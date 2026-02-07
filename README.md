@@ -31,6 +31,18 @@
 - `preview/` генерується з `src/` через `tools/build-preview.ps1`
 - `docs/` генерується для GitHub Pages через `tools/build-docs.ps1`
 
+## Поведінка UI (як зараз реалізовано)
+
+- Навігація степпером (`step-pill`):
+  - можна клікати тільки на поточний або попередні кроки
+  - кроки після поточного завжди “locked” (щоб не перескакувати вперед без сабміту кроку)
+- Валідація:
+  - помилки показуються під полем червоним текстом (наприклад `Pflichtfeld`)
+  - контрол підсвічується (`aria-invalid="true"`) для input/select, а також для radio/checkbox груп
+- Опції:
+  - `option-sets.json` може містити placeholder з `value: ""` тільки для `select`
+  - для `radio` використовуємо відповідні `*_radio` option sets (без placeholder)
+
 ## Білд і перегляд
 
 Зібрати превʼю і Pages-версію (оновлює `preview/` і `docs/`):
@@ -63,7 +75,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File tools/build-docs.ps1
 - [x] Зібрати повні tooltip-тексти німецькою (Erkennungsmerkmale, визначення, юр. disclaimers).
 - [ ] Узгодити формат результату (куди відправляються дані: email/CRM/API).
 - [ ] Додати контактні поля замовника (Imʼя, Email, Телефон) — потрібне уточнення.
-- [ ] Реалізувати форму в коді.
+- [x] Реалізувати форму в коді (data-driven wizard + стилі + білд для Pages).
 
 ## Архітектура форми (стислий огляд)
 

@@ -43,6 +43,21 @@ powershell -NoProfile -ExecutionPolicy Bypass -File tools/build-docs.ps1
 
 This regenerates `docs/` (GitHub Pages source folder) from `preview/` + `assets/`.
 
+## Navigation (Stepper)
+
+Stepper pills are intentionally restricted:
+
+- current step and previous steps are clickable
+- steps after the current one are locked, so moving forward requires submitting the current step
+
+## Validation UI
+
+- Required-field errors render as red text under the field (e.g. `Pflichtfeld`).
+- Invalid fields are marked with `aria-invalid="true"` so CSS can highlight:
+  - `.control` inputs/selects
+  - `.radio-row` groups (chips)
+  - `.checkbox-row` containers
+
 ## Storage
 
 The "Speichern" button stores the current draft in browser `localStorage`.
