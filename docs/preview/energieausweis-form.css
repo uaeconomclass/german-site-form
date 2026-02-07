@@ -139,7 +139,7 @@ code{ font-family:var(--mono); font-size:.95em; }
   height:24px;
   align-items:stretch;
   position:relative;
-  --notch: 8px; /* chevron tip / cut size */
+  --notch: 7px;
 }
 .r{
   flex:1 1 0;
@@ -151,31 +151,27 @@ code{ font-family:var(--mono); font-size:.95em; }
   color:#111827;
   position:relative;
 }
-/* Chevron segments like the reference UI:
-   - each segment has a right arrow tip
-   - segments overlap; the next segment draws a white triangle "cut" on its left,
-     creating the crisp white separators seen in the design */
+/* Chevron segments with white separators like the reference UI:
+   - middle segments have a left "bite" and a right arrow tip
+   - the white separator is the bar background shown through clip-path */
 .r{
-  clip-path: polygon(0 0, calc(100% - var(--notch)) 0, 100% 50%, calc(100% - var(--notch)) 100%, 0 100%);
+  clip-path: polygon(var(--notch) 0, calc(100% - var(--notch)) 0, 100% 50%, calc(100% - var(--notch)) 100%, var(--notch) 100%, 0 50%);
 }
 .r:first-child{
   clip-path: polygon(0 0, calc(100% - var(--notch)) 0, 100% 50%, calc(100% - var(--notch)) 100%, 0 100%);
 }
 .r:last-child{
-  /* last segment ends flat (no extra arrow tip beyond the bar) */
-  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  /* no special case needed; keep the right arrow tip */
 }
-.r:not(:first-child){
-  margin-left: calc(var(--notch) * -1);
-}
-.r:not(:first-child)::before{
+.r:not(:last-child)::after{
+  /* crisp white wedge separator (matches screenshot better than overlap margins) */
   content:"";
   position:absolute;
-  left:0;
+  right:0;
   top:0;
   width: var(--notch);
   height:100%;
-  background:#fff; /* separator color */
+  background:#fff;
   clip-path: polygon(0 0, 100% 50%, 0 100%);
 }
 .r1{ background:#16a34a; color:#fff; }
