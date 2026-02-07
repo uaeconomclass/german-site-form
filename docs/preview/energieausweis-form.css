@@ -35,14 +35,12 @@ code{ font-family:var(--mono); font-size:.95em; }
 .stepsbar{
   display:flex;
   gap:10px;
-  flex-wrap:nowrap;
+  flex-wrap:wrap;
   align-items:center;
   margin:6px 0 10px;
-  overflow-x:auto;
-  padding-bottom:6px;
+  overflow:visible;
+  padding-bottom:0;
 }
-.stepsbar::-webkit-scrollbar{ height:6px; }
-.stepsbar::-webkit-scrollbar-thumb{ background: rgba(102,112,133,.25); border-radius:999px; }
 .step-pill{
   display:flex;
   align-items:center;
