@@ -1,5 +1,5 @@
 ﻿/* Energieausweis Wizard Demo
- * Mirrors FORM-SPEC.md structure (subset) with conditional fields and a JSON export.
+ * Goal: match Group 391 look (light UI) while keeping wizard logic.
  */
 
 function el(tag, attrs, ...children) {
@@ -38,7 +38,6 @@ const DEFAULTS = {
   ausweisart: "",
   gebaeudetyp: "", // WG | NWG | MISCH
 
-  // WG
   wg_subtype: "",
   baujahr: "",
   anzahl_wohneinheiten: "",
@@ -47,27 +46,22 @@ const DEFAULTS = {
   plz: "",
   ort: "",
 
-  // Huelle
   aussenwand_type: "",
   fenster_type: "",
 
-  // Technik
   heizung_type: "",
   warmwasser_type: "",
   lueftung_type: "",
 
-  // NWG
   nwg_nutzung: "",
   nwg_baujahr: "",
 
-  // Misch
   misch_gewerbe_anteil: "",
   misch_tech_lueftung: "",
   misch_tech_kuehlung: "",
   misch_tech_wrg: "",
   misch_reco: "",
 
-  // Bedarf
   geschosshoehen: "",
   gebaeudevolumen: "",
   aussenwandflaechen: "",
@@ -152,25 +146,26 @@ function smartSuggestForNWG(baujahr) {
     heizung_type: "Wärmepumpe",
   };
 }
+
 const STEPS = [
   {
     id: "step1",
-    title: "Anlass & Ausweisart",
-    meta: "KROK 1",
+    title: "Gebäudedaten & Grundprüfung",
+    meta: "1",
     intro: {
-      title: "Start",
-      text:
-        "Bitte wählen Sie Anlass und Ausweisart. Einige Optionen hängen von der Ausweisart ab.",
+      title: "Gebäudedaten",
+      text: "Wählen Sie Anlass und Ausweisart. Danach Gebäudetyp und Basisdaten.",
     },
     fields: [
       {
         key: "anlass",
         label: "Anlass",
-        type: "radio",
+        type: "select",
         required: true,
         tipKey: "anlass",
         options: (s) => {
           const base = [
+            { value: "", label: "Anlass" },
             { value: "Vermietung", label: "Vermietung" },
             { value: "Verkauf", label: "Verkauf" },
             { value: "Sonstiges", label: "Sonstiges" },
@@ -183,69 +178,38 @@ const STEPS = [
         },
       },
       {
+        key: "gebaeudetyp",
+        label: "Gebäudetyp",
+        type: "select",
+        required: true,
+        tipKey: "gebaeudetyp",
+        options: () => [
+          { value: "", label: "Gebäudetyp" },
+          { value: "WG", label: "Wohngebäude (WG)" },
+          { value: "NWG", label: "Nichtwohngebäude (NWG)" },
+          { value: "MISCH", label: "Mischgebäude" },
+        ],
+      },
+      {
         key: "ausweisart",
         label: "Ausweisart",
-        type: "radio",
+        type: "select",
         required: true,
         tipKey: "ausweisart",
         options: () => [
+          { value: "", label: "Welchen Ausweis benötigen Sie?" },
           { value: "Verbrauchsausweis", label: "Verbrauchsausweis" },
           { value: "Bedarfsausweis", label: "Bedarfsausweis" },
           { value: "weiß ich nicht", label: "weiß ich nicht" },
         ],
       },
-    ],
-  },
-  {
-    id: "step2",
-    title: "Gebäudetyp",
-    meta: "KROK 2",
-    intro: {
-      title: "Gebäudetyp",
-      text:
-        "Der Gebäudetyp ist der Hauptzweig der Form (WG / NWG / Mischgebäude).",
-    },
-    fields: [
-      {
-        key: "gebaeudetyp",
-        label: "Gebäudetyp",
-        type: "choice",
-        required: true,
-        tipKey: "gebaeudetyp",
-        choices: [
-          { value: "WG", label: "Wohngebäude (WG)", desc: "EFH, MFH etc." },
-          { value: "NWG", label: "Nichtwohngebäude (NWG)", desc: "Gewerbe, Büro etc." },
-          { value: "MISCH", label: "Mischgebäude", desc: "Wohnen + Gewerbe" },
-        ],
-      },
-    ],
-  },
-  {
-    id: "wg_core",
-    title: "WG - Stammdaten",
-    meta: "WG",
-    when: (s) => s.gebaeudetyp === "WG",
-    intro: { title: "Wohngebäude", text: "Basisdaten für WG." },
-    fields: [
-      {
-        key: "wg_subtype",
-        label: "Gebäudeart (WG)",
-        type: "select",
-        required: true,
-        options: () => [
-          { value: "", label: "Bitte wählen…" },
-          { value: "EFH", label: "Einfamilienhaus (EFH)" },
-          { value: "ZFH", label: "Zweifamilienhaus (ZFH)" },
-          { value: "MFH", label: "Mehrfamilienhaus (MFH)" },
-          { value: "Reihenhaus", label: "Reihenhaus / Doppelhaushälfte" },
-        ],
-      },
-      { key: "baujahr", label: "Baujahr Gebäude", type: "number", required: true, min: 1800, max: 2100 },
-      { key: "anzahl_wohneinheiten", label: "Anzahl Wohneinheiten", type: "number", required: true, min: 1, max: 999 },
-      { key: "wohnflaeche", label: "Wohnfläche (m²)", type: "number", required: true, min: 1, max: 20000, tipKey: "wohnflaeche" },
-      { key: "nutzflaeche", label: "Beheizte Nutzfläche (m²)", type: "number", required: true, min: 1, max: 20000, tipKey: "nutzflaeche" },
-      { key: "plz", label: "PLZ", type: "text", required: true, pattern: "^\\d{5}$", hint: "5-stellig" },
-      { key: "ort", label: "Ort", type: "text", required: true },
+      { key: "anzahl_wohneinheiten", label: "Anzahl Wohnungen", type: "number", required: true, min: 1, max: 999, hint: "z. B. 1" },
+      { key: "baujahr", label: "Baujahr des Gebäudes", type: "number", required: true, min: 1800, max: 2100, hint: "z. B. 1985" },
+      { key: "heizung_type", label: "Baujahr der Heizung", type: "text", required: false, hint: "z. B. 2010" },
+      { key: "plz", label: "PLZ", type: "text", required: true, pattern: "^\\d{5}$", hint: "z. B. 235345" },
+      { key: "ort", label: "Ort", type: "text", required: true, hint: "z. B. München" },
+      { key: "wohnflaeche", label: "Wohnfläche m²", type: "number", required: true, min: 1, max: 20000, tipKey: "wohnflaeche", hint: "z. B. 120" },
+      { key: "nutzflaeche", label: "Nutzfläche m²", type: "number", required: true, min: 1, max: 20000, tipKey: "nutzflaeche", hint: "z. B. 120" },
     ],
     afterChange: (s, changedKey) => {
       if (changedKey !== "baujahr") return;
@@ -256,10 +220,10 @@ const STEPS = [
   },
   {
     id: "wg_huelle",
-    title: "WG - Gebäudehülle",
-    meta: "WG",
+    title: "Bauteile & Dämmung",
+    meta: "2",
     when: (s) => s.gebaeudetyp === "WG",
-    intro: { title: "Gebäudehülle", text: "Außenwand + Fenster." },
+    intro: { title: "Gebäudehülle", text: "Außenwand und Fenster. (Demo)" },
     fields: [
       {
         key: "aussenwand_type",
@@ -292,157 +256,16 @@ const STEPS = [
     ],
   },
   {
-    id: "wg_technik",
-    title: "WG - Anlagentechnik",
-    meta: "WG",
-    when: (s) => s.gebaeudetyp === "WG",
-    intro: { title: "Technik", text: "Heizung, Warmwasser, ggf. Lüftung." },
-    fields: [
-      {
-        key: "heizung_type",
-        label: "Heizung (Typ)",
-        type: "imgselect",
-        required: true,
-        options: () => [
-          { value: "Konstanttemperaturkessel", label: "Konstanttemperatur", img: "../assets/images/heizung/konstanttemperaturkessel.png" },
-          { value: "Niedertemperaturkessel", label: "Niedertemperatur", img: "../assets/images/heizung/niedertemperaturkessel.png" },
-          { value: "Brennwertkessel", label: "Brennwert", img: "../assets/images/heizung/brennwertkessel.png" },
-          { value: "Wärmepumpe", label: "Wärmepumpe", img: "../assets/images/heizung/waermepumpe.png" },
-        ],
-      },
-      {
-        key: "warmwasser_type",
-        label: "Warmwasser (Typ)",
-        type: "select",
-        required: true,
-        options: () => [
-          { value: "", label: "Bitte wählen…" },
-          { value: "Zentral", label: "Zentrale Warmwasserbereitung" },
-          { value: "Dezentral", label: "Dezentrale Warmwasserbereitung" },
-          { value: "Durchlauferhitzer", label: "Durchlauferhitzer (elektrisch)" },
-          { value: "Boiler", label: "Elektrischer Speicher (Boiler)" },
-          { value: "Solarthermie", label: "Solarthermie (Warmwasser)" },
-        ],
-      },
-      {
-        key: "lueftung_type",
-        label: "Lüftung (WG)",
-        type: "imgselect",
-        required: (s) => s.ausweisart === "Bedarfsausweis",
-        when: (s) => s.ausweisart === "Bedarfsausweis",
-        options: () => [
-          { value: "Fensterlüftung", label: "Fensterlüftung", img: "../assets/images/lueftung/fensterlueftung.png" },
-          { value: "Mechanische Abluft", label: "Mechanische Abluft", img: "../assets/images/lueftung/mechanische-abluft.png" },
-          { value: "Zentrale WRG", label: "Zentrale WRG", img: "../assets/images/lueftung/zentrale-lueftungsanlage.png" },
-          { value: "Dezentrale WRG", label: "Dezentrale WRG", img: "../assets/images/lueftung/dezentrale-lueftungsanlage.png" },
-        ],
-      },
-    ],
-  },  {
-    id: "nwg_core",
-    title: "NWG - Stammdaten",
-    meta: "NWG",
-    when: (s) => s.gebaeudetyp === "NWG",
-    intro: { title: "Nichtwohngebäude", text: "Basisdaten für NWG." },
-    fields: [
-      {
-        key: "nwg_nutzung",
-        label: "Gebäudenutzung (NWG)",
-        type: "select",
-        required: true,
-        options: () => [
-          { value: "", label: "Bitte wählen…" },
-          { value: "Büro/Verwaltung", label: "Büro / Verwaltung" },
-          { value: "Schule", label: "Schule" },
-          { value: "Produktion/Lager", label: "Produktion / Lager" },
-          { value: "Einzelhandel", label: "Einzelhandel" },
-          { value: "Gastronomie", label: "Gastronomie" },
-        ],
-      },
-      { key: "nwg_baujahr", label: "Baujahr Gebäude (NWG)", type: "number", required: true, min: 1800, max: 2100 },
-      {
-        key: "heizung_type",
-        label: "Heizung (Typ)",
-        type: "select",
-        required: true,
-        options: () => [
-          { value: "", label: "Bitte wählen…" },
-          { value: "Konstanttemperaturkessel", label: "Konstanttemperaturkessel" },
-          { value: "Niedertemperaturkessel", label: "Niedertemperaturkessel" },
-          { value: "Brennwertkessel", label: "Brennwertkessel" },
-          { value: "Wärmepumpe", label: "Wärmepumpe" },
-          { value: "Fernwärme", label: "Fern-/Nahwärme" },
-        ],
-      },
-      {
-        key: "lueftung_type",
-        label: "Lüftung/Kühlung (NWG)",
-        type: "select",
-        required: (s) => s.ausweisart === "Bedarfsausweis",
-        options: () => [
-          { value: "", label: "Bitte wählen…" },
-          { value: "Fensterlüftung", label: "Fensterlüftung" },
-          { value: "Mechanische Abluft", label: "Mechanische Abluft / Schachtlüftung" },
-          { value: "Zentrale ohne WRG", label: "Zentrale ohne WRG" },
-          { value: "Zentrale WRG", label: "Zentrale WRG" },
-          { value: "Dezentrale WRG", label: "Dezentrale WRG" },
-        ],
-      },
-    ],
-    afterChange: (s, changedKey) => {
-      if (changedKey !== "nwg_baujahr") return;
-      const sug = smartSuggestForNWG(s.nwg_baujahr);
-      if (!sug) return;
-      for (const [k, v] of Object.entries(sug)) if (isEmpty(state[k])) state[k] = v;
-    },
-  },
-  {
-    id: "misch_relevanz",
-    title: "Misch - Relevanz-Check",
-    meta: "MISCH",
-    when: (s) => s.gebaeudetyp === "MISCH",
-    intro: { title: "Relevanz-Check", text: "Vor-Klassifikation (Empfehlung)." },
-    fields: [
-      { key: "misch_gewerbe_anteil", label: "Gewerbeanteil (%, geschätzt)", type: "number", required: true, min: 0, max: 100, hint: "0..100" },
-      { key: "misch_tech_lueftung", label: "Mechanische Lüftung?", type: "radio", required: true, options: () => [{ value: "Ja", label: "Ja" }, { value: "Nein", label: "Nein" }] },
-      { key: "misch_tech_kuehlung", label: "Kühlung/Klima?", type: "radio", required: true, options: () => [{ value: "Ja", label: "Ja" }, { value: "Nein", label: "Nein" }] },
-      { key: "misch_tech_wrg", label: "WRG vorhanden?", type: "radio", required: true, options: () => [{ value: "Ja", label: "Ja" }, { value: "Nein", label: "Nein" }] },
-      {
-        key: "misch_reco",
-        label: "Empfehlung (automatisch)",
-        type: "readonly",
-        compute: (s) => {
-          const p = Number(s.misch_gewerbe_anteil);
-          const tech = [s.misch_tech_lueftung, s.misch_tech_kuehlung, s.misch_tech_wrg].filter((x) => x === "Ja").length;
-          if (!Number.isFinite(p)) return "";
-          if (p >= 70 || tech >= 2) return "Nichtwohngebäude (NWG) – Empfehlung";
-          if (p <= 30 && tech === 0) return "Wohngebäude (WG) – Empfehlung";
-          return "Mischgebäude – Empfehlung";
-        },
-        hint: "Die Einordnung dient nur der Orientierung (GEG).",
-      },
-    ],
-  },
-  {
     id: "uploads",
-    title: "Uploads",
-    meta: "Upload",
-    intro: { title: "Dokumente & Fotos", text: "Anforderungen hängen von Ausweisart/Typ ab." },
+    title: "Versand",
+    meta: "3",
+    intro: { title: "Uploads", text: "Uploads je nach Ausweisart. (Demo)" },
     fields: [
-      { key: "upload_verbrauch_heizkosten", label: "Heizkostenabrechnungen (3 Jahre)", type: "file", required: (s) => s.ausweisart === "Verbrauchsausweis", when: (s) => s.ausweisart === "Verbrauchsausweis", accept: ".pdf,.jpg,.jpeg,.png", multiple: true },
-      { key: "upload_verbrauch_daten", label: "Verbrauchsdaten", type: "file", required: (s) => s.ausweisart === "Verbrauchsausweis", when: (s) => s.ausweisart === "Verbrauchsausweis", accept: ".pdf,.jpg,.jpeg,.png", multiple: true },
       { key: "upload_heizung_photos", label: "Heizungsanlage (Fotos)", type: "file", required: true, tipKey: "uploads_heizung", accept: ".jpg,.jpeg,.png", multiple: true },
       { key: "upload_fenster_photos", label: "Fenster/Türen (Fotos)", type: "file", required: true, tipKey: "uploads_fenster", accept: ".jpg,.jpeg,.png", multiple: true },
-      { key: "upload_daemmung_photos", label: "Wärmedämmung (Fotos)", type: "file", required: true, tipKey: "uploads_daemmung", accept: ".jpg,.jpeg,.png", multiple: true },
-      { key: "geschosshoehen", label: "Geschosshöhen (m)", type: "number", required: (s) => s.ausweisart === "Bedarfsausweis", when: (s) => s.ausweisart === "Bedarfsausweis", min: 0, max: 30 },
-      { key: "gebaeudevolumen", label: "Gebäudevolumen (m³)", type: "number", required: (s) => s.ausweisart === "Bedarfsausweis", when: (s) => s.ausweisart === "Bedarfsausweis", min: 0, max: 10000000 },
-      { key: "aussenwandflaechen", label: "Außenwandflächen (m²)", type: "number", required: (s) => s.ausweisart === "Bedarfsausweis", when: (s) => s.ausweisart === "Bedarfsausweis", min: 0, max: 2000000 },
-      { key: "fensteranteile", label: "Fensterflächen (m²)", type: "number", required: (s) => s.ausweisart === "Bedarfsausweis", when: (s) => s.ausweisart === "Bedarfsausweis", min: 0, max: 2000000 },
-      { key: "upload_bedarf_plaene", label: "Pläne (Grundriss/Schnitt/Ansicht)", type: "file", required: (s) => s.ausweisart === "Bedarfsausweis", when: (s) => s.ausweisart === "Bedarfsausweis", accept: ".pdf,.jpg,.jpeg,.png", multiple: true },
-      { key: "upload_nwg_extended", label: "NWG Bedarf: Anlagenpläne", type: "file", required: (s) => s.ausweisart === "Bedarfsausweis" && s.gebaeudetyp === "NWG", when: (s) => s.ausweisart === "Bedarfsausweis" && s.gebaeudetyp === "NWG", accept: ".pdf,.jpg,.jpeg,.png", multiple: true },
     ],
   },
-  { id: "summary", title: "Zusammenfassung", meta: "Finish", intro: { title: "Fertig", text: "JSON-Export der eingegebenen Daten." }, fields: [] },
+  { id: "summary", title: "Zusammenfassung", meta: "4", intro: { title: "Fertig", text: "JSON-Export der eingegebenen Daten." }, fields: [] },
 ];
 
 function visibleSteps() {
@@ -450,23 +273,29 @@ function visibleSteps() {
 }
 
 const dom = {
-  stepper: document.getElementById("stepper"),
-  stepCount: document.getElementById("stepCount"),
-  progressBar: document.getElementById("progressBar"),
+  topStepper: document.getElementById("topStepper"),
   stepTitle: document.getElementById("stepTitle"),
   stepMeta: document.getElementById("stepMeta"),
+  stepDesc: document.getElementById("stepDesc"),
+
   stepIntro: document.getElementById("stepIntro"),
   introTitle: document.getElementById("introTitle"),
   introText: document.getElementById("introText"),
-  form: document.getElementById("wizardForm"),
-  btnBack: document.getElementById("btnBack"),
-  btnNext: document.getElementById("btnNext"),
-  btnReset: document.getElementById("btnReset"),
+
   warnBox: document.getElementById("warnBox"),
   warnText: document.getElementById("warnText"),
+
+  form: document.getElementById("wizardForm"),
+
   summaryBox: document.getElementById("summaryBox"),
   summaryJson: document.getElementById("summaryJson"),
+
+  btnBack: document.getElementById("btnBack"),
+  btnNext: document.getElementById("btnNext"),
+  btnSave: document.getElementById("btnSave"),
   btnDownload: document.getElementById("btnDownload"),
+
+  overviewProgress: document.getElementById("overviewProgress"),
 };
 
 let stepIndex = 0;
@@ -509,7 +338,7 @@ function renderLabel(field) {
       el(
         "span",
         { class: "tip", role: "button", tabindex: "0", "aria-label": "Info" },
-        "i",
+        "?",
         el("span", { class: "tipbox", html: TIPS[field.tipKey].replaceAll("\n", "<br>") })
       )
     );
@@ -519,34 +348,25 @@ function renderLabel(field) {
 
 function renderStepper() {
   const steps = visibleSteps();
-  dom.stepCount.textContent = String(steps.length);
-  dom.stepper.innerHTML = "";
-
+  dom.topStepper.innerHTML = "";
   steps.forEach((st, idx) => {
-    const done = idx < stepIndex && validateStep(idx, { silent: true }).ok;
-    const item = el(
+    const pill = el(
       "div",
       {
         class:
-          "step" + (idx === stepIndex ? " active" : "") + (done ? " done" : ""),
+          "step-pill" +
+          (idx === stepIndex ? " active" : "") +
+          (idx < stepIndex ? " done" : ""),
         onclick: () => {
           stepIndex = idx;
           render();
         },
       },
-      el("div", { class: "n" }, String(idx + 1)),
-      el(
-        "div",
-        { class: "t" },
-        el("span", null, st.title),
-        el("small", null, st.meta || "")
-      )
+      el("span", { class: "num" }, String(idx + 1)),
+      el("span", null, st.title)
     );
-    dom.stepper.appendChild(item);
+    dom.topStepper.appendChild(pill);
   });
-
-  const pct = steps.length ? (stepIndex / (steps.length - 1)) * 100 : 0;
-  dom.progressBar.style.width = clamp(pct, 0, 100).toFixed(1) + "%";
 }
 
 function runPlausibilityWarnings() {
@@ -554,7 +374,7 @@ function runPlausibilityWarnings() {
   const y = Number(state.baujahr || state.nwg_baujahr);
 
   if (Number.isFinite(y) && y < 1960 && state.heizung_type === "Wärmepumpe") {
-    warnings.push("Baujahr < 1960 + Wärmepumpe: bitte prüfen (ggf. saniert).");
+    warnings.push("Baujahr < 1960 + Wärmepumpe: bitte prüfen (ggf. saniert). ");
   }
 
   if (state.heizung_type === "Wärmepumpe" && state.fenster_type === "Einfachverglasung") {
@@ -568,95 +388,6 @@ function runPlausibilityWarnings() {
     dom.warnBox.style.display = "none";
     dom.warnText.textContent = "";
   }
-}
-
-function renderFields(step) {
-  const fields = (step.fields || []).filter((f) => fieldWhen(f));
-  dom.form.innerHTML = "";
-
-  fields.forEach((field) => {
-    const key = field.key;
-    const val = state[key];
-
-    const wrap = el(
-      "div",
-      { class: "field" + (field.type === "choice" || field.type === "readonly" ? " full" : "") },
-      renderLabel(field)
-    );
-
-    const err = el("div", { class: "errtxt", id: "err_" + key });
-
-    let control;
-
-    if (field.type === "radio") {
-      const opts = (typeof field.options === "function" ? field.options(state) : field.options) || [];
-      control = el("div", { class: "radio-row", role: "group" });
-      opts.forEach((opt) => {
-        const id = key + "_" + opt.value;
-        const input = el("input", { type: "radio", name: key, id, value: opt.value });
-        if (val === opt.value) input.checked = true;
-        input.addEventListener("change", () => setValue(key, opt.value));
-        control.appendChild(el("label", { class: "chip", for: id }, input, el("span", null, opt.label)));
-      });
-    } else if (field.type === "select") {
-      const opts = (typeof field.options === "function" ? field.options(state) : field.options) || [];
-      control = el("select", { class: "control", name: key });
-      opts.forEach((opt) => {
-        const o = el("option", { value: opt.value }, opt.label);
-        if (String(val) === String(opt.value)) o.selected = true;
-        control.appendChild(o);
-      });
-      control.addEventListener("change", () => setValue(key, control.value));
-    } else if (field.type === "number" || field.type === "text") {
-      control = el("input", { class: "control", name: key, type: field.type === "number" ? "number" : "text", value: val ?? "" });
-      if (field.min != null) control.setAttribute("min", String(field.min));
-      if (field.max != null) control.setAttribute("max", String(field.max));
-      if (field.hint) control.setAttribute("placeholder", field.hint);
-      control.addEventListener("input", () => setValue(key, control.value));
-    } else if (field.type === "choice") {
-      control = el("div", { class: "choice-grid" });
-      (field.choices || []).forEach((ch) => {
-        const box = el("div", { class: "choice" + (val === ch.value ? " sel" : ""), onclick: () => setValue(key, ch.value) },
-          el("div", { class: "badge" }, ch.value),
-          el("div", null, el("b", null, ch.label), el("small", null, ch.desc || ""))
-        );
-        control.appendChild(box);
-      });
-    } else if (field.type === "imgselect") {
-      control = el("div", { class: "img-choices" });
-      const opts = (typeof field.options === "function" ? field.options(state) : field.options) || [];
-      opts.forEach((opt) => {
-        const box = el("div", { class: "img-choice" + (val === opt.value ? " sel" : ""), onclick: () => setValue(key, opt.value) },
-          el("img", { src: opt.img, alt: opt.label }),
-          el("div", { class: "cap" }, opt.label)
-        );
-        control.appendChild(box);
-      });
-    } else if (field.type === "file") {
-      control = el("div", { class: "upload" },
-        el("div", { class: "row" }, el("b", null, "Upload"), el("span", null, (field.accept || "").replaceAll(",", ", ")))
-      );
-      const inp = el("input", { type: "file", name: key, accept: field.accept || "", ...(field.multiple ? { multiple: true } : {}) });
-      const list = el("div", { class: "filelist", id: "file_" + key });
-      const saved = state.uploads[key] || [];
-      if (saved.length) list.textContent = "Ausgewählt: " + saved.join(", ");
-      inp.addEventListener("change", () => {
-        const names = Array.from(inp.files || []).map((f) => f.name);
-        state.uploads[key] = names;
-        list.textContent = names.length ? "Ausgewählt: " + names.join(", ") : "";
-      });
-      control.appendChild(inp);
-      control.appendChild(list);
-    } else if (field.type === "readonly") {
-      const v = field.compute ? field.compute(state) : val ?? "";
-      control = el("input", { class: "control", name: key, type: "text", value: v, readonly: true });
-      state[key] = v;
-    }
-
-    wrap.appendChild(control);
-    wrap.appendChild(err);
-    dom.form.appendChild(wrap);
-  });
 }
 
 function setValue(key, value) {
@@ -674,6 +405,95 @@ function setValue(key, value) {
   });
 
   render();
+}
+
+function renderFields(step) {
+  const fields = (step.fields || []).filter((f) => fieldWhen(f));
+  dom.form.innerHTML = "";
+
+  fields.forEach((field) => {
+    const key = field.key;
+    const val = state[key];
+
+    const wrap = el("div", { class: "field" + (field.full ? " full" : "") }, renderLabel(field));
+    const err = el("div", { class: "errtxt", id: "err_" + key });
+
+    let control;
+
+    if (field.type === "select") {
+      const opts = (typeof field.options === "function" ? field.options(state) : field.options) || [];
+      control = el("select", { class: "control", name: key });
+      opts.forEach((opt) => {
+        const o = el("option", { value: opt.value }, opt.label);
+        if (String(val) === String(opt.value)) o.selected = true;
+        control.appendChild(o);
+      });
+      control.addEventListener("change", () => setValue(key, control.value));
+
+    } else if (field.type === "number" || field.type === "text") {
+      control = el("input", {
+        class: "control",
+        name: key,
+        type: field.type === "number" ? "number" : "text",
+        value: val ?? "",
+        placeholder: field.hint || "",
+      });
+      if (field.min != null) control.setAttribute("min", String(field.min));
+      if (field.max != null) control.setAttribute("max", String(field.max));
+      control.addEventListener("input", () => setValue(key, control.value));
+
+    } else if (field.type === "radio") {
+      const opts = (typeof field.options === "function" ? field.options(state) : field.options) || [];
+      control = el("div", { class: "radio-row", role: "group" });
+      opts.forEach((opt) => {
+        const id = key + "_" + opt.value;
+        const input = el("input", { type: "radio", name: key, id, value: opt.value });
+        if (val === opt.value) input.checked = true;
+        input.addEventListener("change", () => setValue(key, opt.value));
+        control.appendChild(el("label", { class: "chip", for: id }, input, el("span", null, opt.label)));
+      });
+
+    } else if (field.type === "imgselect") {
+      control = el("div", { class: "img-choices" });
+      const opts = (typeof field.options === "function" ? field.options(state) : field.options) || [];
+      opts.forEach((opt) => {
+        const box = el(
+          "div",
+          { class: "img-choice" + (val === opt.value ? " sel" : ""), onclick: () => setValue(key, opt.value) },
+          el("img", { src: opt.img, alt: opt.label }),
+          el("div", { class: "cap" }, opt.label)
+        );
+        control.appendChild(box);
+      });
+
+    } else if (field.type === "file") {
+      control = el(
+        "div",
+        { class: "upload" },
+        el("div", { class: "row" }, el("b", null, "Upload"), el("span", null, (field.accept || "").replaceAll(",", ", ")))
+      );
+      const inp = el("input", { type: "file", name: key, accept: field.accept || "", ...(field.multiple ? { multiple: true } : {}) });
+      const list = el("div", { class: "filelist", id: "file_" + key });
+      const saved = state.uploads[key] || [];
+      if (saved.length) list.textContent = "Ausgewählt: " + saved.join(", ");
+      inp.addEventListener("change", () => {
+        const names = Array.from(inp.files || []).map((f) => f.name);
+        state.uploads[key] = names;
+        list.textContent = names.length ? "Ausgewählt: " + names.join(", ") : "";
+      });
+      control.appendChild(inp);
+      control.appendChild(list);
+
+    } else if (field.type === "readonly") {
+      const v = field.compute ? field.compute(state) : val ?? "";
+      control = el("input", { class: "control", name: key, type: "text", value: v, readonly: true });
+      state[key] = v;
+    }
+
+    wrap.appendChild(control);
+    wrap.appendChild(err);
+    dom.form.appendChild(wrap);
+  });
 }
 
 function validateStep(idx, { silent } = {}) {
@@ -741,6 +561,11 @@ function exportData() {
   return out;
 }
 
+function updateOverview() {
+  const steps = visibleSteps();
+  dom.overviewProgress.textContent = String(stepIndex + 1) + "/" + String(steps.length);
+}
+
 function render() {
   const steps = visibleSteps();
   stepIndex = clamp(stepIndex, 0, steps.length - 1);
@@ -771,11 +596,14 @@ function render() {
   }
 
   dom.btnBack.disabled = stepIndex === 0;
-  dom.btnNext.textContent = stepIndex === steps.length - 1 ? "Fertig" : "Weiter";
 
   renderStepper();
   runPlausibilityWarnings();
+  updateOverview();
 }
+
+// Buttons
+
 dom.btnBack.addEventListener("click", () => {
   stepIndex = clamp(stepIndex - 1, 0, visibleSteps().length - 1);
   render();
@@ -789,10 +617,16 @@ dom.btnNext.addEventListener("click", () => {
   render();
 });
 
-dom.btnReset.addEventListener("click", () => {
-  state = deepClone(DEFAULTS);
-  stepIndex = 0;
-  render();
+dom.btnSave.addEventListener("click", () => {
+  const data = exportData();
+  try {
+    localStorage.setItem("ea_wizard_draft_v1", JSON.stringify(data));
+    const old = dom.btnSave.textContent;
+    dom.btnSave.textContent = "Gespeichert";
+    setTimeout(() => (dom.btnSave.textContent = old), 900);
+  } catch (e) {
+    // ignore
+  }
 });
 
 dom.btnDownload.addEventListener("click", () => {
@@ -807,5 +641,16 @@ dom.btnDownload.addEventListener("click", () => {
   a.remove();
   URL.revokeObjectURL(url);
 });
+
+// Load draft if any
+try {
+  const raw = localStorage.getItem("ea_wizard_draft_v1");
+  if (raw) {
+    const d = JSON.parse(raw);
+    state = { ...deepClone(DEFAULTS), ...d, uploads: d.uploads || {} };
+  }
+} catch (e) {
+  // ignore
+}
 
 render();
