@@ -151,17 +151,28 @@ code{ font-family:var(--mono); font-size:.95em; }
   color:#111827;
   position:relative;
 }
-/* Approximate the "arrow" segments from the screenshot. */
-.r:not(:last-child){
-  clip-path: polygon(0 0, calc(100% - var(--notch)) 0, 100% 50%, calc(100% - var(--notch)) 100%, 0 100%, var(--notch) 50%);
+/* Chevron segments with white separators like the reference UI:
+   - middle segments have a left "bite" and a right arrow tip
+   - the white separator is the bar background shown through clip-path */
+.r{
+  clip-path: polygon(var(--notch) 0, calc(100% - var(--notch)) 0, 100% 50%, calc(100% - var(--notch)) 100%, var(--notch) 100%, 0 50%);
 }
 .r:first-child{
   clip-path: polygon(0 0, calc(100% - var(--notch)) 0, 100% 50%, calc(100% - var(--notch)) 100%, 0 100%);
 }
-.r:last-child{ /* keep arrow tip on the right, same chevron geometry */ }
-.r:not(:first-child){
-  /* Slight overlap to reduce visible gaps between segments. */
-  margin-left: calc(var(--notch) * -0.55);
+.r:last-child{
+  /* no special case needed; keep the right arrow tip */
+}
+.r:not(:last-child)::after{
+  /* crisp white wedge separator (matches screenshot better than overlap margins) */
+  content:"";
+  position:absolute;
+  right:0;
+  top:0;
+  width: var(--notch);
+  height:100%;
+  background:#fff;
+  clip-path: polygon(0 0, 100% 50%, 0 100%);
 }
 .r1{ background:#16a34a; color:#fff; }
 .r2{ background:#22c55e; color:#05331c; }
@@ -182,17 +193,6 @@ code{ font-family:var(--mono); font-size:.95em; }
   align-items:center;
   gap:6px;
 }
-.marker-ico{
-  width:16px;
-  height:16px;
-  border-radius:7px;
-  background:#f2f4f7;
-  border:1px solid var(--border);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:#667085;
-}
 .marker-now{
   left: var(--marker-now, 66%);
   top:-16px;
@@ -208,11 +208,14 @@ code{ font-family:var(--mono); font-size:.95em; }
   border-left:6px solid transparent;
   border-right:6px solid transparent;
   border-top:7px solid #111827;
-  opacity:.15;
+  opacity:.25;
 }
 .marker-pot{
   left: var(--marker-pot, 52%);
   bottom:-18px;
+  display:flex;
+  flex-direction:column;
+  gap:2px;
 }
 .marker-pot::after{
   content:"";
@@ -225,7 +228,15 @@ code{ font-family:var(--mono); font-size:.95em; }
   border-left:6px solid transparent;
   border-right:6px solid transparent;
   border-bottom:7px solid #111827;
-  opacity:.15;
+  opacity:.25;
+}
+.pot-ico{
+  width:14px;
+  height:14px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#667085;
 }
 
 .layout{
