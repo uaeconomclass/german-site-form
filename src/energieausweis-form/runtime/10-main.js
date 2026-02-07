@@ -187,7 +187,7 @@ function runPlausibilityWarnings() {
   }
 }
 
-function setValue(key, value, step) {
+function setValue(key, value, step, opts) {
   state[key] = value;
 
   // Keep spec constraint: if Ausweisart not Bedarf, remove invalid Anlass
@@ -199,7 +199,13 @@ function setValue(key, value, step) {
   const hookName = step && step.afterChangeRef;
   if (hookName && AFTER_CHANGE[hookName]) AFTER_CHANGE[hookName](state, key);
 
-  render();
+  const shouldRender = !(opts && opts.render === false);
+  if (shouldRender) render();
+  else {
+    // Avoid full re-render while typing; keep UI responsive and cursor stable.
+    runPlausibilityWarnings();
+    updateOverview();
+  }
 }
 
 function renderFields(step) {
@@ -238,7 +244,10 @@ function renderFields(step) {
         control = el("input", { class: "control", name: key, type: field.type === "number" ? "number" : "text", value: val ?? "", placeholder: field.hint || "" });
         if (field.min != null) control.setAttribute("min", String(field.min));
         if (field.max != null) control.setAttribute("max", String(field.max));
-        control.addEventListener("input", () => setValue(key, control.value, step));
+        // While typing, do not re-render (otherwise the input element gets recreated and typing feels broken).
+        control.addEventListener("input", () => setValue(key, control.value, step, { render: false }));
+        // On commit (blur/enter), re-render so any dependent UI updates can happen.
+        control.addEventListener("change", () => setValue(key, control.value, step));
       } else if (field.type === "counter") {
         const min = field.min != null ? Number(field.min) : 0;
         const max = field.max != null ? Number(field.max) : 999999;
@@ -246,7 +255,8 @@ function renderFields(step) {
         const input = el("input", { class: "control", name: key, type: "number", value: val ?? "", placeholder: field.hint || "" });
         if (field.min != null) input.setAttribute("min", String(field.min));
         if (field.max != null) input.setAttribute("max", String(field.max));
-        input.addEventListener("input", () => setValue(key, input.value, step));
+        input.addEventListener("input", () => setValue(key, input.value, step, { render: false }));
+        input.addEventListener("change", () => setValue(key, input.value, step));
 
         const dec = el("button", { type: "button", class: "pm", onclick: () => setValue(key, String(clamp((Number(state[key] || cur) || 0) - 1, min, max)), step) }, "-");
         const inc = el("button", { type: "button", class: "pm", onclick: () => setValue(key, String(clamp((Number(state[key] || cur) || 0) + 1, min, max)), step) }, "+");
@@ -326,8 +336,9 @@ function renderFields(step) {
               const next = { ...(items[idx] || {}) };
               next[sfKey] = inp.value;
               items[idx] = next;
-              setValue(key, items, step);
+              setValue(key, items, step, { render: false });
             });
+            inp.addEventListener("change", () => setValue(key, items, step));
             cell.appendChild(inp);
             grid.appendChild(cell);
           });
