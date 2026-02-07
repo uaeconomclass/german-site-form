@@ -332,6 +332,20 @@ label{
   line-height:1.35;
   z-index:50;
 }
+.tipbox .tipimgwrap,
+.optiontip .tipimgwrap{
+  display:block;
+  margin-top:8px;
+}
+.tipbox img.tipimg,
+.optiontip img.tipimg{
+  display:block;
+  max-width:100%;
+  height:auto;
+  border-radius:10px;
+  border:1px solid var(--border);
+  background:#fff;
+}
 
 .control{
   height:44px;

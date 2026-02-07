@@ -24,6 +24,31 @@ let stepIndex = 0;
 
 const TIPS = TOOL_TIPS_DE || {};
 
+function escapeHtml(s) {
+  return String(s)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll("\"", "&quot;")
+    .replaceAll("'", "&#39;");
+}
+
+function tipToHtml(raw) {
+  // Tooltips are authored as plain text, sometimes with inline references to local images.
+  // We escape HTML first, then convert newlines and image paths to safe markup.
+  let html = escapeHtml(raw == null ? "" : String(raw));
+
+  // Convert any ../assets/images/... image path into an inline image.
+  // Example (from spec): ...(siehe Bild: ../assets/images/fenster/feuertest-2fach.png)
+  html = html.replace(
+    /(\.\.\/assets\/images\/[A-Za-z0-9._/-]+\.(?:png|jpg|jpeg|webp|svg))/gi,
+    (m) => '<span class="tipimgwrap"><img class="tipimg" src="' + m + '" alt="" loading="lazy" /></span>'
+  );
+
+  html = html.replaceAll("\n", "<br>");
+  return html;
+}
+
 const STORAGE_KEY_BASE = "ea_wizard_draft_v1";
 function getStorageKey() {
   // Per-path draft: different pages do not overwrite each other's local drafts.
@@ -106,7 +131,7 @@ function renderSelectedOptionTip(field, value) {
   const { opt } = selectedOptionFor(field, value);
   const key = opt && opt.tipKey;
   if (!key || !TIPS[key]) return null;
-  return el("div", { class: "optiontip" }, String(TIPS[key]));
+  return el("div", { class: "optiontip", html: tipToHtml(TIPS[key]) });
 }
 
 function setTipOpen(tipEl, open) {
@@ -133,7 +158,7 @@ function renderLabel(field) {
         "span",
         { class: "tip", role: "button", tabindex: "0", "aria-label": "Info" },
         "?",
-        el("span", { class: "tipbox", html: String(TIPS[field.tipKey]).replaceAll("\n", "<br>") })
+        el("span", { class: "tipbox", html: tipToHtml(TIPS[field.tipKey]) })
       )
     );
   }
