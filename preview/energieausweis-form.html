@@ -1,0 +1,81 @@
+﻿<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Energieausweis Formular (Wizard)</title>
+    <link rel="stylesheet" href="./energieausweis-form.css" />
+    <script defer src="./energieausweis-form.js"></script>
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="top">
+        <div>
+          <h1>Energieausweis Formular (Wizard)</h1>
+          <div class="sub">
+            Standalone Demo nach <code>FORM-SPEC.md</code>: Wizard-Flow, Conditional Fields, Upload-Block (lokal), SMART-Suggestions und JSON-Export.
+          </div>
+        </div>
+        <div class="pill"><span class="dot"></span> preview/energieausweis-form.html</div>
+      </div>
+
+      <div class="grid">
+        <div class="card">
+          <div class="card-h">
+            <b>Navigation</b>
+            <span style="color:var(--muted);font-size:12px"><span id="stepCount">0</span> Schritte</span>
+          </div>
+          <div class="card-b">
+            <div class="progress" aria-hidden="true"><div id="progressBar"></div></div>
+            <div class="stepper" id="stepper"></div>
+            <div style="height:10px"></div>
+            <div class="banner warn" id="warnBox" style="display:none">
+              <div class="ico">!</div>
+              <div>
+                <b>Plausibilitätscheck</b>
+                <p id="warnText"></p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-h">
+            <b id="stepTitle">Schritt</b>
+            <span style="color:var(--muted);font-size:12px" id="stepMeta"></span>
+          </div>
+          <div class="card-b">
+            <div id="stepIntro" class="banner" style="display:none;margin-bottom:12px">
+              <div class="ico">i</div>
+              <div>
+                <b id="introTitle">Hinweis</b>
+                <p id="introText"></p>
+              </div>
+            </div>
+
+            <form id="wizardForm" class="form" novalidate></form>
+
+            <div id="summaryBox" style="display:none">
+              <div class="summary"><pre id="summaryJson"></pre></div>
+            </div>
+
+            <div class="actions">
+              <div class="left">
+                <button class="btn ghost" type="button" id="btnBack">Zurück</button>
+                <button class="btn danger" type="button" id="btnReset">Reset</button>
+              </div>
+              <div class="right">
+                <button class="btn ghost" type="button" id="btnDownload" style="display:none">Download JSON</button>
+                <button class="btn primary" type="button" id="btnNext">Weiter</button>
+              </div>
+            </div>
+
+            <div style="margin-top:10px;color:var(--muted);font-size:12px;line-height:1.35">
+              Uploads werden im Browser nur als Dateinamen gespeichert. Backend/WordPress-Integration folgt später.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
