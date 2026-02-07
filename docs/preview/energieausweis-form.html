@@ -1,0 +1,119 @@
+﻿<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Verbrauchsausweis für Wohngebäude</title>
+    <link rel="stylesheet" href="./energieausweis-form.css" />
+    <script defer src="./energieausweis-form.js"></script>
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="stepsbar" id="topStepper" aria-label="Schritte"></div>
+
+      <header class="head">
+        <div class="head-left">
+          <h1>Verbrauchsausweis für Wohngebäude</h1>
+          <p class="sub">In nur wenigen Schritten zu Ihrem Energieausweis.</p>
+        </div>
+
+        <div class="head-mid">
+          <div class="muted small">Ihre Energieeffizienzklasse</div>
+          <div class="muted small">Wir berechnen Ihre aktuelle Energieeffizienzklasse automatisch anhand Ihrer Angaben.</div>
+        </div>
+
+        <div class="head-right">
+          <div class="rating" aria-hidden="true">
+            <span class="r r1">A+</span><span class="r r2">A</span><span class="r r3">B</span><span class="r r4">C</span><span class="r r5">D</span><span class="r r6">E</span><span class="r r7">F</span><span class="r r8">G</span><span class="r r9">H</span>
+            <span class="marker">Jetzt</span>
+          </div>
+          <div class="muted small" style="margin-top:6px">Potenz</div>
+        </div>
+      </header>
+
+      <div class="layout">
+        <main class="card main">
+          <div class="main-head">
+            <div>
+              <div class="kicker">
+                <span id="stepTitle">Gebäudedaten &amp; Grundprüfung</span>
+                <span class="sep">·</span>
+                <span class="muted" id="stepMeta"></span>
+              </div>
+              <div class="desc" id="stepDesc">Damit wir Ihren Energieausweis erstellen können, benötigen wir ein paar Angaben zu Ihrem Gebäude.</div>
+            </div>
+            <div class="timepill" title="Schätzung">
+              <span class="muted">Ungefähre Zeit:</span>
+              <b>5min</b>
+            </div>
+          </div>
+
+          <div class="banner warn" id="warnBox" style="display:none">
+            <div class="ico">!</div>
+            <div>
+              <b>Plausibilitätscheck</b>
+              <p id="warnText"></p>
+            </div>
+          </div>
+
+          <div id="stepIntro" class="banner info" style="display:none">
+            <div class="ico">i</div>
+            <div>
+              <b id="introTitle">Hinweis</b>
+              <p id="introText"></p>
+            </div>
+          </div>
+
+          <form id="wizardForm" class="form" novalidate></form>
+
+          <div id="summaryBox" style="display:none">
+            <div class="summary"><pre id="summaryJson"></pre></div>
+          </div>
+
+          <div class="footerbar">
+            <button class="linkbtn" type="button" id="btnBack">Zurück</button>
+            <div class="footer-right">
+              <button class="btn secondary" type="button" id="btnSave">Speichern</button>
+              <button class="btn primary" type="button" id="btnNext">Weiter zur Bestätigung</button>
+              <button class="btn secondary" type="button" id="btnDownload" style="display:none">Download JSON</button>
+            </div>
+          </div>
+        </main>
+
+        <aside class="card side">
+          <div class="side-head">Ihre Gesamtübersicht</div>
+          <div class="side-body">
+            <div class="kv">
+              <div class="muted">Preis:</div>
+              <div class="price"><b>65</b> € inkl. MwSt.</div>
+            </div>
+            <div class="muted small">Preis kann je nach Gebäude variieren. Aktualisiert sich automatisch.</div>
+
+            <div class="sp"></div>
+
+            <div class="kv">
+              <div class="muted">Voraussichtliche Fertigstellung:</div>
+              <div><b>innerhalb von 24 Stunden</b></div>
+            </div>
+
+            <div class="sp"></div>
+
+            <div class="kv">
+              <div class="muted">Fortschritt:</div>
+              <div><b id="overviewProgress">0/0</b> Angaben vollständig</div>
+            </div>
+
+            <div class="sp"></div>
+
+            <a class="help" href="#" onclick="return false;">Sie haben Fragen? Wir helfen gerne or <b>Ort Beratung</b> beantragen</a>
+
+            <div class="sp"></div>
+
+            <button class="btn wide" type="button" disabled>Weiter zur Bestätigung</button>
+            <div class="okline"><span class="check"></span> Verarbeitung zertifiziert nach GEG</div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </body>
+</html>

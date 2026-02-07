@@ -1,0 +1,375 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Energieausweis Form - Preview</title>
+    <style>
+      :root{
+        --bg0:#0b1220;
+        --bg1:#0f1b33;
+        --card:#0f172a;
+        --card2:#0b1325;
+        --text:#e7edf7;
+        --muted:#a7b4c8;
+        --line:#24324f;
+        --accent:#7cdbff;
+        --accent2:#a9ff7a;
+        --danger:#ff5c7a;
+        --shadow: 0 18px 60px rgba(0,0,0,.45);
+        --radius:16px;
+      }
+      *{ box-sizing:border-box; }
+      html,body{ height:100%; }
+      body{
+        margin:0;
+        font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, "Noto Sans", "Liberation Sans", sans-serif;
+        color:var(--text);
+        background:
+          radial-gradient(1200px 700px at 15% 10%, rgba(124,219,255,.22), transparent 60%),
+          radial-gradient(900px 650px at 90% 10%, rgba(169,255,122,.15), transparent 60%),
+          radial-gradient(900px 600px at 20% 90%, rgba(255,92,122,.12), transparent 55%),
+          linear-gradient(180deg, var(--bg0), var(--bg1));
+      }
+      a{ color:inherit; }
+      .wrap{ max-width:1180px; margin:40px auto; padding:0 18px 80px; }
+      .top{
+        display:flex;
+        gap:16px;
+        align-items:flex-end;
+        justify-content:space-between;
+        margin-bottom:18px;
+      }
+      .title{
+        display:flex;
+        flex-direction:column;
+        gap:6px;
+      }
+      h1{
+        margin:0;
+        font-size:22px;
+        letter-spacing:.2px;
+      }
+      .sub{
+        color:var(--muted);
+        font-size:13px;
+        line-height:1.45;
+        max-width:72ch;
+      }
+      .pill{
+        display:inline-flex;
+        align-items:center;
+        gap:10px;
+        padding:10px 12px;
+        border:1px solid var(--line);
+        border-radius:999px;
+        background:rgba(15,23,42,.7);
+        box-shadow: 0 8px 26px rgba(0,0,0,.18);
+        font-size:12px;
+        color:var(--muted);
+        white-space:nowrap;
+      }
+      .dot{ width:10px; height:10px; border-radius:50%; background:var(--accent2); box-shadow: 0 0 0 4px rgba(169,255,122,.12); }
+
+      .grid{
+        display:grid;
+        grid-template-columns: 320px 1fr;
+        gap:16px;
+        align-items:start;
+      }
+      .card{
+        background:linear-gradient(180deg, rgba(15,23,42,.92), rgba(11,19,37,.92));
+        border:1px solid var(--line);
+        border-radius:var(--radius);
+        box-shadow: var(--shadow);
+        overflow:hidden;
+      }
+      .card-h{
+        padding:14px 16px;
+        border-bottom:1px solid var(--line);
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+        gap:10px;
+      }
+      .card-h b{ font-size:13px; letter-spacing:.2px; }
+      .card-b{ padding:16px; }
+
+      .stepper{
+        display:flex;
+        flex-direction:column;
+        gap:10px;
+      }
+      .step{
+        display:flex;
+        gap:10px;
+        padding:10px 10px;
+        border:1px solid transparent;
+        border-radius:14px;
+      }
+      .step.active{
+        border-color: rgba(124,219,255,.35);
+        background: rgba(124,219,255,.08);
+      }
+      .step .n{
+        width:26px; height:26px;
+        border-radius:9px;
+        display:flex; align-items:center; justify-content:center;
+        border:1px solid var(--line);
+        background:rgba(0,0,0,.15);
+        font-size:12px;
+        color:var(--muted);
+        flex:0 0 auto;
+      }
+      .step.active .n{ color:var(--text); border-color: rgba(124,219,255,.35); }
+      .step .t{
+        display:flex;
+        flex-direction:column;
+        gap:2px;
+        min-width:0;
+      }
+      .step .t span{ font-size:13px; }
+      .step .t small{ color:var(--muted); font-size:12px; line-height:1.25; }
+
+      .form{
+        display:grid;
+        grid-template-columns: 1fr 1fr;
+        gap:12px 16px;
+      }
+      .field{ display:flex; flex-direction:column; gap:6px; }
+      .field label{ font-size:12px; color:var(--muted); }
+      .control{
+        height:44px;
+        border-radius:12px;
+        border:1px solid var(--line);
+        background: rgba(9,13,26,.45);
+        color:var(--text);
+        padding:10px 12px;
+        outline:none;
+      }
+      .control:focus{
+        border-color: rgba(124,219,255,.55);
+        box-shadow: 0 0 0 4px rgba(124,219,255,.12);
+      }
+      .full{ grid-column:1 / -1; }
+      .hint{ color:var(--muted); font-size:12px; line-height:1.35; }
+
+      .radio-row{
+        display:flex;
+        flex-wrap:wrap;
+        gap:10px;
+        align-items:center;
+        min-height:44px;
+      }
+      .chip{
+        display:inline-flex;
+        align-items:center;
+        gap:8px;
+        padding:10px 12px;
+        border-radius:999px;
+        border:1px solid var(--line);
+        background: rgba(9,13,26,.35);
+        cursor:pointer;
+        user-select:none;
+      }
+      .chip input{ margin:0; }
+      .actions{
+        display:flex;
+        gap:10px;
+        justify-content:flex-end;
+        flex-wrap:wrap;
+        padding-top:4px;
+      }
+      .btn{
+        height:44px;
+        padding:0 14px;
+        border-radius:12px;
+        border:1px solid var(--line);
+        background: rgba(9,13,26,.35);
+        color:var(--text);
+        cursor:pointer;
+        font-weight:650;
+        letter-spacing:.2px;
+      }
+      .btn.primary{
+        border-color: rgba(124,219,255,.55);
+        background: linear-gradient(180deg, rgba(124,219,255,.20), rgba(124,219,255,.08));
+      }
+      .btn.primary:hover{ border-color: rgba(124,219,255,.85); }
+      .btn.ghost:hover{ border-color: rgba(169,255,122,.55); }
+
+      .preview-img{
+        width:100%;
+        border-radius:14px;
+        border:1px solid var(--line);
+        background: rgba(0,0,0,.10);
+        display:block;
+        box-shadow: 0 12px 32px rgba(0,0,0,.30);
+      }
+      .img-cap{
+        margin-top:10px;
+        color:var(--muted);
+        font-size:12px;
+        line-height:1.35;
+      }
+
+      @media (max-width: 980px){
+        .grid{ grid-template-columns: 1fr; }
+        .form{ grid-template-columns: 1fr; }
+        .top{ align-items:flex-start; flex-direction:column; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="top">
+        <div class="title">
+          <h1>Energieausweis Formular (Preview)</h1>
+          <div class="sub">
+            Це статичний HTML-макет для перегляду загального вигляду (layout) форми.
+            Дані та логіка беруться зі специфікації у <code>FORM-SPEC.md</code>.
+          </div>
+        </div>
+        <div class="pill" title="Static preview">
+          <span class="dot"></span>
+          preview/form-overview.html
+        </div>
+      </div>
+
+      <div class="grid">
+        <div class="card">
+          <div class="card-h">
+            <b>Кроки (Wizard)</b>
+            <span style="color:var(--muted);font-size:12px">v0</span>
+          </div>
+          <div class="card-b">
+            <div class="stepper">
+              <div class="step active">
+                <div class="n">1</div>
+                <div class="t">
+                  <span>Anlass &amp; Ausweisart</span>
+                  <small>Radio/Select + залежності</small>
+                </div>
+              </div>
+              <div class="step">
+                <div class="n">2</div>
+                <div class="t">
+                  <span>Gebäudetyp</span>
+                  <small>WG / NWG / Misch</small>
+                </div>
+              </div>
+              <div class="step">
+                <div class="n">3</div>
+                <div class="t">
+                  <span>Gebäude-Stammdaten</span>
+                  <small>Baujahr, Flächen, Nutzung</small>
+                </div>
+              </div>
+              <div class="step">
+                <div class="n">4</div>
+                <div class="t">
+                  <span>Gebäudehülle</span>
+                  <small>Außenwand / Fenster</small>
+                </div>
+              </div>
+              <div class="step">
+                <div class="n">5</div>
+                <div class="t">
+                  <span>Anlagentechnik</span>
+                  <small>Heizung / Warmwasser / Lüftung</small>
+                </div>
+              </div>
+              <div class="step">
+                <div class="n">6</div>
+                <div class="t">
+                  <span>Uploads</span>
+                  <small>PDF/JPG/PNG + вимоги</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-h">
+            <b>Загальний вигляд</b>
+            <span style="color:var(--muted);font-size:12px">static</span>
+          </div>
+          <div class="card-b">
+            <img class="preview-img" src="../assets/images/overview/form-overview.jpg" alt="Загальний вигляд форми" />
+            <div class="img-cap">
+              Скрін збережений як <code>assets/images/overview/form-overview.jpg</code>.
+              Нижче просто приклад секції полів для загального layout.
+            </div>
+
+            <div style="height:14px"></div>
+
+            <form class="form" action="#" method="post">
+              <div class="field full">
+                <label>Anlass</label>
+                <div class="radio-row">
+                  <label class="chip"><input type="radio" name="anlass" /> Vermietung</label>
+                  <label class="chip"><input type="radio" name="anlass" /> Verkauf</label>
+                  <label class="chip"><input type="radio" name="anlass" /> Sonstiges</label>
+                  <label class="chip"><input type="radio" name="anlass" /> Neubau</label>
+                  <label class="chip"><input type="radio" name="anlass" /> Modernisierung</label>
+                </div>
+                <div class="hint">Залежить від Ausweisart (Neubau/Modernisierung тільки для Bedarfsausweis).</div>
+              </div>
+
+              <div class="field full">
+                <label>Ausweisart</label>
+                <div class="radio-row">
+                  <label class="chip"><input type="radio" name="ausweisart" /> Verbrauchsausweis</label>
+                  <label class="chip"><input type="radio" name="ausweisart" /> Bedarfsausweis</label>
+                  <label class="chip"><input type="radio" name="ausweisart" /> weiß ich nicht</label>
+                </div>
+              </div>
+
+              <div class="field">
+                <label>Baujahr Gebäude</label>
+                <input class="control" type="number" placeholder="z. B. 1998" />
+              </div>
+              <div class="field">
+                <label>PLZ</label>
+                <input class="control" type="text" placeholder="10115" />
+              </div>
+              <div class="field">
+                <label>Außenwand</label>
+                <select class="control">
+                  <option>Bitte wählen…</option>
+                  <option>Ziegel</option>
+                  <option>Porenbeton / Gasbeton</option>
+                  <option>Stahlbeton</option>
+                  <option>WDVS vorhanden</option>
+                </select>
+              </div>
+              <div class="field">
+                <label>Fenster</label>
+                <select class="control">
+                  <option>Bitte wählen…</option>
+                  <option>Zweifachverglasung</option>
+                  <option>Dreifachverglasung</option>
+                </select>
+              </div>
+
+              <div class="field full">
+                <label>Uploads (Beispiel)</label>
+                <input class="control" type="file" />
+                <div class="hint">
+                  У реальній формі тут буде кілька зон upload + правила (Verbrauchsausweis vs Bedarfsausweis).
+                </div>
+              </div>
+
+              <div class="actions full">
+                <button class="btn ghost" type="button">Zurück</button>
+                <button class="btn primary" type="button">Weiter</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+
