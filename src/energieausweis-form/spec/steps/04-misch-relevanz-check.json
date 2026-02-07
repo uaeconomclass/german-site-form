@@ -1,0 +1,75 @@
+{
+  "id": "misch_relevanz",
+  "title": "Relevanz-Check",
+  "meta": "2",
+  "when": { "eq": ["gebaeudetyp", "MISCH"] },
+  "intro": {
+    "title": "Mischgebäude",
+    "text": "Kurzer Check zur Einordnung. Die endgültige Bewertung erfolgt nach GEG."
+  },
+  "fields": [
+    {
+      "key": "misch_nutzung",
+      "label": "Welche Nutzung liegt im Gebäude vor?",
+      "type": "radio",
+      "required": true,
+      "options": [
+        { "value": "Wohnen", "label": "Wohnen" },
+        { "value": "Gewerbe", "label": "Gewerbe" },
+        { "value": "Kombination", "label": "Kombination aus Wohnen und Gewerbe" }
+      ]
+    },
+    {
+      "key": "misch_gewerbe_anteil",
+      "label": "Wie groß ist der gewerbliche Anteil ungefähr?",
+      "type": "radio",
+      "required": true,
+      "options": [
+        { "value": "unter 10%", "label": "unter 10%" },
+        { "value": "ca. 10–50%", "label": "ca. 10–50%" },
+        { "value": "über 50%", "label": "über 50%" }
+      ]
+    },
+    {
+      "key": "misch_tech_lueftung",
+      "label": "Gibt es eine eigene Lüftungsanlage?",
+      "type": "radio",
+      "required": true,
+      "options": [
+        { "value": "Ja", "label": "Ja" },
+        { "value": "Nein", "label": "Nein" }
+      ]
+    },
+    {
+      "key": "misch_tech_kuehlung",
+      "label": "Gibt es Kühlung oder Klimaanlagen?",
+      "type": "radio",
+      "required": true,
+      "options": [
+        { "value": "Ja", "label": "Ja" },
+        { "value": "Nein", "label": "Nein" }
+      ]
+    },
+    {
+      "key": "misch_tech_oeffnungszeiten",
+      "label": "Hat der Gewerbeteil lange Öffnungszeiten?",
+      "type": "radio",
+      "required": true,
+      "options": [
+        { "value": "Ja", "label": "Ja" },
+        { "value": "Nein", "label": "Nein" }
+      ]
+    },
+    {
+      "key": "misch_tech_glas",
+      "label": "Gibt es große Glasflächen oder Küchenabluft?",
+      "type": "radio",
+      "required": true,
+      "options": [
+        { "value": "Ja", "label": "Ja" },
+        { "value": "Nein", "label": "Nein" }
+      ]
+    }
+  ]
+}
+

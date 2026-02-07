@@ -1,0 +1,60 @@
+{
+  "id": "wg_bauteile_daemmung",
+  "title": "Bauteile & Dämmung",
+  "meta": "2",
+  "when": { "eq": ["gebaeudetyp", "WG"] },
+  "intro": { "title": "Gebäudehülle", "text": "Außenwand und Fenster. Bitte wählen Sie, was am besten passt." },
+  "fields": [
+    {
+      "key": "aussenwand_type",
+      "label": "Außenwand (Typ)",
+      "type": "imgselect",
+      "required": true,
+      "tipKey": "aussenwand_type",
+      "options": [
+        { "value": "Fachwerk", "label": "Fachwerk", "img": "../assets/images/aussenwand/fachwerk.png", "tipKey": "aussenwand_fachwerk" },
+        { "value": "Vollziegel / Naturstein", "label": "Vollziegel / Naturstein", "img": "../assets/images/aussenwand/vollziegel.png", "tipKey": "aussenwand_vollziegel" },
+        { "value": "Hohlblock / Bims", "label": "Hohlblock / Bims", "img": "../assets/images/aussenwand/hohlblockstein-bims.png", "tipKey": "aussenwand_bims" },
+        { "value": "Kalksandstein", "label": "Kalksandstein", "img": "../assets/images/aussenwand/porenbeton-gasbeton.png", "tipKey": "aussenwand_kalksandstein" },
+        { "value": "Ziegel", "label": "Ziegel", "img": "../assets/images/aussenwand/ziegel-hochlochziegel.png", "tipKey": "aussenwand_ziegel" },
+        { "value": "Porenbeton / Gasbeton", "label": "Porenbeton / Gasbeton", "img": "../assets/images/aussenwand/porenbeton-gasbeton.png", "tipKey": "aussenwand_porenbeton" },
+        { "value": "Stahlbeton", "label": "Stahlbeton", "img": "../assets/images/aussenwand/stahlbeton.png", "tipKey": "aussenwand_stahlbeton" },
+        { "value": "WDVS vorhanden", "label": "WDVS vorhanden", "img": "../assets/images/aussenwand/wdvs-querschnitt.png", "tipKey": "aussenwand_wdvs" },
+        { "value": "unbekannt", "label": "unbekannt", "img": "../assets/images/aussenwand/wdvs-querschnitt.png" }
+      ]
+    },
+    { "key": "fenster_type", "label": "Fenster (Typ)", "type": "select", "required": true, "tipKey": "fenster_type", "optionsRef": "fenster_type" },
+    { "key": "fenster_baujahr", "label": "Baujahr Fenster", "type": "number", "required": true, "min": 1800, "max": 2100, "hint": "z. B. 2005" },
+    {
+      "key": "fenster_zustand",
+      "label": "Zustand der Fenster",
+      "type": "radio",
+      "required": true,
+      "options": [
+        { "value": "Alle dicht", "label": "Alle dicht" },
+        { "value": "Teilweise undicht", "label": "Teilweise undicht" }
+      ]
+    },
+    {
+      "key": "fenster_dichtungen",
+      "label": "Dichtungen vorhanden",
+      "type": "radio",
+      "required": true,
+      "options": [
+        { "value": "Ja", "label": "Ja" },
+        { "value": "Nein", "label": "Nein" }
+      ]
+    },
+    {
+      "key": "fenster_vermassung",
+      "label": "Fenster-Vermassung (m²)",
+      "type": "text",
+      "full": true,
+      "when": { "eq": ["ausweisart", "Bedarfsausweis"] },
+      "required": { "eq": ["ausweisart", "Bedarfsausweis"] },
+      "tipKey": "fenster_vermassung",
+      "hint": "z. B. 1,833 m²"
+    }
+  ]
+}
+

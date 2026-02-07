@@ -1,0 +1,112 @@
+{
+  "anlass": [
+    { "value": "", "label": "Anlass" },
+    { "value": "Vermietung", "label": "Vermietung" },
+    { "value": "Verkauf", "label": "Verkauf" },
+    { "value": "Sonstiges", "label": "Sonstiges" },
+    { "value": "Neubau", "label": "Neubau", "when": { "eq": ["ausweisart", "Bedarfsausweis"] } },
+    { "value": "Modernisierung", "label": "Modernisierung", "when": { "eq": ["ausweisart", "Bedarfsausweis"] } }
+  ],
+  "ausweisart": [
+    { "value": "", "label": "Welchen Ausweis benötigen Sie?" },
+    { "value": "Verbrauchsausweis", "label": "Verbrauchsausweis" },
+    { "value": "Bedarfsausweis", "label": "Bedarfsausweis" },
+    { "value": "weiß ich nicht", "label": "weiß ich nicht" }
+  ],
+  "gebaeudetyp": [
+    { "value": "", "label": "Gebäudetyp" },
+    { "value": "WG", "label": "Wohngebäude (WG)" },
+    { "value": "NWG", "label": "Nichtwohngebäude (NWG)" },
+    { "value": "MISCH", "label": "Mischgebäude" }
+  ],
+  "wg_subtype": [
+    { "value": "", "label": "Bitte wählen…" },
+    { "value": "EFH", "label": "Einfamilienhaus (EFH)" },
+    { "value": "ZFH", "label": "Zweifamilienhaus (ZFH)" },
+    { "value": "MFH", "label": "Mehrfamilienhaus (MFH)" },
+    { "value": "REIHE", "label": "Reihenhaus / Doppelhaushälfte" }
+  ],
+  "fenster_type": [
+    { "value": "", "label": "Bitte wählen…" },
+    { "value": "Einfachverglasung", "label": "Einfachverglasung" },
+    { "value": "Verbundfenster", "label": "Verbundfenster" },
+    { "value": "Kastenfenster", "label": "Kastenfenster" },
+    { "value": "Isolierglas alt", "label": "Zweifachverglasung (Isolierverglasung, alt)" },
+    { "value": "Wärmeschutzglas", "label": "Zweifachwärmeschutzverglasung" },
+    { "value": "3-fach Wärmeschutzglas", "label": "Dreifachverglasung" }
+  ],
+  "ja_nein": [
+    { "value": "", "label": "Bitte wählen…" },
+    { "value": "Ja", "label": "Ja" },
+    { "value": "Nein", "label": "Nein" }
+  ],
+  "keller": [
+    { "value": "Nicht vorhanden", "label": "Nicht vorhanden" },
+    { "value": "Unbeheizt", "label": "Unbeheizt" },
+    { "value": "Beheizt", "label": "Beheizt" }
+  ],
+  "dachgeschoss": [
+    { "value": "Nicht vorhanden", "label": "Nicht vorhanden" },
+    { "value": "Unbeheizt", "label": "Unbeheizt" },
+    { "value": "Beheizt", "label": "Beheizt" }
+  ],
+  "gebaeudeanteil": [
+    { "value": "Gesamtgebäude", "label": "Gesamtgebäude" },
+    { "value": "Wohnen", "label": "Wohnen" }
+  ],
+  "nwg_nutzung": [
+    { "value": "", "label": "Bitte wählen…" },
+    { "value": "Büro / Verwaltung", "label": "Büro / Verwaltung" },
+    { "value": "Praxis / Gesundheit", "label": "Praxis / Gesundheit" },
+    { "value": "Schule / Kita", "label": "Schule / Kita" },
+    { "value": "Einzelhandel", "label": "Einzelhandel" },
+    { "value": "Gastronomie", "label": "Gastronomie" },
+    { "value": "Lager / Produktion", "label": "Lager / Produktion" },
+    { "value": "Sonstiges NWG", "label": "Sonstiges NWG" }
+  ],
+  "nwg_aussenwand_simple": [
+    { "value": "", "label": "Bitte wählen…" },
+    { "value": "Massiv", "label": "Massiv" },
+    { "value": "Stahlbeton", "label": "Stahlbeton" },
+    { "value": "Vorhangfassade", "label": "Vorhangfassade" },
+    { "value": "Glasfassade", "label": "Glasfassade" },
+    { "value": "WDVS", "label": "WDVS" },
+    { "value": "unbekannt", "label": "unbekannt" }
+  ],
+  "nwg_fensteranteil": [
+    { "value": "", "label": "Bitte wählen…" },
+    { "value": "gering (<30%)", "label": "gering (<30%)" },
+    { "value": "mittel (30–60%)", "label": "mittel (30–60%)" },
+    { "value": "hoch (>60%)", "label": "hoch (>60%)" }
+  ],
+  "lueftung": [
+    { "value": "", "label": "Bitte wählen…" },
+    { "value": "Fensterlüftung", "label": "Fensterlüftung" },
+    { "value": "Mechanische Abluft / Schachtlüftung", "label": "Mechanische Abluft / Schachtlüftung" },
+    { "value": "Zentrale ohne WRG", "label": "Zentrale ohne WRG" },
+    { "value": "Zentrale WRG", "label": "Zentrale WRG" },
+    { "value": "Dezentrale WRG", "label": "Dezentrale WRG" },
+    { "value": "Nicht bekannt", "label": "Nicht bekannt" }
+  ],
+  "nwg_lueftung": [
+    { "value": "", "label": "Bitte wählen…" },
+    { "value": "Fensterlüftung", "label": "Fensterlüftung" },
+    { "value": "Mechanische Abluft", "label": "Mechanische Abluft" },
+    { "value": "Zentrale Lüftungsanlage", "label": "Zentrale Lüftungsanlage" },
+    { "value": "Lüftung mit Wärmerückgewinnung", "label": "Lüftung mit Wärmerückgewinnung" }
+  ],
+  "nwg_kuehlung": [
+    { "value": "", "label": "Bitte wählen…" },
+    { "value": "keine", "label": "keine" },
+    { "value": "Split-Klima", "label": "Split-Klima" },
+    { "value": "zentrale Klimaanlage", "label": "zentrale Klimaanlage" },
+    { "value": "Kaltwasseranlage", "label": "Kaltwasseranlage" }
+  ],
+  "nwg_beleuchtung": [
+    { "value": "", "label": "Bitte wählen…" },
+    { "value": "Standard", "label": "Standard" },
+    { "value": "LED", "label": "LED" },
+    { "value": "unbekannt", "label": "unbekannt" }
+  ]
+}
+

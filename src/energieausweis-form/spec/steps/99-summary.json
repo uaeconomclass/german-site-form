@@ -1,0 +1,8 @@
+{
+  "id": "summary",
+  "title": "Zusammenfassung",
+  "meta": "7",
+  "intro": { "title": "Fertig", "text": "JSON-Export der eingegebenen Daten." },
+  "fields": []
+}
+

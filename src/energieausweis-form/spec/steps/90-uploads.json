@@ -1,0 +1,115 @@
+{
+  "id": "uploads",
+  "title": "Versand",
+  "meta": "6",
+  "intro": { "title": "Uploads", "text": "Bitte laden Sie die benötigten Unterlagen hoch." },
+  "fields": [
+    {
+      "key": "upload_verbrauch_heizkosten",
+      "label": "Heizkostenabrechnungen (letzte 3 Jahre)",
+      "type": "file",
+      "when": { "eq": ["ausweisart", "Verbrauchsausweis"] },
+      "required": { "eq": ["ausweisart", "Verbrauchsausweis"] },
+      "accept": ".pdf,.jpg,.jpeg,.png",
+      "multiple": true,
+      "tipKey": "upload_verbrauch_heizkosten"
+    },
+    {
+      "key": "upload_verbrauch_verbrauchsdaten",
+      "label": "Verbrauchsdaten",
+      "type": "file",
+      "when": { "eq": ["ausweisart", "Verbrauchsausweis"] },
+      "required": { "eq": ["ausweisart", "Verbrauchsausweis"] },
+      "accept": ".pdf,.jpg,.jpeg,.png",
+      "multiple": true,
+      "tipKey": "upload_verbrauch_verbrauchsdaten"
+    },
+
+    {
+      "key": "upload_heizung_photos",
+      "label": "Heizungsanlage (Fotos)",
+      "type": "file",
+      "required": true,
+      "accept": ".jpg,.jpeg,.png",
+      "multiple": true,
+      "tipKey": "uploads_heizung"
+    },
+    {
+      "key": "upload_fenster_photos",
+      "label": "Fenster/Dachfenster/Türen (Fotos)",
+      "type": "file",
+      "required": true,
+      "accept": ".jpg,.jpeg,.png",
+      "multiple": true,
+      "tipKey": "uploads_fenster"
+    },
+    {
+      "key": "upload_daemmung_photos",
+      "label": "Wärmedämmung (Fotos)",
+      "type": "file",
+      "required": true,
+      "accept": ".jpg,.jpeg,.png",
+      "multiple": true,
+      "tipKey": "uploads_daemmung"
+    },
+
+    {
+      "key": "geschosshoehen",
+      "label": "Geschosshöhen (m)",
+      "type": "number",
+      "when": { "eq": ["ausweisart", "Bedarfsausweis"] },
+      "required": { "eq": ["ausweisart", "Bedarfsausweis"] },
+      "min": 1,
+      "max": 20
+    },
+    {
+      "key": "gebaeudevolumen",
+      "label": "Gebäudevolumen (m³)",
+      "type": "number",
+      "when": { "eq": ["ausweisart", "Bedarfsausweis"] },
+      "required": { "eq": ["ausweisart", "Bedarfsausweis"] },
+      "min": 1,
+      "max": 5000000
+    },
+    {
+      "key": "aussenwandflaechen",
+      "label": "Außenwandflächen (m²)",
+      "type": "number",
+      "when": { "eq": ["ausweisart", "Bedarfsausweis"] },
+      "required": { "eq": ["ausweisart", "Bedarfsausweis"] },
+      "min": 1,
+      "max": 500000
+    },
+    {
+      "key": "fensteranteile",
+      "label": "Fensteranteile (m²)",
+      "type": "number",
+      "when": { "eq": ["ausweisart", "Bedarfsausweis"] },
+      "required": { "eq": ["ausweisart", "Bedarfsausweis"] },
+      "min": 1,
+      "max": 500000
+    },
+
+    {
+      "key": "upload_bedarf_plaene",
+      "label": "Grundrisspläne / Schnitte / Ansichten",
+      "type": "file",
+      "when": { "eq": ["ausweisart", "Bedarfsausweis"] },
+      "required": { "eq": ["ausweisart", "Bedarfsausweis"] },
+      "accept": ".pdf,.jpg,.jpeg,.png",
+      "multiple": true,
+      "tipKey": "upload_bedarf_plaene"
+    },
+    {
+      "key": "upload_nwg_anlagenplaene",
+      "label": "Anlagenpläne (Lüftung/Kälte/Heizung)",
+      "type": "file",
+      "when": { "and": [{ "eq": ["gebaeudetyp", "NWG"] }, { "eq": ["ausweisart", "Bedarfsausweis"] }] },
+      "required": false,
+      "accept": ".pdf,.jpg,.jpeg,.png",
+      "multiple": true,
+      "tipKey": "upload_nwg_anlagenplaene"
+    }
+  ]
+}
+
