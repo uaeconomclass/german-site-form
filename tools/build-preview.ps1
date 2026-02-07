@@ -59,9 +59,25 @@ $srcCss = Join-Path $srcRoot "style.css"
 $dstCss = Join-Path $previewRoot "energieausweis-form.css"
 Copy-Item -LiteralPath $srcCss -Destination $dstCss -Force
 
-# ---- Build JS bundle (inject spec + tooltips, then runtime)
-$runtimePath = Join-Path $srcRoot "runtime.js"
-$runtime = Get-Content -LiteralPath $runtimePath -Raw -Encoding UTF8
+# ---- Build JS bundle (inject spec + tooltips, then runtime modules)
+$runtimeDir = Join-Path $srcRoot "runtime"
+if (!(Test-Path -LiteralPath $runtimeDir)) {
+  throw "Missing runtime directory: $runtimeDir"
+}
+
+$runtimeFiles =
+  Get-ChildItem -LiteralPath $runtimeDir -Filter "*.js" |
+  Sort-Object @{ Expression = { $_.Name } }
+
+if ($runtimeFiles.Count -eq 0) {
+  throw "No runtime module files found in: $runtimeDir"
+}
+
+$runtime = ""
+foreach ($f in $runtimeFiles) {
+  $runtime += (Get-Content -LiteralPath $f.FullName -Raw -Encoding UTF8)
+  if (!$runtime.EndsWith("`n")) { $runtime += "`n" }
+}
 
 $formSpecJson = ($formSpec | ConvertTo-Json -Depth 100 -Compress)
 $tooltipsJson = ($tooltips | ConvertTo-Json -Depth 100 -Compress)
@@ -73,7 +89,7 @@ $bundle = @"
 /* AUTO-GENERATED FILE. Do not edit directly.
  * Source of truth:
  * - $specRoot
- * - $runtimePath
+ * - $runtimeDir
  * Rebuild:
  * - powershell -NoProfile -ExecutionPolicy Bypass -File tools/build-preview.ps1
  */
