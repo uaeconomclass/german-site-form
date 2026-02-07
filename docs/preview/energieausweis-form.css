@@ -1,15 +1,16 @@
 /* Source of truth styles for preview/energieausweis-form.css (Group 391 look). */
 
 :root{
-  --bg:#ffffff;
+  /* Screenshot-like page background (cards sit on a very light gray). */
+  --bg:#f7f9fc;
   --surface:#ffffff;
   --surface2:#fafbfc;
-  --field:#f6f7f9;
+  --field:#ffffff;
   --text:#0f172a;
   --muted:#667085;
   --border:#eaecf0;
-  --shadow: 0 10px 30px rgba(16, 24, 40, .08);
-  --radius:14px;
+  --shadow: 0 8px 22px rgba(16, 24, 40, .06);
+  --radius:12px;
 
   --green:#a3e635;
   --green2:#84cc16;
@@ -34,16 +35,20 @@ code{ font-family:var(--mono); font-size:.95em; }
 .stepsbar{
   display:flex;
   gap:10px;
-  flex-wrap:wrap;
+  flex-wrap:nowrap;
   align-items:center;
   margin:10px 0 14px;
+  overflow-x:auto;
+  padding-bottom:6px;
 }
+.stepsbar::-webkit-scrollbar{ height:6px; }
+.stepsbar::-webkit-scrollbar-thumb{ background: rgba(102,112,133,.25); border-radius:999px; }
 .step-pill{
   display:flex;
   align-items:center;
   gap:8px;
   padding:8px 10px;
-  border-radius:10px;
+  border-radius:999px;
   background:var(--surface2);
   border:1px solid var(--border);
   color:var(--muted);
@@ -51,11 +56,12 @@ code{ font-family:var(--mono); font-size:.95em; }
   line-height:1;
   cursor:pointer;
   user-select:none;
+  white-space:nowrap;
 }
 .step-pill .num{
   width:18px;
   height:18px;
-  border-radius:6px;
+  border-radius:999px;
   display:flex;
   align-items:center;
   justify-content:center;
@@ -108,6 +114,17 @@ code{ font-family:var(--mono); font-size:.95em; }
   font-size:11px;
   font-weight:800;
   color:#111827;
+  position:relative;
+}
+/* Approximate the "arrow" segments from the screenshot. */
+.r:not(:last-child){
+  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 50%, calc(100% - 10px) 100%, 0 100%, 10px 50%);
+}
+.r:first-child{
+  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 50%, calc(100% - 10px) 100%, 0 100%);
+}
+.r:last-child{
+  clip-path: none;
 }
 .r1{ background:#16a34a; color:#fff; }
 .r2{ background:#22c55e; color:#05331c; }
@@ -140,7 +157,7 @@ code{ font-family:var(--mono); font-size:.95em; }
   box-shadow: var(--shadow);
 }
 
-.main{ padding:16px; }
+.main{ padding:18px; }
 .main-head{
   display:flex;
   align-items:flex-start;
@@ -309,7 +326,7 @@ select.control{ padding-right:34px; }
   padding:0 10px;
   border-radius:12px;
   border:1px solid var(--border);
-  background:var(--field);
+  background:var(--surface2);
 }
 .checkbox-row input[type="checkbox"]{
   width:18px;
@@ -451,6 +468,7 @@ select.control{ padding-right:34px; }
 .btn.secondary:hover{ background:var(--surface2); }
 .btn.wide{ width:100%; justify-content:center; }
 .btn:disabled{ opacity:.5; cursor:not-allowed; }
+.side .btn:disabled{ opacity:1; background:#f2f4f7; color:#98a2b3; }
 
 .side-head{
   padding:14px 14px 10px;
