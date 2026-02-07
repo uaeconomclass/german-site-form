@@ -27,6 +27,14 @@
         { "key": "wohnflaeche", "label": "Wohnfläche (m²)", "type": "number", "required": true, "min": 1, "max": 20000, "tipKey": "wohnflaeche", "hint": "z. B. 120" },
         { "key": "nutzflaeche", "label": "Nutzfläche (m²)", "type": "number", "required": true, "min": 1, "max": 20000, "tipKey": "nutzflaeche", "hint": "z. B. 155" }
       ]
+    },
+    {
+      "title": "Grundprüfung",
+      "fields": [
+        { "key": "gebaeudeanteil", "label": "Gebäudeteil", "type": "radio", "required": true, "optionsRef": "gebaeudeanteil" },
+        { "key": "dachgeschoss", "label": "Dachgeschoss", "type": "radio", "required": true, "optionsRef": "dachgeschoss" },
+        { "key": "keller", "label": "Keller", "type": "radio", "required": true, "optionsRef": "keller" }
+      ]
     }
   ]
 }

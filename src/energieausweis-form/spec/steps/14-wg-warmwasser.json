@@ -6,7 +6,6 @@
   "intro": { "title": "Warmwasser", "text": "Angaben zur Warmwasserbereitung." },
   "fields": [
     { "key": "warmwasser_type", "label": "Warmwasser", "type": "select", "required": true, "optionsRef": "warmwasser", "tipKey": "warmwasser_type" },
-    { "key": "warmwasserrohre_gedaemmt", "label": "Warmwasserrohre gedämmt", "type": "radio", "required": false, "optionsRef": "ja_nein" }
+    { "key": "warmwasserrohre_gedaemmt", "label": "Warmwasserrohre gedämmt", "type": "radio", "required": false, "optionsRef": "ja_nein", "tipKey": "warmwasser_rohre_gedaemmt" }
   ]
 }
-

@@ -28,12 +28,12 @@
   ],
   "fenster_type": [
     { "value": "", "label": "Bitte wählen…" },
-    { "value": "Einfachverglasung", "label": "Einfachverglasung" },
-    { "value": "Verbundfenster", "label": "Verbundfenster" },
-    { "value": "Kastenfenster", "label": "Kastenfenster" },
-    { "value": "Isolierglas alt", "label": "Zweifachverglasung (Isolierverglasung, alt)" },
-    { "value": "Wärmeschutzglas", "label": "Zweifachwärmeschutzverglasung" },
-    { "value": "3-fach Wärmeschutzglas", "label": "Dreifachverglasung" }
+    { "value": "Einfachverglasung", "label": "Einfachverglasung", "tipKey": "fenster_einfachverglasung" },
+    { "value": "Verbundfenster", "label": "Verbundfenster", "tipKey": "fenster_verbundfenster" },
+    { "value": "Kastenfenster", "label": "Kastenfenster", "tipKey": "fenster_kastenfenster" },
+    { "value": "Isolierglas alt", "label": "Zweifachverglasung (Isolierverglasung, alt)", "tipKey": "fenster_isolierglas_alt" },
+    { "value": "Wärmeschutzglas", "label": "Zweifachwärmeschutzverglasung", "tipKey": "fenster_waermeschutzglas" },
+    { "value": "3-fach Wärmeschutzglas", "label": "Dreifachverglasung", "tipKey": "fenster_dreifach" }
   ],
   "fenster_rahmenmaterial": [
     { "value": "", "label": "Bitte wählen…" },
@@ -53,22 +53,22 @@
   ],
   "heizung_waermeerzeuger": [
     { "value": "", "label": "Bitte wählen…" },
-    { "value": "Öl", "label": "Öl" },
-    { "value": "Gas", "label": "Gas" },
-    { "value": "Fernwärme", "label": "Fernwärme" },
-    { "value": "Wärmepumpe", "label": "Wärmepumpe" },
-    { "value": "Biomasse", "label": "Biomasse" },
-    { "value": "Elektro", "label": "Elektro" },
-    { "value": "Einzelöfen", "label": "Einzelöfen" },
-    { "value": "BHKW / KWK", "label": "BHKW / KWK" },
-    { "value": "Hybridheizung", "label": "Hybridheizung" }
+    { "value": "Öl", "label": "Öl", "tipKey": "heizung_oel" },
+    { "value": "Gas", "label": "Gas", "tipKey": "heizung_gas" },
+    { "value": "Fernwärme", "label": "Fernwärme", "tipKey": "heizung_fernwaerme" },
+    { "value": "Wärmepumpe", "label": "Wärmepumpe", "tipKey": "heizung_waermepumpe" },
+    { "value": "Biomasse", "label": "Biomasse", "tipKey": "heizung_biomasse" },
+    { "value": "Elektro", "label": "Elektro", "tipKey": "heizung_elektro" },
+    { "value": "Einzelöfen", "label": "Einzelöfen", "tipKey": "heizung_einzelofen" },
+    { "value": "BHKW / KWK", "label": "BHKW / KWK", "tipKey": "heizung_bhkw" },
+    { "value": "Hybridheizung", "label": "Hybridheizung", "tipKey": "heizung_hybrid" }
   ],
   "heizung_kesseltyp": [
     { "value": "", "label": "Bitte wählen…" },
-    { "value": "Konstanttemperatur", "label": "Konstanttemperatur" },
-    { "value": "Niedertemperatur", "label": "Niedertemperatur" },
-    { "value": "Brennwert", "label": "Brennwert" },
-    { "value": "Wärmepumpe", "label": "Wärmepumpe" }
+    { "value": "Konstanttemperatur", "label": "Konstanttemperatur", "tipKey": "heizung_konstanttemperatur" },
+    { "value": "Niedertemperatur", "label": "Niedertemperatur", "tipKey": "heizung_niedertemperatur" },
+    { "value": "Brennwert", "label": "Brennwert", "tipKey": "heizung_brennwert" },
+    { "value": "Wärmepumpe", "label": "Wärmepumpe", "tipKey": "heizung_waermepumpe" }
   ],
   "heizung_waermeabgabe": [
     { "value": "", "label": "Bitte wählen…" },
@@ -79,12 +79,12 @@
   ],
   "warmwasser": [
     { "value": "", "label": "Bitte wählen…" },
-    { "value": "Zentrale Warmwasserbereitung", "label": "Zentrale Warmwasserbereitung" },
-    { "value": "Dezentrale Warmwasserbereitung", "label": "Dezentrale Warmwasserbereitung" },
-    { "value": "Elektrischer Warmwasserspeicher", "label": "Elektrischer Warmwasserspeicher" },
-    { "value": "Durchlauferhitzer", "label": "Durchlauferhitzer" },
-    { "value": "Kombiniert mit Heizung", "label": "Kombiniert mit Heizung" },
-    { "value": "Solarthermie", "label": "Solarthermie" }
+    { "value": "Zentrale Warmwasserbereitung", "label": "Zentrale Warmwasserbereitung", "tipKey": "warmwasser_zentral" },
+    { "value": "Dezentrale Warmwasserbereitung", "label": "Dezentrale Warmwasserbereitung", "tipKey": "warmwasser_dezentral" },
+    { "value": "Elektrischer Warmwasserspeicher", "label": "Elektrischer Warmwasserspeicher", "tipKey": "warmwasser_speicher" },
+    { "value": "Durchlauferhitzer", "label": "Durchlauferhitzer", "tipKey": "warmwasser_durchlauferhitzer" },
+    { "value": "Kombiniert mit Heizung", "label": "Kombiniert mit Heizung", "tipKey": "warmwasser_kombiniert" },
+    { "value": "Solarthermie", "label": "Solarthermie", "tipKey": "warmwasser_solarthermie" }
   ],
   "ja_nein": [
     { "value": "", "label": "Bitte wählen…" },

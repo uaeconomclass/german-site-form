@@ -15,8 +15,9 @@ function Read-JsonFile([string]$path) {
   return $raw | ConvertFrom-Json
 }
 
-function Write-TextUtf8NoBom([string]$path, [string]$text) {
-  $enc = New-Object System.Text.UTF8Encoding($false)
+function Write-TextUtf8Bom([string]$path, [string]$text) {
+  # BOM makes Windows tooling reliably interpret UTF-8 (umlauts) without mojibake.
+  $enc = New-Object System.Text.UTF8Encoding($true)
   [System.IO.File]::WriteAllText($path, $text, $enc)
 }
 
@@ -80,9 +81,8 @@ $runtime
 "@
 
 $dstJs = Join-Path $previewRoot "energieausweis-form.js"
-Write-TextUtf8NoBom $dstJs $bundle
+Write-TextUtf8Bom $dstJs $bundle
 
 Write-Host "Built preview assets:" -ForegroundColor Green
 Write-Host " - $dstCss"
 Write-Host " - $dstJs"
-

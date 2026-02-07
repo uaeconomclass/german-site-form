@@ -38,11 +38,10 @@
     {
       "title": "Zusatz",
       "fields": [
-        { "key": "pv_dach", "label": "Photovoltaik (PV) auf dem Dach", "type": "checkbox", "required": false },
-        { "key": "zirkulation", "label": "Zirkulation (Warmwasser)", "type": "checkbox", "required": false },
-        { "key": "heizungsrohre_gedaemmt", "label": "Heizungsrohre gedämmt", "type": "radio", "required": false, "optionsRef": "ja_nein" }
+        { "key": "pv_dach", "label": "Photovoltaik (PV) auf dem Dach", "type": "checkbox", "required": false, "tipKey": "heizung_photovoltaik", "full": true },
+        { "key": "zirkulation", "label": "Zirkulation (Warmwasser)", "type": "checkbox", "required": false, "tipKey": "heizung_zirkulation", "full": true },
+        { "key": "heizungsrohre_gedaemmt", "label": "Heizungsrohre gedämmt", "type": "radio", "required": false, "optionsRef": "ja_nein", "tipKey": "heizung_rohre_gedaemmt" }
       ]
     }
   ]
 }
-

@@ -66,10 +66,10 @@ function evalCond(cond, state) {
 function smartSuggestForWG(baujahr) {
   const y = Number(baujahr);
   if (!Number.isFinite(y)) return null;
-  if (y <= 1978) return { aussenwand_type: "Vollziegel / Naturstein", fenster_type: "Einfachverglasung", heizung_type: "Konstanttemperaturkessel" };
-  if (y <= 1994) return { aussenwand_type: "Ziegel", fenster_type: "Zweifachverglasung (alt)", heizung_type: "Niedertemperaturkessel" };
-  if (y <= 2008) return { aussenwand_type: "WDVS vorhanden", fenster_type: "Zweifach Wärmeschutz", heizung_type: "Brennwertkessel" };
-  return { aussenwand_type: "WDVS vorhanden", fenster_type: "Dreifachverglasung", heizung_type: "Wärmepumpe" };
+  if (y <= 1978) return { aussenwand_type: "Vollziegel / Naturstein", fenster_type: "Einfachverglasung", heizung_kesseltyp: "Konstanttemperatur" };
+  if (y <= 1994) return { aussenwand_type: "Ziegel", fenster_type: "Isolierglas alt", heizung_kesseltyp: "Niedertemperatur" };
+  if (y <= 2008) return { aussenwand_type: "WDVS vorhanden", fenster_type: "Wärmeschutzglas", heizung_kesseltyp: "Brennwert" };
+  return { aussenwand_type: "WDVS vorhanden", fenster_type: "3-fach Wärmeschutzglas", heizung_kesseltyp: "Wärmepumpe" };
 }
 
 const AFTER_CHANGE = {
@@ -163,6 +163,19 @@ function optionsForField(field) {
   return raw.filter((opt) => !opt.when || evalCond(opt.when, state));
 }
 
+function selectedOptionFor(field, value) {
+  const opts = optionsForField(field);
+  const opt = opts.find((o) => String(o.value) === String(value));
+  return { opt, opts };
+}
+
+function renderSelectedOptionTip(field, value) {
+  const { opt } = selectedOptionFor(field, value);
+  const key = opt && opt.tipKey;
+  if (!key || !TIPS[key]) return null;
+  return el("div", { class: "optiontip" }, String(TIPS[key]));
+}
+
 function setTipOpen(tipEl, open) {
   tipEl.setAttribute("data-open", open ? "1" : "0");
 }
@@ -217,7 +230,15 @@ function renderStepper() {
 function runPlausibilityWarnings() {
   const warnings = [];
   const y = Number(state.baujahr);
-  if (Number.isFinite(y) && y < 1960 && state.heizung_type === "Wärmepumpe") warnings.push("Baujahr < 1960 + Wärmepumpe: bitte prüfen (ggf. saniert).");
+  // Spec examples:
+  // - alte Fenster + Neubau -> prüfen
+  // - Baujahr < 1960 + Fußbodenheizung -> prüfen
+  // - Wärmepumpe + Radiatoren -> Hinweis
+  if (Number.isFinite(y) && y >= 2000) {
+    if (state.fenster_type === "Einfachverglasung" || state.fenster_type === "Kastenfenster") warnings.push("Alte Fenster + neueres Baujahr: bitte prüfen.");
+  }
+  if (Number.isFinite(y) && y < 1960 && state.heizung_waermeabgabe === "Fußbodenheizung") warnings.push("Baujahr < 1960 + Fußbodenheizung: bitte prüfen.");
+  if (state.heizung_kesseltyp === "Wärmepumpe" && state.heizung_waermeabgabe === "Radiatoren") warnings.push("Wärmepumpe + Radiatoren: Hinweis (bitte prüfen).");
   if (warnings.length) {
     dom.warnBox.style.display = "";
     dom.warnText.textContent = warnings.join(" ");
@@ -251,91 +272,99 @@ function renderFields(step) {
 
   blocks.forEach((block) => {
     const fields = (block.fields || []).filter((f) => fieldWhen(f));
-    if (block.title) {
-      dom.form.appendChild(el("div", { class: "block-title" }, block.title));
-    }
+    if (block.title) dom.form.appendChild(el("div", { class: "block-title" }, block.title));
 
     fields.forEach((field) => {
       const key = field.key;
       const val = state[key];
 
-      const wrap = el("div", { class: "field" + (field.full ? " full" : "") }, renderLabel(field));
+      const wrap = el("div", { class: "field" + (field.full ? " full" : "") });
       const err = el("div", { class: "errtxt", id: "err_" + key });
 
-      let control;
+      let control = null;
+      let optionTip = null;
+      let wantsDefaultLabel = true;
+
       if (field.type === "select") {
-      const opts = optionsForField(field);
-      control = el("select", { class: "control", name: key });
-      opts.forEach((opt) => {
-        const o = el("option", { value: opt.value }, opt.label);
-        if (String(val) === String(opt.value)) o.selected = true;
-        control.appendChild(o);
-      });
-      control.addEventListener("change", () => setValue(key, control.value, step));
+        const opts = optionsForField(field);
+        control = el("select", { class: "control", name: key });
+        opts.forEach((opt) => {
+          const o = el("option", { value: opt.value }, opt.label);
+          if (String(val) === String(opt.value)) o.selected = true;
+          control.appendChild(o);
+        });
+        control.addEventListener("change", () => setValue(key, control.value, step));
+        optionTip = renderSelectedOptionTip(field, val);
       } else if (field.type === "number" || field.type === "text") {
-      control = el("input", { class: "control", name: key, type: field.type === "number" ? "number" : "text", value: val ?? "", placeholder: field.hint || "" });
-      if (field.min != null) control.setAttribute("min", String(field.min));
-      if (field.max != null) control.setAttribute("max", String(field.max));
-      control.addEventListener("input", () => setValue(key, control.value, step));
+        control = el("input", { class: "control", name: key, type: field.type === "number" ? "number" : "text", value: val ?? "", placeholder: field.hint || "" });
+        if (field.min != null) control.setAttribute("min", String(field.min));
+        if (field.max != null) control.setAttribute("max", String(field.max));
+        control.addEventListener("input", () => setValue(key, control.value, step));
       } else if (field.type === "counter") {
-      const min = field.min != null ? Number(field.min) : 0;
-      const max = field.max != null ? Number(field.max) : 999999;
-      const cur = Number(val || 0);
-      const input = el("input", { class: "control", name: key, type: "number", value: val ?? "", placeholder: field.hint || "" });
-      if (field.min != null) input.setAttribute("min", String(field.min));
-      if (field.max != null) input.setAttribute("max", String(field.max));
-      input.addEventListener("input", () => setValue(key, input.value, step));
+        const min = field.min != null ? Number(field.min) : 0;
+        const max = field.max != null ? Number(field.max) : 999999;
+        const cur = Number(val || 0);
+        const input = el("input", { class: "control", name: key, type: "number", value: val ?? "", placeholder: field.hint || "" });
+        if (field.min != null) input.setAttribute("min", String(field.min));
+        if (field.max != null) input.setAttribute("max", String(field.max));
+        input.addEventListener("input", () => setValue(key, input.value, step));
 
-      const dec = el("button", { type: "button", class: "pm", onclick: () => setValue(key, String(clamp((Number(state[key] || cur) || 0) - 1, min, max)), step) }, "−");
-      const inc = el("button", { type: "button", class: "pm", onclick: () => setValue(key, String(clamp((Number(state[key] || cur) || 0) + 1, min, max)), step) }, "+");
-      control = el("div", { class: "counter" }, dec, input, inc);
+        const dec = el("button", { type: "button", class: "pm", onclick: () => setValue(key, String(clamp((Number(state[key] || cur) || 0) - 1, min, max)), step) }, "-");
+        const inc = el("button", { type: "button", class: "pm", onclick: () => setValue(key, String(clamp((Number(state[key] || cur) || 0) + 1, min, max)), step) }, "+");
+        control = el("div", { class: "counter" }, dec, input, inc);
       } else if (field.type === "radio") {
-      const opts = optionsForField(field);
-      control = el("div", { class: "radio-row", role: "group" });
-      opts.forEach((opt) => {
-        const id = key + "_" + opt.value;
-        const input = el("input", { type: "radio", name: key, id, value: opt.value });
-        if (val === opt.value) input.checked = true;
-        input.addEventListener("change", () => setValue(key, opt.value, step));
-        control.appendChild(el("label", { class: "chip", for: id }, input, el("span", null, opt.label)));
-      });
+        const opts = optionsForField(field);
+        control = el("div", { class: "radio-row", role: "group" });
+        opts.forEach((opt) => {
+          const id = key + "_" + opt.value;
+          const input = el("input", { type: "radio", name: key, id, value: opt.value });
+          if (val === opt.value) input.checked = true;
+          input.addEventListener("change", () => setValue(key, opt.value, step));
+          control.appendChild(el("label", { class: "chip", for: id }, input, el("span", null, opt.label)));
+        });
+        optionTip = renderSelectedOptionTip(field, val);
       } else if (field.type === "imgselect") {
-      control = el("div", { class: "img-choices" });
-      const opts = optionsForField(field);
-      opts.forEach((opt) => {
-        const box = el(
-          "div",
-          { class: "img-choice" + (val === opt.value ? " sel" : ""), onclick: () => setValue(key, opt.value, step) },
-          el("img", { src: opt.img, alt: opt.label }),
-          el("div", { class: "cap" }, opt.label)
-        );
-        control.appendChild(box);
-      });
-  } else if (field.type === "file") {
-      control = el("div", { class: "upload" }, el("div", { class: "row" }, el("b", null, "Upload"), el("span", null, (field.accept || "").replaceAll(",", ", "))));
-      const inp = el("input", { type: "file", name: key, accept: field.accept || "", ...(field.multiple ? { multiple: true } : {}) });
-      const list = el("div", { class: "filelist", id: "file_" + key });
-      const saved = state.uploads[key] || [];
-      if (saved.length) list.textContent = "Ausgewählt: " + saved.join(", ");
-      inp.addEventListener("change", () => {
-        const names = Array.from(inp.files || []).map((f) => f.name);
-        state.uploads[key] = names;
-        list.textContent = names.length ? "Ausgewählt: " + names.join(", ") : "";
-      });
-      control.appendChild(inp);
-      control.appendChild(list);
-    } else if (field.type === "checkbox") {
-      const id = "cb_" + key;
-      const input = el("input", { type: "checkbox", id, name: key });
-      input.checked = Boolean(val);
-      input.addEventListener("change", () => setValue(key, input.checked, step));
-      control = el("div", { class: "checkbox-row" }, input, el("label", { for: id, class: "cb-label" }, field.label));
-      // Replace normal label since we render it inline for checkbox
-      wrap.innerHTML = "";
-      wrap.appendChild(control);
-    }
+        control = el("div", { class: "img-choices" });
+        const opts = optionsForField(field);
+        opts.forEach((opt) => {
+          const box = el(
+            "div",
+            { class: "img-choice" + (val === opt.value ? " sel" : ""), onclick: () => setValue(key, opt.value, step) },
+            el("img", { src: opt.img, alt: opt.label }),
+            el("div", { class: "cap" }, opt.label)
+          );
+          control.appendChild(box);
+        });
+        optionTip = renderSelectedOptionTip(field, val);
+      } else if (field.type === "file") {
+        control = el("div", { class: "upload" }, el("div", { class: "row" }, el("b", null, "Upload"), el("span", null, (field.accept || "").replaceAll(",", ", "))));
+        const inp = el("input", { type: "file", name: key, accept: field.accept || "", ...(field.multiple ? { multiple: true } : {}) });
+        const list = el("div", { class: "filelist", id: "file_" + key });
+        const saved = state.uploads[key] || [];
+        if (saved.length) list.textContent = "Ausgewählt: " + saved.join(", ");
+        inp.addEventListener("change", () => {
+          const names = Array.from(inp.files || []).map((f) => f.name);
+          state.uploads[key] = names;
+          list.textContent = names.length ? "Ausgewählt: " + names.join(", ") : "";
+        });
+        control.appendChild(inp);
+        control.appendChild(list);
+      } else if (field.type === "checkbox") {
+        wantsDefaultLabel = false;
+        const id = "cb_" + key;
+        const input = el("input", { type: "checkbox", id, name: key });
+        input.checked = Boolean(val);
+        input.addEventListener("change", () => setValue(key, input.checked, step));
+        control = el("div", { class: "checkbox-row" }, input, el("label", { for: id, class: "cb-label" }, field.label));
+        if (field.tipKey && TIPS[field.tipKey]) optionTip = el("div", { class: "optiontip" }, String(TIPS[field.tipKey]));
+      }
 
+      if (wantsDefaultLabel) wrap.appendChild(renderLabel(field));
       if (control) wrap.appendChild(control);
+      if (optionTip) wrap.appendChild(optionTip);
+      if (key === "fenster_type" && (state.fenster_type === "Einfachverglasung" || state.fenster_type === "Kastenfenster")) {
+        wrap.appendChild(el("div", { class: "helptext" }, "Bei Austausch gelten GEG-Mindestwerte."));
+      }
       if (field.help) wrap.appendChild(el("div", { class: "helptext" }, field.help));
       wrap.appendChild(err);
       dom.form.appendChild(wrap);

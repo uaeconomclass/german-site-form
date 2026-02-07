@@ -11,14 +11,13 @@
       "type": "imgselect",
       "required": true,
       "options": [
-        { "value": "Fensterlüftung", "label": "Fensterlüftung", "img": "../assets/images/lueftung/fensterlueftung.png" },
-        { "value": "Mechanische Abluft / Schachtlüftung", "label": "Mechanische Abluft / Schachtlüftung", "img": "../assets/images/lueftung/mechanische-abluft.png" },
-        { "value": "Zentrale ohne WRG", "label": "Zentrale ohne WRG", "img": "../assets/images/lueftung/zentrale-lueftungsanlage.png" },
-        { "value": "Zentrale WRG", "label": "Zentrale WRG", "img": "../assets/images/lueftung/zentrale-lueftungsanlage.png" },
-        { "value": "Dezentrale WRG", "label": "Dezentrale WRG", "img": "../assets/images/lueftung/dezentrale-lueftungsanlage.png" },
+        { "value": "Fensterlüftung", "label": "Fensterlüftung", "img": "../assets/images/lueftung/fensterlueftung.png", "tipKey": "lueftung_fenster" },
+        { "value": "Mechanische Abluft / Schachtlüftung", "label": "Mechanische Abluft / Schachtlüftung", "img": "../assets/images/lueftung/mechanische-abluft.png", "tipKey": "lueftung_abluft" },
+        { "value": "Zentrale ohne WRG", "label": "Zentrale ohne WRG", "img": "../assets/images/lueftung/zentrale-lueftungsanlage.png", "tipKey": "lueftung_zentral_ohne_wrg" },
+        { "value": "Zentrale WRG", "label": "Zentrale WRG", "img": "../assets/images/lueftung/zentrale-lueftungsanlage.png", "tipKey": "lueftung_zentral_wrg" },
+        { "value": "Dezentrale WRG", "label": "Dezentrale WRG", "img": "../assets/images/lueftung/dezentrale-lueftungsanlage.png", "tipKey": "lueftung_dezentral_wrg" },
         { "value": "Nicht bekannt", "label": "Nicht bekannt", "img": "../assets/images/lueftung/fensterlueftung.png" }
       ]
     }
   ]
 }
-

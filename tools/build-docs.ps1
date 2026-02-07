@@ -42,9 +42,8 @@ $index = @"
 </html>
 "@
 
-$enc = New-Object System.Text.UTF8Encoding($false)
+$enc = New-Object System.Text.UTF8Encoding($true)
 [System.IO.File]::WriteAllText((Join-Path $docsRoot "index.html"), $index, $enc)
 
 Write-Host "Built docs site:" -ForegroundColor Green
 Write-Host " - $docsRoot"
-
