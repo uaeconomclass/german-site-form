@@ -49,13 +49,18 @@
     {
       "key": "fenster_vermassung",
       "label": "Fenster-Vermassung (m²)",
-      "type": "text",
+      "type": "repeater",
       "full": true,
       "when": { "eq": ["ausweisart", "Bedarfsausweis"] },
       "required": { "eq": ["ausweisart", "Bedarfsausweis"] },
       "tipKey": "fenster_vermassung",
-      "hint": "z. B. 1,833 m²"
+      "hint": "z. B. Küche, 1.23 × 1.49",
+      "itemLabel": "Fenster",
+      "fields": [
+        { "key": "raum", "label": "Raum / Bezeichnung", "type": "text", "required": false, "hint": "z. B. Küche" },
+        { "key": "hoehe_m", "label": "Höhe (m)", "type": "number", "required": true, "min": 0.1, "max": 10, "hint": "z. B. 1.23" },
+        { "key": "breite_m", "label": "Breite (m)", "type": "number", "required": true, "min": 0.1, "max": 10, "hint": "z. B. 1.49" }
+      ]
     }
   ]
 }
-

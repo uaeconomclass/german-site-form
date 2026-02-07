@@ -81,6 +81,54 @@ const AFTER_CHANGE = {
       if (isEmpty(state[k])) state[k] = v;
     }
   },
+  smart_nwg: (state, changedKey) => {
+    if (changedKey !== "baujahr" && changedKey !== "nwg_nutzung" && changedKey !== "ausweisart" && changedKey !== "gebaeudetyp") return;
+    if (state.gebaeudetyp !== "NWG") return;
+
+    const y = Number(state.baujahr);
+    const nutzung = String(state.nwg_nutzung || "");
+
+    // --- by Baujahr
+    if (Number.isFinite(y)) {
+      if (y <= 1978) {
+        if (isEmpty(state.nwg_aussenwand_simple)) state.nwg_aussenwand_simple = "Massiv";
+        if (isEmpty(state.nwg_fensteranteil)) state.nwg_fensteranteil = "gering (<30%)";
+        if (isEmpty(state.nwg_lueftung)) state.nwg_lueftung = "Fensterlüftung";
+        if (isEmpty(state.heizung_kesseltyp)) state.heizung_kesseltyp = "Konstanttemperatur";
+      } else if (y <= 1994) {
+        if (isEmpty(state.nwg_aussenwand_simple)) state.nwg_aussenwand_simple = "Vorhangfassade";
+        if (isEmpty(state.nwg_fensteranteil)) state.nwg_fensteranteil = "mittel (30–60%)";
+        if (isEmpty(state.nwg_lueftung)) state.nwg_lueftung = "Fensterlüftung";
+        if (isEmpty(state.heizung_kesseltyp)) state.heizung_kesseltyp = "Niedertemperatur";
+      } else if (y <= 2008) {
+        if (isEmpty(state.nwg_aussenwand_simple)) state.nwg_aussenwand_simple = "WDVS";
+        if (isEmpty(state.nwg_fensteranteil)) state.nwg_fensteranteil = "mittel (30–60%)";
+        if (isEmpty(state.nwg_lueftung)) state.nwg_lueftung = "Zentrale Lüftungsanlage";
+        if (isEmpty(state.heizung_kesseltyp)) state.heizung_kesseltyp = "Brennwert";
+      } else {
+        if (isEmpty(state.nwg_aussenwand_simple)) state.nwg_aussenwand_simple = "WDVS";
+        if (isEmpty(state.nwg_fensteranteil)) state.nwg_fensteranteil = "mittel (30–60%)";
+        if (isEmpty(state.nwg_lueftung)) state.nwg_lueftung = "Lüftung mit Wärmerückgewinnung";
+        if (isEmpty(state.heizung_kesseltyp)) state.heizung_kesseltyp = "Brennwert";
+      }
+    }
+
+    // --- by Nutzung (overrides only if empty, to avoid fighting user)
+    if (nutzung === "Büro / Verwaltung" || nutzung === "Schule / Kita") {
+      if (isEmpty(state.nwg_aussenwand_simple)) state.nwg_aussenwand_simple = "Vorhangfassade";
+      if (isEmpty(state.nwg_fensteranteil)) state.nwg_fensteranteil = "hoch (>60%)";
+      if (isEmpty(state.nwg_lueftung)) state.nwg_lueftung = "Zentrale Lüftungsanlage";
+    } else if (nutzung === "Lager / Produktion") {
+      if (isEmpty(state.nwg_aussenwand_simple)) state.nwg_aussenwand_simple = "Stahlbeton";
+      if (isEmpty(state.nwg_fensteranteil)) state.nwg_fensteranteil = "gering (<30%)";
+    } else if (nutzung === "Einzelhandel") {
+      if (isEmpty(state.nwg_lueftung)) state.nwg_lueftung = "Zentrale Lüftungsanlage";
+      if (isEmpty(state.nwg_kuehlung)) state.nwg_kuehlung = "Split-Klima";
+    } else if (nutzung === "Gastronomie") {
+      if (isEmpty(state.nwg_lueftung)) state.nwg_lueftung = "Mechanische Abluft";
+      if (isEmpty(state.nwg_kuehlung)) state.nwg_kuehlung = "Split-Klima";
+    }
+  },
 };
 
 function collectFieldsFromStep(step) {
@@ -100,7 +148,7 @@ for (const st of (FORM_SPEC.steps || [])) {
   for (const f of collectFieldsFromStep(st)) {
     if (!f || !f.key) continue;
     if (f.type === "file") continue; // files are tracked in state.uploads
-    if (!(f.key in DEFAULTS)) DEFAULTS[f.key] = "";
+    if (!(f.key in DEFAULTS)) DEFAULTS[f.key] = f.type === "repeater" ? [] : "";
   }
 }
 
@@ -239,6 +287,13 @@ function runPlausibilityWarnings() {
   }
   if (Number.isFinite(y) && y < 1960 && state.heizung_waermeabgabe === "Fußbodenheizung") warnings.push("Baujahr < 1960 + Fußbodenheizung: bitte prüfen.");
   if (state.heizung_kesseltyp === "Wärmepumpe" && state.heizung_waermeabgabe === "Radiatoren") warnings.push("Wärmepumpe + Radiatoren: Hinweis (bitte prüfen).");
+
+  // NWG SMART warnings (from spec examples)
+  if (state.gebaeudetyp === "NWG") {
+    if (state.nwg_fensteranteil === "hoch (>60%)") warnings.push("Hohe Glasflächen beeinflussen den Energiebedarf maßgeblich.");
+    if (state.nwg_lueftung === "Zentrale Lüftungsanlage" || state.nwg_lueftung === "Lüftung mit Wärmerückgewinnung") warnings.push("Angaben zur Luftmenge können für den Bedarfsausweis erforderlich sein.");
+    if (state.nwg_aussenwand_simple === "Vorhangfassade") warnings.push("Vorhangfassaden dieser Bauzeit besitzen häufig einen erhöhten Energiebedarf.");
+  }
   if (warnings.length) {
     dom.warnBox.style.display = "";
     dom.warnText.textContent = warnings.join(" ");
@@ -349,6 +404,79 @@ function renderFields(step) {
         });
         control.appendChild(inp);
         control.appendChild(list);
+      } else if (field.type === "repeater") {
+        const items = Array.isArray(val) ? val : [];
+        const itemLabel = field.itemLabel || "Eintrag";
+
+        const list = el("div", { class: "rep-list" });
+        const renderRow = (idx) => {
+          const it = items[idx] || {};
+          const row = el("div", { class: "rep-row" });
+          const head = el(
+            "div",
+            { class: "rep-head" },
+            el("b", null, itemLabel + " " + String(idx + 1)),
+            el("button", { type: "button", class: "rep-remove", onclick: () => {
+              items.splice(idx, 1);
+              setValue(key, items, step);
+            } }, "Entfernen")
+          );
+          row.appendChild(head);
+
+          const grid = el("div", { class: "rep-grid" });
+          (field.fields || []).forEach((sf) => {
+            const sfKey = sf.key;
+            const sfVal = it[sfKey] ?? "";
+            const cell = el("div", { class: "rep-cell" });
+            cell.appendChild(renderLabel(sf));
+
+            const inp = el("input", {
+              class: "control",
+              type: sf.type === "number" ? "number" : "text",
+              value: sfVal,
+              placeholder: sf.hint || ""
+            });
+            if (sf.min != null) inp.setAttribute("min", String(sf.min));
+            if (sf.max != null) inp.setAttribute("max", String(sf.max));
+            inp.addEventListener("input", () => {
+              const next = { ...(items[idx] || {}) };
+              next[sfKey] = inp.value;
+              items[idx] = next;
+              setValue(key, items, step);
+            });
+            cell.appendChild(inp);
+            grid.appendChild(cell);
+          });
+
+          // Derived preview: area + total
+          const h = Number(it.hoehe_m);
+          const w = Number(it.breite_m);
+          if (Number.isFinite(h) && Number.isFinite(w)) {
+            const a = h * w;
+            row.appendChild(el("div", { class: "rep-math" }, "Fläche: ", el("b", null, a.toFixed(3)), " m²"));
+          }
+
+          row.appendChild(grid);
+          return row;
+        };
+
+        items.forEach((_, idx) => list.appendChild(renderRow(idx)));
+
+        const addBtn = el("button", { type: "button", class: "btn secondary rep-add", onclick: () => {
+          items.push({});
+          setValue(key, items, step);
+        } }, "+ " + itemLabel + " hinzufügen");
+
+        // Total area
+        let total = 0;
+        for (const it of items) {
+          const h = Number(it && it.hoehe_m);
+          const w = Number(it && it.breite_m);
+          if (Number.isFinite(h) && Number.isFinite(w)) total += h * w;
+        }
+        const totalEl = el("div", { class: "rep-total" }, "Summe: ", el("b", null, total.toFixed(3)), " m²");
+
+        control = el("div", { class: "repeater" }, list, addBtn, totalEl);
       } else if (field.type === "checkbox") {
         wantsDefaultLabel = false;
         const id = "cb_" + key;
@@ -397,6 +525,28 @@ function validateStep(idx, { silent } = {}) {
     }
     if (req && f.type === "checkbox" && v !== true) {
       errors[key] = "Pflichtfeld";
+      continue;
+    }
+    if (f.type === "repeater") {
+      const items = Array.isArray(v) ? v : [];
+      if (req && items.length === 0) {
+        errors[key] = "Mindestens ein Eintrag erforderlich";
+        continue;
+      }
+      // Basic per-row validation: required subfields must be filled.
+      for (const it of items) {
+        for (const sf of (f.fields || [])) {
+          const sfReq = sf.required === true;
+          const sfVal = it && it[sf.key];
+          if (sfReq && isEmpty(sfVal)) errors[key] = "Bitte alle Pflichtfelder in der Liste ausfüllen";
+          if (sf.type === "number" && !isEmpty(sfVal)) {
+            const n = Number(sfVal);
+            if (!Number.isFinite(n)) errors[key] = "Ungültige Zahl in der Liste";
+            if (sf.min != null && n < sf.min) errors[key] = "Wert in der Liste ist zu klein";
+            if (sf.max != null && n > sf.max) errors[key] = "Wert in der Liste ist zu groß";
+          }
+        }
+      }
       continue;
     }
     if (!isEmpty(v) && f.pattern) {
