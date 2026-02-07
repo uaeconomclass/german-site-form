@@ -223,7 +223,7 @@ function renderFields(step) {
       const key = field.key;
       const val = state[key];
 
-      const wrap = el("div", { class: "field" + (field.full ? " full" : "") });
+      const wrap = el("div", { class: "field" + (field.full ? " full" : ""), "data-key": key });
       const err = el("div", { class: "errtxt", id: "err_" + key });
 
       let control = null;
@@ -461,6 +461,26 @@ function validateStep(idx, { silent } = {}) {
       const key = f.key;
       const errEl = document.getElementById("err_" + key);
       if (!errEl) continue;
+
+      // Mark the associated control(s) as invalid for styling + accessibility.
+      // We keep it DOM-driven (query within the rendered field wrapper) so it works across all field types.
+      const wrap = dom.form.querySelector('.field[data-key="' + CSS.escape(key) + '"]');
+      if (wrap) {
+        const invalid = Boolean(errors[key]);
+        const setInvalid = (el) => {
+          if (!el) return;
+          if (invalid) el.setAttribute("aria-invalid", "true");
+          else el.removeAttribute("aria-invalid");
+        };
+
+        // Text/number/select input(s)
+        wrap.querySelectorAll(".control").forEach(setInvalid);
+        // Radio chip groups
+        setInvalid(wrap.querySelector(".radio-row"));
+        // Checkbox row container
+        setInvalid(wrap.querySelector(".checkbox-row"));
+      }
+
       if (errors[key]) {
         errEl.textContent = errors[key];
         errEl.classList.add("show");

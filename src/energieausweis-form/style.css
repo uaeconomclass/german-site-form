@@ -351,6 +351,15 @@ select.control{ padding-right:34px; }
   line-height:1.35;
   margin-top:2px;
 }
+.errtxt{
+  display:none;
+  margin-top:6px;
+  color: rgb(220, 38, 38);
+  font-size:12px;
+  font-weight:700;
+  line-height:1.25;
+}
+.errtxt.show{ display:block; }
 .optiontip{
   border:1px solid var(--border);
   background:#fff;
@@ -459,6 +468,14 @@ select.control{ padding-right:34px; }
   flex-wrap:wrap;
   min-height:44px;
   align-items:center;
+}
+.radio-row[aria-invalid="true"] .chip{
+  border-color: rgba(239,68,68,.55);
+  box-shadow: 0 0 0 4px rgba(239,68,68,.08);
+}
+.checkbox-row[aria-invalid="true"]{
+  border-color: rgba(239,68,68,.55);
+  box-shadow: 0 0 0 4px rgba(239,68,68,.08);
 }
 .chip{
   display:inline-flex;
