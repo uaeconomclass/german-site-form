@@ -1,11 +1,11 @@
 {
   "id": "misch_relevanz",
-  "title": "Relevanz-Check",
-  "meta": "2",
+  "title": "Mischgebäude: Relevanz-Check",
+  "meta": "C1",
   "when": { "eq": ["gebaeudetyp", "MISCH"] },
   "intro": {
-    "title": "Mischgebäude",
-    "text": "Kurzer Check zur Einordnung. Die endgültige Bewertung erfolgt nach GEG."
+    "title": "Einordnung",
+    "text": "Die Einordnung dient der ersten Orientierung. Die endgültige Bewertung erfolgt nach GEG."
   },
   "fields": [
     {
@@ -35,40 +35,28 @@
       "label": "Gibt es eine eigene Lüftungsanlage?",
       "type": "radio",
       "required": true,
-      "options": [
-        { "value": "Ja", "label": "Ja" },
-        { "value": "Nein", "label": "Nein" }
-      ]
+      "optionsRef": "ja_nein"
     },
     {
       "key": "misch_tech_kuehlung",
       "label": "Gibt es Kühlung oder Klimaanlagen?",
       "type": "radio",
       "required": true,
-      "options": [
-        { "value": "Ja", "label": "Ja" },
-        { "value": "Nein", "label": "Nein" }
-      ]
+      "optionsRef": "ja_nein"
     },
     {
       "key": "misch_tech_oeffnungszeiten",
       "label": "Hat der Gewerbeteil lange Öffnungszeiten?",
       "type": "radio",
       "required": true,
-      "options": [
-        { "value": "Ja", "label": "Ja" },
-        { "value": "Nein", "label": "Nein" }
-      ]
+      "optionsRef": "ja_nein"
     },
     {
       "key": "misch_tech_glas",
       "label": "Gibt es große Glasflächen oder Küchenabluft?",
       "type": "radio",
       "required": true,
-      "options": [
-        { "value": "Ja", "label": "Ja" },
-        { "value": "Nein", "label": "Nein" }
-      ]
+      "optionsRef": "ja_nein"
     }
   ]
 }

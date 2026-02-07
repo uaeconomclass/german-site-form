@@ -1,0 +1,24 @@
+{
+  "id": "wg_lueftung",
+  "title": "WG: Lüftung",
+  "meta": "A6",
+  "when": { "and": [{ "eq": ["gebaeudetyp", "WG"] }, { "eq": ["ausweisart", "Bedarfsausweis"] }] },
+  "intro": { "title": "Lüftung", "text": "Nur für Bedarfsausweis." },
+  "fields": [
+    {
+      "key": "lueftung_type",
+      "label": "Lüftung",
+      "type": "imgselect",
+      "required": true,
+      "options": [
+        { "value": "Fensterlüftung", "label": "Fensterlüftung", "img": "../assets/images/lueftung/fensterlueftung.png" },
+        { "value": "Mechanische Abluft / Schachtlüftung", "label": "Mechanische Abluft / Schachtlüftung", "img": "../assets/images/lueftung/mechanische-abluft.png" },
+        { "value": "Zentrale ohne WRG", "label": "Zentrale ohne WRG", "img": "../assets/images/lueftung/zentrale-lueftungsanlage.png" },
+        { "value": "Zentrale WRG", "label": "Zentrale WRG", "img": "../assets/images/lueftung/zentrale-lueftungsanlage.png" },
+        { "value": "Dezentrale WRG", "label": "Dezentrale WRG", "img": "../assets/images/lueftung/dezentrale-lueftungsanlage.png" },
+        { "value": "Nicht bekannt", "label": "Nicht bekannt", "img": "../assets/images/lueftung/fensterlueftung.png" }
+      ]
+    }
+  ]
+}
+

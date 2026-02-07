@@ -31,7 +31,7 @@ function clamp(n, a, b) {
 }
 
 function isEmpty(v) {
-  return v == null || v === "" || (Array.isArray(v) && v.length === 0);
+  return v == null || v === "" || v === false || (Array.isArray(v) && v.length === 0);
 }
 
 function deepClone(o) {
@@ -311,7 +311,7 @@ function renderFields(step) {
         );
         control.appendChild(box);
       });
-      } else if (field.type === "file") {
+  } else if (field.type === "file") {
       control = el("div", { class: "upload" }, el("div", { class: "row" }, el("b", null, "Upload"), el("span", null, (field.accept || "").replaceAll(",", ", "))));
       const inp = el("input", { type: "file", name: key, accept: field.accept || "", ...(field.multiple ? { multiple: true } : {}) });
       const list = el("div", { class: "filelist", id: "file_" + key });
@@ -324,7 +324,16 @@ function renderFields(step) {
       });
       control.appendChild(inp);
       control.appendChild(list);
-      }
+    } else if (field.type === "checkbox") {
+      const id = "cb_" + key;
+      const input = el("input", { type: "checkbox", id, name: key });
+      input.checked = Boolean(val);
+      input.addEventListener("change", () => setValue(key, input.checked, step));
+      control = el("div", { class: "checkbox-row" }, input, el("label", { for: id, class: "cb-label" }, field.label));
+      // Replace normal label since we render it inline for checkbox
+      wrap.innerHTML = "";
+      wrap.appendChild(control);
+    }
 
       if (control) wrap.appendChild(control);
       if (field.help) wrap.appendChild(el("div", { class: "helptext" }, field.help));
@@ -354,6 +363,10 @@ function validateStep(idx, { silent } = {}) {
     const v = f.type === "file" ? state.uploads[key] || [] : state[key];
 
     if (req && isEmpty(v)) {
+      errors[key] = "Pflichtfeld";
+      continue;
+    }
+    if (req && f.type === "checkbox" && v !== true) {
       errors[key] = "Pflichtfeld";
       continue;
     }

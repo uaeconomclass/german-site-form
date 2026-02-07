@@ -1,0 +1,25 @@
+{
+  "id": "misch_bloecke",
+  "title": "Mischgebäude: Wohn- und Gewerbeteil",
+  "meta": "C2",
+  "when": { "eq": ["gebaeudetyp", "MISCH"] },
+  "intro": { "title": "Teile", "text": "Bitte füllen Sie Wohnanteil und Gewerbeanteil aus." },
+  "blocks": [
+    {
+      "title": "Wohnanteil",
+      "fields": [
+        { "key": "misch_wohnflaeche", "label": "Wohnfläche (m²)", "type": "number", "required": true, "min": 1, "max": 200000 },
+        { "key": "misch_heizung_waermeerzeuger", "label": "Heizsystem (Wärmeerzeuger)", "type": "select", "required": true, "optionsRef": "heizung_waermeerzeuger" }
+      ]
+    },
+    {
+      "title": "Gewerbeanteil",
+      "fields": [
+        { "key": "misch_nutzflaeche", "label": "Nutzfläche (m²)", "type": "number", "required": true, "min": 1, "max": 200000 },
+        { "key": "misch_lueftung", "label": "Lüftung", "type": "select", "required": true, "optionsRef": "nwg_lueftung" },
+        { "key": "misch_kuehlung", "label": "Kühlung", "type": "select", "required": true, "optionsRef": "nwg_kuehlung" }
+      ]
+    }
+  ]
+}
+

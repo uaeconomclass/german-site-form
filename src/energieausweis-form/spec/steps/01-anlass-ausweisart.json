@@ -1,0 +1,14 @@
+{
+  "id": "anlass_ausweisart",
+  "title": "Anlass & Ausweisart",
+  "meta": "1",
+  "intro": {
+    "title": "Start",
+    "text": "Wählen Sie Anlass und Ausweisart."
+  },
+  "fields": [
+    { "key": "anlass", "label": "Anlass", "type": "select", "required": true, "tipKey": "anlass", "optionsRef": "anlass" },
+    { "key": "ausweisart", "label": "Ausweisart", "type": "select", "required": true, "tipKey": "ausweisart", "optionsRef": "ausweisart" }
+  ]
+}
+

@@ -1,0 +1,12 @@
+{
+  "id": "nwg_huelle",
+  "title": "NWG: Gebäudehülle",
+  "meta": "B2",
+  "when": { "eq": ["gebaeudetyp", "NWG"] },
+  "intro": { "title": "Gebäudehülle", "text": "Vereinfachte Angaben für NWG." },
+  "fields": [
+    { "key": "nwg_aussenwand_simple", "label": "Außenwand", "type": "select", "required": true, "optionsRef": "nwg_aussenwand_simple" },
+    { "key": "nwg_fensteranteil", "label": "Fensteranteil", "type": "select", "required": true, "tipKey": "nwg_fensteranteil", "optionsRef": "nwg_fensteranteil" }
+  ]
+}
+

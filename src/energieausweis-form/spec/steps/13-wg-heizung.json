@@ -1,0 +1,48 @@
+{
+  "id": "wg_heizung",
+  "title": "WG: Heizungsanlage",
+  "meta": "A4",
+  "when": { "eq": ["gebaeudetyp", "WG"] },
+  "intro": { "title": "Heizung", "text": "Angaben zur Heizungsanlage." },
+  "blocks": [
+    {
+      "title": "Wärmeerzeuger",
+      "fields": [
+        { "key": "heizung_waermeerzeuger", "label": "Wärmeerzeuger", "type": "select", "required": true, "optionsRef": "heizung_waermeerzeuger", "tipKey": "heizung_waermeerzeuger" },
+        { "key": "heizung_baujahr", "label": "Baujahr der Heizung", "type": "number", "required": false, "min": 1800, "max": 2100, "hint": "z. B. 2010" }
+      ]
+    },
+    {
+      "title": "Kesseltyp",
+      "fields": [
+        {
+          "key": "heizung_kesseltyp",
+          "label": "Kesseltyp",
+          "type": "imgselect",
+          "required": true,
+          "options": [
+            { "value": "Konstanttemperatur", "label": "Konstanttemperatur", "img": "../assets/images/heizung/konstanttemperaturkessel.png", "tipKey": "heizung_konstanttemperatur" },
+            { "value": "Niedertemperatur", "label": "Niedertemperatur", "img": "../assets/images/heizung/niedertemperaturkessel.png", "tipKey": "heizung_niedertemperatur" },
+            { "value": "Brennwert", "label": "Brennwert", "img": "../assets/images/heizung/brennwertkessel.png", "tipKey": "heizung_brennwert" },
+            { "value": "Wärmepumpe", "label": "Wärmepumpe", "img": "../assets/images/heizung/waermepumpe.png", "tipKey": "heizung_waermepumpe" }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Wärmeabgabe",
+      "fields": [
+        { "key": "heizung_waermeabgabe", "label": "Wärmeabgabe", "type": "select", "required": true, "optionsRef": "heizung_waermeabgabe" }
+      ]
+    },
+    {
+      "title": "Zusatz",
+      "fields": [
+        { "key": "pv_dach", "label": "Photovoltaik (PV) auf dem Dach", "type": "checkbox", "required": false },
+        { "key": "zirkulation", "label": "Zirkulation (Warmwasser)", "type": "checkbox", "required": false },
+        { "key": "heizungsrohre_gedaemmt", "label": "Heizungsrohre gedämmt", "type": "radio", "required": false, "optionsRef": "ja_nein" }
+      ]
+    }
+  ]
+}
+

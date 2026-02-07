@@ -18,6 +18,12 @@
   "fenster_type": "Fenster-Typ (Verglasung). Tipp: Farbiges Spiegelbild = Wärmeschutz; Spiegelbilder zählen = Anzahl Scheiben.",
   "fenster_vermassung": "Angabe der Fensterabmessungen (lichte Öffnung Breite × Höhe) zur Ermittlung der Fensterfläche im Bedarfsausweis. Beispiel: (1,20m+0,03m)×(1,46m+0,03m)=1,833 m².",
   "nwg_fensteranteil": "NWG arbeitet häufig stärker mit Glasanteilen. Bitte wählen Sie eine grobe Kategorie.",
+  "heizung_waermeerzeuger": "Wärmeerzeuger: z. B. Öl, Gas, Fernwärme, Wärmepumpe, Biomasse. (Details siehe Tooltips-Dokument.)",
+  "heizung_konstanttemperatur": "Konstanttemperaturkessel: typischer Betrieb mit hohen Vorlauftemperaturen, häufig älter.",
+  "heizung_niedertemperatur": "Niedertemperaturkessel: niedrigere Vorlauftemperaturen, typischerweise 1985–2005.",
+  "heizung_brennwert": "Brennwertkessel: nutzt Kondensationswärme, typischerweise ab ca. 1995.",
+  "heizung_waermepumpe": "Wärmepumpe: nutzt Umweltenergie, arbeitet effizient bei niedrigen Systemtemperaturen.",
+  "warmwasser_type": "Art der Warmwasserbereitung (zentral, dezentral, Speicher, Durchlauferhitzer, Solarthermie).",
 
   "upload_verbrauch_heizkosten": "Für den Verbrauchsausweis werden Heizkostenabrechnungen der letzten 3 Jahre benötigt.",
   "upload_verbrauch_verbrauchsdaten": "Für den Verbrauchsausweis werden Verbrauchsdaten (tatsächliches Verbrauchsverhalten) benötigt.",
@@ -27,4 +33,3 @@
   "upload_bedarf_plaene": "Für den Bedarfsausweis werden Pläne benötigt: Grundrisse, Schnitte und Ansichten (PDF/JPG/PNG).",
   "upload_nwg_anlagenplaene": "Optional: Anlagenpläne für Lüftung/Kälte/Heizung können bei NWG hilfreich sein."
 }
-

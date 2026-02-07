@@ -1,0 +1,35 @@
+{
+  "id": "nwg_heizung_warmwasser",
+  "title": "NWG: Heizung & Warmwasser",
+  "meta": "B4",
+  "when": { "eq": ["gebaeudetyp", "NWG"] },
+  "intro": { "title": "Heizung/Warmwasser", "text": "Diese Angaben entsprechen der WG-Logik (A.7 + A.8)." },
+  "blocks": [
+    {
+      "title": "Heizung",
+      "fields": [
+        { "key": "heizung_waermeerzeuger", "label": "Wärmeerzeuger", "type": "select", "required": true, "optionsRef": "heizung_waermeerzeuger", "tipKey": "heizung_waermeerzeuger" },
+        { "key": "heizung_baujahr", "label": "Baujahr der Heizung", "type": "number", "required": false, "min": 1800, "max": 2100, "hint": "z. B. 2010" },
+        {
+          "key": "heizung_kesseltyp",
+          "label": "Kesseltyp",
+          "type": "select",
+          "required": true,
+          "optionsRef": "heizung_kesseltyp"
+        },
+        { "key": "heizung_waermeabgabe", "label": "Wärmeabgabe", "type": "select", "required": true, "optionsRef": "heizung_waermeabgabe" },
+        { "key": "pv_dach", "label": "Photovoltaik (PV) auf dem Dach", "type": "checkbox", "required": false },
+        { "key": "zirkulation", "label": "Zirkulation (Warmwasser)", "type": "checkbox", "required": false },
+        { "key": "heizungsrohre_gedaemmt", "label": "Heizungsrohre gedämmt", "type": "radio", "required": false, "optionsRef": "ja_nein" }
+      ]
+    },
+    {
+      "title": "Warmwasser",
+      "fields": [
+        { "key": "warmwasser_type", "label": "Warmwasser", "type": "select", "required": true, "optionsRef": "warmwasser", "tipKey": "warmwasser_type" },
+        { "key": "warmwasserrohre_gedaemmt", "label": "Warmwasserrohre gedämmt", "type": "radio", "required": false, "optionsRef": "ja_nein" }
+      ]
+    }
+  ]
+}
+

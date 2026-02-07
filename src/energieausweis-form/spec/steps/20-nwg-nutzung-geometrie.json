@@ -1,0 +1,15 @@
+{
+  "id": "nwg_nutzung_geometrie",
+  "title": "NWG: Nutzung & Geometrie",
+  "meta": "B1",
+  "when": { "eq": ["gebaeudetyp", "NWG"] },
+  "intro": { "title": "Nichtwohngebäude", "text": "Nutzung und Flächenangaben." },
+  "fields": [
+    { "key": "nwg_nutzung", "label": "Gebäudenutzung", "type": "select", "required": true, "optionsRef": "nwg_nutzung" },
+    { "key": "nwg_nettogrundflaeche", "label": "Nettogrundfläche (m²)", "type": "number", "required": true, "min": 1, "max": 500000, "hint": "z. B. 350" },
+    { "key": "nwg_anzahl_nutzungseinheiten", "label": "Anzahl Nutzungseinheiten", "type": "number", "required": true, "min": 1, "max": 50000, "hint": "z. B. 3" },
+    { "key": "nwg_geschosshoehen", "label": "Geschosshöhen (m)", "type": "number", "required": false, "min": 1, "max": 20, "hint": "optional" },
+    { "key": "nwg_beheiztes_volumen", "label": "Beheiztes Volumen (m³)", "type": "number", "required": false, "min": 1, "max": 5000000, "hint": "optional" }
+  ]
+}
+

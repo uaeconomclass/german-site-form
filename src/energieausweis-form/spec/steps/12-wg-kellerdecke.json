@@ -1,0 +1,12 @@
+{
+  "id": "wg_kellerdecke",
+  "title": "WG: Kellerdecke",
+  "meta": "A3",
+  "when": { "eq": ["gebaeudetyp", "WG"] },
+  "intro": { "title": "Kellerdecke", "text": "Angaben zum Keller und zur Dämmung." },
+  "fields": [
+    { "key": "keller_heizstatus", "label": "Keller", "type": "select", "required": true, "optionsRef": "kellerdecke_keller" },
+    { "key": "kellerdecke_daemmung", "label": "Kellerdecke", "type": "select", "required": true, "optionsRef": "kellerdecke_daemmung" }
+  ]
+}
+

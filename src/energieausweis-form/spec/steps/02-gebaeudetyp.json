@@ -1,0 +1,13 @@
+{
+  "id": "gebaeudetyp",
+  "title": "Gebäude-Stammdaten",
+  "meta": "2",
+  "intro": {
+    "title": "Gebäudetyp",
+    "text": "Das ist der wichtigste Abzweig der Form."
+  },
+  "fields": [
+    { "key": "gebaeudetyp", "label": "Gebäudetyp", "type": "radio", "required": true, "tipKey": "gebaeudetyp", "optionsRef": "gebaeudetyp", "full": true }
+  ]
+}
+

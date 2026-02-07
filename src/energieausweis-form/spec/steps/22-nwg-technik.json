@@ -1,0 +1,31 @@
+{
+  "id": "nwg_technik",
+  "title": "NWG: Lüftung / Klima / Technik",
+  "meta": "B3",
+  "when": { "eq": ["gebaeudetyp", "NWG"] },
+  "intro": { "title": "Technik", "text": "Wichtig: Diese Felder sind für NWG (insb. Bedarfsausweis) relevant." },
+  "fields": [
+    {
+      "key": "nwg_lueftung",
+      "label": "Lüftung",
+      "type": "select",
+      "required": { "eq": ["ausweisart", "Bedarfsausweis"] },
+      "optionsRef": "nwg_lueftung"
+    },
+    {
+      "key": "nwg_kuehlung",
+      "label": "Kühlung",
+      "type": "select",
+      "required": { "eq": ["ausweisart", "Bedarfsausweis"] },
+      "optionsRef": "nwg_kuehlung"
+    },
+    {
+      "key": "nwg_beleuchtung",
+      "label": "Beleuchtung",
+      "type": "select",
+      "required": { "eq": ["ausweisart", "Bedarfsausweis"] },
+      "optionsRef": "nwg_beleuchtung"
+    }
+  ]
+}
+

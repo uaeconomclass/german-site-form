@@ -292,6 +292,27 @@ select.control{ padding-right:34px; }
 }
 .counter .pm:active{ transform: translateY(1px); }
 
+.checkbox-row{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  height:44px;
+  padding:0 10px;
+  border-radius:12px;
+  border:1px solid var(--border);
+  background:var(--field);
+}
+.checkbox-row input[type="checkbox"]{
+  width:18px;
+  height:18px;
+}
+.checkbox-row .cb-label{
+  margin:0;
+  font-size:12px;
+  font-weight:700;
+  color:#344054;
+}
+
 .radio-row{
   display:flex;
   gap:10px;

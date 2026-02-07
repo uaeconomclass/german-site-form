@@ -1,9 +1,9 @@
 {
-  "id": "wg_bauteile_daemmung",
-  "title": "Bauteile & Dämmung",
-  "meta": "2",
+  "id": "wg_huelle_fenster",
+  "title": "WG: Gebäudehülle & Fenster",
+  "meta": "A2",
   "when": { "eq": ["gebaeudetyp", "WG"] },
-  "intro": { "title": "Gebäudehülle", "text": "Außenwand und Fenster. Bitte wählen Sie, was am besten passt." },
+  "intro": { "title": "Gebäudehülle", "text": "Außenwand und Fensterangaben." },
   "fields": [
     {
       "key": "aussenwand_type",
@@ -25,6 +25,7 @@
     },
     { "key": "fenster_type", "label": "Fenster (Typ)", "type": "select", "required": true, "tipKey": "fenster_type", "optionsRef": "fenster_type" },
     { "key": "fenster_baujahr", "label": "Baujahr Fenster", "type": "number", "required": true, "min": 1800, "max": 2100, "hint": "z. B. 2005" },
+    { "key": "fenster_rahmenmaterial", "label": "Rahmenmaterial", "type": "select", "required": false, "optionsRef": "fenster_rahmenmaterial" },
     {
       "key": "fenster_zustand",
       "label": "Zustand der Fenster",
