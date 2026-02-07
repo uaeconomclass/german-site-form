@@ -8,6 +8,8 @@ Goal: keep the UI renderer generic, and put all steps/fields/hints/tooltips into
   - global metadata (version, locale)
 - `src/energieausweis-form/spec/option-sets.json`
   - shared option sets for `select`/`radio`
+  - rule: option sets that contain an empty `value: ""` placeholder are meant for `select`
+  - for `radio`, use the corresponding `*_radio` set (no placeholder)
 - `src/energieausweis-form/spec/steps/*.json`
   - one JSON file per wizard step (sorted by filename)
   - supports `when`, `required`, `blocks` (section titles inside a step)

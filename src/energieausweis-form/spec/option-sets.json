@@ -19,6 +19,11 @@
     { "value": "NWG", "label": "Nichtwohngebäude (NWG)" },
     { "value": "MISCH", "label": "Mischgebäude" }
   ],
+  "gebaeudetyp_radio": [
+    { "value": "WG", "label": "Wohngebäude (WG)" },
+    { "value": "NWG", "label": "Nichtwohngebäude (NWG)" },
+    { "value": "MISCH", "label": "Mischgebäude" }
+  ],
   "wg_subtype": [
     { "value": "", "label": "Bitte wählen…" },
     { "value": "EFH", "label": "Einfamilienhaus (EFH)" },
@@ -46,8 +51,16 @@
     { "value": "unbeheizter Keller", "label": "unbeheizter Keller" },
     { "value": "beheizter Keller", "label": "beheizter Keller" }
   ],
+  "kellerdecke_keller_radio": [
+    { "value": "unbeheizter Keller", "label": "unbeheizter Keller" },
+    { "value": "beheizter Keller", "label": "beheizter Keller" }
+  ],
   "kellerdecke_daemmung": [
     { "value": "", "label": "Bitte wählen…" },
+    { "value": "Dämmung vorhanden", "label": "Dämmung vorhanden" },
+    { "value": "Dämmung nicht vorhanden", "label": "Dämmung nicht vorhanden" }
+  ],
+  "kellerdecke_daemmung_radio": [
     { "value": "Dämmung vorhanden", "label": "Dämmung vorhanden" },
     { "value": "Dämmung nicht vorhanden", "label": "Dämmung nicht vorhanden" }
   ],
@@ -88,6 +101,10 @@
   ],
   "ja_nein": [
     { "value": "", "label": "Bitte wählen…" },
+    { "value": "Ja", "label": "Ja" },
+    { "value": "Nein", "label": "Nein" }
+  ],
+  "ja_nein_radio": [
     { "value": "Ja", "label": "Ja" },
     { "value": "Nein", "label": "Nein" }
   ],

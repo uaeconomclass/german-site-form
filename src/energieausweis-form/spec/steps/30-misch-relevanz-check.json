@@ -36,29 +36,28 @@
       "label": "Gibt es eine eigene Lüftungsanlage?",
       "type": "radio",
       "required": true,
-      "optionsRef": "ja_nein"
+      "optionsRef": "ja_nein_radio"
     },
     {
       "key": "misch_tech_kuehlung",
       "label": "Gibt es Kühlung oder Klimaanlagen?",
       "type": "radio",
       "required": true,
-      "optionsRef": "ja_nein"
+      "optionsRef": "ja_nein_radio"
     },
     {
       "key": "misch_tech_oeffnungszeiten",
       "label": "Hat der Gewerbeteil lange Öffnungszeiten?",
       "type": "radio",
       "required": true,
-      "optionsRef": "ja_nein"
+      "optionsRef": "ja_nein_radio"
     },
     {
       "key": "misch_tech_glas",
       "label": "Gibt es große Glasflächen oder Küchenabluft?",
       "type": "radio",
       "required": true,
-      "optionsRef": "ja_nein"
-    }
+      "optionsRef": "ja_nein_radio"
+  }
   ]
 }
-

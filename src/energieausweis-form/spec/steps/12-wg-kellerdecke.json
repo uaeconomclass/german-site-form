@@ -5,7 +5,7 @@
   "when": { "eq": ["gebaeudetyp", "WG"] },
   "intro": { "title": "Kellerdecke", "text": "Angaben zum Keller und zur Dämmung." },
   "fields": [
-    { "key": "keller_heizstatus", "label": "Keller", "type": "radio", "required": true, "optionsRef": "kellerdecke_keller" },
-    { "key": "kellerdecke_daemmung", "label": "Kellerdecke", "type": "radio", "required": true, "optionsRef": "kellerdecke_daemmung" }
+    { "key": "keller_heizstatus", "label": "Keller", "type": "radio", "required": true, "optionsRef": "kellerdecke_keller_radio" },
+    { "key": "kellerdecke_daemmung", "label": "Kellerdecke", "type": "radio", "required": true, "optionsRef": "kellerdecke_daemmung_radio" }
   ]
 }
