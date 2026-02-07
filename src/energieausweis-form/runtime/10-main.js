@@ -561,7 +561,7 @@ dom.btnDownload.addEventListener("click", () => {
 
 // Load draft if any
 try {
-  const raw = localStorage.getItem(getStorageKey()) || localStorage.getItem(STORAGE_KEY_BASE);
+  const raw = localStorage.getItem(getStorageKey());
   if (raw) {
     const d = JSON.parse(raw);
     state = { ...deepClone(DEFAULTS), ...d, uploads: d.uploads || {} };
