@@ -241,7 +241,7 @@ document.addEventListener("click", (e) => {
 
 function renderLabel(field) {
   const pieces = [el("span", null, field.label)];
-  if (isRequired(field)) pieces.push(el("span", { class: "req" }, "req"));
+  if (isRequired(field)) pieces.push(el("span", { class: "req", "aria-hidden": "true" }, "*"));
   if (field.tipKey && TIPS[field.tipKey]) {
     pieces.push(
       el(
