@@ -16,7 +16,8 @@ Copy-Item -LiteralPath (Join-Path $repoRoot "preview") -Destination (Join-Path $
 Copy-Item -LiteralPath (Join-Path $repoRoot "assets") -Destination (Join-Path $docsRoot "assets") -Recurse -Force
 
 $extraRootFiles = @(
-  "EVEBI-Datenimport-Energieausweise.md"
+  "EVEBI-Datenimport-Energieausweise.md",
+  "UI-EFFICIENCY-BAR-SPEC.md"
 )
 foreach ($f in $extraRootFiles) {
   $src = Join-Path $repoRoot $f
@@ -46,6 +47,7 @@ $index = @"
       <ul style="margin:0;padding-left:18px">
         <li><a href="./preview/energieausweis-form.html">Open Form</a></li>
         <li><a href="./EVEBI-Datenimport-Energieausweise.md">EVEBI Import Reference (Gebaeudehuelle)</a></li>
+        <li><a href="./UI-EFFICIENCY-BAR-SPEC.md">UI Spec: Efficiency Bar (2 Markers)</a></li>
       </ul>
     </div>
   </body>
