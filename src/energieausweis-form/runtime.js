@@ -180,7 +180,14 @@ const dom = {
   btnDownload: document.getElementById("btnDownload"),
 
   overviewProgress: document.getElementById("overviewProgress"),
+  buildInfo: document.getElementById("buildInfo"),
 };
+
+if (dom.buildInfo && typeof BUILD_INFO === "object" && BUILD_INFO) {
+  const c = BUILD_INFO.commit ? String(BUILD_INFO.commit) : "";
+  const t = BUILD_INFO.builtAt ? String(BUILD_INFO.builtAt) : "";
+  dom.buildInfo.textContent = c ? ("Build: " + c + (t ? (" (" + t + ")") : "")) : "";
+}
 
 function visibleSteps() {
   return (FORM_SPEC.steps || []).filter((st) => !st.when || evalCond(st.when, state));

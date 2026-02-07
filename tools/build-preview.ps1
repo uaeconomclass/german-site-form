@@ -66,6 +66,9 @@ $runtime = Get-Content -LiteralPath $runtimePath -Raw -Encoding UTF8
 $formSpecJson = ($formSpec | ConvertTo-Json -Depth 100 -Compress)
 $tooltipsJson = ($tooltips | ConvertTo-Json -Depth 100 -Compress)
 
+$commit = (git -C $repoRoot rev-parse --short HEAD).Trim()
+$builtAt = (Get-Date).ToString("o")
+
 $bundle = @"
 /* AUTO-GENERATED FILE. Do not edit directly.
  * Source of truth:
@@ -76,6 +79,7 @@ $bundle = @"
  */
 const FORM_SPEC = $formSpecJson;
 const TOOL_TIPS_DE = $tooltipsJson;
+const BUILD_INFO = { commit: "$commit", builtAt: "$builtAt" };
 
 $runtime
 "@
