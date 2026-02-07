@@ -139,6 +139,7 @@ code{ font-family:var(--mono); font-size:.95em; }
   height:24px;
   align-items:stretch;
   position:relative;
+  --notch: 7px;
 }
 .r{
   flex:1 1 0;
@@ -152,13 +153,17 @@ code{ font-family:var(--mono); font-size:.95em; }
 }
 /* Approximate the "arrow" segments from the screenshot. */
 .r:not(:last-child){
-  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 50%, calc(100% - 10px) 100%, 0 100%, 10px 50%);
+  clip-path: polygon(0 0, calc(100% - var(--notch)) 0, 100% 50%, calc(100% - var(--notch)) 100%, 0 100%, var(--notch) 50%);
 }
 .r:first-child{
-  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 50%, calc(100% - 10px) 100%, 0 100%);
+  clip-path: polygon(0 0, calc(100% - var(--notch)) 0, 100% 50%, calc(100% - var(--notch)) 100%, 0 100%);
 }
 .r:last-child{
   clip-path: none;
+}
+.r:not(:first-child){
+  /* Slight overlap to reduce visible gaps between segments. */
+  margin-left: calc(var(--notch) * -0.55);
 }
 .r1{ background:#16a34a; color:#fff; }
 .r2{ background:#22c55e; color:#05331c; }
