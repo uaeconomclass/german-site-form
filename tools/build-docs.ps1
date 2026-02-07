@@ -35,7 +35,6 @@ $index = @"
       <p class="muted" style="margin:0 0 12px">Static preview (GitHub Pages via /docs).</p>
       <ul style="margin:0;padding-left:18px">
         <li><a href="./preview/energieausweis-form.html">Open Form</a></li>
-        <li><a href="./preview/form-overview.html">Overview Page</a></li>
       </ul>
     </div>
   </body>

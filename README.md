@@ -18,7 +18,6 @@
 | **[FORM-SPEC.md](FORM-SPEC.md)** | Повна специфікація форми: поля, логіка, валідації, SMART-система, каталог ілюстрацій |
 | **[TOOLTIPS-DE.md](TOOLTIPS-DE.md)** | Всі tooltip/info-popup тексти німецькою (дослівно з DOCX), готові до UI |
 | **[assets/images/](assets/images/)** | 20 ілюстрацій-підказок: стіни, вікна, котли, вентиляція, інфографіка |
-| **[preview/form-overview.html](preview/form-overview.html)** | Статичний HTML-превʼю загального вигляду форми (layout) |
 
 
 ## Що маємо зробити
