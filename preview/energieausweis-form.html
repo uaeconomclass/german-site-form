@@ -11,25 +11,34 @@
     <div class="wrap">
       <div class="stepsbar" id="topStepper" aria-label="Schritte"></div>
 
-      <header class="head">
+      <header class="headtop">
         <div class="head-left">
           <h1>Verbrauchsausweis für Wohngebäude</h1>
           <p class="sub">In nur wenigen Schritten zu Ihrem Energieausweis.</p>
         </div>
+      </header>
 
-        <div class="head-mid">
-          <div class="muted small">Ihre Energieeffizienzklasse</div>
+      <section class="effbox" aria-label="Energieeffizienzklasse">
+        <div class="eff-left">
+          <div class="eff-title">Ihre Energieeffizienzklasse</div>
           <div class="muted small">Wir berechnen Ihre aktuelle Energieeffizienzklasse automatisch anhand Ihrer Angaben.</div>
         </div>
-
-        <div class="head-right">
-          <div class="rating" aria-hidden="true">
+        <div class="eff-right">
+          <div class="rating" aria-hidden="true" style="--marker: 66%">
             <span class="r r1">A+</span><span class="r r2">A</span><span class="r r3">B</span><span class="r r4">C</span><span class="r r5">D</span><span class="r r6">E</span><span class="r r7">F</span><span class="r r8">G</span><span class="r r9">H</span>
             <span class="marker">Jetzt</span>
           </div>
-          <div class="muted small" style="margin-top:6px">Potenz</div>
+          <div class="potenz">
+            <span class="pico" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 11.5 12 4l9 7.5"></path>
+                <path d="M5.5 10.8V20h13V10.8"></path>
+              </svg>
+            </span>
+            <span class="muted small">Potenz</span>
+          </div>
         </div>
-      </header>
+      </section>
 
       <div class="layout">
         <main class="card main">
