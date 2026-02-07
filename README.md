@@ -6,8 +6,8 @@
 
 Поточні файли-вимоги в корені папки:
 
-- $pdf
-- $docx
+- 06.02.26 Energieberater Erklärung.pdf
+- 06.02.26 Energieberater Erklärung.docx
 
 > Якщо зʼявляться нові версії документів, додаємо їх поруч і фіксуємо дату/версію в цьому README.
 
@@ -18,6 +18,8 @@
 | **[FORM-SPEC.md](FORM-SPEC.md)** | Повна специфікація форми: поля, логіка, валідації, SMART-система, каталог ілюстрацій |
 | **[TOOLTIPS-DE.md](TOOLTIPS-DE.md)** | Всі tooltip/info-popup тексти німецькою (дослівно з DOCX), готові до UI |
 | **[assets/images/](assets/images/)** | 20 ілюстрацій-підказок: стіни, вікна, котли, вентиляція, інфографіка |
+| **[preview/form-overview.html](preview/form-overview.html)** | Статичний HTML-превʼю загального вигляду форми (layout) |
+
 
 ## Що маємо зробити
 
