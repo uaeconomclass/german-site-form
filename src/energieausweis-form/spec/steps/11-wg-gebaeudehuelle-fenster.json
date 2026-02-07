@@ -3,7 +3,7 @@
   "title": "WG: Gebäudehülle & Fenster",
   "meta": "A2",
   "when": { "eq": ["gebaeudetyp", "WG"] },
-  "intro": { "title": "Gebäudehülle", "text": "Außenwand und Fensterangaben." },
+  "intro": { "title": "Gebäudehülle", "text": "Außenwand und Fensterangaben.", "img": "../assets/images/infografik/aussenwand-materialien-epochen.png" },
   "fields": [
     {
       "key": "aussenwand_type",

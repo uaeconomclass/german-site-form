@@ -5,7 +5,8 @@
   "when": { "eq": ["gebaeudetyp", "MISCH"] },
   "intro": {
     "title": "Einordnung",
-    "text": "Die Einordnung dient der ersten Orientierung. Die endgültige Bewertung erfolgt nach GEG."
+    "text": "Die Einordnung dient der ersten Orientierung. Die endgültige Bewertung erfolgt nach GEG.",
+    "img": "../assets/images/infografik/relevanz-check-flowchart.png"
   },
   "fields": [
     {

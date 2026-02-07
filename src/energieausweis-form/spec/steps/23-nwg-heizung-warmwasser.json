@@ -13,9 +13,14 @@
         {
           "key": "heizung_kesseltyp",
           "label": "Kesseltyp",
-          "type": "select",
+          "type": "imgselect",
           "required": true,
-          "optionsRef": "heizung_kesseltyp"
+          "options": [
+            { "value": "Konstanttemperatur", "label": "Konstanttemperatur", "img": "../assets/images/heizung/konstanttemperaturkessel.png", "tipKey": "heizung_konstanttemperatur" },
+            { "value": "Niedertemperatur", "label": "Niedertemperatur", "img": "../assets/images/heizung/niedertemperaturkessel.png", "tipKey": "heizung_niedertemperatur" },
+            { "value": "Brennwert", "label": "Brennwert", "img": "../assets/images/heizung/brennwertkessel.png", "tipKey": "heizung_brennwert" },
+            { "value": "Wärmepumpe", "label": "Wärmepumpe", "img": "../assets/images/heizung/waermepumpe.png", "tipKey": "heizung_waermepumpe" }
+          ]
         },
         { "key": "heizung_waermeabgabe", "label": "Wärmeabgabe", "type": "select", "required": true, "optionsRef": "heizung_waermeabgabe" },
         { "key": "pv_dach", "label": "Photovoltaik (PV) auf dem Dach", "type": "checkbox", "required": false, "tipKey": "heizung_photovoltaik", "full": true },
