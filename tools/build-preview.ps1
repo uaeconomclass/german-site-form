@@ -85,6 +85,16 @@ $tooltipsJson = ($tooltips | ConvertTo-Json -Depth 100 -Compress)
 $commit = (git -C $repoRoot rev-parse --short HEAD).Trim()
 $builtAt = (Get-Date).ToString("o")
 
+# ---- Cache-bust CSS/JS references in the preview HTML so GitHub Pages updates reliably
+$previewHtml = Join-Path $previewRoot "energieausweis-form.html"
+if (Test-Path -LiteralPath $previewHtml) {
+  $html = Get-Content -LiteralPath $previewHtml -Raw -Encoding UTF8
+  # Ensure links always point at the current build commit.
+  $html = $html -replace '(\.\/energieausweis-form\.css)(\?v=[^"''>]+)?', ('$1?v=' + $commit)
+  $html = $html -replace '(\.\/energieausweis-form\.js)(\?v=[^"''>]+)?', ('$1?v=' + $commit)
+  Write-TextUtf8Bom $previewHtml $html
+}
+
 $bundle = @"
 /* AUTO-GENERATED FILE. Do not edit directly.
  * Source of truth:
