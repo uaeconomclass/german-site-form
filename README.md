@@ -18,6 +18,40 @@
 | **[FORM-SPEC.md](FORM-SPEC.md)** | Повна специфікація форми: поля, логіка, валідації, SMART-система, каталог ілюстрацій |
 | **[TOOLTIPS-DE.md](TOOLTIPS-DE.md)** | Всі tooltip/info-popup тексти німецькою (дослівно з DOCX), готові до UI |
 | **[assets/images/](assets/images/)** | 20 ілюстрацій-підказок: стіни, вікна, котли, вентиляція, інфографіка |
+| **[EVEBI-Datenimport-Energieausweise.md](EVEBI-Datenimport-Energieausweise.md)** | Reference extract по EVEBI імпорту (секція Gebäudehülle) для майбутнього мапінгу/експорту |
+| **[UI-EFFICIENCY-BAR-SPEC.md](UI-EFFICIENCY-BAR-SPEC.md)** | UI-spec для шкали енергоефективності A+…H (дві мітки: Jetzt/Potenz) |
+
+## Source Of Truth (що редагувати)
+
+- Специфікація форми (кроки/поля/опції/підказки): `src/energieausweis-form/spec/`
+- Рантайм (рендер/валідація/стан/збереження): `src/energieausweis-form/runtime/*.js`
+- Стилі: `src/energieausweis-form/style.css`
+
+Згенероване (не редагувати руками):
+- `preview/` генерується з `src/` через `tools/build-preview.ps1`
+- `docs/` генерується для GitHub Pages через `tools/build-docs.ps1`
+
+## Білд і перегляд
+
+Зібрати превʼю і Pages-версію (оновлює `preview/` і `docs/`):
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/build-docs.ps1
+```
+
+Локально:
+- `docs/index.html`
+- `docs/preview/energieausweis-form.html`
+
+Онлайн (GitHub Pages):
+- `https://uaeconomclass.github.io/german-site-form/preview/energieausweis-form.html`
+
+## Збереження (localStorage)
+
+Кнопка **Speichern** зберігає чернетку у браузері в `localStorage`.
+Ключ **привʼязаний до URL path**, тобто різні сторінки не конфліктують між собою:
+
+- `ea_wizard_draft_v1:/preview/energieausweis-form.html`
 
 
 ## Що маємо зробити
