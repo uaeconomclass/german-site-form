@@ -163,19 +163,19 @@ function runPlausibilityWarnings() {
   const warnings = [];
   const y = Number(state.baujahr);
   // Spec examples:
-  // - alte Fenster + Neubau -> prГјfen
-  // - Baujahr < 1960 + FuГџbodenheizung -> prГјfen
-  // - WГ¤rmepumpe + Radiatoren -> Hinweis
+  // - alte Fenster + Neubau -> prüfen
+  // - Baujahr < 1960 + Fußbodenheizung -> prüfen
+  // - Wärmepumpe + Radiatoren -> Hinweis
   if (Number.isFinite(y) && y >= 2000) {
-    if (state.fenster_type === "Einfachverglasung" || state.fenster_type === "Kastenfenster") warnings.push("Alte Fenster + neueres Baujahr: bitte prГјfen.");
+    if (state.fenster_type === "Einfachverglasung" || state.fenster_type === "Kastenfenster") warnings.push("Alte Fenster + neueres Baujahr: bitte prüfen.");
   }
-  if (Number.isFinite(y) && y < 1960 && state.heizung_waermeabgabe === "FuГџbodenheizung") warnings.push("Baujahr < 1960 + FuГџbodenheizung: bitte prГјfen.");
-  if (state.heizung_kesseltyp === "WГ¤rmepumpe" && state.heizung_waermeabgabe === "Radiatoren") warnings.push("WГ¤rmepumpe + Radiatoren: Hinweis (bitte prГјfen).");
+  if (Number.isFinite(y) && y < 1960 && state.heizung_waermeabgabe === "Fußbodenheizung") warnings.push("Baujahr < 1960 + Fußbodenheizung: bitte prüfen.");
+  if (state.heizung_kesseltyp === "Wärmepumpe" && state.heizung_waermeabgabe === "Radiatoren") warnings.push("Wärmepumpe + Radiatoren: Hinweis (bitte prüfen).");
 
   // NWG SMART warnings (from spec examples)
   if (state.gebaeudetyp === "NWG") {
-    if (state.nwg_fensteranteil === "hoch (>60%)") warnings.push("Hohe GlasflГ¤chen beeinflussen den Energiebedarf maГџgeblich.");
-    if (state.nwg_lueftung === "Zentrale LГјftungsanlage" || state.nwg_lueftung === "LГјftung mit WГ¤rmerГјckgewinnung") warnings.push("Angaben zur Luftmenge kГ¶nnen fГјr den Bedarfsausweis erforderlich sein.");
+    if (state.nwg_fensteranteil === "hoch (>60%)") warnings.push("Hohe Glasflächen beeinflussen den Energiebedarf maßgeblich.");
+    if (state.nwg_lueftung === "Zentrale Lüftungsanlage" || state.nwg_lueftung === "Lüftung mit Wärmerückgewinnung") warnings.push("Angaben zur Luftmenge können für den Bedarfsausweis erforderlich sein.");
     if (state.nwg_aussenwand_simple === "Vorhangfassade") warnings.push("Vorhangfassaden dieser Bauzeit besitzen hГ¤ufig einen erhГ¶hten Energiebedarf.");
   }
   if (warnings.length) {
@@ -290,11 +290,11 @@ function renderFields(step) {
         const inp = el("input", { type: "file", name: key, accept: field.accept || "", ...(field.multiple ? { multiple: true } : {}) });
         const list = el("div", { class: "filelist", id: "file_" + key });
         const saved = state.uploads[key] || [];
-        if (saved.length) list.textContent = "AusgewГ¤hlt: " + saved.join(", ");
+        if (saved.length) list.textContent = "Ausgewählt: " + saved.join(", ");
         inp.addEventListener("change", () => {
           const names = Array.from(inp.files || []).map((f) => f.name);
           state.uploads[key] = names;
-          list.textContent = names.length ? "AusgewГ¤hlt: " + names.join(", ") : "";
+          list.textContent = names.length ? "Ausgewählt: " + names.join(", ") : "";
         });
         control.appendChild(inp);
         control.appendChild(list);
@@ -348,7 +348,7 @@ function renderFields(step) {
           const w = Number(it.breite_m);
           if (Number.isFinite(h) && Number.isFinite(w)) {
             const a = h * w;
-            row.appendChild(el("div", { class: "rep-math" }, "FlГ¤che: ", el("b", null, a.toFixed(3)), " mВІ"));
+            row.appendChild(el("div", { class: "rep-math" }, "Fläche: ", el("b", null, a.toFixed(3)), " m²"));
           }
 
           row.appendChild(grid);
@@ -360,7 +360,7 @@ function renderFields(step) {
         const addBtn = el("button", { type: "button", class: "btn secondary rep-add", onclick: () => {
           items.push({});
           setValue(key, items, step);
-        } }, "+ " + itemLabel + " hinzufГјgen");
+        } }, "+ " + itemLabel + " hinzufügen");
 
         // Total area
         let total = 0;
@@ -433,12 +433,12 @@ function validateStep(idx, { silent } = {}) {
         for (const sf of (f.fields || [])) {
           const sfReq = sf.required === true;
           const sfVal = it && it[sf.key];
-          if (sfReq && isEmpty(sfVal)) errors[key] = "Bitte alle Pflichtfelder in der Liste ausfГјllen";
+          if (sfReq && isEmpty(sfVal)) errors[key] = "Bitte alle Pflichtfelder in der Liste ausfüllen";
           if (sf.type === "number" && !isEmpty(sfVal)) {
             const n = Number(sfVal);
-            if (!Number.isFinite(n)) errors[key] = "UngГјltige Zahl in der Liste";
+            if (!Number.isFinite(n)) errors[key] = "Ungültige Zahl in der Liste";
             if (sf.min != null && n < sf.min) errors[key] = "Wert in der Liste ist zu klein";
-            if (sf.max != null && n > sf.max) errors[key] = "Wert in der Liste ist zu groГџ";
+            if (sf.max != null && n > sf.max) errors[key] = "Wert in der Liste ist zu groß";
           }
         }
       }
@@ -446,13 +446,13 @@ function validateStep(idx, { silent } = {}) {
     }
     if (!isEmpty(v) && f.pattern) {
       const re = new RegExp(f.pattern);
-      if (!re.test(String(v))) errors[key] = "UngГјltiges Format";
+      if (!re.test(String(v))) errors[key] = "Ungültiges Format";
     }
     if (!isEmpty(v) && f.type === "number") {
       const n = Number(v);
       if (!Number.isFinite(n)) errors[key] = "Zahl erforderlich";
       if (f.min != null && n < f.min) errors[key] = "Zu klein";
-      if (f.max != null && n > f.max) errors[key] = "Zu groГџ";
+      if (f.max != null && n > f.max) errors[key] = "Zu groß";
     }
   }
 

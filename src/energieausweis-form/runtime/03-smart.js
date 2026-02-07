@@ -3,8 +3,8 @@
   if (!Number.isFinite(y)) return null;
   if (y <= 1978) return { aussenwand_type: "Vollziegel / Naturstein", fenster_type: "Einfachverglasung", heizung_kesseltyp: "Konstanttemperatur" };
   if (y <= 1994) return { aussenwand_type: "Ziegel", fenster_type: "Isolierglas alt", heizung_kesseltyp: "Niedertemperatur" };
-  if (y <= 2008) return { aussenwand_type: "WDVS vorhanden", fenster_type: "WГ¤rmeschutzglas", heizung_kesseltyp: "Brennwert" };
-  return { aussenwand_type: "WDVS vorhanden", fenster_type: "3-fach WГ¤rmeschutzglas", heizung_kesseltyp: "WГ¤rmepumpe" };
+  if (y <= 2008) return { aussenwand_type: "WDVS vorhanden", fenster_type: "Wärmeschutzglas", heizung_kesseltyp: "Brennwert" };
+  return { aussenwand_type: "WDVS vorhanden", fenster_type: "3-fach Wärmeschutzglas", heizung_kesseltyp: "Wärmepumpe" };
 }
 
 const AFTER_CHANGE = {
@@ -38,12 +38,12 @@ const AFTER_CHANGE = {
       } else if (y <= 2008) {
         if (isEmpty(state.nwg_aussenwand_simple)) state.nwg_aussenwand_simple = "WDVS";
         if (isEmpty(state.nwg_fensteranteil)) state.nwg_fensteranteil = "mittel (30вЂ“60%)";
-        if (isEmpty(state.nwg_lueftung)) state.nwg_lueftung = "Zentrale LГјftungsanlage";
+        if (isEmpty(state.nwg_lueftung)) state.nwg_lueftung = "Zentrale Lüftungsanlage";
         if (isEmpty(state.heizung_kesseltyp)) state.heizung_kesseltyp = "Brennwert";
       } else {
         if (isEmpty(state.nwg_aussenwand_simple)) state.nwg_aussenwand_simple = "WDVS";
         if (isEmpty(state.nwg_fensteranteil)) state.nwg_fensteranteil = "mittel (30вЂ“60%)";
-        if (isEmpty(state.nwg_lueftung)) state.nwg_lueftung = "LГјftung mit WГ¤rmerГјckgewinnung";
+        if (isEmpty(state.nwg_lueftung)) state.nwg_lueftung = "Lüftung mit Wärmerückgewinnung";
         if (isEmpty(state.heizung_kesseltyp)) state.heizung_kesseltyp = "Brennwert";
       }
     }
@@ -52,12 +52,12 @@ const AFTER_CHANGE = {
     if (nutzung === "BГјro / Verwaltung" || nutzung === "Schule / Kita") {
       if (isEmpty(state.nwg_aussenwand_simple)) state.nwg_aussenwand_simple = "Vorhangfassade";
       if (isEmpty(state.nwg_fensteranteil)) state.nwg_fensteranteil = "hoch (>60%)";
-      if (isEmpty(state.nwg_lueftung)) state.nwg_lueftung = "Zentrale LГјftungsanlage";
+      if (isEmpty(state.nwg_lueftung)) state.nwg_lueftung = "Zentrale Lüftungsanlage";
     } else if (nutzung === "Lager / Produktion") {
       if (isEmpty(state.nwg_aussenwand_simple)) state.nwg_aussenwand_simple = "Stahlbeton";
       if (isEmpty(state.nwg_fensteranteil)) state.nwg_fensteranteil = "gering (<30%)";
     } else if (nutzung === "Einzelhandel") {
-      if (isEmpty(state.nwg_lueftung)) state.nwg_lueftung = "Zentrale LГјftungsanlage";
+      if (isEmpty(state.nwg_lueftung)) state.nwg_lueftung = "Zentrale Lüftungsanlage";
       if (isEmpty(state.nwg_kuehlung)) state.nwg_kuehlung = "Split-Klima";
     } else if (nutzung === "Gastronomie") {
       if (isEmpty(state.nwg_lueftung)) state.nwg_lueftung = "Mechanische Abluft";
