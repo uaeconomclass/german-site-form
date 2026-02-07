@@ -81,6 +81,11 @@ code{ font-family:var(--mono); font-size:.95em; }
   background:#d1fadf;
   color:#027a48;
 }
+.step-pill.locked{
+  opacity:0.4;
+  cursor:not-allowed;
+  pointer-events:none;
+}
 
 .headtop{ margin:2px 0 10px; }
 .head-left h1{ margin:0; font-size:16px; font-weight:800; }

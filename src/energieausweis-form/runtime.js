@@ -154,6 +154,7 @@ for (const st of (FORM_SPEC.steps || [])) {
 
 let state = deepClone(DEFAULTS);
 let stepIndex = 0;
+let maxReachedStep = 0;
 
 const TIPS = TOOL_TIPS_DE || {};
 
@@ -266,14 +267,12 @@ function renderStepper() {
   const steps = visibleSteps();
   dom.topStepper.innerHTML = "";
   steps.forEach((st, idx) => {
+    const locked = idx > maxReachedStep;
     const pill = el(
       "div",
       {
-        class: "step-pill" + (idx === stepIndex ? " active" : "") + (idx < stepIndex ? " done" : ""),
-        onclick: () => {
-          stepIndex = idx;
-          render();
-        },
+        class: "step-pill" + (idx === stepIndex ? " active" : "") + (idx < stepIndex ? " done" : "") + (locked ? " locked" : ""),
+        ...(locked ? {} : { onclick: () => { stepIndex = idx; render(); } }),
       },
       el("span", { class: "num" }, String(idx + 1)),
       el("span", null, st.title)
@@ -655,6 +654,7 @@ dom.btnNext.addEventListener("click", () => {
   const res = validateStep(stepIndex, { silent: false });
   if (!res.ok) return;
   stepIndex = clamp(stepIndex + 1, 0, steps.length - 1);
+  maxReachedStep = Math.max(maxReachedStep, stepIndex);
   render();
 });
 
@@ -687,6 +687,14 @@ try {
   if (raw) {
     const d = JSON.parse(raw);
     state = { ...deepClone(DEFAULTS), ...d, uploads: d.uploads || {} };
+    // Compute maxReachedStep from saved progress
+    const steps = visibleSteps();
+    for (let i = 0; i < steps.length; i++) {
+      const res = validateStep(i, { silent: true });
+      if (res.ok) maxReachedStep = i + 1;
+      else break;
+    }
+    maxReachedStep = clamp(maxReachedStep, 0, steps.length - 1);
   }
 } catch (e) {}
 
