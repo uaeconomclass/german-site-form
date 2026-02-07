@@ -25,6 +25,17 @@ let maxReachedStep = 0;
 
 const TIPS = TOOL_TIPS_DE || {};
 
+const STORAGE_KEY_BASE = "ea_wizard_draft_v1";
+function getStorageKey() {
+  // Per-path draft: different pages do not overwrite each other's local drafts.
+  // Example: ea_wizard_draft_v1:/preview/energieausweis-form.html
+  try {
+    return STORAGE_KEY_BASE + ":" + String(location.pathname || "");
+  } catch (e) {
+    return STORAGE_KEY_BASE;
+  }
+}
+
 const dom = {
   topStepper: document.getElementById("topStepper"),
   stepTitle: document.getElementById("stepTitle"),
@@ -528,7 +539,7 @@ dom.btnNext.addEventListener("click", () => {
 dom.btnSave.addEventListener("click", () => {
   const data = exportData();
   try {
-    localStorage.setItem("ea_wizard_draft_v1", JSON.stringify(data));
+    localStorage.setItem(getStorageKey(), JSON.stringify(data));
     const old = dom.btnSave.textContent;
     dom.btnSave.textContent = "Gespeichert";
     setTimeout(() => (dom.btnSave.textContent = old), 900);
@@ -550,7 +561,7 @@ dom.btnDownload.addEventListener("click", () => {
 
 // Load draft if any
 try {
-  const raw = localStorage.getItem("ea_wizard_draft_v1");
+  const raw = localStorage.getItem(getStorageKey()) || localStorage.getItem(STORAGE_KEY_BASE);
   if (raw) {
     const d = JSON.parse(raw);
     state = { ...deepClone(DEFAULTS), ...d, uploads: d.uploads || {} };
