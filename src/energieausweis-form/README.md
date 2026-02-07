@@ -13,8 +13,8 @@ Goal: keep the UI renderer generic, and put all steps/fields/hints/tooltips into
   - supports `when`, `required`, `blocks` (section titles inside a step)
 - `src/energieausweis-form/spec/tooltips-de.json`
   - tooltip texts map: `tipKey -> text` (German)
-- `src/energieausweis-form/runtime.js`
-  - generic renderer runtime (conditions, validation, autosave, summary export)
+- `src/energieausweis-form/runtime/*.js`
+  - generic renderer runtime (split into modules for maintainability)
 - `src/energieausweis-form/style.css`
   - "Group 391" look and layout (light UI)
 
@@ -31,5 +31,19 @@ powershell -NoProfile -ExecutionPolicy Bypass -File tools/build-preview.ps1
 This updates:
 
 - `preview/energieausweis-form.css` (copied from `src/energieausweis-form/style.css`)
-- `preview/energieausweis-form.js` (spec + tooltips injected, then `runtime.js` appended)
+- `preview/energieausweis-form.js` (spec + tooltips injected, then `runtime/*.js` concatenated)
 
+## Build Docs (GitHub Pages)
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/build-docs.ps1
+```
+
+This regenerates `docs/` (GitHub Pages source folder) from `preview/` + `assets/`.
+
+## Storage
+
+The "Speichern" button stores the current draft in browser `localStorage`.
+Key is per-path to avoid conflicts between pages:
+
+- `ea_wizard_draft_v1:<pathname>`
