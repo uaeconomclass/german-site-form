@@ -12,20 +12,9 @@ function ea_form_plugin_form_base_url() {
     return trailingslashit(EA_FORM_PLUGIN_URL . 'assets/form');
 }
 
-add_action('wp_enqueue_scripts', function () {
-    // Only load assets on pages where the shortcode is present, OR on order single pages.
-    $should_enqueue = false;
-
-    if (is_singular(array('wg', 'nwg', 'misch'))) {
-        $should_enqueue = true;
-    } else {
-        $post = get_post();
-        if ($post && has_shortcode($post->post_content, 'energieausweis_form')) {
-            $should_enqueue = true;
-        }
-    }
-
-    if (!$should_enqueue) {
+function ea_form_plugin_enqueue_assets() {
+    // Idempotent: shortcodes/templates can call this safely.
+    if (wp_style_is('ea-form', 'enqueued') && wp_script_is('ea-form', 'enqueued')) {
         return;
     }
 
@@ -58,4 +47,26 @@ add_action('wp_enqueue_scripts', function () {
     }
 
     wp_localize_script('ea-form', 'EA_CONFIG', $config);
+}
+
+add_action('wp_enqueue_scripts', function () {
+    // Only load assets on pages where the shortcode is present, OR on order single pages.
+    $should_enqueue = false;
+
+    if (is_singular(array('wg', 'nwg', 'misch'))) {
+        $should_enqueue = true;
+    } else {
+        $post = get_post();
+        // NOTE: if a template renders the shortcode via do_shortcode(),
+        // it won't be in post_content. In that case, the shortcode itself will enqueue assets.
+        if ($post && has_shortcode($post->post_content, 'energieausweis_form')) {
+            $should_enqueue = true;
+        }
+    }
+
+    if (!$should_enqueue) {
+        return;
+    }
+
+    ea_form_plugin_enqueue_assets();
 });

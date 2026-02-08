@@ -20,6 +20,9 @@ function ea_form_page_context_title() {
 }
 
 add_shortcode('energieausweis_form', function ($atts = array(), $content = '') {
+    if (function_exists('ea_form_plugin_enqueue_assets')) {
+        ea_form_plugin_enqueue_assets();
+    }
     $title = ea_form_page_context_title();
 
     ob_start();

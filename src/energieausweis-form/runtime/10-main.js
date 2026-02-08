@@ -753,4 +753,25 @@ async function init() {
   render();
 }
 
-init();
+function showFatal(err) {
+  try {
+    const msg = (err && err.message) ? String(err.message) : String(err);
+    const target = dom.form || document.getElementById("wizardForm");
+    if (target) {
+      target.innerHTML =
+        '<div class="banner warn" style="display:flex">' +
+          '<div class="ico">!</div>' +
+          '<div><b>JS-Fehler</b><p>Die Form konnte nicht initialisiert werden. Bitte Konsole pr\u00fcfen.</p>' +
+          '<pre class="errtxt" style="white-space:pre-wrap">' + escapeHtml(msg) + '</pre></div>' +
+        '</div>';
+    }
+    // eslint-disable-next-line no-console
+    console.error("EA form fatal:", err);
+  } catch (e) {}
+}
+
+try {
+  init();
+} catch (e) {
+  showFatal(e);
+}
