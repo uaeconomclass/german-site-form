@@ -24,8 +24,10 @@ let stepIndex = 0;
 
 const TIPS = TOOL_TIPS_DE || {};
 
-const EA_CONFIG = (typeof window !== "undefined" && window.EA_CONFIG) ? window.EA_CONFIG : null;
-const EA_ASSETS_BASE = EA_CONFIG && EA_CONFIG.assetsBaseUrl ? String(EA_CONFIG.assetsBaseUrl) : "";
+// WP injects `window.EA_CONFIG` via wp_localize_script. Do NOT redeclare `EA_CONFIG` here
+// (it would conflict with the global `var EA_CONFIG` and crash with a SyntaxError).
+const EA_CFG = (typeof window !== "undefined" && window.EA_CONFIG) ? window.EA_CONFIG : null;
+const EA_ASSETS_BASE = EA_CFG && EA_CFG.assetsBaseUrl ? String(EA_CFG.assetsBaseUrl) : "";
 
 function resolveAssetUrl(p) {
   const s = String(p || "");
@@ -569,9 +571,9 @@ function saveDraftServer(data, meta) {
   // Optional: when embedded in WP, PHP can provide a draft endpoint and nonce via window.EA_CONFIG.
   // This is "best effort" and must not block navigation.
   try {
-    const url = EA_CONFIG && (EA_CONFIG.draftUrl || EA_CONFIG.draftEndpoint);
+    const url = EA_CFG && (EA_CFG.draftUrl || EA_CFG.draftEndpoint);
     if (!url) return;
-    const nonce = EA_CONFIG.nonce;
+    const nonce = EA_CFG.nonce;
     fetch(url, {
       method: "POST",
       headers: {
@@ -651,9 +653,9 @@ dom.btnNext.addEventListener("click", async () => {
   if (!res.ok) return;
 
   // If we're at the branching step and don't have an order yet, create it on the server and redirect.
-  // This keeps the plugin autonomous: order creation is handled via EA_CONFIG.createUrl.
-  const createUrl = EA_CONFIG && EA_CONFIG.createUrl ? String(EA_CONFIG.createUrl) : "";
-  const hasOrderId = EA_CONFIG && EA_CONFIG.orderId;
+  // This keeps the plugin autonomous: order creation is handled via EA_CFG.createUrl.
+  const createUrl = EA_CFG && EA_CFG.createUrl ? String(EA_CFG.createUrl) : "";
+  const hasOrderId = EA_CFG && EA_CFG.orderId;
   if (st && st.id === "gebaeudetyp" && !hasOrderId && createUrl) {
     const old = dom.btnNext.textContent;
     try {
@@ -664,7 +666,7 @@ dom.btnNext.addEventListener("click", async () => {
       // Keep a local copy as a fallback.
       saveDraftLocal(data);
 
-      const nonce = EA_CONFIG && EA_CONFIG.nonce ? String(EA_CONFIG.nonce) : "";
+      const nonce = EA_CFG && EA_CFG.nonce ? String(EA_CFG.nonce) : "";
       const resp = await fetch(createUrl, {
         method: "POST",
         headers: {
@@ -734,9 +736,9 @@ async function init() {
 
   // Server source-of-truth draft (order pages)
   try {
-    const draftUrl = EA_CONFIG && EA_CONFIG.draftUrl ? String(EA_CONFIG.draftUrl) : "";
+    const draftUrl = EA_CFG && EA_CFG.draftUrl ? String(EA_CFG.draftUrl) : "";
     if (draftUrl) {
-      const nonce = EA_CONFIG && EA_CONFIG.nonce ? String(EA_CONFIG.nonce) : "";
+      const nonce = EA_CFG && EA_CFG.nonce ? String(EA_CFG.nonce) : "";
       const resp = await fetch(draftUrl, {
         method: "GET",
         headers: { ...(nonce ? { "X-WP-Nonce": nonce } : {}) },
