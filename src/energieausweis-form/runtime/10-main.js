@@ -60,6 +60,8 @@ function getStorageKey() {
   }
 }
 
+const EA_CONFIG = (typeof window !== "undefined" && window.EA_CONFIG) ? window.EA_CONFIG : null;
+
 const dom = {
   topStepper: document.getElementById("topStepper"),
   stepTitle: document.getElementById("stepTitle"),
@@ -535,6 +537,46 @@ function exportData() {
   return out;
 }
 
+function saveDraftLocal(data) {
+  try {
+    localStorage.setItem(getStorageKey(), JSON.stringify(data));
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
+
+function saveDraftServer(data, meta) {
+  // Optional: when embedded in WP, PHP can provide a draft endpoint and nonce via window.EA_CONFIG.
+  // This is "best effort" and must not block navigation.
+  try {
+    const url = EA_CONFIG && (EA_CONFIG.draftUrl || EA_CONFIG.draftEndpoint);
+    if (!url) return;
+    const nonce = EA_CONFIG.nonce;
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        ...(nonce ? { "X-WP-Nonce": String(nonce) } : {}),
+      },
+      body: JSON.stringify({ data, meta }),
+      credentials: "same-origin",
+    }).catch(() => {});
+  } catch (e) {}
+}
+
+function persistDraft(reason) {
+  const data = exportData();
+  saveDraftLocal(data);
+  saveDraftServer(data, {
+    reason,
+    stepIndex,
+    stepId: (currentStep() && currentStep().id) || "",
+    at: new Date().toISOString(),
+  });
+  return data;
+}
+
 function updateOverview() {
   const steps = visibleSteps();
   dom.overviewProgress.textContent = String(stepIndex + 1) + "/" + String(steps.length);
@@ -587,14 +629,15 @@ dom.btnNext.addEventListener("click", () => {
   const steps = visibleSteps();
   const res = validateStep(stepIndex, { silent: false });
   if (!res.ok) return;
+  // Save on successful step submit ("Weiter").
+  persistDraft("next");
   stepIndex = clamp(stepIndex + 1, 0, steps.length - 1);
   render();
 });
 
 dom.btnSave.addEventListener("click", () => {
-  const data = exportData();
+  persistDraft("manual");
   try {
-    localStorage.setItem(getStorageKey(), JSON.stringify(data));
     const old = dom.btnSave.textContent;
     dom.btnSave.textContent = "Gespeichert";
     setTimeout(() => (dom.btnSave.textContent = old), 900);

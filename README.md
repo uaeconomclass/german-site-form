@@ -60,7 +60,8 @@ powershell -NoProfile -ExecutionPolicy Bypass -File tools/build-docs.ps1
 
 ## Збереження (localStorage)
 
-Кнопка **Speichern** зберігає чернетку у браузері в `localStorage`.
+Кнопка **Speichern** зберігає чернетку у браузері в `localStorage` (ручний сейв).
+Також чернетка **автоматично зберігається на `Weiter`** після успішної валідації кроку.
 Ключ **привʼязаний до URL path**, тобто різні сторінки не конфліктують між собою:
 
 - `ea_wizard_draft_v1:/preview/energieausweis-form.html`

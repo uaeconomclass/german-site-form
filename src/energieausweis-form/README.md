@@ -60,7 +60,8 @@ Stepper pills are intentionally restricted:
 
 ## Storage
 
-The "Speichern" button stores the current draft in browser `localStorage`.
+The "Speichern" button stores the current draft in browser `localStorage` (manual save).
+Draft is also saved automatically on "Weiter" after a successful step validation.
 Key is per-path to avoid conflicts between pages:
 
 - `ea_wizard_draft_v1:<pathname>`
