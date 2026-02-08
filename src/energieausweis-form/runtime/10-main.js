@@ -480,7 +480,20 @@ function renderFields(step) {
         );
 
         const inp = el("input", { class: "up-input", type: "file", name: key, accept, ...(field.multiple ? { multiple: true } : {}) });
-        const btnPick = el("button", { type: "button", class: "btn secondary up-pick", onclick: () => inp.click() }, "Datei auswählen");
+        // IMPORTANT: prevent event bubbling to the drop-zone click handler.
+        // Otherwise a click on this button can trigger two `input.click()` calls and reopen the dialog.
+        const btnPick = el(
+          "button",
+          {
+            type: "button",
+            class: "btn secondary up-pick",
+            onclick: (e) => {
+              try { e.preventDefault(); e.stopPropagation(); } catch (err) {}
+              inp.click();
+            },
+          },
+          "Datei auswählen"
+        );
         const drop = el(
           "div",
           { class: "up-drop", role: "button", tabindex: "0" },
@@ -606,7 +619,11 @@ function renderFields(step) {
         ["dragenter", "dragover"].forEach((ev) => drop.addEventListener(ev, (e) => { stop(e); drop.classList.add("drag"); }));
         ["dragleave", "drop"].forEach((ev) => drop.addEventListener(ev, (e) => { stop(e); drop.classList.remove("drag"); }));
         drop.addEventListener("drop", (e) => addFiles(e.dataTransfer && e.dataTransfer.files));
-        drop.addEventListener("click", () => inp.click());
+        drop.addEventListener("click", (e) => {
+          // If the click originated from the "pick file" button, do nothing (button handler already ran).
+          if (e && e.target && e.target.closest && e.target.closest(".up-pick")) return;
+          inp.click();
+        });
         drop.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); inp.click(); } });
 
         renderGrid();
