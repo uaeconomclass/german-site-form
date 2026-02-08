@@ -2,11 +2,49 @@
   "id": "gebaeudetyp",
   "title": "Gebäude-Stammdaten",
   "meta": "2",
+  "afterChangeRef": "smart_wg_baujahr",
   "intro": {
     "title": "Gebäudetyp",
     "text": "Das ist der wichtigste Abzweig der Form."
   },
-  "fields": [
-    { "key": "gebaeudetyp", "label": "Gebäudetyp", "type": "radio", "required": true, "tipKey": "gebaeudetyp", "optionsRef": "gebaeudetyp_radio", "full": true }
+  "blocks": [
+    {
+      "title": "",
+      "fields": [
+        { "key": "gebaeudetyp", "label": "Gebäudetyp", "type": "radio", "required": true, "tipKey": "gebaeudetyp", "optionsRef": "gebaeudetyp_radio", "full": true }
+      ]
+    },
+    {
+      "title": "Untertyp",
+      "fields": [
+        { "key": "wg_subtype", "label": "Gebäude", "type": "select", "required": true, "optionsRef": "wg_subtype", "when": { "eq": ["gebaeudetyp", "WG"] }, "full": true }
+      ]
+    },
+    {
+      "title": "Basisdaten",
+      "fields": [
+        {
+          "key": "baujahr",
+          "label": "Baujahr Gebäude",
+          "type": "number",
+          "required": true,
+          "min": 1800,
+          "max": 2100,
+          "hint": "z. B. 1985",
+          "when": { "eq": ["gebaeudetyp", "WG"] }
+        },
+        { "key": "anzahl_wohneinheiten", "label": "Anzahl Wohneinheiten", "type": "counter", "required": true, "min": 1, "max": 999, "hint": "z. B. 1", "when": { "eq": ["gebaeudetyp", "WG"] } },
+        { "key": "wohnflaeche", "label": "Wohnfläche (m²)", "type": "number", "required": true, "min": 1, "max": 20000, "tipKey": "wohnflaeche", "hint": "z. B. 120", "when": { "eq": ["gebaeudetyp", "WG"] } },
+        { "key": "nutzflaeche", "label": "Nutzfläche (m²)", "type": "number", "required": true, "min": 1, "max": 20000, "tipKey": "nutzflaeche", "hint": "z. B. 155", "when": { "eq": ["gebaeudetyp", "WG"] } }
+      ]
+    },
+    {
+      "title": "Grundprüfung",
+      "fields": [
+        { "key": "gebaeudeanteil", "label": "Gebäudeteil", "type": "radio", "required": true, "optionsRef": "gebaeudeanteil", "when": { "eq": ["gebaeudetyp", "WG"] } },
+        { "key": "dachgeschoss", "label": "Dachgeschoss", "type": "radio", "required": true, "optionsRef": "dachgeschoss", "when": { "eq": ["gebaeudetyp", "WG"] } },
+        { "key": "keller", "label": "Keller", "type": "radio", "required": true, "optionsRef": "keller", "when": { "eq": ["gebaeudetyp", "WG"] } }
+      ]
+    }
   ]
 }

@@ -1,40 +1,7 @@
 {
   "id": "wg_basisdaten",
-  "title": "WG: Basisdaten",
+  "title": "WG: Basisdaten (merged into step 2)",
   "meta": "A1",
-  "when": { "eq": ["gebaeudetyp", "WG"] },
-  "afterChangeRef": "smart_wg_baujahr",
-  "blocks": [
-    {
-      "title": "Untertyp",
-      "fields": [
-        { "key": "wg_subtype", "label": "Gebäude", "type": "select", "required": true, "optionsRef": "wg_subtype" }
-      ]
-    },
-    {
-      "title": "Basisdaten",
-      "fields": [
-        {
-          "key": "baujahr",
-          "label": "Baujahr Gebäude",
-          "type": "number",
-          "required": true,
-          "min": 1800,
-          "max": 2100,
-          "hint": "z. B. 1985"
-        },
-        { "key": "anzahl_wohneinheiten", "label": "Anzahl Wohneinheiten", "type": "counter", "required": true, "min": 1, "max": 999, "hint": "z. B. 1" },
-        { "key": "wohnflaeche", "label": "Wohnfläche (m²)", "type": "number", "required": true, "min": 1, "max": 20000, "tipKey": "wohnflaeche", "hint": "z. B. 120" },
-        { "key": "nutzflaeche", "label": "Nutzfläche (m²)", "type": "number", "required": true, "min": 1, "max": 20000, "tipKey": "nutzflaeche", "hint": "z. B. 155" }
-      ]
-    },
-    {
-      "title": "Grundprüfung",
-      "fields": [
-        { "key": "gebaeudeanteil", "label": "Gebäudeteil", "type": "radio", "required": true, "optionsRef": "gebaeudeanteil" },
-        { "key": "dachgeschoss", "label": "Dachgeschoss", "type": "radio", "required": true, "optionsRef": "dachgeschoss" },
-        { "key": "keller", "label": "Keller", "type": "radio", "required": true, "optionsRef": "keller" }
-      ]
-    }
-  ]
+  "when": { "eq": ["__wg_basisdaten_enabled", "1"] },
+  "blocks": []
 }

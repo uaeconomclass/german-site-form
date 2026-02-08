@@ -363,6 +363,7 @@ function renderFields(step) {
 
   blocks.forEach((block) => {
     const fields = (block.fields || []).filter((f) => fieldWhen(f));
+    if (!fields.length) return;
     if (block.title) dom.form.appendChild(el("div", { class: "block-title" }, block.title));
 
     fields.forEach((field) => {
@@ -999,9 +1000,20 @@ async function init() {
       if (resp.ok && d && typeof d === "object") {
         state = { ...deepClone(DEFAULTS), ...d, uploads: d.uploads || {} };
         // Restore the last (server) step pointer.
-        const stepId = meta && typeof meta === "object" && meta.stepId ? String(meta.stepId) : "";
-        const idx = findStepIndexById(stepId);
+        let stepId = meta && typeof meta === "object" && meta.stepId ? String(meta.stepId) : "";
+
+        // Compatibility: older drafts might point at removed/merged steps.
+        if (stepId === "wg_basisdaten" && String(state.gebaeudetyp || "") === "WG") stepId = "gebaeudetyp";
+
+        let idx = findStepIndexById(stepId);
         if (idx >= 0) stepIndex = idx;
+        else {
+          // Safeguard fallback: if we can't restore the step pointer, open a safe start point.
+          // - If building type isn't chosen yet: step 1
+          // - Otherwise: step 2
+          idx = findStepIndexById(isEmpty(state.gebaeudetyp) ? "anlass_ausweisart" : "gebaeudetyp");
+          if (idx >= 0) stepIndex = idx;
+        }
       }
     }
   } catch (e) {}
