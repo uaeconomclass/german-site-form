@@ -55,6 +55,20 @@ function ea_form_set_order_draft_data($order_id, $data, $meta = null) {
     }
 }
 
+function ea_form_sync_gebaeudetyp_meta_from_draft($order_id, $data) {
+    if (!is_array($data)) return;
+
+    $gt = isset($data['gebaeudetyp']) ? strtoupper(trim((string) $data['gebaeudetyp'])) : '';
+    if (!in_array($gt, array('WG', 'NWG', 'MISCH'), true)) {
+        return;
+    }
+
+    $cur = strtoupper(trim((string) get_post_meta((int) $order_id, '_ea_gebaeudetyp', true)));
+    if ($cur === $gt) return;
+
+    update_post_meta((int) $order_id, '_ea_gebaeudetyp', $gt);
+}
+
 function ea_form_uploads_base_dir() {
     $u = wp_upload_dir();
     $base = trailingslashit($u['basedir']) . 'ea-form';
@@ -218,6 +232,8 @@ add_action('rest_api_init', function () {
                 }
 
                 ea_form_set_order_draft_data($order_id, $data, $meta);
+                // Keep order meta in sync when user changes the building type later in the flow.
+                ea_form_sync_gebaeudetyp_meta_from_draft($order_id, $data);
 
                 return rest_ensure_response(array(
                     'ok' => true,
