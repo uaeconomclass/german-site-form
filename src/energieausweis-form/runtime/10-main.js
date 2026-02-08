@@ -500,6 +500,7 @@ function renderFields(step) {
 
           // Prefer server-backed previews for uploaded files. `blob:` preview URLs are session-only.
           const thumbSrc =
+            (item.url ? String(item.url) : "") ||
             (item.fileId && cfg ? buildUrl(cfg.downloadUrl, { orderId: cfg.orderId, fileId: item.fileId, inline: 1 }) : "") ||
             (item.previewUrl ? String(item.previewUrl) : "");
 
@@ -575,6 +576,7 @@ function renderFields(step) {
                   } else {
                     item.status = "uploaded";
                     item.fileId = String(res.file.fileId);
+                    if (res.file.url) item.url = String(res.file.url);
                     item.mime = res.file.mime || item.mime;
                     item.size = res.file.size || item.size;
                   }
@@ -844,6 +846,7 @@ function exportData() {
             name: it.name ? String(it.name) : "",
             size: it.size != null ? Number(it.size) : undefined,
             mime: it.mime ? String(it.mime) : "",
+            ...(it.url ? { url: String(it.url) } : {}),
           };
         })
         .filter(Boolean);

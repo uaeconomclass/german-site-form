@@ -75,10 +75,18 @@ function ea_form_uploads_base_dir() {
     if (!file_exists($base)) {
         wp_mkdir_p($base);
     }
-    // Best effort privacy for Apache setups.
+    // NOTE: For now we allow direct links to uploads (per request), so do NOT block access
+    // via `.htaccess`. Still disable directory listing as a minimal safeguard.
     $ht = trailingslashit($base) . '.htaccess';
+    $allow = "Options -Indexes\n<IfModule mod_authz_core.c>\n  Require all granted\n</IfModule>\n<IfModule !mod_authz_core.c>\n  Order allow,deny\n  Allow from all\n</IfModule>\n";
     if (!file_exists($ht)) {
-        @file_put_contents($ht, "Deny from all\n");
+        @file_put_contents($ht, $allow);
+    } else {
+        // If an old "Deny from all" exists, overwrite it to prevent broken direct links.
+        $cur = @file_get_contents($ht);
+        if (is_string($cur) && stripos($cur, 'Deny from all') !== false) {
+            @file_put_contents($ht, $allow);
+        }
     }
     $idx = trailingslashit($base) . 'index.html';
     if (!file_exists($idx)) {
@@ -321,6 +329,7 @@ add_action('rest_api_init', function () {
 
                 $uploads = wp_upload_dir();
                 $rel = ltrim(str_replace(trailingslashit($uploads['basedir']), '', $dest), '/\\');
+                $direct_url = trailingslashit((string) ($uploads['baseurl'] ?? '')) . str_replace('\\', '/', $rel);
                 $idx = ea_form_files_index_get($order_id);
                 $idx[$file_id] = array(
                     'fileId' => $file_id,
@@ -330,6 +339,7 @@ add_action('rest_api_init', function () {
                     'mime' => $mime,
                     'size' => $size,
                     'relPath' => $rel,
+                    'url' => $direct_url,
                     'createdAt' => current_time('mysql'),
                 );
                 ea_form_files_index_set($order_id, $idx);
@@ -342,6 +352,7 @@ add_action('rest_api_init', function () {
                     'name' => $orig_name,
                     'mime' => $mime,
                     'size' => $size,
+                    'url' => $direct_url,
                     'createdAt' => current_time('mysql'),
                 ));
             },
