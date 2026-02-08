@@ -31,71 +31,101 @@ Accessibility:
 
 ## API (Component Inputs)
 
+We intentionally keep this UI decoupled from any real domain formulas.
+For now, the bar accepts **direct positions** (0..100) and we simply render markers.
+
 Data:
-- `nowKwh` (number | null): position for `Jetzt`
-- `potKwh` (number | null): position for `Potenz`
+- `nowPct` (number | null): position for `Jetzt` in percent `0..100`
+- `potPct` (number | null): position for `Potenz` in percent `0..100`
 
-Scale model (configurable, default aligned to common A+..H thresholds):
-- `scaleMin` default: `0`
-- `scaleMax` default: `250` (values > 250 are still shown, clamped at the right edge)
-- `clampMin` default: `5` (avoid sticking to far-left edge)
-- `clampMax` default: `250`
+Direction:
+- `0%` = far **left** (greener / A+ side)
+- `100%` = far **right** (redder / H side)
 
-Thresholds (for class highlighting / display):
-- A+: `<= 30`
-- A: `<= 50`
-- B: `<= 75`
-- C: `<= 100`
-- D: `<= 130`
-- E: `<= 160`
-- F: `<= 200`
-- G: `<= 250`
-- H: `> 250`
-
-Note: If we later need exact legal thresholds for specific products (WG/NWG, Bedarf/Verbrauch),
-keep this table as a per-product config, not hardcoded in CSS.
+Clamping:
+- Recommended clamp range: `2..98` (to avoid marker overflow at the edges).
+- Hard clamp: `0..100`.
 
 ## Positioning Rules
 
-Convert a kWh value to a percent position on the bar:
+We use a deliberately simple mechanism:
+- Markers are regular DOM elements and are moved by changing `padding-left`.
+- This makes the “API” understandable for humans and easy to wire from PHP or JS.
 
-1. `v = clamp(value, clampMin, clampMax)`
-2. `pos = (v - scaleMin) / (scaleMax - scaleMin) * 100`
+### Units
 
-Apply to CSS:
-- Top marker uses CSS custom property: `--marker-now: <pos>%`
-- Bottom marker uses CSS custom property: `--marker-pot: <pos>%`
+`padding-left` is always expressed in **percent**:
+- `padding-left: 0%` .. `padding-left: 100%`
 
-Marker element styles:
-- `left: var(--marker-now)` and `transform: translateX(-50%)`
-- Same for `--marker-pot`
+### Markup Contract
+
+The bar area contains:
+- top marker: `.potenz.jetzt`
+- the segments: `.rating`
+- bottom marker: `.potenz` (without `.jetzt`)
+
+Example (simplified):
+```html
+<div class="eff-right">
+  <div class="potenz jetzt" style="padding-left: 66%">
+    <span class="muted small">Jetzt</span>
+  </div>
+
+  <div class="rating" aria-hidden="true">
+    <span class="r r1">A+</span> ... <span class="r r9">H</span>
+  </div>
+
+  <div class="potenz" style="padding-left: 40%">
+    <span class="muted small">Potenz</span>
+  </div>
+</div>
+```
+
+### Recommended API (CSS Variable)
+
+Instead of writing `padding-left` directly, we can use a CSS variable:
+```html
+<div class="potenz jetzt" style="--pos: 66%"></div>
+<div class="potenz" style="--pos: 40%"></div>
+```
+and in CSS:
+```css
+.potenz { padding-left: var(--pos, 0%); }
+```
+
+This keeps markup stable while still allowing `0..100%` control.
 
 ## Current Repo Implementation (as of 2026-02-07)
 
 Files:
-- Markup: `preview/energieausweis-form.html`
-  - One bar element: `.rating`
-  - One marker: `.marker` with label `Jetzt`
-  - `Potenz` exists only as a label row below (not a movable marker).
-  - Marker position is currently static (inline: `style="--marker: 66%"`).
-- CSS: `src/energieausweis-form/style.css`
-  - `.rating` uses chevron segments with overlap (via `margin-left` negative).
-  - `.marker` reads `--marker` and draws a downward triangle.
-- JS: `src/energieausweis-form/runtime.js`
-  - No dynamic updates for the marker are currently implemented.
+- Markup:
+  - WP source of truth: `wp-plugin/energieausweis-form/includes/shortcode.php`
+  - Preview mirror: `preview/energieausweis-form.html` (generated)
+  - Two marker rows exist:
+    - `.potenz.jetzt` (top label)
+    - `.potenz` (bottom label)
+- CSS:
+  - Source of truth: `src/energieausweis-form/style.css`
+  - Generated copies:
+    - `preview/energieausweis-form.css`
+    - `docs/preview/energieausweis-form.css`
+    - `wp-plugin/energieausweis-form/assets/form/energieausweis-form.css`
 
 Compatibility plan:
-- Introduce 2 marker elements:
-  - `.marker.marker-now` (top, down triangle, uses `--marker-now`)
-  - `.marker.marker-pot` (bottom, up triangle, uses `--marker-pot`)
-- Keep existing `.rating`/segment markup intact.
-- Replace current single `--marker` with `--marker-now` and optionally `--marker-pot`.
-- Add a small helper in runtime to update CSS variables based on `nowKwh` and `potKwh`.
+If we need to drive marker positions dynamically:
+- Keep the DOM markup as-is.
+- Update `.potenz.jetzt` and `.potenz` positions by setting `padding-left` or `--pos`.
 
 ## Implementation Notes (Suggested)
 
-- Implement `valueToPercent(value)` like Powerpass does: clamp + linear mapping.
-- Keep marker offsets in CSS (not JS) so the JS only sets percentages.
-- Store marker values in state as:
-  - `ui_eff_now_kwh`, `ui_eff_pot_kwh` (temporary), OR derive from real computed values later.
+Helper (JS):
+```js
+function setMarkerPct(el, pct) {
+  const v = Math.max(0, Math.min(100, Number(pct)));
+  el.style.paddingLeft = v + "%";
+}
+```
 
+Defaults:
+- If values are unknown, use a neutral position (e.g. 50% / around class D-E),
+  or hide the marker rows entirely.
