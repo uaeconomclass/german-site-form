@@ -39,8 +39,9 @@ function ea_form_register_cpts() {
                 'menu_name' => 'Mischgebaeude',
             ),
             'public' => false,
-            'show_ui' => true,
-            'show_in_menu' => true,
+            // Hide legacy CPT from wp-admin menus. Old records can still exist and be accessed by direct URL if needed.
+            'show_ui' => false,
+            'show_in_menu' => false,
             'supports' => array('title', 'author'),
             'capability_type' => 'post',
             'map_meta_cap' => true,
@@ -52,3 +53,7 @@ function ea_form_register_cpts() {
 
 add_action('init', 'ea_form_register_cpts', 9);
 
+// Some installs register `misch` from the theme or another plugin. Ensure the admin menu item is removed regardless.
+add_action('admin_menu', function () {
+    remove_menu_page('edit.php?post_type=misch');
+}, 999);
