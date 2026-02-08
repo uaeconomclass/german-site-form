@@ -21,8 +21,9 @@ function ea_form_plugin_enqueue_assets() {
     $css = ea_form_plugin_form_base_url() . 'energieausweis-form.css';
     $js  = ea_form_plugin_form_base_url() . 'energieausweis-form.js';
 
-    wp_enqueue_style('ea-form', $css, array(), '0.1.0');
-    wp_enqueue_script('ea-form', $js, array(), '0.1.0', true);
+    $ver = defined('EA_FORM_PLUGIN_VERSION') ? EA_FORM_PLUGIN_VERSION : '0.0.0';
+    wp_enqueue_style('ea-form', $css, array(), $ver);
+    wp_enqueue_script('ea-form', $js, array(), $ver, true);
 
     $rest_base = rest_url('ea/v1');
     $nonce = is_user_logged_in() ? wp_create_nonce('wp_rest') : '';
