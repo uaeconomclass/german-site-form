@@ -73,7 +73,15 @@ function tipToHtml(raw) {
 }
 
 const STORAGE_KEY_BASE = "ea_wizard_draft_v1";
+function allowLocalStorage() {
+  // In WP we only want localStorage on real order pages (source of truth is server).
+  // On landing pages (no orderId yet), do not persist to localStorage.
+  // Outside WP (no EA config), keep localStorage enabled (GitHub Pages preview).
+  if (!EA_CFG) return true;
+  return !!EA_CFG.orderId;
+}
 function getStorageKey() {
+  if (!allowLocalStorage()) return "";
   // Per-path draft: different pages do not overwrite each other's local drafts.
   // Example: ea_wizard_draft_v1:/preview/energieausweis-form.html
   try {
@@ -567,7 +575,9 @@ function exportData() {
 
 function saveDraftLocal(data) {
   try {
-    localStorage.setItem(getStorageKey(), JSON.stringify(data));
+    const k = getStorageKey();
+    if (!k) return false;
+    localStorage.setItem(k, JSON.stringify(data));
     return true;
   } catch (e) {
     return false;
@@ -747,10 +757,13 @@ dom.btnDownload.addEventListener("click", () => {
 async function init() {
   // Local fallback draft
   try {
-    const raw = localStorage.getItem(getStorageKey());
-    if (raw) {
-      const d = JSON.parse(raw);
-      state = { ...deepClone(DEFAULTS), ...d, uploads: d.uploads || {} };
+    const k = getStorageKey();
+    if (k) {
+      const raw = localStorage.getItem(k);
+      if (raw) {
+        const d = JSON.parse(raw);
+        state = { ...deepClone(DEFAULTS), ...d, uploads: d.uploads || {} };
+      }
     }
   } catch (e) {}
 
