@@ -1,8 +1,8 @@
-﻿{
+{
   "id": "uploads",
-  "title": "Uploadbereich",
+  "title": "Versand",
   "meta": "6",
-  "intro": { "title": "Uploadbereich", "text": "Bitte laden Sie die benötigten Unterlagen hoch." },
+  "intro": { "title": "Uploads", "text": "Bitte laden Sie die benötigten Unterlagen hoch." },
   "fields": [
     {
       "key": "upload_verbrauch_heizkosten",
@@ -112,3 +112,4 @@
     }
   ]
 }
+

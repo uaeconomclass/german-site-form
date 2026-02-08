@@ -1,8 +1,8 @@
-﻿{
+{
   "id": "adresse",
-  "title": "Gebäudeadresse",
+  "title": "Adresse",
   "meta": "3",
-  "intro": { "title": "Gebäudeadresse", "text": "Bitte geben Sie die Adresse des Gebäudes an, für das der Energieausweis erstellt wird." },
+  "intro": { "title": "Adresse", "text": "Bitte geben Sie die Gebäudeadresse an." },
   "fields": [
     { "key": "strasse", "label": "Straße", "type": "text", "required": true, "hint": "Straße" },
     { "key": "hausnummer", "label": "Hausnummer", "type": "text", "required": true, "hint": "Nr." },
@@ -10,3 +10,4 @@
     { "key": "ort", "label": "Ort", "type": "text", "required": true, "hint": "z. B. München" }
   ]
 }
+

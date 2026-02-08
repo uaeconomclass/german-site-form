@@ -88,6 +88,7 @@ add_shortcode('energieausweis_form', function ($atts = array(), $content = '') {
             <div class="eff-right">
               <div class="rating" aria-hidden="true" style="--marker: 66%">
                 <span class="r r1">A+</span><span class="r r2">A</span><span class="r r3">B</span><span class="r r4">C</span><span class="r r5">D</span><span class="r r6">E</span><span class="r r7">F</span><span class="r r8">G</span><span class="r r9">H</span>
+                <span class="marker">Jetzt</span>
               </div>
               <div class="potenz">
                 <span class="pico" aria-hidden="true">
