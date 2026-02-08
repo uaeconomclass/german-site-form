@@ -6,6 +6,7 @@ if (!defined('ABSPATH')) {
 
 function ea_form_page_context_title() {
     // Prefer order post type, fallback to page slug.
+    if (is_singular('ea_order')) return 'Energieausweis Anfrage';
     if (is_singular('nwg')) return 'Verbrauchsausweis für Gewerbe';
     if (is_singular('misch')) return 'Verbrauchsausweis für Mischgebäude';
     if (is_singular('wg')) return 'Verbrauchsausweis für Wohngebäude';
@@ -24,8 +25,8 @@ function ea_form_user_orders_count($user_id) {
     if ($user_id <= 0) return 0;
 
     $q = new WP_Query(array(
-        'post_type' => array('wg', 'nwg', 'misch'),
-        'post_status' => array('publish'),
+        'post_type' => array('ea_order', 'wg', 'nwg', 'misch'),
+        'post_status' => array('publish', 'private', 'draft', 'pending'),
         'author' => $user_id,
         'fields' => 'ids',
         'posts_per_page' => 1,
@@ -37,7 +38,7 @@ function ea_form_user_orders_count($user_id) {
 function ea_form_render_previous_orders_link() {
     if (!is_user_logged_in()) return '';
     // Only show on non-order pages.
-    if (is_singular(array('wg', 'nwg', 'misch'))) return '';
+    if (is_singular(array('ea_order', 'wg', 'nwg', 'misch'))) return '';
 
     $count = ea_form_user_orders_count(get_current_user_id());
     if ($count <= 0) return '';
@@ -51,6 +52,17 @@ function ea_form_render_previous_orders_link() {
 add_shortcode('energieausweis_form', function ($atts = array(), $content = '') {
     if (function_exists('ea_form_plugin_enqueue_assets')) {
         ea_form_plugin_enqueue_assets();
+    }
+
+    if (is_singular('ea_order')) {
+        $order_id = get_the_ID();
+        if (!function_exists('ea_form_current_user_can_access_order') || !ea_form_current_user_can_access_order($order_id)) {
+            return '<div class="wrap" style="max-width:1100px;margin:30px auto;padding:0 14px">'
+                . '<div class="banner warn" style="display:flex">'
+                . '<div class="ico">!</div>'
+                . '<div><b>Zugriff eingeschrГ¤nkt</b><p>Bitte melden Sie sich an, um diese Anfrage zu sehen.</p></div>'
+                . '</div></div>';
+        }
     }
     $title = ea_form_page_context_title();
 

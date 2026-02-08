@@ -5,14 +5,16 @@ if (!defined('ABSPATH')) {
 }
 
 function ea_form_allowed_post_types() {
-    return array('wg', 'nwg', 'misch');
+    // Unified order CPT + legacy types (for backward compatibility only).
+    return array('ea_order', 'wg', 'nwg', 'misch');
 }
 
 function ea_form_map_gebaeudetyp_to_post_type($gebaeudetyp) {
     $s = strtoupper(trim((string) $gebaeudetyp));
-    if ($s === 'WG') return 'wg';
-    if ($s === 'NWG') return 'nwg';
-    if ($s === 'MISCH') return 'misch';
+    // New system: always create `ea_order` and store the building type in meta.
+    if ($s === 'WG') return 'ea_order';
+    if ($s === 'NWG') return 'ea_order';
+    if ($s === 'MISCH') return 'ea_order';
     return '';
 }
 
@@ -121,7 +123,7 @@ add_action('rest_api_init', function () {
                 $post_id = wp_insert_post(array(
                     'post_type' => $post_type,
                     'post_status' => 'publish',
-                    'post_title' => 'Form ' . current_time('Y-m-d H:i'),
+                    'post_title' => 'Anfrage ' . strtoupper(trim((string) $gebaeudetyp)) . ' ' . current_time('Y-m-d H:i'),
                     'post_author' => get_current_user_id(),
                 ), true);
 
@@ -139,6 +141,8 @@ add_action('rest_api_init', function () {
                     $merged_meta = array_merge($merged_meta, $meta);
                 }
                 ea_form_set_order_draft_data($post_id, $data, $merged_meta);
+                // Store building type for easier backend filtering/reporting.
+                update_post_meta((int) $post_id, '_ea_gebaeudetyp', strtoupper(trim((string) $gebaeudetyp)));
 
                 $redirect = get_permalink((int) $post_id);
                 if (!$redirect) {

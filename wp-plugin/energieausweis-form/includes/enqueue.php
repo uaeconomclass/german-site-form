@@ -35,13 +35,15 @@ function ea_form_plugin_enqueue_assets() {
         'assetsBaseUrl' => ea_form_plugin_assets_base_url(),
     );
 
-    if (is_singular(array('wg', 'nwg', 'misch')) && is_user_logged_in()) {
+    if (is_singular(array('ea_order', 'wg', 'nwg', 'misch')) && is_user_logged_in()) {
         $order_id = get_the_ID();
-        $config['orderId'] = $order_id;
-        $config['draftUrl'] = add_query_arg('orderId', $order_id, rest_url('ea/v1/order-draft'));
-        $config['uploadUrl'] = rest_url('ea/v1/order-upload');
-        $config['uploadDownloadUrl'] = rest_url('ea/v1/order-upload-download');
-        $config['uploadDeleteUrl'] = rest_url('ea/v1/order-upload-delete');
+        if (function_exists('ea_form_current_user_can_access_order') && ea_form_current_user_can_access_order($order_id)) {
+            $config['orderId'] = $order_id;
+            $config['draftUrl'] = add_query_arg('orderId', $order_id, rest_url('ea/v1/order-draft'));
+            $config['uploadUrl'] = rest_url('ea/v1/order-upload');
+            $config['uploadDownloadUrl'] = rest_url('ea/v1/order-upload-download');
+            $config['uploadDeleteUrl'] = rest_url('ea/v1/order-upload-delete');
+        }
     } else {
         $page_id = get_the_ID();
         $config['pageId'] = $page_id;
@@ -60,7 +62,7 @@ add_action('wp_enqueue_scripts', function () {
     // Only load assets on pages where the shortcode is present, OR on order single pages.
     $should_enqueue = false;
 
-    if (is_singular(array('wg', 'nwg', 'misch'))) {
+    if (is_singular(array('ea_order', 'wg', 'nwg', 'misch'))) {
         $should_enqueue = true;
     } else {
         $post = get_post();
