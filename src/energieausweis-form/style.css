@@ -26,7 +26,7 @@ body{
   margin:0;
   background:var(--bg);
   color:var(--text);
-  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, "Noto Sans", "Liberation Sans", sans-serif;
+  font-family: Inter, sans-serif;
 }
 code{ font-family:var(--mono); font-size:.95em; }
 
