@@ -720,6 +720,10 @@ select.control{ padding-right:34px; }
 .side-body{ padding:0 14px 14px; }
 .sp{ height:12px; }
 .kv{ display:flex; justify-content:space-between; gap:10px; align-items:baseline; }
+.kvlist{ display:flex; flex-direction:column; gap:8px; }
+.order-summary{ padding:4px 0; }
+.order-summary .k{ min-width:120px; }
+.order-summary .v{ font-weight:600; color:#0f172a; text-align:right; }
 .price b{ font-size:18px; }
 .help{ display:block; color:#0ea5e9; font-size:12px; text-decoration:none; }
 .help b{ font-weight:700; }

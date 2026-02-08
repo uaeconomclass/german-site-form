@@ -248,6 +248,36 @@ function selectedOptionFor(field, value) {
   return { opt, opts };
 }
 
+function buildOrderProductLabel() {
+  const a = String(state.ausweisart || "");
+  const t = String(state.gebaeudetyp || "");
+
+  const base =
+    a === "Verbrauchsausweis" ? "Verbrauchsausweis" :
+    a === "Bedarfsausweis" ? "Bedarfsausweis" :
+    "Energieausweis";
+
+  const suffix =
+    t === "WG" ? "für Wohngebäude" :
+    t === "NWG" ? "für Gewerbe" :
+    t === "MISCH" ? "für Mischgebäude" :
+    "für Gebäude";
+
+  return base + " " + suffix;
+}
+
+function buildObjectAddressLabel() {
+  const street = String(state.strasse || "").trim();
+  const no = String(state.hausnummer || "").trim();
+  const plz = String(state.plz || "").trim();
+  const ort = String(state.ort || "").trim();
+
+  const l1 = (street + (street && no ? " " : "") + no).trim();
+  const l2 = (plz + (plz && ort ? " " : "") + ort).trim();
+  const out = (l1 + (l1 && l2 ? ", " : "") + l2).trim();
+  return out || "—";
+}
+
 function renderSelectedOptionTip(field, value) {
   const { opt } = selectedOptionFor(field, value);
   const key = opt && opt.tipKey;
@@ -660,6 +690,23 @@ function renderFields(step) {
         input.addEventListener("change", () => setValue(key, input.checked, step));
         control = el("div", { class: "checkbox-row" }, input, el("label", { for: id, class: "cb-label" }, field.label));
         if (field.tipKey && TIPS[field.tipKey]) optionTip = el("div", { class: "optiontip" }, String(TIPS[field.tipKey]));
+      } else if (field.type === "kvsummary") {
+        wantsDefaultLabel = false;
+
+        const rows = [
+          ["Produkt:", buildOrderProductLabel()],
+          ["Adresse:", buildObjectAddressLabel()],
+          ["Lieferzeit:", "innerhalb von 24 Stunden"],
+          ["Versand:", "PDF per E-Mail"],
+        ];
+
+        const list = el(
+          "div",
+          { class: "kvlist" },
+          ...rows.map(([k1, v1]) => el("div", { class: "kv" }, el("span", { class: "k muted" }, k1), el("span", { class: "v" }, v1)))
+        );
+
+        control = el("div", { class: "order-summary" }, list);
       }
 
       if (wantsDefaultLabel) wrap.appendChild(renderLabel(field));

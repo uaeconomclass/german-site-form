@@ -6,6 +6,12 @@
   "intro": { "title": "Zahlung & Bestellung", "text": "In nur einem Schritt zu Ihrem Energieausweis." },
   "blocks": [
     {
+      "title": "Ihre Bestellung",
+      "fields": [
+        { "key": "order_summary", "label": "Ihre Bestellung", "type": "kvsummary", "full": true }
+      ]
+    },
+    {
       "title": "Rechnungsdaten",
       "fields": [
         {
