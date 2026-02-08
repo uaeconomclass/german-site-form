@@ -859,12 +859,9 @@ function render() {
   dom.btnDownload.style.display = "none";
 
   if (st.id === "summary") {
-    // Summary step: render the configured fields (e.g. billing details) first,
-    // then show the JSON export box below.
+    // Summary step: render the configured fields (e.g. billing details).
+    // NOTE: JSON export box is temporarily disabled (was only for debugging).
     renderFields(st);
-    dom.summaryBox.style.display = "";
-    dom.btnDownload.style.display = "";
-    dom.summaryJson.textContent = JSON.stringify(exportData(), null, 2);
   } else {
     renderFields(st);
   }
