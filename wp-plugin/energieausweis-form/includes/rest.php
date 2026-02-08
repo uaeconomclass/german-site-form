@@ -40,6 +40,11 @@ function ea_form_get_order_draft_data($order_id) {
     return is_array($raw) ? $raw : null;
 }
 
+function ea_form_get_order_draft_meta($order_id) {
+    $raw = get_post_meta((int) $order_id, '_ea_form_draft_meta', true);
+    return is_array($raw) ? $raw : null;
+}
+
 function ea_form_set_order_draft_data($order_id, $data, $meta = null) {
     update_post_meta((int) $order_id, '_ea_form_draft', $data);
     update_post_meta((int) $order_id, '_ea_form_draft_updated_at', current_time('mysql'));
@@ -59,6 +64,7 @@ add_action('rest_api_init', function () {
                 $params = (array) $req->get_json_params();
                 $gebaeudetyp = isset($params['gebaeudetyp']) ? $params['gebaeudetyp'] : '';
                 $data = isset($params['data']) ? $params['data'] : null;
+                $meta = isset($params['meta']) ? $params['meta'] : null;
 
                 $post_type = ea_form_map_gebaeudetyp_to_post_type($gebaeudetyp);
                 if ($post_type === '') {
@@ -66,6 +72,9 @@ add_action('rest_api_init', function () {
                 }
                 if (!is_array($data)) {
                     return new WP_Error('ea_invalid_data', 'Invalid data payload.', array('status' => 400));
+                }
+                if ($meta !== null && !is_array($meta)) {
+                    $meta = null;
                 }
 
                 $post_id = wp_insert_post(array(
@@ -80,10 +89,15 @@ add_action('rest_api_init', function () {
                 }
 
                 // Store initial draft right away (server source of truth).
-                ea_form_set_order_draft_data($post_id, $data, array(
+                $merged_meta = array(
                     'reason' => 'create',
                     'at' => current_time('mysql'),
-                ));
+                );
+                if (is_array($meta)) {
+                    // Allow client to set step pointers (e.g. next step after gebaeudetyp).
+                    $merged_meta = array_merge($merged_meta, $meta);
+                }
+                ea_form_set_order_draft_data($post_id, $data, $merged_meta);
 
                 $redirect = get_permalink((int) $post_id);
                 if (!$redirect) {
@@ -114,11 +128,13 @@ add_action('rest_api_init', function () {
                 }
 
                 $data = ea_form_get_order_draft_data($order_id);
+                $meta = ea_form_get_order_draft_meta($order_id);
                 $updated_at = (string) get_post_meta($order_id, '_ea_form_draft_updated_at', true);
 
                 return rest_ensure_response(array(
                     'orderId' => $order_id,
                     'data' => $data ? $data : new stdClass(),
+                    'meta' => $meta ? $meta : new stdClass(),
                     'updatedAt' => $updated_at,
                 ));
             },
@@ -175,4 +191,3 @@ add_action('rest_api_init', function () {
         ),
     ));
 });
-

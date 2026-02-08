@@ -124,6 +124,13 @@ function currentStep() {
   return steps[stepIndex] || steps[0];
 }
 
+function findStepIndexById(stepId) {
+  const id = String(stepId || "");
+  if (!id) return -1;
+  const steps = visibleSteps();
+  return steps.findIndex((s) => String(s.id) === id);
+}
+
 function isRequired(field) {
   if (typeof field.required === "boolean") return field.required;
   if (field.required) return evalCond(field.required, state);
@@ -666,6 +673,12 @@ dom.btnNext.addEventListener("click", async () => {
       // Keep a local copy as a fallback.
       saveDraftLocal(data);
 
+      // After order creation we want to land on the next visible step (variant 2).
+      // Compute it from current visibility rules.
+      const stepsAfter = visibleSteps();
+      const next = stepsAfter[clamp(stepIndex + 1, 0, stepsAfter.length - 1)];
+      const nextStepId = next && next.id ? String(next.id) : "";
+
       const nonce = EA_CFG && EA_CFG.nonce ? String(EA_CFG.nonce) : "";
       const resp = await fetch(createUrl, {
         method: "POST",
@@ -673,7 +686,14 @@ dom.btnNext.addEventListener("click", async () => {
           "Content-Type": "application/json",
           ...(nonce ? { "X-WP-Nonce": nonce } : {}),
         },
-        body: JSON.stringify({ gebaeudetyp: state.gebaeudetyp, data }),
+        body: JSON.stringify({
+          gebaeudetyp: state.gebaeudetyp,
+          data,
+          meta: {
+            stepId: nextStepId,
+            stepIndex: clamp(stepIndex + 1, 0, 9999),
+          },
+        }),
         credentials: "same-origin",
       });
 
@@ -746,8 +766,13 @@ async function init() {
       });
       const json = await resp.json().catch(() => null);
       const d = json && json.data ? json.data : null;
+      const meta = json && json.meta ? json.meta : null;
       if (resp.ok && d && typeof d === "object") {
         state = { ...deepClone(DEFAULTS), ...d, uploads: d.uploads || {} };
+        // Restore the last (server) step pointer.
+        const stepId = meta && typeof meta === "object" && meta.stepId ? String(meta.stepId) : "";
+        const idx = findStepIndexById(stepId);
+        if (idx >= 0) stepIndex = idx;
       }
     }
   } catch (e) {}
