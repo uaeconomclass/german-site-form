@@ -859,7 +859,9 @@ function render() {
   dom.btnDownload.style.display = "none";
 
   if (st.id === "summary") {
-    dom.form.innerHTML = "";
+    // Summary step: render the configured fields (e.g. billing details) first,
+    // then show the JSON export box below.
+    renderFields(st);
     dom.summaryBox.style.display = "";
     dom.btnDownload.style.display = "";
     dom.summaryJson.textContent = JSON.stringify(exportData(), null, 2);
