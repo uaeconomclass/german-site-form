@@ -58,6 +58,22 @@ powershell -NoProfile -ExecutionPolicy Bypass -File tools/build-docs.ps1
 Онлайн (GitHub Pages):
 - `https://uaeconomclass.github.io/german-site-form/preview/energieausweis-form.html`
 
+## WordPress плагін (автономний)
+
+Код плагіна: `wp-plugin/energieausweis-form/`
+
+Що робить:
+- Дає шорткод: `[energieausweis_form]` (виводить повний HTML-скелет форми).
+- На “лендінгах” (звичайні WP сторінки зі шорткодом) **створює заявку** на кроці `gebaeudetyp` (WG/NWG/MISCH) через REST і редіректить на `single` створеного поста.
+- На `single` заявок (`wg`, `nwg`, `misch`) **серверна чернетка є source-of-truth**: форма при завантаженні тягне draft з PHP, і на `Weiter` / `Speichern` пушить оновлення на сервер.
+- Доступ до збереження/читання чернетки: лише автор заявки або адмін (через `edit_post`).
+
+Білд assets для плагіна (копіює `preview/*.css/js` + `assets/images`):
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/build-wp-plugin.ps1
+```
+
 ## Збереження (localStorage)
 
 Кнопка **Speichern** зберігає чернетку у браузері в `localStorage` (ручний сейв).

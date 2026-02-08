@@ -24,6 +24,27 @@ let stepIndex = 0;
 
 const TIPS = TOOL_TIPS_DE || {};
 
+const EA_CONFIG = (typeof window !== "undefined" && window.EA_CONFIG) ? window.EA_CONFIG : null;
+const EA_ASSETS_BASE = EA_CONFIG && EA_CONFIG.assetsBaseUrl ? String(EA_CONFIG.assetsBaseUrl) : "";
+
+function resolveAssetUrl(p) {
+  const s = String(p || "");
+  if (!s) return s;
+  if (/^https?:\/\//i.test(s)) return s;
+  if (s.startsWith("/")) return s;
+  if (!EA_ASSETS_BASE) return s;
+
+  // preview build uses "../assets/..." relative paths. In WP these break, so rewrite to plugin assets.
+  // Map: ../assets/images/foo.png -> {assetsBaseUrl}/images/foo.png
+  const m = s.match(/^(?:\.\.\/)+assets\/(.+)$/);
+  if (m) return EA_ASSETS_BASE.replace(/\/+$/, "") + "/" + m[1];
+
+  const m2 = s.match(/^(?:\.\/)?assets\/(.+)$/);
+  if (m2) return EA_ASSETS_BASE.replace(/\/+$/, "") + "/" + m2[1];
+
+  return s;
+}
+
 function escapeHtml(s) {
   return String(s)
     .replaceAll("&", "&amp;")
@@ -42,7 +63,7 @@ function tipToHtml(raw) {
   // Example (from spec): ...(siehe Bild: ../assets/images/fenster/feuertest-2fach.png)
   html = html.replace(
     /(\.\.\/assets\/images\/[A-Za-z0-9._/-]+\.(?:png|jpg|jpeg|webp|svg))/gi,
-    (m) => '<span class="tipimgwrap"><img class="tipimg" src="' + m + '" alt="" loading="lazy" /></span>'
+    (m) => '<span class="tipimgwrap"><img class="tipimg" src="' + resolveAssetUrl(m) + '" alt="" loading="lazy" /></span>'
   );
 
   html = html.replaceAll("\n", "<br>");
@@ -59,8 +80,6 @@ function getStorageKey() {
     return STORAGE_KEY_BASE;
   }
 }
-
-const EA_CONFIG = (typeof window !== "undefined" && window.EA_CONFIG) ? window.EA_CONFIG : null;
 
 const dom = {
   topStepper: document.getElementById("topStepper"),
@@ -306,7 +325,7 @@ function renderFields(step) {
           const box = el(
             "div",
             { class: "img-choice" + (val === opt.value ? " sel" : ""), onclick: () => setValue(key, opt.value, step) },
-            el("img", { src: opt.img, alt: opt.label }),
+            el("img", { src: resolveAssetUrl(opt.img), alt: opt.label }),
             el("div", { class: "cap" }, opt.label)
           );
           control.appendChild(box);
@@ -625,11 +644,57 @@ dom.btnBack.addEventListener("click", () => {
   render();
 });
 
-dom.btnNext.addEventListener("click", () => {
+dom.btnNext.addEventListener("click", async () => {
   const steps = visibleSteps();
+  const st = currentStep();
   const res = validateStep(stepIndex, { silent: false });
   if (!res.ok) return;
-  // Save on successful step submit ("Weiter").
+
+  // If we're at the branching step and don't have an order yet, create it on the server and redirect.
+  // This keeps the plugin autonomous: order creation is handled via EA_CONFIG.createUrl.
+  const createUrl = EA_CONFIG && EA_CONFIG.createUrl ? String(EA_CONFIG.createUrl) : "";
+  const hasOrderId = EA_CONFIG && EA_CONFIG.orderId;
+  if (st && st.id === "gebaeudetyp" && !hasOrderId && createUrl) {
+    const old = dom.btnNext.textContent;
+    try {
+      dom.btnNext.disabled = true;
+      dom.btnNext.textContent = "Bitte warten...";
+
+      const data = exportData();
+      // Keep a local copy as a fallback.
+      saveDraftLocal(data);
+
+      const nonce = EA_CONFIG && EA_CONFIG.nonce ? String(EA_CONFIG.nonce) : "";
+      const resp = await fetch(createUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          ...(nonce ? { "X-WP-Nonce": nonce } : {}),
+        },
+        body: JSON.stringify({ gebaeudetyp: state.gebaeudetyp, data }),
+        credentials: "same-origin",
+      });
+
+      const json = await resp.json().catch(() => null);
+      const redirectUrl = json && json.redirectUrl ? String(json.redirectUrl) : "";
+      if (!resp.ok || !redirectUrl) {
+        alert("Order konnte nicht erstellt werden.");
+        dom.btnNext.disabled = false;
+        dom.btnNext.textContent = old;
+        return;
+      }
+
+      location.href = redirectUrl;
+      return;
+    } catch (e) {
+      alert("Order konnte nicht erstellt werden.");
+      dom.btnNext.disabled = false;
+      dom.btnNext.textContent = old;
+      return;
+    }
+  }
+
+  // Normal step submit: persist and continue.
   persistDraft("next");
   stepIndex = clamp(stepIndex + 1, 0, steps.length - 1);
   render();
@@ -657,13 +722,35 @@ dom.btnDownload.addEventListener("click", () => {
   URL.revokeObjectURL(url);
 });
 
-// Load draft if any
-try {
-  const raw = localStorage.getItem(getStorageKey());
-  if (raw) {
-    const d = JSON.parse(raw);
-    state = { ...deepClone(DEFAULTS), ...d, uploads: d.uploads || {} };
-  }
-} catch (e) {}
+async function init() {
+  // Local fallback draft
+  try {
+    const raw = localStorage.getItem(getStorageKey());
+    if (raw) {
+      const d = JSON.parse(raw);
+      state = { ...deepClone(DEFAULTS), ...d, uploads: d.uploads || {} };
+    }
+  } catch (e) {}
 
-render();
+  // Server source-of-truth draft (order pages)
+  try {
+    const draftUrl = EA_CONFIG && EA_CONFIG.draftUrl ? String(EA_CONFIG.draftUrl) : "";
+    if (draftUrl) {
+      const nonce = EA_CONFIG && EA_CONFIG.nonce ? String(EA_CONFIG.nonce) : "";
+      const resp = await fetch(draftUrl, {
+        method: "GET",
+        headers: { ...(nonce ? { "X-WP-Nonce": nonce } : {}) },
+        credentials: "same-origin",
+      });
+      const json = await resp.json().catch(() => null);
+      const d = json && json.data ? json.data : null;
+      if (resp.ok && d && typeof d === "object") {
+        state = { ...deepClone(DEFAULTS), ...d, uploads: d.uploads || {} };
+      }
+    }
+  } catch (e) {}
+
+  render();
+}
+
+init();
