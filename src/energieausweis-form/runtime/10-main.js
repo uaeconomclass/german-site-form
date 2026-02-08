@@ -498,9 +498,10 @@ function renderFields(step) {
           const mime = String(item.mime || "");
           const isImg = isProbablyImage(mime, name);
 
+          // Prefer server-backed previews for uploaded files. `blob:` preview URLs are session-only.
           const thumbSrc =
-            item.previewUrl ? String(item.previewUrl) :
-            (item.fileId && cfg ? buildUrl(cfg.downloadUrl, { orderId: cfg.orderId, fileId: item.fileId, inline: 1 }) : "");
+            (item.fileId && cfg ? buildUrl(cfg.downloadUrl, { orderId: cfg.orderId, fileId: item.fileId, inline: 1 }) : "") ||
+            (item.previewUrl ? String(item.previewUrl) : "");
 
           const thumb = isImg && thumbSrc
             ? el("img", { class: "up-thumb", src: thumbSrc, alt: name, loading: "lazy" })
@@ -828,10 +829,28 @@ function exportData() {
     if (isEmpty(out[k])) delete out[k];
   }
   if (out.uploads) {
+    // Persist uploads in a portable format. Do NOT store `blob:` preview URLs or local-only IDs,
+    // because they break after reload and can surface as "broken links" in the UI.
     const u = {};
-    for (const [k, v] of Object.entries(out.uploads)) if (v && v.length) u[k] = v;
+    for (const [k, v] of Object.entries(out.uploads)) {
+      const arr = Array.isArray(v) ? v : [];
+      const kept = arr
+        .map((it) => {
+          if (!it || typeof it !== "object") return null;
+          const fileId = it.fileId ? String(it.fileId) : "";
+          if (!fileId) return null; // only keep server-backed uploads
+          return {
+            fileId,
+            name: it.name ? String(it.name) : "",
+            size: it.size != null ? Number(it.size) : undefined,
+            mime: it.mime ? String(it.mime) : "",
+          };
+        })
+        .filter(Boolean);
+      if (kept.length) u[k] = kept;
+    }
     out.uploads = u;
-    if (Object.keys(out.uploads).length === 0) delete out.uploads;
+    if (Object.keys(u).length === 0) delete out.uploads;
   }
   out._meta = { createdAt: new Date().toISOString(), spec: "src/energieausweis-form/spec/*" };
   return out;
