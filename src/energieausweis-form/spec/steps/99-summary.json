@@ -7,6 +7,17 @@
     {
       "title": "Rechnungsdaten",
       "fields": [
+        {
+          "key": "rechnung_auftragsart",
+          "label": "Auftragsart",
+          "type": "radio",
+          "required": true,
+          "options": [
+            { "value": "Privat-Eigentuemer", "label": "Privat-Eigentuemer" },
+            { "value": "Gewerblich", "label": "Gewerblich" },
+            { "value": "Gewerblich_ohne_UStId", "label": "Gewerblich ohne USt.ID" }
+          ]
+        },
         { "key": "rechnung_vorname", "label": "Vorname", "type": "text", "required": true, "hint": "Vorname" },
         { "key": "rechnung_nachname", "label": "Nachname", "type": "text", "required": true, "hint": "Nachname" },
         { "key": "rechnung_email", "label": "E-Mail", "type": "text", "required": true, "pattern": "^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$", "hint": "emailexample@gmail.com" },
