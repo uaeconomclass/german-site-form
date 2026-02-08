@@ -86,15 +86,22 @@ add_shortcode('energieausweis_form', function ($atts = array(), $content = '') {
               <div class="muted small">Wir berechnen Ihre aktuelle Energieeffizienzklasse automatisch anhand Ihrer Angaben.</div>
             </div>
             <div class="eff-right">
+             <div class="potenz jetzt">
+				<svg width="13" height="15" viewBox="0 0 13 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<path d="M13 0H0V9L6.5 14.5L13 9V0Z" fill="#5D5A88"/>
+				</svg>
+
+                <span class="muted small">Jetzt</span>
+              </div>
               <div class="rating" aria-hidden="true" style="--marker: 66%">
                 <span class="r r1">A+</span><span class="r r2">A</span><span class="r r3">B</span><span class="r r4">C</span><span class="r r5">D</span><span class="r r6">E</span><span class="r r7">F</span><span class="r r8">G</span><span class="r r9">H</span>
               </div>
               <div class="potenz">
                 <span class="pico" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M3 11.5 12 4l9 7.5"></path>
-                    <path d="M5.5 10.8V20h13V10.8"></path>
-                  </svg>
+					<svg width="13" height="15" viewBox="0 0 13 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<path d="M13 14.5H0V5.5L6.5 0L13 5.5V14.5Z" fill="#5D5A88"/>
+					</svg>
+
                 </span>
                 <span class="muted small">Potenz</span>
               </div>

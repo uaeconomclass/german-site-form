@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Energieausweis Form
  * Description: Data-driven Energieausweis form embedded via shortcode, with draft storage on ea_order posts.
- * Version: 0.1.19
+ * Version: 0.1.20
  * Author: uaeconomclass
  */
 
@@ -13,7 +13,7 @@ if (!defined('ABSPATH')) {
 define('EA_FORM_PLUGIN_FILE', __FILE__);
 define('EA_FORM_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('EA_FORM_PLUGIN_URL', plugin_dir_url(__FILE__));
-define('EA_FORM_PLUGIN_VERSION', '0.1.19');
+define('EA_FORM_PLUGIN_VERSION', '0.1.20');
 
 register_activation_hook(__FILE__, function () {
     // Ensure CPT rewrites are registered, then flush once on activation.

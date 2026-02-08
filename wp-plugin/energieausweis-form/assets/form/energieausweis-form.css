@@ -165,11 +165,12 @@ code{ font-family:var(--mono); font-size:.95em; }
   justify-content:center;
   gap:6px;
 }
+
+
 .pico{
   width:18px;
   height:18px;
   border-radius:7px;
-  background:#f2f4f7;
   border:1px solid var(--border);
   display:flex;
   align-items:center;
