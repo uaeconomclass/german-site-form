@@ -35,15 +35,44 @@ code{ font-family:var(--mono); font-size:.95em; }
 /* Optional note above the form (WP landing pages) */
 .ea-ordersnote{
   max-width:1080px;
-  margin:14px auto 0;
+  margin:10px auto 2px;
   padding:0 14px;
   font-size:14px;
+  display:flex;
+  justify-content:flex-end;
 }
 .ea-ordersnote a{
-  color:var(--blue);
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:8px 12px;
+  border:1px solid var(--border);
+  border-radius:999px;
+  background:rgba(255,255,255,.75);
+  box-shadow:0 2px 8px rgba(16, 24, 40, .05);
+  color:var(--muted);
+  font-weight:600;
   text-decoration:none;
 }
-.ea-ordersnote a:hover{ text-decoration:underline; }
+.ea-ordersnote a:hover{
+  background:#fff;
+  border-color:#d0d5dd;
+  color:var(--text);
+}
+.ea-ordersnote-ico{
+  width:18px;
+  height:18px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:999px;
+  background:var(--surface2);
+  border:1px solid var(--border);
+  color:var(--muted);
+  font-size:12px;
+  line-height:1;
+}
+.ea-ordersnote-count{ opacity:.85; }
 
 .stepsbar{
   display:flex;

@@ -43,9 +43,9 @@ function ea_form_render_previous_orders_link() {
     if ($count <= 0) return '';
 
     $url = home_url('/mein-bereich/');
-    $label = 'Vorherige Anfragen ansehen (' . $count . ')';
+    $label = 'Vorherige Anfragen ansehen';
 
-    return '<div class="ea-ordersnote"><a href="' . esc_url($url) . '">' . esc_html($label) . '</a></div>';
+    return '<div class="ea-ordersnote"><a href="' . esc_url($url) . '"><span class="ea-ordersnote-ico" aria-hidden="true">↩</span><span class="ea-ordersnote-text">' . esc_html($label) . '</span><span class="ea-ordersnote-count">(' . (int) $count . ')</span></a></div>';
 }
 
 add_shortcode('energieausweis_form', function ($atts = array(), $content = '') {
