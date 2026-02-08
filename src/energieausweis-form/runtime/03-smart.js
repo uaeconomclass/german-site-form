@@ -64,5 +64,33 @@ const AFTER_CHANGE = {
       if (isEmpty(state.nwg_kuehlung)) state.nwg_kuehlung = "Split-Klima";
     }
   },
+  billing_same_as_object: (state, changedKey) => {
+    const flagKey = "rechnung_gleich_objektadresse";
+    const billingKeys = ["rechnung_strasse_hausnummer", "rechnung_plz", "rechnung_ort"];
+
+    const objStreet = String(state.strasse || "").trim();
+    const objNo = String(state.hausnummer || "").trim();
+    const objPlz = String(state.plz || "").trim();
+    const objOrt = String(state.ort || "").trim();
+    const expectedStreet = (objStreet + (objStreet && objNo ? " " : "") + objNo).trim();
+
+    if (changedKey === flagKey) {
+      if (state[flagKey] !== true) return;
+      // Copy once on toggle.
+      if (!isEmpty(expectedStreet)) state.rechnung_strasse_hausnummer = expectedStreet;
+      if (!isEmpty(objPlz)) state.rechnung_plz = objPlz;
+      if (!isEmpty(objOrt)) state.rechnung_ort = objOrt;
+      return;
+    }
+
+    // If user edits billing address after copying, uncheck the flag (we do not re-sync).
+    if (state[flagKey] === true && billingKeys.includes(changedKey)) {
+      const same =
+        String(state.rechnung_strasse_hausnummer || "").trim() === expectedStreet &&
+        String(state.rechnung_plz || "").trim() === objPlz &&
+        String(state.rechnung_ort || "").trim() === objOrt;
+      if (!same) state[flagKey] = false;
+    }
+  },
 };
 

@@ -2,6 +2,7 @@
   "id": "summary",
   "title": "Zahlung & Bestellung",
   "meta": "7",
+  "afterChangeRef": "billing_same_as_object",
   "intro": { "title": "Zahlung & Bestellung", "text": "In nur einem Schritt zu Ihrem Energieausweis." },
   "blocks": [
     {
@@ -23,7 +24,8 @@
         { "key": "rechnung_email", "label": "E-Mail", "type": "text", "required": true, "pattern": "^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$", "hint": "emailexample@gmail.com" },
         { "key": "rechnung_strasse_hausnummer", "label": "Straße & Hausnummer", "type": "text", "required": true, "hint": "Musterstraße 12, 23345 Musterstadt" },
         { "key": "rechnung_plz", "label": "PLZ", "type": "text", "required": true, "pattern": "^\\d{5}$", "hint": "23345" },
-        { "key": "rechnung_ort", "label": "Ort", "type": "text", "required": true, "hint": "München" }
+        { "key": "rechnung_ort", "label": "Ort", "type": "text", "required": true, "hint": "München" },
+        { "key": "rechnung_gleich_objektadresse", "label": "Rechnungsadresse entspricht Objektadresse", "type": "checkbox", "required": false, "full": true }
       ]
     }
   ]
