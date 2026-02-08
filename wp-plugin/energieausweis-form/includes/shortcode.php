@@ -19,6 +19,35 @@ function ea_form_page_context_title() {
     return 'Energieausweis';
 }
 
+function ea_form_user_orders_count($user_id) {
+    $user_id = (int) $user_id;
+    if ($user_id <= 0) return 0;
+
+    $q = new WP_Query(array(
+        'post_type' => array('wg', 'nwg', 'misch'),
+        'post_status' => array('publish'),
+        'author' => $user_id,
+        'fields' => 'ids',
+        'posts_per_page' => 1,
+        'no_found_rows' => false, // we need found_posts
+    ));
+    return (int) $q->found_posts;
+}
+
+function ea_form_render_previous_orders_link() {
+    if (!is_user_logged_in()) return '';
+    // Only show on non-order pages.
+    if (is_singular(array('wg', 'nwg', 'misch'))) return '';
+
+    $count = ea_form_user_orders_count(get_current_user_id());
+    if ($count <= 0) return '';
+
+    $url = home_url('/mein-bereich/');
+    $label = 'Vorherige Anfragen ansehen (' . $count . ')';
+
+    return '<div class="ea-ordersnote"><a href="' . esc_url($url) . '">' . esc_html($label) . '</a></div>';
+}
+
 add_shortcode('energieausweis_form', function ($atts = array(), $content = '') {
     if (function_exists('ea_form_plugin_enqueue_assets')) {
         ea_form_plugin_enqueue_assets();
@@ -28,6 +57,7 @@ add_shortcode('energieausweis_form', function ($atts = array(), $content = '') {
     ob_start();
     ?>
       <div class="ea-form-root">
+        <?php echo ea_form_render_previous_orders_link(); ?>
         <div class="wrap">
           <div class="stepsbar" id="topStepper" aria-label="Schritte"></div>
 

@@ -42,7 +42,10 @@ function ea_form_plugin_enqueue_assets() {
     } else {
         $page_id = get_the_ID();
         $config['pageId'] = $page_id;
-        if (is_user_logged_in()) {
+        // Landing pages should not auto-create orders by default.
+        // If later needed, enable via filter.
+        $enable_create = (bool) apply_filters('ea_form_enable_order_create', false, $page_id);
+        if ($enable_create && is_user_logged_in()) {
             $config['createUrl'] = rest_url('ea/v1/order-create');
         }
     }
