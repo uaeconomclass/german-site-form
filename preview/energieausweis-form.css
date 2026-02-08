@@ -179,14 +179,14 @@ code{ font-family:var(--mono); font-size:.95em; }
 
 .rating{
   display:flex;
-  border-radius:999px;
+  /*border-radius:999px;*/
   overflow:hidden;
-  border:1px solid var(--border);
+  /*border:1px solid var(--border);*/
   background:#fff;
   height:24px;
   align-items:stretch;
   position:relative;
-  --notch: 7px;
+  --notch: 14px;
 }
 .r{
   flex:1 1 0;
@@ -203,7 +203,7 @@ code{ font-family:var(--mono); font-size:.95em; }
   clip-path: polygon(0 0, calc(100% - var(--notch)) 0, 100% 50%, calc(100% - var(--notch)) 100%, 0 100%, var(--notch) 50%);
 }
 .r:first-child{
-  clip-path: polygon(0 0, calc(100% - var(--notch)) 0, 100% 50%, calc(100% - var(--notch)) 100%, 0 100%);
+  /*clip-path: polygon(0 0, calc(100% - var(--notch)) 0, 100% 50%, calc(100% - var(--notch)) 100%, 0 100%);*/
 }
 .r:last-child{
   clip-path: none;
@@ -211,6 +211,7 @@ code{ font-family:var(--mono); font-size:.95em; }
 .r:not(:first-child){
   /* Slight overlap to reduce visible gaps between segments. */
   margin-left: calc(var(--notch) * -0.55);
+  clip-path: polygon(0 0, calc(100% - var(--notch)) 0, 100% 50%, calc(100% - var(--notch)) 100%, 0 100%, var(--notch) 50%);
 }
 .r1{ background:#16a34a; color:#fff; }
 .r2{ background:#22c55e; color:#05331c; }
