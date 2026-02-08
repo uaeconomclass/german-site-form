@@ -165,6 +165,13 @@ code{ font-family:var(--mono); font-size:.95em; }
   gap:6px;
 }
 
+/* Efficiency bar markers: allow positioning via percent left padding (0..100). */
+.eff-right .potenz{
+  width:100%;
+  box-sizing:border-box;
+  padding-left: var(--pos, 0%);
+}
+
 
 .pico{
   width:18px;

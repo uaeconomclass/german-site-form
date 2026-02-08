@@ -278,6 +278,95 @@ function buildObjectAddressLabel() {
   return out || "—";
 }
 
+function clampPct(n) {
+  const v = Number(n);
+  if (!Number.isFinite(v)) return 50;
+  return clamp(v, 0, 100);
+}
+
+function computeEfficiencyMarkerPct() {
+  // Heuristic-only: 0% = best (green/A+), 100% = worst (red/H).
+  // We base it on a few "big" fields that exist in our form spec.
+  //
+  // The goal is plausibility, not legal correctness.
+  let pct = 58; // neutral-ish default around D/E
+
+  const y = Number(state.baujahr);
+  if (Number.isFinite(y)) {
+    if (y < 1978) pct += 18;
+    else if (y < 1995) pct += 10;
+    else if (y >= 2009) pct -= 6;
+  }
+
+  const ft = String(state.fenster_type || "");
+  if (ft === "Einfachverglasung") pct += 16;
+  else if (ft === "Kastenfenster") pct += 13;
+  else if (ft === "Isolierglas alt") pct += 8;
+  else if (ft === "Wärmeschutzglas") pct -= 6;
+  else if (ft === "3-fach Wärmeschutzglas") pct -= 9;
+
+  const aw = String(state.aussenwand_type || "");
+  if (aw === "WDVS vorhanden") pct -= 6;
+  else if (aw === "Fachwerk") pct += 6;
+  else if (aw === "Vollziegel / Naturstein") pct += 4;
+
+  const kt = String(state.heizung_kesseltyp || "");
+  if (kt === "Konstanttemperatur") pct += 12;
+  else if (kt === "Niedertemperatur") pct += 6;
+  else if (kt === "Brennwert") pct -= 4;
+  else if (kt === "Wärmepumpe") pct -= 7;
+
+  // Conservative clamp to avoid overflowing outside the bar.
+  return clamp(pct, 2, 98);
+}
+
+function computeEfficiencyPotenzPct(nowPct) {
+  // "Potenz" = improvement potential (better than now -> more left).
+  // We give more improvement if key parts aren't in "best" state.
+  let delta = 8;
+
+  const ft = String(state.fenster_type || "");
+  if (ft && ft !== "3-fach Wärmeschutzglas") delta += 4;
+
+  const aw = String(state.aussenwand_type || "");
+  if (aw && aw !== "WDVS vorhanden") delta += 2;
+
+  const kt = String(state.heizung_kesseltyp || "");
+  if (kt && kt !== "Wärmepumpe" && kt !== "Brennwert") delta += 2;
+
+  const y = Number(state.baujahr);
+  if (Number.isFinite(y) && y < 1978) delta += 2;
+
+  delta = clamp(delta, 6, 18);
+  return clamp(nowPct - delta, 2, 98);
+}
+
+function updateEfficiencyMarkers() {
+  // Markers are present in the header markup (WP shortcode + preview).
+  // We move them with percent padding-left via CSS var `--pos`.
+  try {
+    const root = document.querySelector(".eff-right");
+    if (!root) return;
+
+    const elNow = root.querySelector(".potenz.jetzt");
+    const elPot = root.querySelector(".potenz:not(.jetzt)");
+    if (!elNow && !elPot) return;
+
+    // If author wants manual control, allow opt-out:
+    // set `data-manual-pos="1"` on the marker element.
+    const manualNow = elNow && elNow.getAttribute("data-manual-pos") === "1";
+    const manualPot = elPot && elPot.getAttribute("data-manual-pos") === "1";
+
+    // If key info is missing, keep stable defaults (still visible but neutral).
+    const hasAny = !isEmpty(state.baujahr) || !isEmpty(state.fenster_type) || !isEmpty(state.heizung_kesseltyp);
+    const nowPct = hasAny ? computeEfficiencyMarkerPct() : 60;
+    const potPct = hasAny ? computeEfficiencyPotenzPct(nowPct) : 45;
+
+    if (elNow && !manualNow) elNow.style.setProperty("--pos", clampPct(nowPct) + "%");
+    if (elPot && !manualPot) elPot.style.setProperty("--pos", clampPct(potPct) + "%");
+  } catch (e) {}
+}
+
 function renderSelectedOptionTip(field, value) {
   const { opt } = selectedOptionFor(field, value);
   const key = opt && opt.tipKey;
@@ -957,6 +1046,7 @@ function render() {
   renderStepper();
   runPlausibilityWarnings();
   updateOverview();
+  updateEfficiencyMarkers();
 }
 
 // Buttons
