@@ -29,6 +29,89 @@ const TIPS = TOOL_TIPS_DE || {};
 const EA_CFG = (typeof window !== "undefined" && window.EA_CONFIG) ? window.EA_CONFIG : null;
 const EA_ASSETS_BASE = EA_CFG && EA_CFG.assetsBaseUrl ? String(EA_CFG.assetsBaseUrl) : "";
 
+// Upload helpers (WP plugin)
+const UPLOAD_FILE_CACHE = new Map(); // localId -> File
+const UPLOAD_INFLIGHT = new Set(); // localId
+
+function bytesHuman(n) {
+  const b = Number(n || 0);
+  if (!Number.isFinite(b) || b <= 0) return "0 B";
+  const units = ["B", "KB", "MB", "GB"];
+  let v = b, i = 0;
+  while (v >= 1024 && i < units.length - 1) { v /= 1024; i++; }
+  return (i === 0 ? String(Math.round(v)) : v.toFixed(1)) + " " + units[i];
+}
+
+function extOf(name) {
+  const s = String(name || "");
+  const m = s.toLowerCase().match(/\.([a-z0-9]{1,8})$/);
+  return m ? m[1] : "";
+}
+
+function isProbablyImage(mime, name) {
+  const mt = String(mime || "").toLowerCase();
+  if (mt.startsWith("image/")) return true;
+  const e = extOf(name);
+  return ["jpg", "jpeg", "png", "webp", "gif", "heic", "heif"].includes(e);
+}
+
+function getUploadCfg() {
+  if (!EA_CFG || !EA_CFG.orderId) return null;
+  const orderId = String(EA_CFG.orderId);
+  const nonce = EA_CFG.nonce ? String(EA_CFG.nonce) : "";
+  const uploadUrl = EA_CFG.uploadUrl ? String(EA_CFG.uploadUrl) : "";
+  const downloadUrl = EA_CFG.uploadDownloadUrl ? String(EA_CFG.uploadDownloadUrl) : "";
+  const deleteUrl = EA_CFG.uploadDeleteUrl ? String(EA_CFG.uploadDeleteUrl) : "";
+  if (!orderId || !uploadUrl || !downloadUrl || !deleteUrl) return null;
+  return { orderId, nonce, uploadUrl, downloadUrl, deleteUrl };
+}
+
+function buildUrl(base, params) {
+  const u = new URL(String(base), location.href);
+  Object.entries(params || {}).forEach(([k, v]) => {
+    if (v == null || v === "") return;
+    u.searchParams.set(k, String(v));
+  });
+  return u.toString();
+}
+
+async function apiUploadFile(fieldKey, file, localId) {
+  const cfg = getUploadCfg();
+  if (!cfg) return { ok: false, error: "no_cfg" };
+
+  const fd = new FormData();
+  fd.append("fieldKey", String(fieldKey));
+  fd.append("file", file, file.name);
+
+  const url = buildUrl(cfg.uploadUrl, { orderId: cfg.orderId });
+  const resp = await fetch(url, {
+    method: "POST",
+    headers: { ...(cfg.nonce ? { "X-WP-Nonce": cfg.nonce } : {}) },
+    body: fd,
+    credentials: "same-origin",
+  });
+  const json = await resp.json().catch(() => null);
+  if (!resp.ok || !json || !json.fileId) {
+    return { ok: false, error: (json && json.message) ? String(json.message) : "upload_failed" };
+  }
+  return { ok: true, file: json };
+}
+
+async function apiDeleteFile(fileId) {
+  const cfg = getUploadCfg();
+  if (!cfg) return { ok: false, error: "no_cfg" };
+  const url = buildUrl(cfg.deleteUrl, { orderId: cfg.orderId, fileId });
+  const resp = await fetch(url, {
+    method: "POST",
+    headers: { ...(cfg.nonce ? { "X-WP-Nonce": cfg.nonce } : {}), "Content-Type": "application/json" },
+    body: JSON.stringify({ fileId }),
+    credentials: "same-origin",
+  });
+  const json = await resp.json().catch(() => null);
+  if (!resp.ok || !(json && json.ok)) return { ok: false, error: "delete_failed" };
+  return { ok: true };
+}
+
 function resolveAssetUrl(p) {
   const s = String(p || "");
   if (!s) return s;
@@ -349,18 +432,151 @@ function renderFields(step) {
         });
         optionTip = renderSelectedOptionTip(field, val);
       } else if (field.type === "file") {
-        control = el("div", { class: "upload" }, el("div", { class: "row" }, el("b", null, "Upload"), el("span", null, (field.accept || "").replaceAll(",", ", "))));
-        const inp = el("input", { type: "file", name: key, accept: field.accept || "", ...(field.multiple ? { multiple: true } : {}) });
-        const list = el("div", { class: "filelist", id: "file_" + key });
-        const saved = state.uploads[key] || [];
-        if (saved.length) list.textContent = "Ausgewählt: " + saved.join(", ");
+        const cfg = getUploadCfg(); // null on landing pages or when not logged in
+        const accept = String(field.accept || "");
+        const maxFiles = field.maxFiles != null ? Number(field.maxFiles) : (field.multiple ? 30 : 1);
+
+        // Normalize legacy string-array uploads to object-array.
+        const savedRaw = state.uploads[key] || [];
+        const saved = Array.isArray(savedRaw)
+          ? savedRaw.map((it) => (typeof it === "string" ? ({ name: it, status: "legacy" }) : it))
+          : [];
+        state.uploads[key] = saved;
+
+        const note = el("div", { class: "up-note muted small" },
+          field.multiple ? ("Upload: bis zu " + String(maxFiles) + " Dateien") : "Upload: 1 Datei",
+          accept ? (" · Formate: " + accept.replaceAll(",", ", ")) : ""
+        );
+
+        const inp = el("input", { class: "up-input", type: "file", name: key, accept, ...(field.multiple ? { multiple: true } : {}) });
+        const btnPick = el("button", { type: "button", class: "btn secondary up-pick", onclick: () => inp.click() }, "Datei auswählen");
+        const drop = el(
+          "div",
+          { class: "up-drop", role: "button", tabindex: "0" },
+          el("div", { class: "up-ico", "aria-hidden": "true" }, "⬆"),
+          el("div", { class: "up-t1" }, "Dateien per Drag & Drop hochladen"),
+          el("div", { class: "up-t2 muted small" }, "Privat. Nur für Sie sichtbar."),
+          btnPick
+        );
+
+        const grid = el("div", { class: "up-grid" });
+
+        const renderItem = (item) => {
+          const name = String(item.name || "");
+          const size = item.size != null ? bytesHuman(item.size) : "";
+          const mime = String(item.mime || "");
+          const isImg = isProbablyImage(mime, name);
+
+          const thumbSrc =
+            item.previewUrl ? String(item.previewUrl) :
+            (item.fileId && cfg ? buildUrl(cfg.downloadUrl, { orderId: cfg.orderId, fileId: item.fileId, inline: 1 }) : "");
+
+          const thumb = isImg && thumbSrc
+            ? el("img", { class: "up-thumb", src: thumbSrc, alt: name, loading: "lazy" })
+            : el("div", { class: "up-file" }, el("div", { class: "up-file-ico" }, "PDF"), el("div", { class: "up-file-name" }, name));
+
+          const status =
+            item.status === "uploading" ? "Uploading..." :
+            item.status === "error" ? "Fehler" :
+            item.status === "uploaded" ? "OK" : "";
+
+          const metaLine = el("div", { class: "up-meta muted small" }, [size, status].filter(Boolean).join(" · "));
+
+          const btnDel = el("button", { type: "button", class: "up-del", title: "Entfernen" }, "🗑");
+          btnDel.addEventListener("click", async () => {
+            // remove locally first (snappy UI)
+            const arr = state.uploads[key] || [];
+            const idx = arr.indexOf(item);
+            if (idx >= 0) arr.splice(idx, 1);
+            state.uploads[key] = arr;
+            try {
+              if (item.previewUrl) URL.revokeObjectURL(String(item.previewUrl));
+            } catch (e) {}
+            render();
+
+            if (item.fileId && cfg) {
+              await apiDeleteFile(String(item.fileId)).catch(() => {});
+            }
+          });
+
+          const card = el("div", { class: "up-item" }, btnDel, thumb, el("div", { class: "up-cap" }, name), metaLine);
+          return card;
+        };
+
+        const renderGrid = () => {
+          grid.innerHTML = "";
+          (state.uploads[key] || []).forEach((it) => grid.appendChild(renderItem(it)));
+        };
+
+        const acceptedExts = accept
+          .split(",")
+          .map((s) => s.trim().toLowerCase())
+          .filter(Boolean)
+          .map((s) => (s.startsWith(".") ? s.slice(1) : s));
+
+        const addFiles = (files) => {
+          const arr = state.uploads[key] || [];
+          const list = Array.from(files || []);
+          for (const f of list) {
+            if (arr.length >= maxFiles) break;
+            const e = extOf(f.name);
+            if (acceptedExts.length && e && !acceptedExts.includes(e)) {
+              arr.push({ name: f.name, size: f.size, mime: f.type, status: "error", error: "format" });
+              continue;
+            }
+            const localId = "l_" + Math.random().toString(36).slice(2);
+            const previewUrl = URL.createObjectURL(f);
+            const item = { localId, name: f.name, size: f.size, mime: f.type, previewUrl, status: cfg ? "uploading" : "local" };
+            UPLOAD_FILE_CACHE.set(localId, f);
+            arr.push(item);
+
+            if (cfg) {
+              // Kick off upload in background.
+              (async () => {
+                if (UPLOAD_INFLIGHT.has(localId)) return;
+                UPLOAD_INFLIGHT.add(localId);
+                try {
+                  const res = await apiUploadFile(key, f, localId);
+                  if (!res.ok) {
+                    item.status = "error";
+                    item.error = res.error || "upload_failed";
+                  } else {
+                    item.status = "uploaded";
+                    item.fileId = String(res.file.fileId);
+                    item.mime = res.file.mime || item.mime;
+                    item.size = res.file.size || item.size;
+                  }
+                } catch (e) {
+                  item.status = "error";
+                  item.error = "upload_failed";
+                } finally {
+                  UPLOAD_INFLIGHT.delete(localId);
+                  UPLOAD_FILE_CACHE.delete(localId);
+                  // Keep server draft in sync (best effort).
+                  saveDraftServer(exportData(), { reason: "upload", fieldKey: key, at: new Date().toISOString() });
+                  render();
+                }
+              })();
+            }
+          }
+          state.uploads[key] = arr;
+          render();
+        };
+
         inp.addEventListener("change", () => {
-          const names = Array.from(inp.files || []).map((f) => f.name);
-          state.uploads[key] = names;
-          list.textContent = names.length ? "Ausgewählt: " + names.join(", ") : "";
+          addFiles(inp.files);
+          try { inp.value = ""; } catch (e) {}
         });
-        control.appendChild(inp);
-        control.appendChild(list);
+
+        const stop = (e) => { e.preventDefault(); e.stopPropagation(); };
+        ["dragenter", "dragover"].forEach((ev) => drop.addEventListener(ev, (e) => { stop(e); drop.classList.add("drag"); }));
+        ["dragleave", "drop"].forEach((ev) => drop.addEventListener(ev, (e) => { stop(e); drop.classList.remove("drag"); }));
+        drop.addEventListener("drop", (e) => addFiles(e.dataTransfer && e.dataTransfer.files));
+        drop.addEventListener("click", () => inp.click());
+        drop.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); inp.click(); } });
+
+        renderGrid();
+        control = el("div", { class: "upbox" }, note, drop, inp, grid);
       } else if (field.type === "repeater") {
         const items = Array.isArray(val) ? val : [];
         const itemLabel = field.itemLabel || "Eintrag";

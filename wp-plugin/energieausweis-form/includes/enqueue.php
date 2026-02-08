@@ -39,6 +39,9 @@ function ea_form_plugin_enqueue_assets() {
         $order_id = get_the_ID();
         $config['orderId'] = $order_id;
         $config['draftUrl'] = add_query_arg('orderId', $order_id, rest_url('ea/v1/order-draft'));
+        $config['uploadUrl'] = rest_url('ea/v1/order-upload');
+        $config['uploadDownloadUrl'] = rest_url('ea/v1/order-upload-download');
+        $config['uploadDeleteUrl'] = rest_url('ea/v1/order-upload-delete');
     } else {
         $page_id = get_the_ID();
         $config['pageId'] = $page_id;
