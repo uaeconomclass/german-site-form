@@ -1,8 +1,8 @@
 {
   "id": "summary",
-  "title": "Zusammenfassung",
+  "title": "Zahlung & Bestellung",
   "meta": "7",
-  "intro": { "title": "Fertig", "text": "JSON-Export der eingegebenen Daten." },
+  "intro": { "title": "Zahlung & Bestellung", "text": "In nur einem Schritt zu Ihrem Energieausweis." },
   "fields": []
 }
 
