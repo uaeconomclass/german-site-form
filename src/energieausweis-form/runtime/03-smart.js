@@ -31,8 +31,9 @@ const AFTER_CHANGE = {
     }
 
     // Auto-classification (Relevanz-Check) per 06.02 spec.
+    // If user edits the relevanz-check inputs, re-enable auto classification (manual override is no longer trusted).
     if (changedKey !== "misch_nutzung" && changedKey !== "misch_gewerbe_anteil") return;
-    if (state.__gebaeudetyp_manual === "1") return;
+    state.__gebaeudetyp_manual = "";
 
     const nutzung = String(state.misch_nutzung || "");
     if (nutzung && nutzung !== "Kombination") {
