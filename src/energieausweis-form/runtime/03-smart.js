@@ -16,6 +16,45 @@ const AFTER_CHANGE = {
       if (isEmpty(state[k])) state[k] = v;
     }
   },
+  smart_step2_split: (state, changedKey) => {
+    // If the user explicitly changes the building type, do not fight them with auto-classification.
+    if (changedKey === "gebaeudetyp") state.__gebaeudetyp_manual = "1";
+
+    // Keep existing WG smart-suggestions (only on Baujahr changes).
+    if (changedKey === "baujahr") {
+      const sug = smartSuggestForWG(state.baujahr);
+      if (sug) {
+        for (const [k, v] of Object.entries(sug)) {
+          if (isEmpty(state[k])) state[k] = v;
+        }
+      }
+    }
+
+    // Auto-classification (Relevanz-Check) per 06.02 spec.
+    if (changedKey !== "misch_nutzung" && changedKey !== "misch_gewerbe_anteil") return;
+    if (state.__gebaeudetyp_manual === "1") return;
+
+    const nutzung = String(state.misch_nutzung || "");
+    if (nutzung && nutzung !== "Kombination") {
+      // Not needed if there's no combination.
+      state.misch_gewerbe_anteil = "";
+    }
+
+    const infer = () => {
+      if (nutzung === "Wohnen") return "WG";
+      if (nutzung === "Gewerbe") return "NWG";
+      if (nutzung === "Kombination") {
+        const a = String(state.misch_gewerbe_anteil || "");
+        if (a === "unter 10%") return "WG";      // <= 10%
+        if (a === "ca. 10–50%") return "MISCH";  // 10–50%
+        if (a === "über 50%") return "NWG";      // > 50%
+      }
+      return "";
+    };
+
+    const nextType = infer();
+    if (nextType) state.gebaeudetyp = nextType;
+  },
   smart_nwg: (state, changedKey) => {
     if (changedKey !== "baujahr" && changedKey !== "nwg_nutzung" && changedKey !== "ausweisart" && changedKey !== "gebaeudetyp") return;
     if (state.gebaeudetyp !== "NWG") return;

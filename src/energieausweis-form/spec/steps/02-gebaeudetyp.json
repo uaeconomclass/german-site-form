@@ -2,12 +2,42 @@
   "id": "gebaeudetyp",
   "title": "Gebäude-Stammdaten",
   "meta": "2",
-  "afterChangeRef": "smart_wg_baujahr",
+  "afterChangeRef": "smart_step2_split",
   "intro": {
     "title": "Gebäudetyp",
     "text": "Das ist der wichtigste Abzweig der Form."
   },
   "blocks": [
+    {
+      "title": "Relevanz-Check",
+      "fields": [
+        {
+          "key": "misch_nutzung",
+          "label": "Welche Nutzung liegt im Gebäude vor?",
+          "type": "radio",
+          "required": true,
+          "full": true,
+          "options": [
+            { "value": "Wohnen", "label": "Wohnen" },
+            { "value": "Gewerbe", "label": "Gewerbe" },
+            { "value": "Kombination", "label": "Kombination aus Wohnen und Gewerbe" }
+          ]
+        },
+        {
+          "key": "misch_gewerbe_anteil",
+          "label": "Wie groß ist der gewerbliche Anteil ungefähr?",
+          "type": "radio",
+          "full": true,
+          "when": { "eq": ["misch_nutzung", "Kombination"] },
+          "required": { "eq": ["misch_nutzung", "Kombination"] },
+          "options": [
+            { "value": "unter 10%", "label": "unter 10%" },
+            { "value": "ca. 10–50%", "label": "ca. 10–50%" },
+            { "value": "über 50%", "label": "über 50%" }
+          ]
+        }
+      ]
+    },
     {
       "title": "",
       "fields": [
