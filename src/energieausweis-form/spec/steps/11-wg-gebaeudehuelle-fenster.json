@@ -24,20 +24,6 @@
         { "value": "unbekannt", "label": "unbekannt", "img": "../assets/images/aussenwand/wdvs-querschnitt.png" }
       ]
     },
-    {
-      "type": "checklist",
-      "full": true,
-      "when": { "eq": ["ausweisart", "Bedarfsausweis"] },
-      "title": "Angaben zur Wärmedämmung Abfrage WICHTIG:",
-      "text": "Bitte markieren Sie, welche Bauteile gedämmt sind."
-    },
-    { "key": "waermedaemmung_aussenwand", "label": "Außenwand gedämmt", "type": "checkbox", "full": true, "when": { "eq": ["ausweisart", "Bedarfsausweis"] } },
-    { "key": "waermedaemmung_kelleraussenwand", "label": "Kelleraußenwand gedämmt", "type": "checkbox", "full": true, "when": { "eq": ["ausweisart", "Bedarfsausweis"] } },
-    { "key": "waermedaemmung_kellerdecke", "label": "Kellerdecke gedämmt", "type": "checkbox", "full": true, "when": { "eq": ["ausweisart", "Bedarfsausweis"] } },
-    { "key": "waermedaemmung_dachgeschoss", "label": "Dachgeschoss gedämmt", "type": "checkbox", "full": true, "when": { "eq": ["ausweisart", "Bedarfsausweis"] } },
-    { "key": "waermedaemmung_oberste_geschossdecke", "label": "Oberste Geschossdecke gedämmt", "type": "checkbox", "full": true, "when": { "eq": ["ausweisart", "Bedarfsausweis"] } },
-    { "key": "waermedaemmung_oberste_geschossdecke_min12cm", "label": "Oberste Geschossdecke min. 12cm gedämmt", "type": "checkbox", "full": true, "when": { "eq": ["ausweisart", "Bedarfsausweis"] } },
-
     { "key": "fenster_type", "label": "Fenster (Typ)", "type": "select", "full": true, "required": true, "tipKey": "fenster_type", "optionsRef": "fenster_type" },
     { "key": "fenster_baujahr", "label": "Baujahr Fenster", "type": "number", "full": true, "required": true, "min": 1800, "max": 2100, "hint": "z. B. 2005" },
     { "key": "fenster_rahmenmaterial", "label": "Rahmenmaterial", "type": "select", "full": true, "required": false, "optionsRef": "fenster_rahmenmaterial" },

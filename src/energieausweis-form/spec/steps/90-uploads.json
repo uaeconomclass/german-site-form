@@ -104,6 +104,29 @@
     },
 
     {
+      "type": "checklist",
+      "full": true,
+      "when": { "eq": ["ausweisart", "Bedarfsausweis"] },
+      "title": "Angaben zur Wärmedämmung Abfrage WICHTIG:",
+      "text": "Bitte markieren Sie, welche Bauteile gedämmt sind."
+    },
+    { "key": "waermedaemmung_aussenwand", "label": "Außenwand gedämmt", "type": "checkbox", "full": true, "when": { "eq": ["ausweisart", "Bedarfsausweis"] } },
+    { "key": "waermedaemmung_kelleraussenwand", "label": "Kelleraußenwand gedämmt", "type": "checkbox", "full": true, "when": { "eq": ["ausweisart", "Bedarfsausweis"] } },
+    { "key": "waermedaemmung_kellerdecke", "label": "Kellerdecke gedämmt", "type": "checkbox", "full": true, "when": { "eq": ["ausweisart", "Bedarfsausweis"] } },
+    { "key": "waermedaemmung_dachgeschoss", "label": "Dachgeschoss gedämmt", "type": "checkbox", "full": true, "when": { "eq": ["ausweisart", "Bedarfsausweis"] } },
+    { "key": "waermedaemmung_oberste_geschossdecke", "label": "Oberste Geschossdecke gedämmt", "type": "checkbox", "full": true, "when": { "eq": ["ausweisart", "Bedarfsausweis"] } },
+    { "key": "waermedaemmung_oberste_geschossdecke_min12cm", "label": "Oberste Geschossdecke min. 12cm gedämmt", "type": "checkbox", "full": true, "when": { "eq": ["ausweisart", "Bedarfsausweis"] } },
+
+    {
+      "type": "checklist",
+      "full": true,
+      "when": { "eq": ["ausweisart", "Bedarfsausweis"] },
+      "title": "Angaben zur Massenangaben Abfrage WICHTIG:",
+      "text": "Bitte tragen Sie die folgenden Werte ein. Hinweis Fensteranteile: Die Gesamtfläche aller Fenster im Gebäude, gemessen von innen zwischen den Fensterlaibungen (lichte Höhe Öffnung + 3cm und lichte Breite Öffnung + 3cm). Umrechnung: 100cm = 1m. Beispiel: Küchenfenster Höhe (1,20m + 0,03m) × Breite (1,46m + 0,03m) = 1,8327 ≈ 1,833m².",
+      "img": "../assets/images/fenster/vermassung-fenster.png",
+      "imgAlt": "Fenster-Vermassung (lichte Maße + 3cm)"
+    },
+    {
       "key": "geschosshoehen",
       "label": "Geschosshöhen (m)",
       "type": "number",
