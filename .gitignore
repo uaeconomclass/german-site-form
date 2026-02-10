@@ -2,3 +2,4 @@ dist/
 tmp/
 tmp_docx_extracted.txt
 .serena/memories/
+.serena/project.yml
