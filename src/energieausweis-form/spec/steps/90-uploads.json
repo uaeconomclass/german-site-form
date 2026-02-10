@@ -8,6 +8,7 @@
       "key": "upload_verbrauch_heizkosten",
       "label": "Heizkostenabrechnungen (letzte 3 Jahre)",
       "type": "file",
+      "full": true,
       "when": { "eq": ["ausweisart", "Verbrauchsausweis"] },
       "required": { "eq": ["ausweisart", "Verbrauchsausweis"] },
       "accept": ".pdf,.jpg,.jpeg,.png",
@@ -18,6 +19,7 @@
       "key": "upload_verbrauch_verbrauchsdaten",
       "label": "Verbrauchsdaten",
       "type": "file",
+      "full": true,
       "when": { "eq": ["ausweisart", "Verbrauchsausweis"] },
       "required": { "eq": ["ausweisart", "Verbrauchsausweis"] },
       "accept": ".pdf,.jpg,.jpeg,.png",
@@ -26,27 +28,75 @@
     },
 
     {
+      "key": "checklist_bedarf_heizung",
+      "type": "checklist",
+      "when": { "eq": ["ausweisart", "Bedarfsausweis"] },
+      "full": true,
+      "title": "Bedarfsausweis – Bild-Upload – Heizungsanlage bzw. des Wärmeerzeugers",
+      "text": "Seit Mai 2021 gilt in Deutschland das Gebäudeenergiegesetz (GEG). Für die fachgerechte Erstellung des Energieausweises benötigen wir Fotos, um den energetischen Zustand beurteilen und Modernisierungsempfehlungen ableiten zu können. Wichtig: Die hochgeladenen Bilder erscheinen nicht auf dem Energieausweis und dienen ausschließlich der fachlichen Bewertung.",
+      "items": [
+        { "label": "Beispielbild der Heizungsanlage mit Heizkessel", "required": true, "note": "Heizungsraum mit Anlage fotografieren." },
+        { "label": "Beispielbild der Rohrleitungen", "required": true, "note": "Leitungen/Rohre sichtbar darstellen; Dämmzustand erkennbar." },
+        { "label": "Detailbild Typenschildes", "required": true, "note": "Foto des Typenschildes: Typ Wärmeerzeuger, Energieträger, Nennleistung, Baujahr." },
+        { "label": "Beispielbild des Heizkörpers mit Raumtemperaturregelung", "required": true, "note": "Falls vorhanden, Thermostate an Heizkörpern oder Wandthermostate fotografieren." }
+      ]
+    },
+    {
       "key": "upload_heizung_photos",
       "label": "Heizungsanlage (Fotos)",
       "type": "file",
+      "full": true,
       "required": true,
       "accept": ".jpg,.jpeg,.png",
       "multiple": true,
       "tipKey": "uploads_heizung"
     },
     {
+      "key": "checklist_bedarf_fenster",
+      "type": "checklist",
+      "when": { "eq": ["ausweisart", "Bedarfsausweis"] },
+      "full": true,
+      "title": "Bedarfsausweis – Bild-Upload – Fenster / Dachfenster / Türen",
+      "text": "Seit Mai 2021 gilt in Deutschland das Gebäudeenergiegesetz (GEG). Für die fachgerechte Erstellung des Energieausweises benötigen wir daher Fotos der Gebäudehülle, um den Sanierungszustand einschätzen und passende Modernisierungsempfehlungen geben zu können. Hinweis: Die hochgeladenen Bilder erscheinen nicht auf dem Energieausweis und werden ausschließlich zur fachlichen Bewertung verwendet.",
+      "items": [
+        { "label": "Beispielbild eines Fensters", "required": true, "note": "Bei einheitlicher Fensterart genügt ein Beispielbild, sonst je Fenstertyp ein Foto." },
+        { "label": "Nahaufnahme des Verglasungsrahmens", "required": true, "note": "Wenn möglich Nahaufnahme von Fenster bzw. Falz mit erkennbarem Datumsaufdruck am Verglasungsrahmen." },
+        { "label": "Fensterlaibung", "required": true, "note": "Fensterlaibung innen und außen." },
+        { "label": "Beispielbild eines Dachflächenfensters", "required": true, "note": "Bei einheitlicher Fensterart genügt ein Beispielbild, sonst je Fenstertyp ein Foto." },
+        { "label": "Beispielbild der Haustüre", "required": true, "note": "Bei einheitlicher Fensterart genügt ein Beispielbild, sonst je Fenstertyp ein Foto." }
+      ]
+    },
+    {
       "key": "upload_fenster_photos",
       "label": "Fenster/Dachfenster/Türen (Fotos)",
       "type": "file",
+      "full": true,
       "required": true,
       "accept": ".jpg,.jpeg,.png",
       "multiple": true,
       "tipKey": "uploads_fenster"
     },
     {
+      "key": "checklist_bedarf_daemmung",
+      "type": "checklist",
+      "when": { "eq": ["ausweisart", "Bedarfsausweis"] },
+      "full": true,
+      "title": "Bedarfsausweis – Bild-Upload – Wärmedämmung/Gebäude",
+      "text": "Seit Mai 2021 gilt in Deutschland das Gebäudeenergiegesetz (GEG). Für die fachgerechte Erstellung des Energieausweises benötigen wir Fotos zur Wärmedämmung des Gebäudes, um den energetischen Zustand beurteilen und Modernisierungsempfehlungen ableiten zu können. Wichtig: Die hochgeladenen Bilder erscheinen nicht auf dem Energieausweis und dienen ausschließlich der fachlichen Bewertung.",
+      "items": [
+        { "label": "Detailaufnahme Innenbereich Dach", "required": true, "note": "Spitzboden/Dachboden: Dämmung bzw. fehlende Dämmung soll eindeutig erkennbar sein." },
+        { "label": "Bild oberste Geschossdecke", "required": true, "note": "Dämmung und Dämmstärke abbilden. Falls nicht möglich: Randbereich und Querschnitt des Dachzugangs fotografieren." },
+        { "label": "Falls kein Dachboden", "required": true, "note": "Kein Dachboden (z. B. Flachdach)? Foto eines Dachgeschossraums mit sichtbarer Decke." },
+        { "label": "Detailbild der Außenwand", "required": true, "note": "Verkleidung/Dämmung – sofern vorhanden – mit abbilden." },
+        { "label": "Sockelbereich des Hauses", "required": true, "note": "Fassadensockel gut sichtbar. Bei WDVS muss der untere Systemabschluss erkennbar sein." },
+        { "label": "Abbildung der Kellerdecke / unterer Gebäudeabschluss", "required": true, "note": "Fotos sollen zeigen, ob die Kellerdecke gedämmt ist oder nicht; Kellerdecke eindeutig erkennbar." }
+      ]
+    },
+    {
       "key": "upload_daemmung_photos",
       "label": "Wärmedämmung (Fotos)",
       "type": "file",
+      "full": true,
       "required": true,
       "accept": ".jpg,.jpeg,.png",
       "multiple": true,
@@ -57,6 +107,7 @@
       "key": "geschosshoehen",
       "label": "Geschosshöhen (m)",
       "type": "number",
+      "full": true,
       "when": { "eq": ["ausweisart", "Bedarfsausweis"] },
       "required": { "eq": ["ausweisart", "Bedarfsausweis"] },
       "min": 1,
@@ -66,6 +117,7 @@
       "key": "gebaeudevolumen",
       "label": "Gebäudevolumen (m³)",
       "type": "number",
+      "full": true,
       "when": { "eq": ["ausweisart", "Bedarfsausweis"] },
       "required": { "eq": ["ausweisart", "Bedarfsausweis"] },
       "min": 1,
@@ -75,6 +127,7 @@
       "key": "aussenwandflaechen",
       "label": "Außenwandflächen (m²)",
       "type": "number",
+      "full": true,
       "when": { "eq": ["ausweisart", "Bedarfsausweis"] },
       "required": { "eq": ["ausweisart", "Bedarfsausweis"] },
       "min": 1,
@@ -84,6 +137,7 @@
       "key": "fensteranteile",
       "label": "Fensteranteile (m²)",
       "type": "number",
+      "full": true,
       "when": { "eq": ["ausweisart", "Bedarfsausweis"] },
       "required": { "eq": ["ausweisart", "Bedarfsausweis"] },
       "min": 1,
@@ -91,9 +145,23 @@
     },
 
     {
+      "key": "checklist_bedarf_unterlagen",
+      "type": "checklist",
+      "when": { "eq": ["ausweisart", "Bedarfsausweis"] },
+      "full": true,
+      "title": "Bedarfsausweis – Bild-Upload – Gebäudeunterlagen",
+      "text": "Für den Bedarfsausweis werden Angaben zur Gebäudegeometrie und Gebäudehülle benötigt. Bitte laden Sie – soweit möglich – folgende Unterlagen hoch:",
+      "items": [
+        { "label": "Bauunterlagen", "required": true, "note": "z. B. Baugenehmigungen, U-Wert-Berechnungen, Anlagentechnik oder alte Energieausweise." },
+        { "label": "Baupläne", "required": true, "note": "Grundrisse, Ansichten und Schnitte." },
+        { "label": "Gebäudeansichten", "required": true, "note": "Alle vier Gebäudeansichten nach Himmelsrichtungen fotografisch darstellen." }
+      ]
+    },
+    {
       "key": "upload_bedarf_plaene",
       "label": "Grundrisspläne / Schnitte / Ansichten",
       "type": "file",
+      "full": true,
       "when": { "eq": ["ausweisart", "Bedarfsausweis"] },
       "required": { "eq": ["ausweisart", "Bedarfsausweis"] },
       "accept": ".pdf,.jpg,.jpeg,.png",
@@ -104,6 +172,7 @@
       "key": "upload_nwg_anlagenplaene",
       "label": "Anlagenpläne (Lüftung/Kälte/Heizung)",
       "type": "file",
+      "full": true,
       "when": { "and": [{ "eq": ["gebaeudetyp", "NWG"] }, { "eq": ["ausweisart", "Bedarfsausweis"] }] },
       "required": false,
       "accept": ".pdf,.jpg,.jpeg,.png",
