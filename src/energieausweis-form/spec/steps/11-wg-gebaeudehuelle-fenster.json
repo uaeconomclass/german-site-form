@@ -24,6 +24,13 @@
         { "value": "unbekannt", "label": "unbekannt", "img": "../assets/images/aussenwand/wdvs-querschnitt.png" }
       ]
     },
+    {
+      "type": "checklist",
+      "full": true,
+      "when": { "eq": ["ausweisart", "Bedarfsausweis"] },
+      "title": "Angaben zur Wärmedämmung Abfrage WICHTIG:",
+      "text": "Bitte markieren Sie, welche Bauteile gedämmt sind."
+    },
     { "key": "waermedaemmung_aussenwand", "label": "Außenwand gedämmt", "type": "checkbox", "full": true, "when": { "eq": ["ausweisart", "Bedarfsausweis"] } },
     { "key": "waermedaemmung_kelleraussenwand", "label": "Kelleraußenwand gedämmt", "type": "checkbox", "full": true, "when": { "eq": ["ausweisart", "Bedarfsausweis"] } },
     { "key": "waermedaemmung_kellerdecke", "label": "Kellerdecke gedämmt", "type": "checkbox", "full": true, "when": { "eq": ["ausweisart", "Bedarfsausweis"] } },
