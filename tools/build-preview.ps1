@@ -18,7 +18,19 @@ function Read-JsonFile([string]$path) {
 function Write-TextUtf8Bom([string]$path, [string]$text) {
   # BOM makes Windows tooling reliably interpret UTF-8 (umlauts) without mojibake.
   $enc = New-Object System.Text.UTF8Encoding($true)
-  [System.IO.File]::WriteAllText($path, $text, $enc)
+
+  # Some processes (e.g. preview opened by another tool) can temporarily lock files.
+  # Retry a few times instead of failing the whole build.
+  $attempts = 30
+  for ($i = 1; $i -le $attempts; $i++) {
+    try {
+      [System.IO.File]::WriteAllText($path, $text, $enc)
+      return
+    } catch [System.IO.IOException] {
+      if ($i -eq $attempts) { throw }
+      Start-Sleep -Milliseconds 200
+    }
+  }
 }
 
 if (!(Test-Path -LiteralPath $previewRoot)) {
