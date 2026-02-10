@@ -9,6 +9,7 @@
       "key": "aussenwand_type",
       "label": "Außenwand (Typ)",
       "type": "imgselect",
+      "full": true,
       "required": true,
       "tipKey": "aussenwand_type",
       "options": [
@@ -23,13 +24,21 @@
         { "value": "unbekannt", "label": "unbekannt", "img": "../assets/images/aussenwand/wdvs-querschnitt.png" }
       ]
     },
-    { "key": "fenster_type", "label": "Fenster (Typ)", "type": "select", "required": true, "tipKey": "fenster_type", "optionsRef": "fenster_type" },
-    { "key": "fenster_baujahr", "label": "Baujahr Fenster", "type": "number", "required": true, "min": 1800, "max": 2100, "hint": "z. B. 2005" },
-    { "key": "fenster_rahmenmaterial", "label": "Rahmenmaterial", "type": "select", "required": false, "optionsRef": "fenster_rahmenmaterial" },
+    { "key": "waermedaemmung_aussenwand", "label": "Außenwand gedämmt", "type": "checkbox", "full": true, "when": { "eq": ["ausweisart", "Bedarfsausweis"] } },
+    { "key": "waermedaemmung_kelleraussenwand", "label": "Kelleraußenwand gedämmt", "type": "checkbox", "full": true, "when": { "eq": ["ausweisart", "Bedarfsausweis"] } },
+    { "key": "waermedaemmung_kellerdecke", "label": "Kellerdecke gedämmt", "type": "checkbox", "full": true, "when": { "eq": ["ausweisart", "Bedarfsausweis"] } },
+    { "key": "waermedaemmung_dachgeschoss", "label": "Dachgeschoss gedämmt", "type": "checkbox", "full": true, "when": { "eq": ["ausweisart", "Bedarfsausweis"] } },
+    { "key": "waermedaemmung_oberste_geschossdecke", "label": "Oberste Geschossdecke gedämmt", "type": "checkbox", "full": true, "when": { "eq": ["ausweisart", "Bedarfsausweis"] } },
+    { "key": "waermedaemmung_oberste_geschossdecke_min12cm", "label": "Oberste Geschossdecke min. 12cm gedämmt", "type": "checkbox", "full": true, "when": { "eq": ["ausweisart", "Bedarfsausweis"] } },
+
+    { "key": "fenster_type", "label": "Fenster (Typ)", "type": "select", "full": true, "required": true, "tipKey": "fenster_type", "optionsRef": "fenster_type" },
+    { "key": "fenster_baujahr", "label": "Baujahr Fenster", "type": "number", "full": true, "required": true, "min": 1800, "max": 2100, "hint": "z. B. 2005" },
+    { "key": "fenster_rahmenmaterial", "label": "Rahmenmaterial", "type": "select", "full": true, "required": false, "optionsRef": "fenster_rahmenmaterial" },
     {
       "key": "fenster_zustand",
       "label": "Zustand der Fenster",
       "type": "radio",
+      "full": true,
       "required": true,
       "options": [
         { "value": "Alle dicht", "label": "Alle dicht" },
@@ -40,6 +49,7 @@
       "key": "fenster_dichtungen",
       "label": "Dichtungen vorhanden",
       "type": "radio",
+      "full": true,
       "required": true,
       "options": [
         { "value": "Ja", "label": "Ja" },
