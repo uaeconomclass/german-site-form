@@ -315,9 +315,9 @@ code{ font-family:var(--mono); font-size:.95em; }
 .banner.info .ico{ background: rgba(14,165,233,.10); color:#075985; }
 
 .form{
-  display:grid;
-  grid-template-columns: 1fr 1fr;
-  gap:12px 14px;
+  /*display:grid;*/
+  /*grid-template-columns: 1fr 1fr;*/
+  /*gap:12px 14px;*/
   margin-top:8px;
 }
 .block-title{
