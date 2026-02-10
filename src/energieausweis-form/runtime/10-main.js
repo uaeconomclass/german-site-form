@@ -405,6 +405,38 @@ function renderLabel(field) {
   return el("label", null, ...pieces);
 }
 
+function renderChecklist(field) {
+  const wrap = el("div", { class: "checklistbox" + (field.variant ? (" " + String(field.variant)) : "") });
+
+  if (field.title) wrap.appendChild(el("div", { class: "checklist-title" }, String(field.title)));
+  if (field.text) wrap.appendChild(el("div", { class: "checklist-text muted small" }, String(field.text)));
+
+  if (field.img) {
+    wrap.appendChild(el("img", { class: "checklist-img", src: resolveAssetUrl(String(field.img)), alt: String(field.imgAlt || field.title || "Example") }));
+  }
+
+  const items = Array.isArray(field.items) ? field.items : [];
+  if (items.length) {
+    const ul = el("ul", { class: "checklist-items" });
+    items.forEach((it) => {
+      const label = (it && it.label != null) ? String(it.label) : "";
+      const note = (it && it.note != null) ? String(it.note) : "";
+      const req = Boolean(it && it.required);
+      ul.appendChild(
+        el(
+          "li",
+          { class: "checklist-item" + (req ? " req" : "") },
+          el("div", { class: "checklist-main" }, label, req ? el("span", { class: "checklist-req", "aria-hidden": "true" }, "*") : null),
+          note ? el("div", { class: "checklist-note muted small" }, note) : null
+        )
+      );
+    });
+    wrap.appendChild(ul);
+  }
+
+  return wrap;
+}
+
 function renderStepper() {
   const steps = visibleSteps();
   dom.topStepper.innerHTML = "";
@@ -486,6 +518,13 @@ function renderFields(step) {
     if (block.title) dom.form.appendChild(el("div", { class: "block-title" }, block.title));
 
     fields.forEach((field) => {
+      if (field.type === "checklist") {
+        const wrap = el("div", { class: "field full checklist-field" });
+        wrap.appendChild(renderChecklist(field));
+        dom.form.appendChild(wrap);
+        return;
+      }
+
       const key = field.key;
       const val = state[key];
 
