@@ -21,9 +21,18 @@ function ea_form_plugin_enqueue_assets() {
     $css = ea_form_plugin_form_base_url() . 'energieausweis-form.css';
     $js  = ea_form_plugin_form_base_url() . 'energieausweis-form.js';
 
-    $ver = defined('EA_FORM_PLUGIN_VERSION') ? EA_FORM_PLUGIN_VERSION : '0.0.0';
-    wp_enqueue_style('ea-form', $css, array(), $ver);
-    wp_enqueue_script('ea-form', $js, array(), $ver, true);
+    // Cache busting: plugin version changes rarely during development, but assets change often.
+    // Use file mtimes when possible so browsers pick up fresh CSS/JS without manual cache clears.
+    $fallback_ver = defined('EA_FORM_PLUGIN_VERSION') ? EA_FORM_PLUGIN_VERSION : '0.0.0';
+
+    $css_path = defined('EA_FORM_PLUGIN_DIR') ? (EA_FORM_PLUGIN_DIR . 'assets/form/energieausweis-form.css') : '';
+    $js_path  = defined('EA_FORM_PLUGIN_DIR') ? (EA_FORM_PLUGIN_DIR . 'assets/form/energieausweis-form.js') : '';
+
+    $css_ver = ($css_path && file_exists($css_path)) ? (string) filemtime($css_path) : $fallback_ver;
+    $js_ver  = ($js_path && file_exists($js_path)) ? (string) filemtime($js_path) : $fallback_ver;
+
+    wp_enqueue_style('ea-form', $css, array(), $css_ver);
+    wp_enqueue_script('ea-form', $js, array(), $js_ver, true);
 
     $rest_base = rest_url('ea/v1');
     $nonce = is_user_logged_in() ? wp_create_nonce('wp_rest') : '';
