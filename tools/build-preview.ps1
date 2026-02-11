@@ -97,7 +97,7 @@ $tooltipsJson = ($tooltips | ConvertTo-Json -Depth 100 -Compress)
 $commit = (git -C $repoRoot rev-parse --short HEAD).Trim()
 $builtAt = (Get-Date).ToString("o")
 
-# ---- Cache-bust CSS/JS references in the preview HTML so GitHub Pages updates reliably
+# ---- Cache-bust CSS/JS references in preview HTML to avoid stale browser cache
 $previewHtml = Join-Path $previewRoot "energieausweis-form.html"
 if (Test-Path -LiteralPath $previewHtml) {
   $html = Get-Content -LiteralPath $previewHtml -Raw -Encoding UTF8

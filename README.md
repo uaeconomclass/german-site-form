@@ -29,7 +29,6 @@
 
 Згенероване (не редагувати руками):
 - `preview/` генерується з `src/` через `tools/build-preview.ps1`
-- `docs/` генерується для GitHub Pages через `tools/build-docs.ps1`
 
 ## Поведінка UI (як зараз реалізовано)
 
@@ -45,18 +44,14 @@
 
 ## Білд і перегляд
 
-Зібрати превʼю і Pages-версію (оновлює `preview/` і `docs/`):
+Зібрати превʼю:
 
 ```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File tools/build-docs.ps1
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/build-preview.ps1
 ```
 
 Локально:
-- `docs/index.html`
-- `docs/preview/energieausweis-form.html`
-
-Онлайн (GitHub Pages):
-- `https://uaeconomclass.github.io/german-site-form/preview/energieausweis-form.html`
+- `preview/energieausweis-form.html`
 
 ## WordPress плагін (автономний)
 
@@ -92,7 +87,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File tools/build-wp-plugin.ps1
 - [x] Зібрати повні tooltip-тексти німецькою (Erkennungsmerkmale, визначення, юр. disclaimers).
 - [ ] Узгодити формат результату (куди відправляються дані: email/CRM/API).
 - [ ] Додати контактні поля замовника (Imʼя, Email, Телефон) — потрібне уточнення.
-- [x] Реалізувати форму в коді (data-driven wizard + стилі + білд для Pages).
+- [x] Реалізувати форму в коді (data-driven wizard + стилі + білд для WP plugin).
 
 ## Архітектура форми (стислий огляд)
 

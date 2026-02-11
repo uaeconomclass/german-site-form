@@ -35,13 +35,13 @@ This updates:
 - `preview/energieausweis-form.css` (copied from `src/energieausweis-form/style.css`)
 - `preview/energieausweis-form.js` (spec + tooltips injected, then `runtime/*.js` concatenated)
 
-## Build Docs (GitHub Pages)
+## Build WP Plugin Assets
 
 ```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File tools/build-docs.ps1
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/build-wp-plugin.ps1
 ```
 
-This regenerates `docs/` (GitHub Pages source folder) from `preview/` + `assets/`.
+This regenerates `wp-plugin/energieausweis-form/assets/form/*` from `src/` via `preview/`.
 
 ## Navigation (Stepper)
 
