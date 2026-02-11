@@ -436,14 +436,15 @@ select.control{ padding-right:34px; }
 
 .checklist-field{ gap:0; }
 .checklistbox{
-  border:1px solid rgba(34,197,94,.35);
-  background: linear-gradient(180deg, rgba(34,197,94,.06), rgba(34,197,94,.02));
+  border:1px solid var(--border);
+  background: var(--surface2);
   border-radius:14px;
   padding:14px 14px 12px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.7);
 }
 .checklist-title{
   font-weight:900;
-  color:#111827;
+  color:#344054;
   margin-bottom:6px;
 }
 .checklist-text{ margin-bottom:10px; }
