@@ -2,7 +2,7 @@
   "id": "misch_relevanz",
   "title": "Mischgebäude: Komplexe Technik?",
   "meta": "C1",
-  "when": { "eq": ["gebaeudetyp", "MISCH"] },
+  "when": { "eq": ["__step30_enabled", "1"] },
   "intro": {
     "title": "Prüfung",
     "text": "Bei Mischgebäuden hängt die energetische Einordnung oft von der Technik ab. Hinweis: Die endgültige Bewertung erfolgt nach GEG.",
