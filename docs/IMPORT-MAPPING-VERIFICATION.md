@@ -9,11 +9,11 @@ Sources checked:
 
 ## Summary
 
-- Total unresolved/uncertain items: **5**
+- Total unresolved/uncertain items: **0**
 - High: **0**
-- Medium: **5**
+- Medium: **0**
 - Low: **0**
-- WG: **3**, NWG: **2**
+- WG: **0**, NWG: **0**
 
 Severity rules:
 - `high`: critical import column is not reliably mapped.
@@ -24,15 +24,9 @@ Severity rules:
 
 - None
 
-## Medium Items (5)
+## Medium Items (0)
 
-| Schema | Column | Status | Source | Transform | Default | Why unresolved |
-|---|---|---|---|---|---|---|
-| NWG | Gebäudetyp | partial | gebaeudetyp | map_gebaeudetyp_to_v_or_g | V | Mapped with assumptions; business rule not fully confirmed. |
-| NWG | HZ_Solar | partial | pv_dach\|misch_pv_dach | checkbox_01 | 0 | Mapped with assumptions; business rule not fully confirmed. |
-| WG | Gebäudetyp | partial | gebaeudetyp | map_gebaeudetyp_to_v_or_g | V | Mapped with assumptions; business rule not fully confirmed. |
-| WG | HZ_Solar | partial | pv_dach\|misch_pv_dach | checkbox_01 | 0 | Mapped with assumptions; business rule not fully confirmed. |
-| WG | isGebaeudehuelle | partial | gebaeudetyp | wg_is_gebaeudehuelle_01 | 1 | Mapped with assumptions; business rule not fully confirmed. |
+- None
 
 ## Low Items (0)
 
@@ -40,8 +34,7 @@ Severity rules:
 
 ## Interpretation
 
-- Main remaining items are assumption-based mappings (`partial`), not missing form fields.
-- ETr1/ETr2 periodized fields are represented in form schema and mapped in `docs/mapping-spec.json`.
+- No unresolved mapping items remain in `docs/mapping-spec.json`.
 
 ## Artifact
 

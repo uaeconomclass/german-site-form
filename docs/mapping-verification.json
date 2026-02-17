@@ -1,62 +1,13 @@
 ﻿{
     "summary":  {
-                    "issues_total":  5,
+                    "issues_total":  0,
                     "high":  0,
-                    "medium":  5,
+                    "medium":  0,
                     "low":  0,
-                    "wg":  3,
-                    "nwg":  2
+                    "wg":  0,
+                    "nwg":  0
                 },
     "issues":  [
-                   {
-                       "schema":  "WG",
-                       "column":  "isGebaeudehuelle",
-                       "status":  "partial",
-                       "severity":  "medium",
-                       "source":  "gebaeudetyp",
-                       "transform":  "wg_is_gebaeudehuelle_01",
-                       "default":  1,
-                       "reason":  "Mapped with assumptions; business rule not fully confirmed."
-                   },
-                   {
-                       "schema":  "WG",
-                       "column":  "HZ_Solar",
-                       "status":  "partial",
-                       "severity":  "medium",
-                       "source":  "pv_dach|misch_pv_dach",
-                       "transform":  "checkbox_01",
-                       "default":  0,
-                       "reason":  "Mapped with assumptions; business rule not fully confirmed."
-                   },
-                   {
-                       "schema":  "WG",
-                       "column":  "Gebäudetyp",
-                       "status":  "partial",
-                       "severity":  "medium",
-                       "source":  "gebaeudetyp",
-                       "transform":  "map_gebaeudetyp_to_v_or_g",
-                       "default":  "V",
-                       "reason":  "Mapped with assumptions; business rule not fully confirmed."
-                   },
-                   {
-                       "schema":  "NWG",
-                       "column":  "HZ_Solar",
-                       "status":  "partial",
-                       "severity":  "medium",
-                       "source":  "pv_dach|misch_pv_dach",
-                       "transform":  "checkbox_01",
-                       "default":  0,
-                       "reason":  "Mapped with assumptions; business rule not fully confirmed."
-                   },
-                   {
-                       "schema":  "NWG",
-                       "column":  "Gebäudetyp",
-                       "status":  "partial",
-                       "severity":  "medium",
-                       "source":  "gebaeudetyp",
-                       "transform":  "map_gebaeudetyp_to_v_or_g",
-                       "default":  "V",
-                       "reason":  "Mapped with assumptions; business rule not fully confirmed."
-                   }
+
                ]
 }

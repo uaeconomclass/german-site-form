@@ -31,16 +31,16 @@ Reference inputs:
 From `docs/mapping-spec.json`:
 
 - WG (87 columns):
-  - `mapped`: 76
+  - `mapped`: 79
   - `derived`: 3
-  - `partial`: 3
+  - `partial`: 0
   - `defaulted`: 5
   - `unmapped`: 0
 
 - NWG (97 columns):
-  - `mapped`: 78
+  - `mapped`: 80
   - `derived`: 4
-  - `partial`: 2
+  - `partial`: 0
   - `defaulted`: 13
   - `unmapped`: 0
 
@@ -102,7 +102,7 @@ Status meaning:
 
 If any critical value is missing after transform/default stage, export must fail with validation error.
 
-## Important Partial / Assumed Logic
+## Fixed Policies
 
 - Upload slot policy `v1` is fixed:
   - `bilderStreams_0` <- first file from `upload_heizung_photos`
@@ -112,16 +112,14 @@ If any critical value is missing after transform/default stage, export must fail
 - Cooling fields are collected directly in the form and mapped 1:1 to CSV columns:
   - `Klimatisiert`, `passiveKuehlung`, `fernKuehlung`, `stromKuehlung`, `waermeKuehlung`
   - WG-only: `kuehlWfl`
-- `HZ_Solar` is temporarily derived from `pv_dach` checkbox (proxy, not exact EVEBI semantics).
+- `HZ_Solar` is captured as dedicated form field (`hz_solar`) and exported directly.
 - `MISCH` routing currently forced to NWG fallback.
-
-These are intentionally marked as `partial` in `docs/mapping-spec.json`.
 
 ## Implementation Notes
 
 - Use `docs/mapping-spec.json` directly in exporter logic.
 - Keep transforms as pure functions (input form data + context -> string/number for target column).
-- Emit `export_warnings` for all `partial`, `defaulted`, and `unmapped` columns used during row generation.
+- Emit `export_warnings` for all `defaulted` columns used during row generation.
 - Revisit mapping when client confirms:
   - consumption data collection model,
   - MISCH export policy.
