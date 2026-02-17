@@ -719,7 +719,7 @@
           "source": "nwg_nutzung",
           "transform": "map_nutzung_to_id",
           "default": "1",
-          "status": "partial"
+          "status": "mapped"
         },
         {
           "column": "Nutzung1_Flaeche",
@@ -1132,7 +1132,7 @@
           "source": "nwg_beleuchtung",
           "transform": "nwg_etr2_licht_01",
           "default": 1,
-          "status": "partial"
+          "status": "mapped"
         },
         {
           "column": "ETr2_ZusatzHz",
@@ -1369,6 +1369,11 @@
       "Gastronomie": "53",
       "Lager / Produktion": "51",
       "Sonstiges NWG": "91"
+    },
+    "nwg_beleuchtung_to_etr2_licht": {
+      "Standard": 1,
+      "LED": 1,
+      "unbekannt": 1
     }
   },
   "validation": {

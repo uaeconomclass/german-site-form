@@ -825,10 +825,14 @@ function renderFields(step) {
 
         items.forEach((_, idx) => list.appendChild(renderRow(idx)));
 
+        const maxItems = Number(field.maxItems);
+        const canAddMore = !Number.isFinite(maxItems) || items.length < maxItems;
         const addBtn = el("button", { type: "button", class: "btn secondary rep-add", onclick: () => {
+          if (!canAddMore) return;
           items.push({});
           setValue(key, items, step);
         } }, "+ " + itemLabel + " hinzufügen");
+        if (!canAddMore) addBtn.setAttribute("disabled", "disabled");
 
         const hasAreaFields = (field.fields || []).some((sf) => sf.key === "hoehe_m")
           && (field.fields || []).some((sf) => sf.key === "breite_m");
@@ -908,12 +912,12 @@ function monthsInclusive(fromDate, toDate) {
 
 function validateEtrPeriodsField(fieldKey, label, errors) {
   const periods = Array.isArray(state[fieldKey]) ? state[fieldKey] : [];
-  if (periods.length !== 3) {
-    errors[fieldKey] = label + ": Bitte genau 3 Zeiträume angeben";
+  if (periods.length === 0) return;
+  if (periods.length > 3) {
+    errors[fieldKey] = label + ": Maximal 3 Zeiträume erlaubt";
     return;
   }
 
-  let totalMonths = 0;
   let prevTo = null;
 
   for (let i = 0; i < periods.length; i++) {
@@ -961,12 +965,6 @@ function validateEtrPeriodsField(fieldKey, label, errors) {
         return;
       }
     }
-
-    totalMonths += monthsInclusive(fromDate, toDate);
-  }
-
-  if (totalMonths < 36) {
-    errors[fieldKey] = label + ": Insgesamt mindestens 36 Monate erforderlich";
   }
 }
 
@@ -1001,6 +999,14 @@ function validateStep(idx, { silent } = {}) {
       const items = Array.isArray(v) ? v : [];
       if (req && items.length === 0) {
         errors[key] = "Mindestens ein Eintrag erforderlich";
+        continue;
+      }
+      if (f.minItems != null && items.length < Number(f.minItems)) {
+        errors[key] = "Zu wenige Einträge";
+        continue;
+      }
+      if (f.maxItems != null && items.length > Number(f.maxItems)) {
+        errors[key] = "Zu viele Einträge";
         continue;
       }
       // Basic per-row validation: required subfields must be filled.

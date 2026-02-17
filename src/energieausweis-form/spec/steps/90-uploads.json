@@ -122,6 +122,7 @@
       "when": { "eq": ["ausweisart", "Verbrauchsausweis"] },
       "required": { "eq": ["ausweisart", "Verbrauchsausweis"] },
       "itemLabel": "Zeitraum",
+      "maxItems": 3,
       "tipKey": "etr_perioden",
       "fields": [
         { "key": "von", "label": "Von (TT.MM.JJJJ)", "type": "text", "required": true, "pattern": "^\\d{2}\\.\\d{2}\\.\\d{4}$", "hint": "z. B. 01.01.2021" },
@@ -228,6 +229,7 @@
       "when": { "and": [{ "eq": ["ausweisart", "Verbrauchsausweis"] }, { "eq": ["etr2_enabled", true] }] },
       "required": { "and": [{ "eq": ["ausweisart", "Verbrauchsausweis"] }, { "eq": ["etr2_enabled", true] }] },
       "itemLabel": "Zeitraum",
+      "maxItems": 3,
       "tipKey": "etr_perioden",
       "fields": [
         { "key": "von", "label": "Von (TT.MM.JJJJ)", "type": "text", "required": true, "pattern": "^\\d{2}\\.\\d{2}\\.\\d{4}$", "hint": "z. B. 01.01.2021" },

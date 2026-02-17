@@ -1,11 +1,11 @@
 ﻿{
     "summary":  {
-                    "issues_total":  13,
+                    "issues_total":  11,
                     "high":  0,
-                    "medium":  13,
+                    "medium":  11,
                     "low":  0,
                     "wg":  6,
-                    "nwg":  7
+                    "nwg":  5
                 },
     "issues":  [
                    {
@@ -70,16 +70,6 @@
                    },
                    {
                        "schema":  "NWG",
-                       "column":  "Nutzung1_ID",
-                       "status":  "partial",
-                       "severity":  "medium",
-                       "source":  "nwg_nutzung",
-                       "transform":  "map_nutzung_to_id",
-                       "default":  "1",
-                       "reason":  "Mapped with assumptions; business rule not fully confirmed."
-                   },
-                   {
-                       "schema":  "NWG",
                        "column":  "passiveKuehlung",
                        "status":  "partial",
                        "severity":  "medium",
@@ -116,16 +106,6 @@
                        "source":  "pv_dach|misch_pv_dach",
                        "transform":  "checkbox_01",
                        "default":  0,
-                       "reason":  "Mapped with assumptions; business rule not fully confirmed."
-                   },
-                   {
-                       "schema":  "NWG",
-                       "column":  "ETr2_Licht",
-                       "status":  "partial",
-                       "severity":  "medium",
-                       "source":  "nwg_beleuchtung",
-                       "transform":  "nwg_etr2_licht_01",
-                       "default":  1,
                        "reason":  "Mapped with assumptions; business rule not fully confirmed."
                    },
                    {

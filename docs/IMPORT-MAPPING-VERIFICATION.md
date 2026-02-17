@@ -9,11 +9,11 @@ Sources checked:
 
 ## Summary
 
-- Total unresolved/uncertain items: **13**
+- Total unresolved/uncertain items: **11**
 - High: **0**
-- Medium: **13**
+- Medium: **11**
 - Low: **0**
-- WG: **6**, NWG: **7**
+- WG: **6**, NWG: **5**
 
 Severity rules:
 - `high`: critical import column is not reliably mapped.
@@ -24,15 +24,13 @@ Severity rules:
 
 - None
 
-## Medium Items (13)
+## Medium Items (11)
 
 | Schema | Column | Status | Source | Transform | Default | Why unresolved |
 |---|---|---|---|---|---|---|
-| NWG | ETr2_Licht | partial | nwg_beleuchtung | nwg_etr2_licht_01 | 1 | Mapped with assumptions; business rule not fully confirmed. |
 | NWG | fernKuehlung | partial | nwg_kuehlung\|misch_kuehlung | cooling_district_01 | 0 | Mapped with assumptions; business rule not fully confirmed. |
 | NWG | Gebäudetyp | partial | gebaeudetyp | map_gebaeudetyp_to_v_or_g | V | Mapped with assumptions; business rule not fully confirmed. |
 | NWG | HZ_Solar | partial | pv_dach\|misch_pv_dach | checkbox_01 | 0 | Mapped with assumptions; business rule not fully confirmed. |
-| NWG | Nutzung1_ID | partial | nwg_nutzung | map_nutzung_to_id | 1 | Mapped with assumptions; business rule not fully confirmed. |
 | NWG | passiveKuehlung | partial | nwg_kuehlung\|misch_kuehlung | cooling_passive_01 | 0 | Mapped with assumptions; business rule not fully confirmed. |
 | NWG | waermeKuehlung | partial | nwg_kuehlung\|misch_kuehlung | cooling_thermal_01 | 0 | Mapped with assumptions; business rule not fully confirmed. |
 | WG | fernKuehlung | partial | nwg_kuehlung\|misch_kuehlung | cooling_district_01 | 0 | Mapped with assumptions; business rule not fully confirmed. |
