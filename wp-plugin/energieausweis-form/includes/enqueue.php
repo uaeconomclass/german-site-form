@@ -52,6 +52,7 @@ function ea_form_plugin_enqueue_assets() {
             $config['uploadUrl'] = rest_url('ea/v1/order-upload');
             $config['uploadDownloadUrl'] = rest_url('ea/v1/order-upload-download');
             $config['uploadDeleteUrl'] = rest_url('ea/v1/order-upload-delete');
+            $config['exportBundleUrl'] = rest_url('ea/v1/order-export-bundle');
         }
     } else {
         $page_id = get_the_ID();

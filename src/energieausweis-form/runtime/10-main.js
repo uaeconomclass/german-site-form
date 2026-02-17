@@ -1340,7 +1340,18 @@ function applyExportTransform(colSpec, ctx, schemaId, enums) {
   return hasRealValue(raw) ? raw : (def == null ? "" : def);
 }
 
-function exportAdminCsv() {
+function downloadBlob(blob, fileName) {
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = fileName;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+}
+
+async function exportAdminCsv() {
   if (typeof EXPORT_MAPPING_SPEC !== "object" || !EXPORT_MAPPING_SPEC || !EXPORT_MAPPING_SPEC.schemas) {
     alert("Export-Mapping nicht verfügbar.");
     return;
@@ -1373,17 +1384,39 @@ function exportAdminCsv() {
   });
 
   const csv = headers.map(csvEscape).join(";") + "\r\n" + row.join(";") + "\r\n";
-  // Add UTF-8 BOM so Excel detects encoding like in reference files.
-  const blob = new Blob(["\uFEFF", csv], { type: "text/csv;charset=utf-8" });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
   const stamp = new Date().toISOString().slice(0, 19).replaceAll(":", "-");
-  a.href = url;
-  a.download = "EA_Verbrauch_" + schemaId + "_" + orderId + "_" + stamp + ".csv";
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
-  URL.revokeObjectURL(url);
+  const csvFileName = "EA_Verbrauch_" + schemaId + "_" + orderId + "_" + stamp + ".csv";
+
+  // Prefer server-side ZIP bundle (CSV + images). Fallback to plain CSV if unavailable.
+  const bundleUrl = EA_CFG && EA_CFG.exportBundleUrl ? String(EA_CFG.exportBundleUrl) : "";
+  const nonce = EA_CFG && EA_CFG.nonce ? String(EA_CFG.nonce) : "";
+  if (bundleUrl && EA_CFG && EA_CFG.orderId) {
+    try {
+      const reqUrl = buildUrl(bundleUrl, { orderId: orderId });
+      const resp = await fetch(reqUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          ...(nonce ? { "X-WP-Nonce": nonce } : {}),
+        },
+        body: JSON.stringify({
+          orderId: orderId,
+          csvName: csvFileName,
+          csvContent: csv,
+        }),
+        credentials: "same-origin",
+      });
+      if (resp.ok) {
+        const zipBlob = await resp.blob();
+        downloadBlob(zipBlob, csvFileName.replace(/\.csv$/i, ".zip"));
+        return;
+      }
+    } catch (e) {}
+  }
+
+  // Add UTF-8 BOM so Excel detects encoding like in reference files.
+  const csvBlob = new Blob(["\uFEFF", csv], { type: "text/csv;charset=utf-8" });
+  downloadBlob(csvBlob, csvFileName);
 }
 
 function saveDraftLocal(data) {
@@ -1577,8 +1610,16 @@ dom.btnDownload.addEventListener("click", () => {
 });
 
 if (dom.btnAdminExportCsv) {
-  dom.btnAdminExportCsv.addEventListener("click", () => {
-    exportAdminCsv();
+  dom.btnAdminExportCsv.addEventListener("click", async () => {
+    const old = dom.btnAdminExportCsv.textContent;
+    dom.btnAdminExportCsv.disabled = true;
+    dom.btnAdminExportCsv.textContent = "Export wird erstellt...";
+    try {
+      await exportAdminCsv();
+    } finally {
+      dom.btnAdminExportCsv.disabled = false;
+      dom.btnAdminExportCsv.textContent = old;
+    }
   });
 }
 

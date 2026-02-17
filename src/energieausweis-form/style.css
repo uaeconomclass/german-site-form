@@ -276,6 +276,10 @@ code{ font-family:var(--mono); font-size:.95em; }
 }
 .kicker{ font-weight:700; font-size:13px; }
 .sep{ margin:0 6px; color:var(--muted); }
+#stepMeta,
+.kicker .sep{
+  display:none;
+}
 .desc{ color:var(--muted); font-size:12px; margin-top:6px; line-height:1.35; }
 .timepill{
   border:1px solid var(--border);
