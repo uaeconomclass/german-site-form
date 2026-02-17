@@ -31,18 +31,18 @@ Reference inputs:
 From `docs/mapping-spec.json`:
 
 - WG (87 columns):
-  - `mapped`: 13
-  - `derived`: 8
-  - `partial`: 10
-  - `defaulted`: 13
-  - `unmapped`: 43
+  - `mapped`: 76
+  - `derived`: 3
+  - `partial`: 3
+  - `defaulted`: 5
+  - `unmapped`: 0
 
 - NWG (97 columns):
-  - `mapped`: 14
-  - `derived`: 10
-  - `partial`: 11
-  - `defaulted`: 20
-  - `unmapped`: 42
+  - `mapped`: 78
+  - `derived`: 4
+  - `partial`: 2
+  - `defaulted`: 13
+  - `unmapped`: 0
 
 Status meaning:
 - `mapped`: direct mapping from form field.
@@ -109,23 +109,13 @@ If any critical value is missing after transform/default stage, export must fail
   - `bilderStreams_1` <- first file from `upload_fenster_photos`
   - `bilderStreams_2` <- first file from `upload_daemmung_photos`
   - if file missing -> empty value
+- Cooling fields are collected directly in the form and mapped 1:1 to CSV columns:
+  - `Klimatisiert`, `passiveKuehlung`, `fernKuehlung`, `stromKuehlung`, `waermeKuehlung`
+  - WG-only: `kuehlWfl`
 - `HZ_Solar` is temporarily derived from `pv_dach` checkbox (proxy, not exact EVEBI semantics).
-- Insulation columns (`Dach1_Dämmung`, `Wand1_Dämmung`, `Boden1_Dämmung`) use checkbox-to-value fallback.
 - `MISCH` routing currently forced to NWG fallback.
 
 These are intentionally marked as `partial` in `docs/mapping-spec.json`.
-
-## Major Unmapped Areas
-
-- Full consumption blocks:
-  - `ETr1_Jahr{1..3}_*`
-  - `ETr2_Jahr{1..3}_*`
-- Secondary energy carrier details (`ETr2_*` business logic)
-- Fernwärme factors/shares:
-  - `ETr*_PrimFaktor`
-  - `ETr*_Anteil_erneuerbar`
-  - `ETr*_Anteil_KWK`
-- Multi-usage NWG allocation beyond `Nutzung1_*`
 
 ## Implementation Notes
 

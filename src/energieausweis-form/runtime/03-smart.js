@@ -98,10 +98,12 @@ const AFTER_CHANGE = {
       if (isEmpty(state.nwg_fensteranteil)) state.nwg_fensteranteil = "gering (<30%)";
     } else if (nutzung === "Einzelhandel") {
       if (isEmpty(state.nwg_lueftung)) state.nwg_lueftung = "Zentrale Lüftungsanlage";
-      if (isEmpty(state.nwg_kuehlung)) state.nwg_kuehlung = "Split-Klima";
+      if (isEmpty(state.klimatisiert)) state.klimatisiert = "Ja";
+      if (isEmpty(state.stromKuehlung)) state.stromKuehlung = "Ja";
     } else if (nutzung === "Gastronomie") {
       if (isEmpty(state.nwg_lueftung)) state.nwg_lueftung = "Mechanische Abluft";
-      if (isEmpty(state.nwg_kuehlung)) state.nwg_kuehlung = "Split-Klima";
+      if (isEmpty(state.klimatisiert)) state.klimatisiert = "Ja";
+      if (isEmpty(state.stromKuehlung)) state.stromKuehlung = "Ja";
     }
   },
   billing_same_as_object: (state, changedKey) => {

@@ -152,45 +152,45 @@
         },
         {
           "column": "Klimatisiert",
-          "source": "nwg_kuehlung|misch_kuehlung",
-          "transform": "cooling_present_01",
+          "source": "klimatisiert",
+          "transform": "ja_nein_to_01",
           "default": 0,
-          "status": "derived"
+          "status": "mapped"
         },
         {
           "column": "kuehlWfl",
-          "source": null,
-          "transform": "constant",
+          "source": "kuehlWfl",
+          "transform": "number_locale_de",
           "default": 0,
-          "status": "defaulted"
+          "status": "mapped"
         },
         {
           "column": "passiveKuehlung",
-          "source": "nwg_kuehlung|misch_kuehlung",
-          "transform": "cooling_passive_01",
+          "source": "passiveKuehlung",
+          "transform": "ja_nein_to_01",
           "default": 0,
-          "status": "partial"
+          "status": "mapped"
         },
         {
           "column": "fernKuehlung",
-          "source": "nwg_kuehlung|misch_kuehlung",
-          "transform": "cooling_district_01",
+          "source": "fernKuehlung",
+          "transform": "ja_nein_to_01",
           "default": 0,
-          "status": "partial"
+          "status": "mapped"
         },
         {
           "column": "stromKuehlung",
-          "source": "nwg_kuehlung|misch_kuehlung",
-          "transform": "cooling_electric_01",
+          "source": "stromKuehlung",
+          "transform": "ja_nein_to_01",
           "default": 0,
-          "status": "derived"
+          "status": "mapped"
         },
         {
           "column": "waermeKuehlung",
-          "source": "nwg_kuehlung|misch_kuehlung",
-          "transform": "cooling_thermal_01",
+          "source": "waermeKuehlung",
+          "transform": "ja_nein_to_01",
           "default": 0,
-          "status": "partial"
+          "status": "mapped"
         },
         {
           "column": "kaiAnzahl",
@@ -800,38 +800,38 @@
         },
         {
           "column": "Klimatisiert",
-          "source": "nwg_kuehlung|misch_kuehlung",
-          "transform": "cooling_present_01",
+          "source": "klimatisiert",
+          "transform": "ja_nein_to_01",
           "default": 0,
-          "status": "derived"
+          "status": "mapped"
         },
         {
           "column": "passiveKuehlung",
-          "source": "nwg_kuehlung|misch_kuehlung",
-          "transform": "cooling_passive_01",
+          "source": "passiveKuehlung",
+          "transform": "ja_nein_to_01",
           "default": 0,
-          "status": "partial"
+          "status": "mapped"
         },
         {
           "column": "fernKuehlung",
-          "source": "nwg_kuehlung|misch_kuehlung",
-          "transform": "cooling_district_01",
+          "source": "fernKuehlung",
+          "transform": "ja_nein_to_01",
           "default": 0,
-          "status": "partial"
+          "status": "mapped"
         },
         {
           "column": "stromKuehlung",
-          "source": "nwg_kuehlung|misch_kuehlung",
-          "transform": "cooling_electric_01",
+          "source": "stromKuehlung",
+          "transform": "ja_nein_to_01",
           "default": 0,
-          "status": "derived"
+          "status": "mapped"
         },
         {
           "column": "waermeKuehlung",
-          "source": "nwg_kuehlung|misch_kuehlung",
-          "transform": "cooling_thermal_01",
+          "source": "waermeKuehlung",
+          "transform": "ja_nein_to_01",
           "default": 0,
-          "status": "partial"
+          "status": "mapped"
         },
         {
           "column": "kaiAnzahl",
@@ -1108,10 +1108,10 @@
         },
         {
           "column": "ETr2_Kuehlen",
-          "source": "nwg_kuehlung",
-          "transform": "nwg_etr2_kuehlen_01",
+          "source": "klimatisiert",
+          "transform": "ja_nein_to_01",
           "default": 0,
-          "status": "derived"
+          "status": "mapped"
         },
         {
           "column": "ETr2_Lueften",

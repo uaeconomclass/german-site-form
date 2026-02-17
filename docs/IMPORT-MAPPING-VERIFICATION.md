@@ -9,11 +9,11 @@ Sources checked:
 
 ## Summary
 
-- Total unresolved/uncertain items: **11**
+- Total unresolved/uncertain items: **5**
 - High: **0**
-- Medium: **11**
+- Medium: **5**
 - Low: **0**
-- WG: **6**, NWG: **5**
+- WG: **3**, NWG: **2**
 
 Severity rules:
 - `high`: critical import column is not reliably mapped.
@@ -24,21 +24,15 @@ Severity rules:
 
 - None
 
-## Medium Items (11)
+## Medium Items (5)
 
 | Schema | Column | Status | Source | Transform | Default | Why unresolved |
 |---|---|---|---|---|---|---|
-| NWG | fernKuehlung | partial | nwg_kuehlung\|misch_kuehlung | cooling_district_01 | 0 | Mapped with assumptions; business rule not fully confirmed. |
 | NWG | Gebäudetyp | partial | gebaeudetyp | map_gebaeudetyp_to_v_or_g | V | Mapped with assumptions; business rule not fully confirmed. |
 | NWG | HZ_Solar | partial | pv_dach\|misch_pv_dach | checkbox_01 | 0 | Mapped with assumptions; business rule not fully confirmed. |
-| NWG | passiveKuehlung | partial | nwg_kuehlung\|misch_kuehlung | cooling_passive_01 | 0 | Mapped with assumptions; business rule not fully confirmed. |
-| NWG | waermeKuehlung | partial | nwg_kuehlung\|misch_kuehlung | cooling_thermal_01 | 0 | Mapped with assumptions; business rule not fully confirmed. |
-| WG | fernKuehlung | partial | nwg_kuehlung\|misch_kuehlung | cooling_district_01 | 0 | Mapped with assumptions; business rule not fully confirmed. |
 | WG | Gebäudetyp | partial | gebaeudetyp | map_gebaeudetyp_to_v_or_g | V | Mapped with assumptions; business rule not fully confirmed. |
 | WG | HZ_Solar | partial | pv_dach\|misch_pv_dach | checkbox_01 | 0 | Mapped with assumptions; business rule not fully confirmed. |
 | WG | isGebaeudehuelle | partial | gebaeudetyp | wg_is_gebaeudehuelle_01 | 1 | Mapped with assumptions; business rule not fully confirmed. |
-| WG | passiveKuehlung | partial | nwg_kuehlung\|misch_kuehlung | cooling_passive_01 | 0 | Mapped with assumptions; business rule not fully confirmed. |
-| WG | waermeKuehlung | partial | nwg_kuehlung\|misch_kuehlung | cooling_thermal_01 | 0 | Mapped with assumptions; business rule not fully confirmed. |
 
 ## Low Items (0)
 

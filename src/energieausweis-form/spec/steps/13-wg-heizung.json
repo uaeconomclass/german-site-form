@@ -42,6 +42,17 @@
         { "key": "zirkulation", "label": "Zirkulation (Warmwasser)", "type": "checkbox", "required": false, "tipKey": "heizung_zirkulation", "full": true },
         { "key": "heizungsrohre_gedaemmt", "label": "Heizungsrohre gedämmt", "type": "radio", "required": false, "optionsRef": "ja_nein_radio", "tipKey": "heizung_rohre_gedaemmt" }
       ]
+    },
+    {
+      "title": "Kühlung",
+      "fields": [
+        { "key": "klimatisiert", "label": "Gibt es eine Kühlung im Gebäude?", "type": "radio", "required": true, "optionsRef": "ja_nein_radio" },
+        { "key": "fernKuehlung", "label": "Erfolgt Kühlung über Fernkälte?", "type": "radio", "required": { "eq": ["klimatisiert", "Ja"] }, "when": { "eq": ["klimatisiert", "Ja"] }, "optionsRef": "ja_nein_radio" },
+        { "key": "passiveKuehlung", "label": "Gibt es passive Kühlung?", "type": "radio", "required": { "eq": ["klimatisiert", "Ja"] }, "when": { "eq": ["klimatisiert", "Ja"] }, "optionsRef": "ja_nein_radio" },
+        { "key": "waermeKuehlung", "label": "Gibt es thermische Kühlung?", "type": "radio", "required": { "eq": ["klimatisiert", "Ja"] }, "when": { "eq": ["klimatisiert", "Ja"] }, "optionsRef": "ja_nein_radio" },
+        { "key": "stromKuehlung", "label": "Gibt es elektrische Kompressionskühlung?", "type": "radio", "required": { "eq": ["klimatisiert", "Ja"] }, "when": { "eq": ["klimatisiert", "Ja"] }, "optionsRef": "ja_nein_radio" },
+        { "key": "kuehlWfl", "label": "Gekühlte Fläche (m²)", "type": "number", "required": { "eq": ["klimatisiert", "Ja"] }, "when": { "eq": ["klimatisiert", "Ja"] }, "min": 1, "max": 500000, "hint": "z. B. 120" }
+      ]
     }
   ]
 }

@@ -163,13 +163,6 @@
     { "value": "Zentrale Lüftungsanlage", "label": "Zentrale Lüftungsanlage" },
     { "value": "Lüftung mit Wärmerückgewinnung", "label": "Lüftung mit Wärmerückgewinnung" }
   ],
-  "nwg_kuehlung": [
-    { "value": "", "label": "Bitte wählen…" },
-    { "value": "keine", "label": "keine" },
-    { "value": "Split-Klima", "label": "Split-Klima" },
-    { "value": "zentrale Klimaanlage", "label": "zentrale Klimaanlage" },
-    { "value": "Kaltwasseranlage", "label": "Kaltwasseranlage" }
-  ],
   "nwg_beleuchtung": [
     { "value": "", "label": "Bitte wählen…" },
     { "value": "Standard", "label": "Standard" },

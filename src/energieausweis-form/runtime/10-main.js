@@ -497,6 +497,18 @@ function setValue(key, value, step, opts) {
       state.modernisierungsjahr = "";
     }
   }
+  // Cooling consistency: when no cooling, reset dependent flags/area.
+  if (key === "klimatisiert" && state.klimatisiert === "Nein") {
+    state.fernKuehlung = "Nein";
+    state.passiveKuehlung = "Nein";
+    state.waermeKuehlung = "Nein";
+    state.stromKuehlung = "Nein";
+    state.kuehlWfl = "";
+  }
+  if ((key === "fernKuehlung" || key === "passiveKuehlung" || key === "waermeKuehlung" || key === "stromKuehlung")
+    && state[key] === "Ja" && isEmpty(state.klimatisiert)) {
+    state.klimatisiert = "Ja";
+  }
 
   // After-change hooks from spec
   const hookName = step && step.afterChangeRef;
@@ -1046,6 +1058,20 @@ function validateStep(idx, { silent } = {}) {
     validateEtrPeriodsField("etr1_periods", "Energieträger 1", errors);
     if (state.etr2_enabled === true) {
       validateEtrPeriodsField("etr2_periods", "Energieträger 2", errors);
+    }
+  }
+
+  // Cooling cross-checks (applies to WG/NWG/MISCH direct cooling fields).
+  if (["WG", "NWG", "MISCH"].includes(String(state.gebaeudetyp || ""))) {
+    if (String(state.klimatisiert || "") === "Ja") {
+      const flags = [state.fernKuehlung, state.passiveKuehlung, state.waermeKuehlung, state.stromKuehlung];
+      if (!flags.some((v) => String(v || "") === "Ja")) {
+        errors.klimatisiert = "Bitte mindestens eine Art der Kühlung auswählen";
+      }
+      if (String(state.gebaeudetyp || "") === "WG") {
+        const n = Number(state.kuehlWfl);
+        if (!Number.isFinite(n) || n <= 0) errors.kuehlWfl = "Bitte gekühlte Fläche > 0 angeben";
+      }
     }
   }
 

@@ -33,7 +33,11 @@
       "fields": [
         { "key": "misch_nutzflaeche", "label": "Nutzfläche (m²)", "type": "number", "required": true, "min": 1, "max": 200000 },
         { "key": "misch_lueftung", "label": "Lüftung", "type": "select", "required": true, "optionsRef": "nwg_lueftung" },
-        { "key": "misch_kuehlung", "label": "Kühlung", "type": "select", "required": true, "optionsRef": "nwg_kuehlung" }
+        { "key": "klimatisiert", "label": "Gibt es eine Kühlung im Gebäude?", "type": "radio", "required": true, "optionsRef": "ja_nein_radio" },
+        { "key": "fernKuehlung", "label": "Erfolgt Kühlung über Fernkälte?", "type": "radio", "required": { "eq": ["klimatisiert", "Ja"] }, "when": { "eq": ["klimatisiert", "Ja"] }, "optionsRef": "ja_nein_radio" },
+        { "key": "passiveKuehlung", "label": "Gibt es passive Kühlung?", "type": "radio", "required": { "eq": ["klimatisiert", "Ja"] }, "when": { "eq": ["klimatisiert", "Ja"] }, "optionsRef": "ja_nein_radio" },
+        { "key": "waermeKuehlung", "label": "Gibt es thermische Kühlung?", "type": "radio", "required": { "eq": ["klimatisiert", "Ja"] }, "when": { "eq": ["klimatisiert", "Ja"] }, "optionsRef": "ja_nein_radio" },
+        { "key": "stromKuehlung", "label": "Gibt es elektrische Kompressionskühlung?", "type": "radio", "required": { "eq": ["klimatisiert", "Ja"] }, "when": { "eq": ["klimatisiert", "Ja"] }, "optionsRef": "ja_nein_radio" }
       ]
     }
   ]
