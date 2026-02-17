@@ -118,6 +118,13 @@ function ea_form_files_index_set($order_id, $idx) {
     update_post_meta((int) $order_id, '_ea_form_files', $idx);
 }
 
+function ea_form_meta_value_unwrap($v) {
+    if (is_array($v) && count($v) === 1) {
+        return ea_form_meta_value_unwrap($v[0]);
+    }
+    return $v;
+}
+
 add_action('rest_api_init', function () {
     register_rest_route('ea/v1', '/order-create', array(
         array(
@@ -439,6 +446,79 @@ add_action('rest_api_init', function () {
             'args' => array(
                 'orderId' => array('required' => true),
                 'fileId' => array('required' => true),
+            ),
+        ),
+    ));
+
+    // Debug endpoint: returns order meta + draft/files state to troubleshoot export/upload issues.
+    register_rest_route('ea/v1', '/order-debug-meta', array(
+        array(
+            'methods' => WP_REST_Server::READABLE,
+            'permission_callback' => function (WP_REST_Request $req) {
+                return true;
+            },
+            'callback' => function (WP_REST_Request $req) {
+                $order_id = (int) $req->get_param('orderId');
+                $p = ea_form_get_order_post($order_id);
+                if (!$p) {
+                    return new WP_Error('ea_not_found', 'Order not found.', array('status' => 404));
+                }
+
+                $meta_raw = get_post_meta($order_id);
+                $meta = array();
+                foreach ((array) $meta_raw as $k => $vals) {
+                    $meta[$k] = ea_form_meta_value_unwrap($vals);
+                }
+
+                $draft_data = ea_form_get_order_draft_data($order_id);
+                $draft_meta = ea_form_get_order_draft_meta($order_id);
+                $files_idx = ea_form_files_index_get($order_id);
+
+                $uploads = wp_upload_dir();
+                $files_debug = array();
+                foreach ((array) $files_idx as $file_id => $rec) {
+                    $rel = (string) ($rec['relPath'] ?? '');
+                    $abs = trailingslashit((string) $uploads['basedir']) . ltrim($rel, '/\\');
+                    $files_debug[$file_id] = array(
+                        'fileId' => (string) ($rec['fileId'] ?? $file_id),
+                        'fieldKey' => (string) ($rec['fieldKey'] ?? ''),
+                        'name' => (string) ($rec['name'] ?? ''),
+                        'relPath' => $rel,
+                        'existsOnDisk' => file_exists($abs),
+                        'sizeOnDisk' => file_exists($abs) ? (int) @filesize($abs) : 0,
+                        'url' => (string) ($rec['url'] ?? ''),
+                        'createdAt' => (string) ($rec['createdAt'] ?? ''),
+                    );
+                }
+
+                return rest_ensure_response(array(
+                    'orderId' => $order_id,
+                    'post' => array(
+                        'id' => (int) $p->ID,
+                        'type' => (string) $p->post_type,
+                        'status' => (string) $p->post_status,
+                        'author' => (int) $p->post_author,
+                        'title' => (string) $p->post_title,
+                    ),
+                    'meta' => $meta,
+                    'draft' => array(
+                        'data' => is_array($draft_data) ? $draft_data : new stdClass(),
+                        'meta' => is_array($draft_meta) ? $draft_meta : new stdClass(),
+                        'updatedAt' => (string) get_post_meta($order_id, '_ea_form_draft_updated_at', true),
+                    ),
+                    'files' => array(
+                        'count' => count((array) $files_idx),
+                        'index' => $files_debug,
+                    ),
+                ));
+            },
+            'args' => array(
+                'orderId' => array(
+                    'required' => true,
+                    'validate_callback' => function ($param) {
+                        return is_numeric($param) && (int) $param > 0;
+                    },
+                ),
             ),
         ),
     ));

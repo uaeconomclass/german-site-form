@@ -1373,7 +1373,8 @@ function exportAdminCsv() {
   });
 
   const csv = headers.map(csvEscape).join(";") + "\r\n" + row.join(";") + "\r\n";
-  const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
+  // Add UTF-8 BOM so Excel detects encoding like in reference files.
+  const blob = new Blob(["\uFEFF", csv], { type: "text/csv;charset=utf-8" });
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   const stamp = new Date().toISOString().slice(0, 19).replaceAll(":", "-");
@@ -1548,6 +1549,8 @@ dom.btnNext.addEventListener("click", async () => {
   if (isSubmitStep) state.submitted_at = new Date().toISOString();
   persistDraft(isSubmitStep ? "submit" : "next");
   stepIndex = clamp(stepIndex + 1, 0, steps.length - 1);
+  // Keep user on the thank-you step after page reloads.
+  if (isSubmitStep) persistDraft("thank_you");
   render();
 });
 
