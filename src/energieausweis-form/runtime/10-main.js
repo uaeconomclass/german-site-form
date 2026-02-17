@@ -195,6 +195,8 @@ const dom = {
   btnNext: document.getElementById("btnNext"),
   btnSave: document.getElementById("btnSave"),
   btnDownload: document.getElementById("btnDownload"),
+  footerBar: document.getElementById("footerBar"),
+  btnAdminExportCsv: document.getElementById("btnAdminExportCsv"),
 
   overviewProgress: document.getElementById("overviewProgress"),
   buildInfo: document.getElementById("buildInfo"),
@@ -1148,6 +1150,56 @@ function exportData() {
   return out;
 }
 
+function flattenForCsv(obj, prefix = "", out = {}) {
+  if (obj == null) return out;
+  if (Array.isArray(obj)) {
+    if (!prefix) return out;
+    out[prefix] = JSON.stringify(obj);
+    return out;
+  }
+  if (typeof obj !== "object") {
+    if (prefix) out[prefix] = obj;
+    return out;
+  }
+  for (const [k, v] of Object.entries(obj)) {
+    const next = prefix ? (prefix + "." + k) : k;
+    if (v == null || v === "") continue;
+    if (typeof v === "object") flattenForCsv(v, next, out);
+    else out[next] = v;
+  }
+  return out;
+}
+
+function csvEscape(v) {
+  const s = String(v == null ? "" : v);
+  if (!/[;"\r\n]/.test(s)) return s;
+  return "\"" + s.replaceAll("\"", "\"\"") + "\"";
+}
+
+function exportAdminCsv() {
+  const data = exportData();
+  const flat = flattenForCsv(data);
+  const keys = Object.keys(flat).sort();
+  if (keys.length === 0) {
+    alert("Keine Daten für CSV-Export vorhanden.");
+    return;
+  }
+  const header = keys.map(csvEscape).join(";");
+  const row = keys.map((k) => csvEscape(flat[k])).join(";");
+  const csv = header + "\r\n" + row + "\r\n";
+  const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  const orderId = EA_CFG && EA_CFG.orderId ? String(EA_CFG.orderId) : "draft";
+  const stamp = new Date().toISOString().slice(0, 19).replaceAll(":", "-");
+  a.href = url;
+  a.download = "ea-export-" + orderId + "-" + stamp + ".csv";
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+}
+
 function saveDraftLocal(data) {
   try {
     const k = getStorageKey();
@@ -1215,6 +1267,11 @@ function render() {
 
   dom.summaryBox.style.display = "none";
   dom.btnDownload.style.display = "none";
+  const isThankYou = String(st.id || "") === "thank_you";
+  const isSummary = String(st.id || "") === "summary";
+  if (dom.btnNext) dom.btnNext.textContent = isSummary ? "Anfrage absenden" : "Weiter zur Bestätigung";
+  if (dom.footerBar) dom.footerBar.style.display = isThankYou ? "none" : "";
+  if (dom.btnAdminExportCsv) dom.btnAdminExportCsv.style.display = isThankYou ? "" : "none";
 
   if (st.id === "summary") {
     // Summary step: render the configured fields (e.g. billing details).
@@ -1302,7 +1359,9 @@ dom.btnNext.addEventListener("click", async () => {
   }
 
   // Normal step submit: persist and continue.
-  persistDraft("next");
+  const isSubmitStep = st && st.id === "summary";
+  if (isSubmitStep) state.submitted_at = new Date().toISOString();
+  persistDraft(isSubmitStep ? "submit" : "next");
   stepIndex = clamp(stepIndex + 1, 0, steps.length - 1);
   render();
 });
@@ -1328,6 +1387,12 @@ dom.btnDownload.addEventListener("click", () => {
   a.remove();
   URL.revokeObjectURL(url);
 });
+
+if (dom.btnAdminExportCsv) {
+  dom.btnAdminExportCsv.addEventListener("click", () => {
+    exportAdminCsv();
+  });
+}
 
 async function init() {
   // Local fallback draft

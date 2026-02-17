@@ -1,0 +1,17 @@
+{
+  "id": "thank_you",
+  "title": "Bestätigung",
+  "meta": "8",
+  "intro": {
+    "title": "Vielen Dank",
+    "text": "Ihre Anfrage wurde erfolgreich übermittelt. Wir prüfen die Angaben und melden uns bei Ihnen."
+  },
+  "fields": [
+    {
+      "type": "checklist",
+      "full": true,
+      "title": "Danke für Ihre Anfrage",
+      "text": "Wir setzen uns zeitnah mit Ihnen in Verbindung. Bitte prüfen Sie auch Ihren E-Mail-Posteingang."
+    }
+  ]
+}

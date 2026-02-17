@@ -144,7 +144,7 @@ add_shortcode('energieausweis_form', function ($atts = array(), $content = '') {
                 <div class="summary"><pre id="summaryJson"></pre></div>
               </div>
 
-              <div class="footerbar">
+              <div class="footerbar" id="footerBar">
                 <button class="linkbtn" type="button" id="btnBack">Zurück</button>
                 <div class="footer-right">
                   <button class="btn secondary" type="button" id="btnSave">Speichern</button>
@@ -175,7 +175,9 @@ add_shortcode('energieausweis_form', function ($atts = array(), $content = '') {
 
                 <div class="sp"></div>
 
-                <button class="btn wide" type="button" disabled>Weiter zur Bestätigung</button>
+                <?php if (current_user_can('manage_options')): ?>
+                <button class="btn wide secondary" type="button" id="btnAdminExportCsv" style="display:none">CSV-Export (Admin)</button>
+                <?php endif; ?>
                 <div class="okline"><span class="check"></span> Verarbeitung zertifiziert nach GEG</div>
                 <div class="muted small" id="buildInfo" style="margin-top:10px"></div>
               </div>

@@ -4,8 +4,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Verbrauchsausweis für Wohngebäude</title>
-    <link rel="stylesheet" href="./energieausweis-form.css?v=c7c7789" />
-    <script defer src="./energieausweis-form.js?v=c7c7789"></script>
+    <link rel="stylesheet" href="./energieausweis-form.css?v=737fe05" />
+    <script defer src="./energieausweis-form.js?v=737fe05"></script>
   </head>
   <body>
     <div class="wrap">
@@ -75,7 +75,7 @@
             <div class="summary"><pre id="summaryJson"></pre></div>
           </div>
 
-          <div class="footerbar">
+            <div class="footerbar" id="footerBar">
             <button class="linkbtn" type="button" id="btnBack">Zurück</button>
             <div class="footer-right">
               <button class="btn secondary" type="button" id="btnSave">Speichern</button>
@@ -106,7 +106,7 @@
 
             <div class="sp"></div>
 
-            <button class="btn wide" type="button" disabled>Weiter zur Bestätigung</button>
+            <button class="btn wide secondary" type="button" id="btnAdminExportCsv" style="display:none">CSV-Export (Admin)</button>
             <div class="okline"><span class="check"></span> Verarbeitung zertifiziert nach GEG</div>
             <div class="muted small" id="buildInfo" style="margin-top:10px"></div>
           </div>
