@@ -42,6 +42,7 @@ $metaPath = Join-Path $specRoot "meta.json"
 $optionSetsPath = Join-Path $specRoot "option-sets.json"
 $stepsDir = Join-Path $specRoot "steps"
 $tooltipsPath = Join-Path $specRoot "tooltips-de.json"
+$exportMappingPath = Join-Path $repoRoot "docs/mapping-spec.json"
 
 $meta = Read-JsonFile $metaPath
 $optionSets = Read-JsonFile $optionSetsPath
@@ -65,6 +66,7 @@ $formSpec["optionSets"] = $optionSets
 $formSpec["steps"] = $steps
 
 $tooltips = Read-JsonFile $tooltipsPath
+$exportMapping = Read-JsonFile $exportMappingPath
 
 # ---- Copy CSS
 $srcCss = Join-Path $srcRoot "style.css"
@@ -93,6 +95,7 @@ foreach ($f in $runtimeFiles) {
 
 $formSpecJson = ($formSpec | ConvertTo-Json -Depth 100 -Compress)
 $tooltipsJson = ($tooltips | ConvertTo-Json -Depth 100 -Compress)
+$exportMappingJson = ($exportMapping | ConvertTo-Json -Depth 100 -Compress)
 
 $commit = (git -C $repoRoot rev-parse --short HEAD).Trim()
 $builtAt = (Get-Date).ToString("o")
@@ -117,6 +120,7 @@ $bundle = @"
  */
 const FORM_SPEC = $formSpecJson;
 const TOOL_TIPS_DE = $tooltipsJson;
+const EXPORT_MAPPING_SPEC = $exportMappingJson;
 const BUILD_INFO = { commit: "$commit", builtAt: "$builtAt" };
 
 $runtime

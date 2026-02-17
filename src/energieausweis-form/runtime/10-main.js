@@ -1150,50 +1150,235 @@ function exportData() {
   return out;
 }
 
-function flattenForCsv(obj, prefix = "", out = {}) {
-  if (obj == null) return out;
-  if (Array.isArray(obj)) {
-    if (!prefix) return out;
-    out[prefix] = JSON.stringify(obj);
-    return out;
-  }
-  if (typeof obj !== "object") {
-    if (prefix) out[prefix] = obj;
-    return out;
-  }
-  for (const [k, v] of Object.entries(obj)) {
-    const next = prefix ? (prefix + "." + k) : k;
-    if (v == null || v === "") continue;
-    if (typeof v === "object") flattenForCsv(v, next, out);
-    else out[next] = v;
-  }
-  return out;
-}
-
 function csvEscape(v) {
   const s = String(v == null ? "" : v);
   if (!/[;"\r\n]/.test(s)) return s;
   return "\"" + s.replaceAll("\"", "\"\"") + "\"";
 }
 
+function hasRealValue(v) {
+  return !(v == null || v === "" || (Array.isArray(v) && v.length === 0));
+}
+
+function normalizeLookupKey(v) {
+  return String(v == null ? "" : v)
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-zA-Z0-9]/g, "")
+    .toLowerCase();
+}
+
+function enumLookup(enumMap, value, fallback) {
+  if (!enumMap || typeof enumMap !== "object") return fallback;
+  const k = normalizeLookupKey(value);
+  if (!k) return fallback;
+  for (const [ek, ev] of Object.entries(enumMap)) {
+    if (normalizeLookupKey(ek) === k) return ev;
+  }
+  return fallback;
+}
+
+function pathGet(obj, rawPath) {
+  if (!obj || !rawPath) return undefined;
+  const path = String(rawPath).replace(/\[(\d+)\]/g, ".$1");
+  const parts = path.split(".").filter(Boolean);
+  let cur = obj;
+  for (const p of parts) {
+    if (cur == null) return undefined;
+    cur = cur[p];
+  }
+  return cur;
+}
+
+function pickSourceValue(sourceExpr, ctx) {
+  if (!sourceExpr) return undefined;
+  const variants = String(sourceExpr).split("|").map((s) => s.trim()).filter(Boolean);
+  for (const key of variants) {
+    const v = pathGet(ctx, key);
+    if (hasRealValue(v)) return v;
+  }
+  return undefined;
+}
+
+function numberToDe(v) {
+  if (!hasRealValue(v)) return "";
+  const n = Number(String(v).replace(",", "."));
+  if (!Number.isFinite(n)) return "";
+  if (Math.floor(n) === n) return String(n);
+  return String(n).replace(".", ",");
+}
+
+function safeId(v) {
+  const raw = String(v == null ? "" : v).trim();
+  if (!raw) return "";
+  return raw.replace(/[^a-zA-Z0-9._-]/g, "_");
+}
+
+function firstUploadName(uploadArr) {
+  const arr = Array.isArray(uploadArr) ? uploadArr : [];
+  if (!arr.length) return "";
+  const first = arr[0] || {};
+  const byName = first.name ? String(first.name) : "";
+  if (byName) return byName;
+  const byUrl = first.url ? String(first.url) : "";
+  if (!byUrl) return "";
+  const parts = byUrl.split("/");
+  return parts[parts.length - 1] || "";
+}
+
+function mapJaNein01(v) {
+  const s = normalizeLookupKey(v);
+  if (!s) return 0;
+  if (v === true || s === "ja" || s === "yes" || s === "true" || s === "1") return 1;
+  return 0;
+}
+
+function mapVentWindow(v) {
+  const s = normalizeLookupKey(v);
+  return (s.includes("fenster") || s === "lafrei" || s === "freieluftung") ? 1 : 0;
+}
+
+function mapVentShaft(v) {
+  const s = normalizeLookupKey(v);
+  return (s.includes("schacht") || s.includes("abluft")) ? 1 : 0;
+}
+
+function mapVentWrg(v) {
+  const s = normalizeLookupKey(v);
+  return s.includes("wrg") ? 1 : 0;
+}
+
+function mapVentNoWrg(v) {
+  const s = normalizeLookupKey(v);
+  if (!s) return 0;
+  if (s.includes("wrg")) return 0;
+  return (s.includes("abluft") || s.includes("ohnewrg") || s.includes("zentrale")) ? 1 : 0;
+}
+
+function mapKeller01(v) {
+  const s = normalizeLookupKey(v);
+  if (!s) return 0;
+  if (s.includes("unbeheiz")) return 0;
+  return s.includes("beheiz") ? 1 : 0;
+}
+
+function applyExportTransform(colSpec, ctx, schemaId, enums) {
+  const t = String(colSpec.transform || "");
+  const src = colSpec.source;
+  const def = Object.prototype.hasOwnProperty.call(colSpec, "default") ? colSpec.default : "";
+  const raw = pickSourceValue(src, ctx);
+
+  if (t === "constant") return def;
+  if (t === "string_trim") return hasRealValue(raw) ? String(raw).trim() : "";
+  if (t === "id_safe_filename") return safeId(raw || ctx.export_meta.order_id || "");
+  if (t === "map_anlass_to_ag_code") return enumLookup(enums.anlass_to_ag_code, raw, def || "AG_VERMIETUNG");
+  if (t === "map_ausweisart_to_bv") return enumLookup(enums.ausweisart_to_bv, raw, def || "V");
+  if (t === "year_int") {
+    const n = Number(raw);
+    return Number.isFinite(n) ? String(Math.floor(n)) : "";
+  }
+  if (t === "int_or_1") {
+    const n = Number(raw);
+    return (Number.isFinite(n) && n > 0) ? String(Math.floor(n)) : String(def || 1);
+  }
+  if (t === "schema_dependent_area") {
+    if (schemaId === "WG") return numberToDe(ctx.wohnflaeche);
+    return numberToDe(ctx.nwg_nettogrundflaeche || ctx.wohnflaeche);
+  }
+  if (t === "map_gebaeudeteil_gt") return enumLookup(enums.gebaeudeteil_to_gt, raw, def || "GT_GANZES_GEB");
+  if (t === "map_keller_beheizt_01") return mapKeller01(raw);
+  if (t === "basename_or_empty") return hasRealValue(raw) ? String(raw) : "";
+  if (t === "ja_nein_to_01") return mapJaNein01(raw);
+  if (t === "number_locale_de") return numberToDe(raw);
+  if (t === "year_or_fallback_baujahr") {
+    const n = Number(raw);
+    if (Number.isFinite(n) && n > 1000) return String(Math.floor(n));
+    const b = Number(ctx.baujahr);
+    return Number.isFinite(b) ? String(Math.floor(b)) : (def == null ? "" : String(def));
+  }
+  if (t === "year_or_0") {
+    const n = Number(raw);
+    return (Number.isFinite(n) && n > 1000) ? String(Math.floor(n)) : String(def == null ? 0 : def);
+  }
+  if (t === "warmwasser_solar_01") {
+    const s = normalizeLookupKey(raw);
+    return s.includes("solar") ? 1 : 0;
+  }
+  if (t === "warmwasser_wp_01") {
+    const s = normalizeLookupKey(raw);
+    return s.includes("warmepumpe") ? 1 : 0;
+  }
+  if (t === "heating_wp_01") {
+    const s = normalizeLookupKey(raw);
+    return s.includes("warmepumpe") ? 1 : 0;
+  }
+  if (t === "vent_window_01") return mapVentWindow(raw);
+  if (t === "vent_shaft_01") return mapVentShaft(raw);
+  if (t === "vent_wrg_yes_01") return mapVentWrg(raw);
+  if (t === "vent_without_wrg_01") return mapVentNoWrg(raw);
+  if (t === "bk_code_identity") {
+    const s = String(raw == null ? "" : raw).trim();
+    if (s.startsWith("BK_")) return s;
+    return enumLookup(enums.heizung_to_bk, raw, def == null ? "" : String(def));
+  }
+  if (t === "modernisierung_year_from_field_or_0") {
+    const n = Number(raw);
+    if (Number.isFinite(n) && n > 1000) return String(Math.floor(n));
+    return String(def == null ? 0 : def);
+  }
+  if (t === "from_repeater_period") {
+    // Source already points to etr*_periods[i].field, so pathGet from ctx handles it.
+    if (!hasRealValue(raw)) return def == null ? "" : def;
+    if (typeof raw === "number") return numberToDe(raw);
+    return String(raw);
+  }
+  if (t === "map_nutzung_to_id") return enumLookup(enums.nwg_nutzung_to_id, raw, def || "91");
+  if (t === "nwg_flag_01") return 1;
+  if (t === "nwg_etr2_lueften_01") return mapVentNoWrg(raw) || mapVentWrg(raw) || mapVentShaft(raw);
+  if (t === "nwg_etr2_licht_01") return enumLookup(enums.nwg_beleuchtung_to_etr2_licht, raw, def == null ? 1 : def);
+
+  return hasRealValue(raw) ? raw : (def == null ? "" : def);
+}
+
 function exportAdminCsv() {
-  const data = exportData();
-  const flat = flattenForCsv(data);
-  const keys = Object.keys(flat).sort();
-  if (keys.length === 0) {
-    alert("Keine Daten für CSV-Export vorhanden.");
+  if (typeof EXPORT_MAPPING_SPEC !== "object" || !EXPORT_MAPPING_SPEC || !EXPORT_MAPPING_SPEC.schemas) {
+    alert("Export-Mapping nicht verfügbar.");
     return;
   }
-  const header = keys.map(csvEscape).join(";");
-  const row = keys.map((k) => csvEscape(flat[k])).join(";");
-  const csv = header + "\r\n" + row + "\r\n";
+
+  const schemaId = String(state.gebaeudetyp || "") === "WG" ? "WG" : "NWG"; // MISCH -> NWG fallback
+  const schema = EXPORT_MAPPING_SPEC.schemas[schemaId];
+  if (!schema || !Array.isArray(schema.columns) || !schema.columns.length) {
+    alert("Export-Schema nicht verfügbar.");
+    return;
+  }
+
+  const orderId = EA_CFG && EA_CFG.orderId ? String(EA_CFG.orderId) : "draft";
+  const ctx = {
+    ...state,
+    export_meta: { order_id: orderId },
+    upload_export: {
+      slot0: firstUploadName(state.uploads && state.uploads.upload_heizung_photos),
+      slot1: firstUploadName(state.uploads && state.uploads.upload_fenster_photos),
+      slot2: firstUploadName(state.uploads && state.uploads.upload_daemmung_photos),
+    },
+  };
+  const enums = EXPORT_MAPPING_SPEC.enums || {};
+
+  const headers = schema.columns.map((c) => String(c.column || ""));
+  const row = schema.columns.map((c) => {
+    const val = applyExportTransform(c, ctx, schemaId, enums);
+    const out = hasRealValue(val) ? val : (c.default == null ? "" : c.default);
+    return csvEscape(out);
+  });
+
+  const csv = headers.map(csvEscape).join(";") + "\r\n" + row.join(";") + "\r\n";
   const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
-  const orderId = EA_CFG && EA_CFG.orderId ? String(EA_CFG.orderId) : "draft";
   const stamp = new Date().toISOString().slice(0, 19).replaceAll(":", "-");
   a.href = url;
-  a.download = "ea-export-" + orderId + "-" + stamp + ".csv";
+  a.download = "EA_Verbrauch_" + schemaId + "_" + orderId + "_" + stamp + ".csv";
   document.body.appendChild(a);
   a.click();
   a.remove();
