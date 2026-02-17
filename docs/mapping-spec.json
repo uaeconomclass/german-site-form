@@ -1,0 +1,1380 @@
+{
+  "version": "1.0.0-draft",
+  "source": {
+    "schema_files": [
+      "docs/hints-for-import/EA_Verbrauch_WG.csv",
+      "docs/hints-for-import/EA_Verbrauch_NWG.csv",
+      "docs/hints-for-import/Schnittstellenbeschreibung-Import-Energieausweise.pdf"
+    ],
+    "format": {
+      "delimiter": ";",
+      "encoding": "utf-8",
+      "decimal": ","
+    }
+  },
+  "routing": {
+    "WG": {
+      "when": "gebaeudetyp == 'WG'"
+    },
+    "NWG": {
+      "when": "gebaeudetyp == 'NWG'"
+    },
+    "MISCH": {
+      "policy": "default_to_NWG",
+      "note": "Can be switched to split export later"
+    }
+  },
+  "schemas": {
+    "WG": {
+      "columns": [
+        {
+          "column": "BOM",
+          "source": null,
+          "transform": "constant",
+          "default": "",
+          "status": "defaulted"
+        },
+        {
+          "column": "ID",
+          "source": "export_meta.order_id",
+          "transform": "id_safe_filename",
+          "default": null,
+          "status": "derived"
+        },
+        {
+          "column": "Anlass",
+          "source": "anlass",
+          "transform": "map_anlass_to_ag_code",
+          "default": "AG_VERMIETUNG",
+          "status": "mapped"
+        },
+        {
+          "column": "PLZ",
+          "source": "plz",
+          "transform": "string_trim",
+          "default": null,
+          "status": "mapped"
+        },
+        {
+          "column": "Ort",
+          "source": "ort",
+          "transform": "string_trim",
+          "default": null,
+          "status": "mapped"
+        },
+        {
+          "column": "Straße",
+          "source": null,
+          "transform": "constant",
+          "default": "",
+          "status": "unmapped"
+        },
+        {
+          "column": "Hausnr",
+          "source": "hausnummer",
+          "transform": "string_trim",
+          "default": null,
+          "status": "mapped"
+        },
+        {
+          "column": "isGebaeudehuelle",
+          "source": "gebaeudetyp",
+          "transform": "wg_is_gebaeudehuelle_01",
+          "default": 1,
+          "status": "partial"
+        },
+        {
+          "column": "Baujahr",
+          "source": "baujahr",
+          "transform": "year_int",
+          "default": null,
+          "status": "mapped"
+        },
+        {
+          "column": "Wohneinheiten",
+          "source": "anzahl_wohneinheiten",
+          "transform": "int_or_1",
+          "default": 1,
+          "status": "mapped"
+        },
+        {
+          "column": "Wohnfläche",
+          "source": "wohnflaeche|nwg_nettogrundflaeche",
+          "transform": "schema_dependent_area",
+          "default": null,
+          "status": "mapped"
+        },
+        {
+          "column": "gebaeudeteil",
+          "source": "gebaeudeanteil|gebaeudetyp",
+          "transform": "map_gebaeudeteil_gt",
+          "default": "GT_GANZES_GEB",
+          "status": "mapped"
+        },
+        {
+          "column": "Keller_beheizt",
+          "source": "keller|keller_heizstatus",
+          "transform": "map_keller_beheizt_01",
+          "default": 0,
+          "status": "mapped"
+        },
+        {
+          "column": "bilderStreams_0",
+          "source": "upload_export.slot0",
+          "transform": "basename_or_empty",
+          "default": "",
+          "status": "partial"
+        },
+        {
+          "column": "bilderStreams_1",
+          "source": "upload_export.slot1",
+          "transform": "basename_or_empty",
+          "default": "",
+          "status": "partial"
+        },
+        {
+          "column": "bilderStreams_2",
+          "source": "upload_export.slot2",
+          "transform": "basename_or_empty",
+          "default": "",
+          "status": "partial"
+        },
+        {
+          "column": "Klimatisiert",
+          "source": "nwg_kuehlung|misch_kuehlung",
+          "transform": "cooling_present_01",
+          "default": 0,
+          "status": "derived"
+        },
+        {
+          "column": "kuehlWfl",
+          "source": null,
+          "transform": "constant",
+          "default": 0,
+          "status": "defaulted"
+        },
+        {
+          "column": "passiveKuehlung",
+          "source": "nwg_kuehlung|misch_kuehlung",
+          "transform": "cooling_passive_01",
+          "default": 0,
+          "status": "partial"
+        },
+        {
+          "column": "fernKuehlung",
+          "source": "nwg_kuehlung|misch_kuehlung",
+          "transform": "cooling_district_01",
+          "default": 0,
+          "status": "partial"
+        },
+        {
+          "column": "stromKuehlung",
+          "source": "nwg_kuehlung|misch_kuehlung",
+          "transform": "cooling_electric_01",
+          "default": 0,
+          "status": "derived"
+        },
+        {
+          "column": "waermeKuehlung",
+          "source": "nwg_kuehlung|misch_kuehlung",
+          "transform": "cooling_thermal_01",
+          "default": 0,
+          "status": "partial"
+        },
+        {
+          "column": "kaiAnzahl",
+          "source": null,
+          "transform": "constant",
+          "default": 0,
+          "status": "defaulted"
+        },
+        {
+          "column": "kaiDatum",
+          "source": null,
+          "transform": "constant",
+          "default": "00.01.1900",
+          "status": "defaulted"
+        },
+        {
+          "column": "baujahrHzErz",
+          "source": "heizung_baujahr|misch_heizung_baujahr",
+          "transform": "year_or_fallback_baujahr",
+          "default": null,
+          "status": "mapped"
+        },
+        {
+          "column": "TW_Solar",
+          "source": "warmwasser_type",
+          "transform": "warmwasser_solar_01",
+          "default": 0,
+          "status": "derived"
+        },
+        {
+          "column": "HZ_Solar",
+          "source": "pv_dach|misch_pv_dach",
+          "transform": "checkbox_01",
+          "default": 0,
+          "status": "partial"
+        },
+        {
+          "column": "TW_WP",
+          "source": "warmwasser_type",
+          "transform": "warmwasser_wp_01",
+          "default": 0,
+          "status": "defaulted"
+        },
+        {
+          "column": "HZ_WP",
+          "source": "heizung_waermeerzeuger|misch_heizung_waermeerzeuger",
+          "transform": "heating_wp_01",
+          "default": 0,
+          "status": "derived"
+        },
+        {
+          "column": "Fensterlüftung",
+          "source": "lueftung_type|nwg_lueftung|misch_lueftung",
+          "transform": "vent_window_01",
+          "default": 0,
+          "status": "mapped"
+        },
+        {
+          "column": "Schachtlüftung",
+          "source": "lueftung_type|nwg_lueftung|misch_lueftung",
+          "transform": "vent_shaft_01",
+          "default": 0,
+          "status": "mapped"
+        },
+        {
+          "column": "L_Mit_WRG",
+          "source": "lueftung_type|nwg_lueftung|misch_lueftung",
+          "transform": "vent_wrg_yes_01",
+          "default": 0,
+          "status": "mapped"
+        },
+        {
+          "column": "L_Ohne_WRG",
+          "source": "lueftung_type|nwg_lueftung|misch_lueftung",
+          "transform": "vent_without_wrg_01",
+          "default": 0,
+          "status": "mapped"
+        },
+        {
+          "column": "Modernisierung",
+          "source": "anlass",
+          "transform": "modernisierung_year_or_0",
+          "default": 0,
+          "status": "partial"
+        },
+        {
+          "column": "Dach1_Dämmung",
+          "source": "waermedaemmung_dachgeschoss|waermedaemmung_oberste_geschossdecke",
+          "transform": "insulation_checkbox_to_cm_or_0",
+          "default": 0,
+          "status": "partial"
+        },
+        {
+          "column": "Wand1_Dämmung",
+          "source": "waermedaemmung_aussenwand",
+          "transform": "insulation_checkbox_to_cm_or_0",
+          "default": 0,
+          "status": "partial"
+        },
+        {
+          "column": "Boden1_Dämmung",
+          "source": "waermedaemmung_kellerdecke|waermedaemmung_kelleraussenwand",
+          "transform": "insulation_checkbox_to_cm_or_0",
+          "default": 0,
+          "status": "partial"
+        },
+        {
+          "column": "bjFensterAustausch",
+          "source": "fenster_baujahr",
+          "transform": "year_or_0",
+          "default": 0,
+          "status": "mapped"
+        },
+        {
+          "column": "ETr1_Kategorie",
+          "source": "heizung_waermeerzeuger|misch_heizung_waermeerzeuger",
+          "transform": "map_heating_to_bk_code",
+          "default": "BK_GAS",
+          "status": "partial"
+        },
+        {
+          "column": "ETr1_Anteil_erneuerbar",
+          "source": null,
+          "transform": "constant",
+          "default": 0,
+          "status": "defaulted"
+        },
+        {
+          "column": "ETr1_Anteil_KWK",
+          "source": null,
+          "transform": "constant",
+          "default": 0,
+          "status": "defaulted"
+        },
+        {
+          "column": "ETr1_isFw",
+          "source": "heizung_waermeerzeuger|misch_heizung_waermeerzeuger",
+          "transform": "is_fernwaerme_01",
+          "default": 0,
+          "status": "derived"
+        },
+        {
+          "column": "ETr1_gebaeudeNahErzeugt",
+          "source": null,
+          "transform": "constant",
+          "default": 0,
+          "status": "defaulted"
+        },
+        {
+          "column": "ETr1_Jahr1_von",
+          "source": "verbrauch.period1.from",
+          "transform": "date_dd_mm_yyyy",
+          "default": null,
+          "status": "unmapped"
+        },
+        {
+          "column": "ETr1_Jahr1_bis",
+          "source": "verbrauch.period1.to",
+          "transform": "date_dd_mm_yyyy",
+          "default": null,
+          "status": "unmapped"
+        },
+        {
+          "column": "ETr1_Jahr1_Menge",
+          "source": "verbrauch.period1.total",
+          "transform": "number_locale_de",
+          "default": null,
+          "status": "unmapped"
+        },
+        {
+          "column": "ETr1_TWW",
+          "source": "warmwasser_type",
+          "transform": "warmwasser_present_01",
+          "default": 1,
+          "status": "derived"
+        },
+        {
+          "column": "ETr1_Jahr1_Menge_TWW",
+          "source": "verbrauch.period1.tww",
+          "transform": "number_locale_de",
+          "default": "",
+          "status": "unmapped"
+        },
+        {
+          "column": "ETr1_Jahr1_Leerstand",
+          "source": "verbrauch.period1.vacancy_pct",
+          "transform": "percent_0_100",
+          "default": 0,
+          "status": "unmapped"
+        },
+        {
+          "column": "ETr1_Jahr2_von",
+          "source": "verbrauch.period2.from",
+          "transform": "date_dd_mm_yyyy",
+          "default": null,
+          "status": "unmapped"
+        },
+        {
+          "column": "ETr1_Jahr2_bis",
+          "source": "verbrauch.period2.to",
+          "transform": "date_dd_mm_yyyy",
+          "default": null,
+          "status": "unmapped"
+        },
+        {
+          "column": "ETr1_Jahr2_Menge",
+          "source": "verbrauch.period2.total",
+          "transform": "number_locale_de",
+          "default": null,
+          "status": "unmapped"
+        },
+        {
+          "column": "ETr1_Jahr2_Menge_TWW",
+          "source": "verbrauch.period2.tww",
+          "transform": "number_locale_de",
+          "default": "",
+          "status": "unmapped"
+        },
+        {
+          "column": "ETr1_Jahr2_Leerstand",
+          "source": "verbrauch.period2.vacancy_pct",
+          "transform": "percent_0_100",
+          "default": 0,
+          "status": "unmapped"
+        },
+        {
+          "column": "ETr1_Jahr3_von",
+          "source": "verbrauch.period3.from",
+          "transform": "date_dd_mm_yyyy",
+          "default": null,
+          "status": "unmapped"
+        },
+        {
+          "column": "ETr1_Jahr3_bis",
+          "source": "verbrauch.period3.to",
+          "transform": "date_dd_mm_yyyy",
+          "default": null,
+          "status": "unmapped"
+        },
+        {
+          "column": "ETr1_Jahr3_Menge",
+          "source": "verbrauch.period3.total",
+          "transform": "number_locale_de",
+          "default": null,
+          "status": "unmapped"
+        },
+        {
+          "column": "ETr1_Jahr3_Menge_TWW",
+          "source": "verbrauch.period3.tww",
+          "transform": "number_locale_de",
+          "default": "",
+          "status": "unmapped"
+        },
+        {
+          "column": "ETr1_Jahr3_Leerstand",
+          "source": "verbrauch.period3.vacancy_pct",
+          "transform": "percent_0_100",
+          "default": 0,
+          "status": "unmapped"
+        },
+        {
+          "column": "ETr1_PrimFaktor",
+          "source": "fernwaerme.primfaktor_etr1",
+          "transform": "number_locale_de",
+          "default": "",
+          "status": "unmapped"
+        },
+        {
+          "column": "ETr2_Kategorie",
+          "source": "etr2.kategorie",
+          "transform": "map_to_bk_code",
+          "default": "",
+          "status": "unmapped"
+        },
+        {
+          "column": "ETr2_Jahr1_von",
+          "source": "etr2.period1.from",
+          "transform": "date_dd_mm_yyyy",
+          "default": "",
+          "status": "unmapped"
+        },
+        {
+          "column": "ETr2_Jahr1_bis",
+          "source": "etr2.period1.to",
+          "transform": "date_dd_mm_yyyy",
+          "default": "",
+          "status": "unmapped"
+        },
+        {
+          "column": "ETr2_Jahr1_Menge",
+          "source": "etr2.period1.total",
+          "transform": "number_locale_de",
+          "default": "",
+          "status": "unmapped"
+        },
+        {
+          "column": "ETr2_TWW",
+          "source": "etr2.tww",
+          "transform": "bool_01",
+          "default": "",
+          "status": "unmapped"
+        },
+        {
+          "column": "ETr2_Jahr1_Menge_TWW",
+          "source": "etr2.period1.tww",
+          "transform": "number_locale_de",
+          "default": "",
+          "status": "unmapped"
+        },
+        {
+          "column": "ETr2_Jahr1_Leerstand",
+          "source": "etr2.period1.vacancy_pct",
+          "transform": "percent_0_100",
+          "default": "",
+          "status": "unmapped"
+        },
+        {
+          "column": "ETr2_Jahr2_von",
+          "source": "etr2.period2.from",
+          "transform": "date_dd_mm_yyyy",
+          "default": "",
+          "status": "unmapped"
+        },
+        {
+          "column": "ETr2_Jahr2_bis",
+          "source": "etr2.period2.to",
+          "transform": "date_dd_mm_yyyy",
+          "default": "",
+          "status": "unmapped"
+        },
+        {
+          "column": "ETr2_Jahr2_Menge",
+          "source": "etr2.period2.total",
+          "transform": "number_locale_de",
+          "default": "",
+          "status": "unmapped"
+        },
+        {
+          "column": "ETr2_Jahr2_Menge_TWW",
+          "source": "etr2.period2.tww",
+          "transform": "number_locale_de",
+          "default": "",
+          "status": "unmapped"
+        },
+        {
+          "column": "ETr2_Jahr2_Leerstand",
+          "source": "etr2.period2.vacancy_pct",
+          "transform": "percent_0_100",
+          "default": "",
+          "status": "unmapped"
+        },
+        {
+          "column": "ETr2_Jahr3_von",
+          "source": "etr2.period3.from",
+          "transform": "date_dd_mm_yyyy",
+          "default": "",
+          "status": "unmapped"
+        },
+        {
+          "column": "ETr2_Jahr3_bis",
+          "source": "etr2.period3.to",
+          "transform": "date_dd_mm_yyyy",
+          "default": "",
+          "status": "unmapped"
+        },
+        {
+          "column": "ETr2_Jahr3_Menge",
+          "source": "etr2.period3.total",
+          "transform": "number_locale_de",
+          "default": "",
+          "status": "unmapped"
+        },
+        {
+          "column": "ETr2_Jahr3_Menge_TWW",
+          "source": "etr2.period3.tww",
+          "transform": "number_locale_de",
+          "default": "",
+          "status": "unmapped"
+        },
+        {
+          "column": "ETr2_Jahr3_Leerstand",
+          "source": "etr2.period3.vacancy_pct",
+          "transform": "percent_0_100",
+          "default": "",
+          "status": "unmapped"
+        },
+        {
+          "column": "ETr1_Heizung",
+          "source": "heizung_waermeerzeuger|misch_heizung_waermeerzeuger",
+          "transform": "bool_from_presence_01",
+          "default": 1,
+          "status": "derived"
+        },
+        {
+          "column": "ETr2_Heizung",
+          "source": "etr2.heizung",
+          "transform": "bool_01",
+          "default": 0,
+          "status": "unmapped"
+        },
+        {
+          "column": "ETr2_PrimFaktor",
+          "source": "fernwaerme.etr2_primfaktor",
+          "transform": "number_locale_de",
+          "default": "",
+          "status": "unmapped"
+        },
+        {
+          "column": "Gebäudetyp",
+          "source": "gebaeudetyp",
+          "transform": "map_gebaeudetyp_to_v_or_g",
+          "default": "V",
+          "status": "partial"
+        },
+        {
+          "column": "Datenerhebung",
+          "source": null,
+          "transform": "constant",
+          "default": 0,
+          "status": "defaulted"
+        },
+        {
+          "column": "BedarfVerbrauch",
+          "source": "ausweisart",
+          "transform": "map_ausweisart_to_bv",
+          "default": "V",
+          "status": "mapped"
+        },
+        {
+          "column": "ETr2_Anteil_KWK",
+          "source": "fernwaerme.etr2_kwk_share",
+          "transform": "number_locale_de",
+          "default": "#NV",
+          "status": "defaulted"
+        },
+        {
+          "column": "ETr2_Anteil_erneuerbar",
+          "source": "fernwaerme.etr2_renew_share",
+          "transform": "number_locale_de",
+          "default": "#NV",
+          "status": "defaulted"
+        },
+        {
+          "column": "ETr2_isFw",
+          "source": "etr2.is_fw",
+          "transform": "bool_or_nv",
+          "default": "#NV",
+          "status": "defaulted"
+        },
+        {
+          "column": "ETr2_gebaeudeNahErzeugt",
+          "source": "etr2.gebaeudenah",
+          "transform": "bool_or_nv",
+          "default": "#NV",
+          "status": "defaulted"
+        }
+      ]
+    },
+    "NWG": {
+      "columns": [
+        {
+          "column": "BOM",
+          "source": null,
+          "transform": "constant",
+          "default": "",
+          "status": "defaulted"
+        },
+        {
+          "column": "ID",
+          "source": "export_meta.order_id",
+          "transform": "id_safe_filename",
+          "default": null,
+          "status": "derived"
+        },
+        {
+          "column": "nichtWohnGeb",
+          "source": "gebaeudetyp",
+          "transform": "nwg_flag_01",
+          "default": 1,
+          "status": "mapped"
+        },
+        {
+          "column": "Anlass",
+          "source": "anlass",
+          "transform": "map_anlass_to_ag_code",
+          "default": "AG_VERMIETUNG",
+          "status": "mapped"
+        },
+        {
+          "column": "PLZ",
+          "source": "plz",
+          "transform": "string_trim",
+          "default": null,
+          "status": "mapped"
+        },
+        {
+          "column": "Ort",
+          "source": "ort",
+          "transform": "string_trim",
+          "default": null,
+          "status": "mapped"
+        },
+        {
+          "column": "Straße",
+          "source": null,
+          "transform": "constant",
+          "default": "",
+          "status": "unmapped"
+        },
+        {
+          "column": "Hausnr",
+          "source": "hausnummer",
+          "transform": "string_trim",
+          "default": null,
+          "status": "mapped"
+        },
+        {
+          "column": "Baujahr",
+          "source": "baujahr",
+          "transform": "year_int",
+          "default": null,
+          "status": "mapped"
+        },
+        {
+          "column": "Nutzung1_ID",
+          "source": "nwg_nutzung",
+          "transform": "map_nutzung_to_id",
+          "default": "1",
+          "status": "partial"
+        },
+        {
+          "column": "Nutzung1_Flaeche",
+          "source": "nwg_nettogrundflaeche",
+          "transform": "number_locale_de",
+          "default": null,
+          "status": "mapped"
+        },
+        {
+          "column": "Nutzung2_ID",
+          "source": null,
+          "transform": "constant",
+          "default": "",
+          "status": "defaulted"
+        },
+        {
+          "column": "Nutzung2_Flaeche",
+          "source": null,
+          "transform": "constant",
+          "default": "",
+          "status": "defaulted"
+        },
+        {
+          "column": "Nutzung3_ID",
+          "source": null,
+          "transform": "constant",
+          "default": "",
+          "status": "defaulted"
+        },
+        {
+          "column": "Nutzung3_Flaeche",
+          "source": null,
+          "transform": "constant",
+          "default": "",
+          "status": "defaulted"
+        },
+        {
+          "column": "Wohnfläche",
+          "source": "wohnflaeche|nwg_nettogrundflaeche",
+          "transform": "schema_dependent_area",
+          "default": null,
+          "status": "mapped"
+        },
+        {
+          "column": "gebaeudeteil",
+          "source": "gebaeudeanteil|gebaeudetyp",
+          "transform": "map_gebaeudeteil_gt",
+          "default": "GT_GANZES_GEB",
+          "status": "mapped"
+        },
+        {
+          "column": "Keller_beheizt",
+          "source": "keller|keller_heizstatus",
+          "transform": "map_keller_beheizt_01",
+          "default": 0,
+          "status": "mapped"
+        },
+        {
+          "column": "bilderStreams_0",
+          "source": "upload_export.slot0",
+          "transform": "basename_or_empty",
+          "default": "",
+          "status": "partial"
+        },
+        {
+          "column": "bilderStreams_1",
+          "source": "upload_export.slot1",
+          "transform": "basename_or_empty",
+          "default": "",
+          "status": "partial"
+        },
+        {
+          "column": "bilderStreams_2",
+          "source": "upload_export.slot2",
+          "transform": "basename_or_empty",
+          "default": "",
+          "status": "partial"
+        },
+        {
+          "column": "Klimatisiert",
+          "source": "nwg_kuehlung|misch_kuehlung",
+          "transform": "cooling_present_01",
+          "default": 0,
+          "status": "derived"
+        },
+        {
+          "column": "passiveKuehlung",
+          "source": "nwg_kuehlung|misch_kuehlung",
+          "transform": "cooling_passive_01",
+          "default": 0,
+          "status": "partial"
+        },
+        {
+          "column": "fernKuehlung",
+          "source": "nwg_kuehlung|misch_kuehlung",
+          "transform": "cooling_district_01",
+          "default": 0,
+          "status": "partial"
+        },
+        {
+          "column": "stromKuehlung",
+          "source": "nwg_kuehlung|misch_kuehlung",
+          "transform": "cooling_electric_01",
+          "default": 0,
+          "status": "derived"
+        },
+        {
+          "column": "waermeKuehlung",
+          "source": "nwg_kuehlung|misch_kuehlung",
+          "transform": "cooling_thermal_01",
+          "default": 0,
+          "status": "partial"
+        },
+        {
+          "column": "kaiAnzahl",
+          "source": null,
+          "transform": "constant",
+          "default": 0,
+          "status": "defaulted"
+        },
+        {
+          "column": "kaiDatum",
+          "source": null,
+          "transform": "constant",
+          "default": "00.01.1900",
+          "status": "defaulted"
+        },
+        {
+          "column": "baujahrHzErz",
+          "source": "heizung_baujahr|misch_heizung_baujahr",
+          "transform": "year_or_fallback_baujahr",
+          "default": null,
+          "status": "mapped"
+        },
+        {
+          "column": "TW_Solar",
+          "source": "warmwasser_type",
+          "transform": "warmwasser_solar_01",
+          "default": 0,
+          "status": "derived"
+        },
+        {
+          "column": "HZ_Solar",
+          "source": "pv_dach|misch_pv_dach",
+          "transform": "checkbox_01",
+          "default": 0,
+          "status": "partial"
+        },
+        {
+          "column": "TW_WP",
+          "source": "warmwasser_type",
+          "transform": "warmwasser_wp_01",
+          "default": 0,
+          "status": "defaulted"
+        },
+        {
+          "column": "HZ_WP",
+          "source": "heizung_waermeerzeuger|misch_heizung_waermeerzeuger",
+          "transform": "heating_wp_01",
+          "default": 0,
+          "status": "derived"
+        },
+        {
+          "column": "Fensterlüftung",
+          "source": "lueftung_type|nwg_lueftung|misch_lueftung",
+          "transform": "vent_window_01",
+          "default": 0,
+          "status": "mapped"
+        },
+        {
+          "column": "Schachtlüftung",
+          "source": "lueftung_type|nwg_lueftung|misch_lueftung",
+          "transform": "vent_shaft_01",
+          "default": 0,
+          "status": "mapped"
+        },
+        {
+          "column": "L_Mit_WRG",
+          "source": "lueftung_type|nwg_lueftung|misch_lueftung",
+          "transform": "vent_wrg_yes_01",
+          "default": 0,
+          "status": "mapped"
+        },
+        {
+          "column": "L_Ohne_WRG",
+          "source": "lueftung_type|nwg_lueftung|misch_lueftung",
+          "transform": "vent_without_wrg_01",
+          "default": 0,
+          "status": "mapped"
+        },
+        {
+          "column": "Modernisierung",
+          "source": "anlass",
+          "transform": "modernisierung_year_or_0",
+          "default": 0,
+          "status": "partial"
+        },
+        {
+          "column": "Dach1_Dämmung",
+          "source": "waermedaemmung_dachgeschoss|waermedaemmung_oberste_geschossdecke",
+          "transform": "insulation_checkbox_to_cm_or_0",
+          "default": 0,
+          "status": "partial"
+        },
+        {
+          "column": "Wand1_Dämmung",
+          "source": "waermedaemmung_aussenwand",
+          "transform": "insulation_checkbox_to_cm_or_0",
+          "default": 0,
+          "status": "partial"
+        },
+        {
+          "column": "Boden1_Dämmung",
+          "source": "waermedaemmung_kellerdecke|waermedaemmung_kelleraussenwand",
+          "transform": "insulation_checkbox_to_cm_or_0",
+          "default": 0,
+          "status": "partial"
+        },
+        {
+          "column": "bjFensterAustausch",
+          "source": "fenster_baujahr",
+          "transform": "year_or_0",
+          "default": 0,
+          "status": "mapped"
+        },
+        {
+          "column": "ETr1_Kategorie",
+          "source": "heizung_waermeerzeuger|misch_heizung_waermeerzeuger",
+          "transform": "map_heating_to_bk_code",
+          "default": "BK_GAS",
+          "status": "partial"
+        },
+        {
+          "column": "ETr1_Anteil_erneuerbar",
+          "source": null,
+          "transform": "constant",
+          "default": 0,
+          "status": "defaulted"
+        },
+        {
+          "column": "ETr1_Anteil_KWK",
+          "source": null,
+          "transform": "constant",
+          "default": 0,
+          "status": "defaulted"
+        },
+        {
+          "column": "ETr1_isFw",
+          "source": "heizung_waermeerzeuger|misch_heizung_waermeerzeuger",
+          "transform": "is_fernwaerme_01",
+          "default": 0,
+          "status": "derived"
+        },
+        {
+          "column": "ETr1_gebaeudeNahErzeugt",
+          "source": null,
+          "transform": "constant",
+          "default": 0,
+          "status": "defaulted"
+        },
+        {
+          "column": "ETr1_Jahr1_von",
+          "source": "verbrauch.period1.from",
+          "transform": "date_dd_mm_yyyy",
+          "default": null,
+          "status": "unmapped"
+        },
+        {
+          "column": "ETr1_Jahr1_bis",
+          "source": "verbrauch.period1.to",
+          "transform": "date_dd_mm_yyyy",
+          "default": null,
+          "status": "unmapped"
+        },
+        {
+          "column": "ETr1_Jahr1_Menge",
+          "source": "verbrauch.period1.total",
+          "transform": "number_locale_de",
+          "default": null,
+          "status": "unmapped"
+        },
+        {
+          "column": "ETr1_TWW",
+          "source": "warmwasser_type",
+          "transform": "warmwasser_present_01",
+          "default": 1,
+          "status": "derived"
+        },
+        {
+          "column": "ETr1_Jahr1_Menge_TWW",
+          "source": "verbrauch.period1.tww",
+          "transform": "number_locale_de",
+          "default": "",
+          "status": "unmapped"
+        },
+        {
+          "column": "ETr1_Jahr1_Leerstand",
+          "source": "verbrauch.period1.vacancy_pct",
+          "transform": "percent_0_100",
+          "default": 0,
+          "status": "unmapped"
+        },
+        {
+          "column": "ETr1_Jahr2_von",
+          "source": "verbrauch.period2.from",
+          "transform": "date_dd_mm_yyyy",
+          "default": null,
+          "status": "unmapped"
+        },
+        {
+          "column": "ETr1_Jahr2_bis",
+          "source": "verbrauch.period2.to",
+          "transform": "date_dd_mm_yyyy",
+          "default": null,
+          "status": "unmapped"
+        },
+        {
+          "column": "ETr1_Jahr2_Menge",
+          "source": "verbrauch.period2.total",
+          "transform": "number_locale_de",
+          "default": null,
+          "status": "unmapped"
+        },
+        {
+          "column": "ETr1_Jahr2_Menge_TWW",
+          "source": "verbrauch.period2.tww",
+          "transform": "number_locale_de",
+          "default": "",
+          "status": "unmapped"
+        },
+        {
+          "column": "ETr1_Jahr2_Leerstand",
+          "source": "verbrauch.period2.vacancy_pct",
+          "transform": "percent_0_100",
+          "default": 0,
+          "status": "unmapped"
+        },
+        {
+          "column": "ETr1_Jahr3_von",
+          "source": "verbrauch.period3.from",
+          "transform": "date_dd_mm_yyyy",
+          "default": null,
+          "status": "unmapped"
+        },
+        {
+          "column": "ETr1_Jahr3_bis",
+          "source": "verbrauch.period3.to",
+          "transform": "date_dd_mm_yyyy",
+          "default": null,
+          "status": "unmapped"
+        },
+        {
+          "column": "ETr1_Jahr3_Menge",
+          "source": "verbrauch.period3.total",
+          "transform": "number_locale_de",
+          "default": null,
+          "status": "unmapped"
+        },
+        {
+          "column": "ETr1_Jahr3_Menge_TWW",
+          "source": "verbrauch.period3.tww",
+          "transform": "number_locale_de",
+          "default": "",
+          "status": "unmapped"
+        },
+        {
+          "column": "ETr1_Jahr3_Leerstand",
+          "source": "verbrauch.period3.vacancy_pct",
+          "transform": "percent_0_100",
+          "default": 0,
+          "status": "unmapped"
+        },
+        {
+          "column": "ETr1_PrimFaktor",
+          "source": "fernwaerme.primfaktor_etr1",
+          "transform": "number_locale_de",
+          "default": "",
+          "status": "unmapped"
+        },
+        {
+          "column": "ETr2_Kategorie",
+          "source": "etr2.kategorie",
+          "transform": "map_to_bk_code",
+          "default": "",
+          "status": "unmapped"
+        },
+        {
+          "column": "ETr2_Kuehlen",
+          "source": "nwg_kuehlung",
+          "transform": "nwg_etr2_kuehlen_01",
+          "default": 0,
+          "status": "derived"
+        },
+        {
+          "column": "ETr2_Lueften",
+          "source": "nwg_lueftung",
+          "transform": "nwg_etr2_lueften_01",
+          "default": 0,
+          "status": "derived"
+        },
+        {
+          "column": "ETr2_Feuchte",
+          "source": null,
+          "transform": "constant",
+          "default": 0,
+          "status": "defaulted"
+        },
+        {
+          "column": "ETr2_Licht",
+          "source": "nwg_beleuchtung",
+          "transform": "nwg_etr2_licht_01",
+          "default": 1,
+          "status": "partial"
+        },
+        {
+          "column": "ETr2_ZusatzHz",
+          "source": null,
+          "transform": "constant",
+          "default": 0,
+          "status": "defaulted"
+        },
+        {
+          "column": "ETr2_Sonst",
+          "source": null,
+          "transform": "constant",
+          "default": 1,
+          "status": "defaulted"
+        },
+        {
+          "column": "ETr2_Jahr1_von",
+          "source": "etr2.period1.from",
+          "transform": "date_dd_mm_yyyy",
+          "default": "",
+          "status": "unmapped"
+        },
+        {
+          "column": "ETr2_Jahr1_bis",
+          "source": "etr2.period1.to",
+          "transform": "date_dd_mm_yyyy",
+          "default": "",
+          "status": "unmapped"
+        },
+        {
+          "column": "ETr2_Jahr1_Menge",
+          "source": "etr2.period1.total",
+          "transform": "number_locale_de",
+          "default": "",
+          "status": "unmapped"
+        },
+        {
+          "column": "ETr2_TWW",
+          "source": "etr2.tww",
+          "transform": "bool_01",
+          "default": "",
+          "status": "unmapped"
+        },
+        {
+          "column": "ETr2_Jahr1_Menge_TWW",
+          "source": "etr2.period1.tww",
+          "transform": "number_locale_de",
+          "default": "",
+          "status": "unmapped"
+        },
+        {
+          "column": "ETr2_Jahr1_Leerstand",
+          "source": "etr2.period1.vacancy_pct",
+          "transform": "percent_0_100",
+          "default": "",
+          "status": "unmapped"
+        },
+        {
+          "column": "ETr2_Jahr2_von",
+          "source": "etr2.period2.from",
+          "transform": "date_dd_mm_yyyy",
+          "default": "",
+          "status": "unmapped"
+        },
+        {
+          "column": "ETr2_Jahr2_bis",
+          "source": "etr2.period2.to",
+          "transform": "date_dd_mm_yyyy",
+          "default": "",
+          "status": "unmapped"
+        },
+        {
+          "column": "ETr2_Jahr2_Menge",
+          "source": "etr2.period2.total",
+          "transform": "number_locale_de",
+          "default": "",
+          "status": "unmapped"
+        },
+        {
+          "column": "ETr2_Jahr2_Menge_TWW",
+          "source": "etr2.period2.tww",
+          "transform": "number_locale_de",
+          "default": "",
+          "status": "unmapped"
+        },
+        {
+          "column": "ETr2_Jahr2_Leerstand",
+          "source": "etr2.period2.vacancy_pct",
+          "transform": "percent_0_100",
+          "default": "",
+          "status": "unmapped"
+        },
+        {
+          "column": "ETr2_Jahr3_von",
+          "source": "etr2.period3.from",
+          "transform": "date_dd_mm_yyyy",
+          "default": "",
+          "status": "unmapped"
+        },
+        {
+          "column": "ETr2_Jahr3_bis",
+          "source": "etr2.period3.to",
+          "transform": "date_dd_mm_yyyy",
+          "default": "",
+          "status": "unmapped"
+        },
+        {
+          "column": "ETr2_Jahr3_Menge",
+          "source": "etr2.period3.total",
+          "transform": "number_locale_de",
+          "default": "",
+          "status": "unmapped"
+        },
+        {
+          "column": "ETr2_Jahr3_Menge_TWW",
+          "source": "etr2.period3.tww",
+          "transform": "number_locale_de",
+          "default": "",
+          "status": "unmapped"
+        },
+        {
+          "column": "ETr2_Jahr3_Leerstand",
+          "source": "etr2.period3.vacancy_pct",
+          "transform": "percent_0_100",
+          "default": "",
+          "status": "unmapped"
+        },
+        {
+          "column": "ETr1_Heizung",
+          "source": "heizung_waermeerzeuger|misch_heizung_waermeerzeuger",
+          "transform": "bool_from_presence_01",
+          "default": 1,
+          "status": "derived"
+        },
+        {
+          "column": "ETr2_Heizung",
+          "source": "etr2.heizung",
+          "transform": "bool_01",
+          "default": 0,
+          "status": "unmapped"
+        },
+        {
+          "column": "Gebäudetyp",
+          "source": "gebaeudetyp",
+          "transform": "map_gebaeudetyp_to_v_or_g",
+          "default": "V",
+          "status": "partial"
+        },
+        {
+          "column": "Datenerhebung",
+          "source": null,
+          "transform": "constant",
+          "default": 0,
+          "status": "defaulted"
+        },
+        {
+          "column": "BedarfVerbrauch",
+          "source": "ausweisart",
+          "transform": "map_ausweisart_to_bv",
+          "default": "V",
+          "status": "mapped"
+        },
+        {
+          "column": "ETr2_Anteil_KWK",
+          "source": "fernwaerme.etr2_kwk_share",
+          "transform": "number_locale_de",
+          "default": "#NV",
+          "status": "defaulted"
+        },
+        {
+          "column": "ETr2_Anteil_erneuerbar",
+          "source": "fernwaerme.etr2_renew_share",
+          "transform": "number_locale_de",
+          "default": "#NV",
+          "status": "defaulted"
+        },
+        {
+          "column": "ETr2_isFw",
+          "source": "etr2.is_fw",
+          "transform": "bool_or_nv",
+          "default": "#NV",
+          "status": "defaulted"
+        },
+        {
+          "column": "ETr2_gebaeudeNahErzeugt",
+          "source": "etr2.gebaeudenah",
+          "transform": "bool_or_nv",
+          "default": "#NV",
+          "status": "defaulted"
+        },
+        {
+          "column": "stromAufzugEnthalten",
+          "source": null,
+          "transform": "constant",
+          "default": 0,
+          "status": "defaulted"
+        }
+      ]
+    }
+  },
+  "enums": {
+    "anlass_to_ag_code": {
+      "Vermietung": "AG_VERMIETUNG",
+      "Verkauf": "AG_VERMIETUNG",
+      "Sonstiges": "AG_SONST",
+      "Neubau": "AG_SONST",
+      "Modernisierung": "AG_SONST"
+    },
+    "ausweisart_to_bv": {
+      "Verbrauchsausweis": "V",
+      "Bedarfsausweis": "B",
+      "wei? ich nicht": "V"
+    },
+    "gebaeudeteil_to_gt": {
+      "Gesamtgeb?ude": "GT_GANZES_GEB",
+      "Wohnen": "GT_TEIL_DES_WG"
+    },
+    "heizung_to_bk": {
+      "?l": "BK_OEL",
+      "Gas": "BK_GAS",
+      "Fernw?rme": "BK_FW0",
+      "W?rmepumpe": "BK_STROM",
+      "Biomasse": "BK_HOLZ",
+      "Elektro": "BK_STROM",
+      "Einzel?fen": "BK_HOLZ",
+      "BHKW / KWK": "BK_GAS",
+      "Hybridheizung": "BK_GAS"
+    },
+    "nwg_nutzung_to_id": {
+      "B?ro / Verwaltung": "1",
+      "Praxis / Gesundheit": "20",
+      "Schule / Kita": "33",
+      "Einzelhandel": "50",
+      "Gastronomie": "53",
+      "Lager / Produktion": "51",
+      "Sonstiges NWG": "91"
+    }
+  },
+  "validation": {
+    "critical_columns": [
+      "ID",
+      "Anlass",
+      "BedarfVerbrauch",
+      "PLZ",
+      "Ort",
+      "Stra?e",
+      "Hausnr",
+      "Baujahr"
+    ],
+    "date_format": "dd.mm.yyyy",
+    "warnings": {
+      "unmapped_columns": "Include in export_warnings block",
+      "defaulted_columns": "Log default application with column name"
+    }
+  }
+}
