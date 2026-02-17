@@ -260,31 +260,31 @@
         },
         {
           "column": "Modernisierung",
-          "source": "anlass",
-          "transform": "modernisierung_year_or_0",
+          "source": "modernisierungsjahr|anlass",
+          "transform": "modernisierung_year_from_field_or_0",
           "default": 0,
-          "status": "partial"
+          "status": "mapped"
         },
         {
           "column": "Dach1_Dämmung",
-          "source": "waermedaemmung_dachgeschoss|waermedaemmung_oberste_geschossdecke",
-          "transform": "insulation_checkbox_to_cm_or_0",
+          "source": "daemmstaerke_dach_cm",
+          "transform": "number_locale_de",
           "default": 0,
-          "status": "partial"
+          "status": "mapped"
         },
         {
           "column": "Wand1_Dämmung",
-          "source": "waermedaemmung_aussenwand",
-          "transform": "insulation_checkbox_to_cm_or_0",
+          "source": "daemmstaerke_aussenwand_cm",
+          "transform": "number_locale_de",
           "default": 0,
-          "status": "partial"
+          "status": "mapped"
         },
         {
           "column": "Boden1_Dämmung",
-          "source": "waermedaemmung_kellerdecke|waermedaemmung_kelleraussenwand",
-          "transform": "insulation_checkbox_to_cm_or_0",
+          "source": "daemmstaerke_boden_cm",
+          "transform": "number_locale_de",
           "default": 0,
-          "status": "partial"
+          "status": "mapped"
         },
         {
           "column": "bjFensterAustausch",
@@ -901,31 +901,31 @@
         },
         {
           "column": "Modernisierung",
-          "source": "anlass",
-          "transform": "modernisierung_year_or_0",
+          "source": "modernisierungsjahr|anlass",
+          "transform": "modernisierung_year_from_field_or_0",
           "default": 0,
-          "status": "partial"
+          "status": "mapped"
         },
         {
           "column": "Dach1_Dämmung",
-          "source": "waermedaemmung_dachgeschoss|waermedaemmung_oberste_geschossdecke",
-          "transform": "insulation_checkbox_to_cm_or_0",
+          "source": "daemmstaerke_dach_cm",
+          "transform": "number_locale_de",
           "default": 0,
-          "status": "partial"
+          "status": "mapped"
         },
         {
           "column": "Wand1_Dämmung",
-          "source": "waermedaemmung_aussenwand",
-          "transform": "insulation_checkbox_to_cm_or_0",
+          "source": "daemmstaerke_aussenwand_cm",
+          "transform": "number_locale_de",
           "default": 0,
-          "status": "partial"
+          "status": "mapped"
         },
         {
           "column": "Boden1_Dämmung",
-          "source": "waermedaemmung_kellerdecke|waermedaemmung_kelleraussenwand",
-          "transform": "insulation_checkbox_to_cm_or_0",
+          "source": "daemmstaerke_boden_cm",
+          "transform": "number_locale_de",
           "default": 0,
-          "status": "partial"
+          "status": "mapped"
         },
         {
           "column": "bjFensterAustausch",

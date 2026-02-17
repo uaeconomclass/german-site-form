@@ -1,6 +1,7 @@
 {
   "anlass": "Vermietung, Verkauf oder sonstiger Zweck. Für einen Verbrauchsausweis sind die Anlässe Neubau oder Modernisierung nicht zulässig.",
   "ausweisart": "Verbrauchsausweis: auf Basis tatsächlichen Verbrauchs. Bedarfsausweis: auf Basis Berechnung (mehr Angaben).",
+  "modernisierungsjahr": "Bitte geben Sie das Jahr der letzten relevanten Modernisierung an (vierstellig).",
 
   "relevanz_disclaimer": "Die Einordnung dient der ersten Orientierung. Die endgültige Bewertung erfolgt im Rahmen der Energieausweis-Erstellung nach den geltenden gesetzlichen Vorgaben (GEG). Abweichungen im Einzelfall sind möglich.",
   "gebaeudetyp": "Der Energieausweis wird grundsätzlich für das gesamte Gebäude oder den kompletten Wohnteil eines Mischgebäudes erstellt. Eine Ausstellung für einzelne Wohnungen oder Teilflächen ist nicht möglich.",

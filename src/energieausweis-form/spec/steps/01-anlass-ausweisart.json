@@ -8,7 +8,27 @@
   },
   "fields": [
     { "key": "anlass", "label": "Anlass", "type": "select", "required": true, "tipKey": "anlass", "optionsRef": "anlass" },
-    { "key": "ausweisart", "label": "Ausweisart", "type": "select", "required": true, "tipKey": "ausweisart", "optionsRef": "ausweisart" }
+    { "key": "ausweisart", "label": "Ausweisart", "type": "select", "required": true, "tipKey": "ausweisart", "optionsRef": "ausweisart" },
+    {
+      "key": "modernisierungsjahr",
+      "label": "Modernisierungsjahr",
+      "type": "number",
+      "min": 1900,
+      "max": 2026,
+      "hint": "z. B. 2019",
+      "tipKey": "modernisierungsjahr",
+      "when": {
+        "and": [
+          { "eq": ["ausweisart", "Bedarfsausweis"] },
+          { "eq": ["anlass", "Modernisierung"] }
+        ]
+      },
+      "required": {
+        "and": [
+          { "eq": ["ausweisart", "Bedarfsausweis"] },
+          { "eq": ["anlass", "Modernisierung"] }
+        ]
+      }
+    }
   ]
 }
-

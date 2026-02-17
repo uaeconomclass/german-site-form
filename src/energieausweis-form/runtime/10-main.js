@@ -491,6 +491,12 @@ function setValue(key, value, step, opts) {
   if (key === "ausweisart" && state.ausweisart !== "Bedarfsausweis") {
     if (state.anlass === "Neubau" || state.anlass === "Modernisierung") state.anlass = "";
   }
+  // Keep Modernisierungsjahr consistent with visible conditions.
+  if (key === "ausweisart" || key === "anlass") {
+    if (state.ausweisart !== "Bedarfsausweis" || state.anlass !== "Modernisierung") {
+      state.modernisierungsjahr = "";
+    }
+  }
 
   // After-change hooks from spec
   const hookName = step && step.afterChangeRef;
