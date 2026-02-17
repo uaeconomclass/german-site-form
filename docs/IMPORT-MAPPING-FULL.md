@@ -104,7 +104,11 @@ If any critical value is missing after transform/default stage, export must fail
 
 ## Important Partial / Assumed Logic
 
-- Upload fields are currently compressed into `bilderStreams_0..2` filename slots.
+- Upload slot policy `v1` is fixed:
+  - `bilderStreams_0` <- first file from `upload_heizung_photos`
+  - `bilderStreams_1` <- first file from `upload_fenster_photos`
+  - `bilderStreams_2` <- first file from `upload_daemmung_photos`
+  - if file missing -> empty value
 - `HZ_Solar` is temporarily derived from `pv_dach` checkbox (proxy, not exact EVEBI semantics).
 - Insulation columns (`Dach1_Dämmung`, `Wand1_Dämmung`, `Boden1_Dämmung`) use checkbox-to-value fallback.
 - `MISCH` routing currently forced to NWG fallback.
@@ -130,5 +134,4 @@ These are intentionally marked as `partial` in `docs/mapping-spec.json`.
 - Emit `export_warnings` for all `partial`, `defaulted`, and `unmapped` columns used during row generation.
 - Revisit mapping when client confirms:
   - consumption data collection model,
-  - MISCH export policy,
-  - exact handling of uploads for EVEBI import.
+  - MISCH export policy.

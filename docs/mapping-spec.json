@@ -24,6 +24,17 @@
       "note": "Can be switched to split export later"
     }
   },
+  "upload_slot_policy": {
+    "version": "v1",
+    "applies_to": ["WG", "NWG"],
+    "rules": {
+      "slot0": "first_file(upload_heizung_photos)",
+      "slot1": "first_file(upload_fenster_photos)",
+      "slot2": "first_file(upload_daemmung_photos)"
+    },
+    "missing_file_behavior": "empty_string",
+    "note": "Based on provided CSV examples (Ansicht/Fenster/Anlage pattern)."
+  },
   "schemas": {
     "WG": {
       "columns": [
@@ -123,21 +134,21 @@
           "source": "upload_export.slot0",
           "transform": "basename_or_empty",
           "default": "",
-          "status": "partial"
+          "status": "mapped"
         },
         {
           "column": "bilderStreams_1",
           "source": "upload_export.slot1",
           "transform": "basename_or_empty",
           "default": "",
-          "status": "partial"
+          "status": "mapped"
         },
         {
           "column": "bilderStreams_2",
           "source": "upload_export.slot2",
           "transform": "basename_or_empty",
           "default": "",
-          "status": "partial"
+          "status": "mapped"
         },
         {
           "column": "Klimatisiert",
@@ -771,21 +782,21 @@
           "source": "upload_export.slot0",
           "transform": "basename_or_empty",
           "default": "",
-          "status": "partial"
+          "status": "mapped"
         },
         {
           "column": "bilderStreams_1",
           "source": "upload_export.slot1",
           "transform": "basename_or_empty",
           "default": "",
-          "status": "partial"
+          "status": "mapped"
         },
         {
           "column": "bilderStreams_2",
           "source": "upload_export.slot2",
           "transform": "basename_or_empty",
           "default": "",
-          "status": "partial"
+          "status": "mapped"
         },
         {
           "column": "Klimatisiert",

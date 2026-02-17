@@ -1,19 +1,19 @@
-# Import Mapping Verification (Almost-Production)
+﻿# Import Mapping Verification (Almost-Production)
 
 Sources checked:
 - `docs/mapping-spec.json`
 - `docs/hints-for-import/EA_Verbrauch_WG.csv`
 - `docs/hints-for-import/EA_Verbrauch_NWG.csv`
 - `docs/hints-for-import/Schnittstellenbeschreibung-Import-Energieausweise.pdf`
-- `docs/hints-for-import/EA_Verbrauch_NWG_mod.xlsx` (`Bez?ge_Auswahlliste`)
+- `docs/hints-for-import/EA_Verbrauch_NWG_mod.xlsx` (`Bezüge_Auswahlliste`)
 
 ## Summary
 
-- Total unresolved/uncertain items: **27**
+- Total unresolved/uncertain items: **13**
 - High: **0**
-- Medium: **27**
+- Medium: **13**
 - Low: **0**
-- WG: **13**, NWG: **14**
+- WG: **6**, NWG: **7**
 
 Severity rules:
 - `high`: critical import column is not reliably mapped.
@@ -24,34 +24,20 @@ Severity rules:
 
 - None
 
-## Medium Items (27)
+## Medium Items (13)
 
 | Schema | Column | Status | Source | Transform | Default | Why unresolved |
 |---|---|---|---|---|---|---|
-| NWG | Boden1_Dämmung | partial | waermedaemmung_kellerdecke\|waermedaemmung_kelleraussenwand | insulation_checkbox_to_cm_or_0 | 0 | Mapped with assumptions; business rule not fully confirmed. |
-| NWG | Dach1_Dämmung | partial | waermedaemmung_dachgeschoss\|waermedaemmung_oberste_geschossdecke | insulation_checkbox_to_cm_or_0 | 0 | Mapped with assumptions; business rule not fully confirmed. |
 | NWG | ETr2_Licht | partial | nwg_beleuchtung | nwg_etr2_licht_01 | 1 | Mapped with assumptions; business rule not fully confirmed. |
+| NWG | fernKuehlung | partial | nwg_kuehlung\|misch_kuehlung | cooling_district_01 | 0 | Mapped with assumptions; business rule not fully confirmed. |
 | NWG | Gebäudetyp | partial | gebaeudetyp | map_gebaeudetyp_to_v_or_g | V | Mapped with assumptions; business rule not fully confirmed. |
 | NWG | HZ_Solar | partial | pv_dach\|misch_pv_dach | checkbox_01 | 0 | Mapped with assumptions; business rule not fully confirmed. |
-| NWG | Modernisierung | partial | anlass | modernisierung_year_or_0 | 0 | Mapped with assumptions; business rule not fully confirmed. |
 | NWG | Nutzung1_ID | partial | nwg_nutzung | map_nutzung_to_id | 1 | Mapped with assumptions; business rule not fully confirmed. |
-| NWG | Wand1_Dämmung | partial | waermedaemmung_aussenwand | insulation_checkbox_to_cm_or_0 | 0 | Mapped with assumptions; business rule not fully confirmed. |
-| NWG | bilderStreams_0 | partial | upload_export.slot0 | basename_or_empty |  | Mapped with assumptions; business rule not fully confirmed. |
-| NWG | bilderStreams_1 | partial | upload_export.slot1 | basename_or_empty |  | Mapped with assumptions; business rule not fully confirmed. |
-| NWG | bilderStreams_2 | partial | upload_export.slot2 | basename_or_empty |  | Mapped with assumptions; business rule not fully confirmed. |
-| NWG | fernKuehlung | partial | nwg_kuehlung\|misch_kuehlung | cooling_district_01 | 0 | Mapped with assumptions; business rule not fully confirmed. |
 | NWG | passiveKuehlung | partial | nwg_kuehlung\|misch_kuehlung | cooling_passive_01 | 0 | Mapped with assumptions; business rule not fully confirmed. |
 | NWG | waermeKuehlung | partial | nwg_kuehlung\|misch_kuehlung | cooling_thermal_01 | 0 | Mapped with assumptions; business rule not fully confirmed. |
-| WG | Boden1_Dämmung | partial | waermedaemmung_kellerdecke\|waermedaemmung_kelleraussenwand | insulation_checkbox_to_cm_or_0 | 0 | Mapped with assumptions; business rule not fully confirmed. |
-| WG | Dach1_Dämmung | partial | waermedaemmung_dachgeschoss\|waermedaemmung_oberste_geschossdecke | insulation_checkbox_to_cm_or_0 | 0 | Mapped with assumptions; business rule not fully confirmed. |
+| WG | fernKuehlung | partial | nwg_kuehlung\|misch_kuehlung | cooling_district_01 | 0 | Mapped with assumptions; business rule not fully confirmed. |
 | WG | Gebäudetyp | partial | gebaeudetyp | map_gebaeudetyp_to_v_or_g | V | Mapped with assumptions; business rule not fully confirmed. |
 | WG | HZ_Solar | partial | pv_dach\|misch_pv_dach | checkbox_01 | 0 | Mapped with assumptions; business rule not fully confirmed. |
-| WG | Modernisierung | partial | anlass | modernisierung_year_or_0 | 0 | Mapped with assumptions; business rule not fully confirmed. |
-| WG | Wand1_Dämmung | partial | waermedaemmung_aussenwand | insulation_checkbox_to_cm_or_0 | 0 | Mapped with assumptions; business rule not fully confirmed. |
-| WG | bilderStreams_0 | partial | upload_export.slot0 | basename_or_empty |  | Mapped with assumptions; business rule not fully confirmed. |
-| WG | bilderStreams_1 | partial | upload_export.slot1 | basename_or_empty |  | Mapped with assumptions; business rule not fully confirmed. |
-| WG | bilderStreams_2 | partial | upload_export.slot2 | basename_or_empty |  | Mapped with assumptions; business rule not fully confirmed. |
-| WG | fernKuehlung | partial | nwg_kuehlung\|misch_kuehlung | cooling_district_01 | 0 | Mapped with assumptions; business rule not fully confirmed. |
 | WG | isGebaeudehuelle | partial | gebaeudetyp | wg_is_gebaeudehuelle_01 | 1 | Mapped with assumptions; business rule not fully confirmed. |
 | WG | passiveKuehlung | partial | nwg_kuehlung\|misch_kuehlung | cooling_passive_01 | 0 | Mapped with assumptions; business rule not fully confirmed. |
 | WG | waermeKuehlung | partial | nwg_kuehlung\|misch_kuehlung | cooling_thermal_01 | 0 | Mapped with assumptions; business rule not fully confirmed. |
@@ -63,7 +49,7 @@ Severity rules:
 ## Interpretation
 
 - Main remaining items are assumption-based mappings (`partial`), not missing form fields.
-- ETr1/ETr2 periodized fields are now represented in form schema and mapped in `docs/mapping-spec.json`.
+- ETr1/ETr2 periodized fields are represented in form schema and mapped in `docs/mapping-spec.json`.
 
 ## Artifact
 

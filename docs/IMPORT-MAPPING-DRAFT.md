@@ -50,7 +50,11 @@
 - `heizung_baujahr` -> `baujahrHzErz`
 - `pv_dach`/доп. solar поля -> возможно в `TW_Solar`/`HZ_Solar` (нужна бизнес-логика)
 - `lueftung_type`/`nwg_lueftung` -> `Fensterlüftung`, `Schachtlüftung`, `L_Mit_WRG`, `L_Ohne_WRG` (через rule mapping)
-- `upload_*` -> `bilderStreams_0..2` или внешний поток файлов (требует отдельного ТЗ)
+- `upload_*` -> `bilderStreams_0..2` по фиксированному `slot policy v1`:
+  - `slot0`: первый файл `upload_heizung_photos`
+  - `slot1`: первый файл `upload_fenster_photos`
+  - `slot2`: первый файл `upload_daemmung_photos`
+  - если файла нет -> пусто
 
 ## Что не закрыто текущей формой (или неявно)
 
@@ -70,7 +74,7 @@
 4. Как заполнять `ETr2_*`:
    всегда, только при 2-м энерготрегере, или оставлять пустым.
 5. Стратегия по картинкам/файлам:
-   только имена в `bilderStreams_*` или отдельная загрузка в систему.
+   на текущем этапе зафиксирована как `slot policy v1` (только имена в `bilderStreams_*`).
 6. WG/NWG routing:
    какой шаблон выбирать для `MISCH` (split, приоритет, или 2 файла).
 

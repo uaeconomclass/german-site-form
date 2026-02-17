@@ -1,282 +1,142 @@
-{
-  "summary": {
-    "issues_total": 27,
-    "high": 0,
-    "medium": 27,
-    "low": 0,
-    "wg": 13,
-    "nwg": 14
-  },
-  "issues": [
-    {
-      "schema": "NWG",
-      "column": "Boden1_Dämmung",
-      "status": "partial",
-      "severity": "medium",
-      "source": "waermedaemmung_kellerdecke|waermedaemmung_kelleraussenwand",
-      "transform": "insulation_checkbox_to_cm_or_0",
-      "default": 0,
-      "reason": "Mapped with assumptions; business rule not fully confirmed."
-    },
-    {
-      "schema": "NWG",
-      "column": "Dach1_Dämmung",
-      "status": "partial",
-      "severity": "medium",
-      "source": "waermedaemmung_dachgeschoss|waermedaemmung_oberste_geschossdecke",
-      "transform": "insulation_checkbox_to_cm_or_0",
-      "default": 0,
-      "reason": "Mapped with assumptions; business rule not fully confirmed."
-    },
-    {
-      "schema": "NWG",
-      "column": "ETr2_Licht",
-      "status": "partial",
-      "severity": "medium",
-      "source": "nwg_beleuchtung",
-      "transform": "nwg_etr2_licht_01",
-      "default": 1,
-      "reason": "Mapped with assumptions; business rule not fully confirmed."
-    },
-    {
-      "schema": "NWG",
-      "column": "Gebäudetyp",
-      "status": "partial",
-      "severity": "medium",
-      "source": "gebaeudetyp",
-      "transform": "map_gebaeudetyp_to_v_or_g",
-      "default": "V",
-      "reason": "Mapped with assumptions; business rule not fully confirmed."
-    },
-    {
-      "schema": "NWG",
-      "column": "HZ_Solar",
-      "status": "partial",
-      "severity": "medium",
-      "source": "pv_dach|misch_pv_dach",
-      "transform": "checkbox_01",
-      "default": 0,
-      "reason": "Mapped with assumptions; business rule not fully confirmed."
-    },
-    {
-      "schema": "NWG",
-      "column": "Modernisierung",
-      "status": "partial",
-      "severity": "medium",
-      "source": "anlass",
-      "transform": "modernisierung_year_or_0",
-      "default": 0,
-      "reason": "Mapped with assumptions; business rule not fully confirmed."
-    },
-    {
-      "schema": "NWG",
-      "column": "Nutzung1_ID",
-      "status": "partial",
-      "severity": "medium",
-      "source": "nwg_nutzung",
-      "transform": "map_nutzung_to_id",
-      "default": "1",
-      "reason": "Mapped with assumptions; business rule not fully confirmed."
-    },
-    {
-      "schema": "NWG",
-      "column": "Wand1_Dämmung",
-      "status": "partial",
-      "severity": "medium",
-      "source": "waermedaemmung_aussenwand",
-      "transform": "insulation_checkbox_to_cm_or_0",
-      "default": 0,
-      "reason": "Mapped with assumptions; business rule not fully confirmed."
-    },
-    {
-      "schema": "NWG",
-      "column": "bilderStreams_0",
-      "status": "partial",
-      "severity": "medium",
-      "source": "upload_export.slot0",
-      "transform": "basename_or_empty",
-      "default": "",
-      "reason": "Mapped with assumptions; business rule not fully confirmed."
-    },
-    {
-      "schema": "NWG",
-      "column": "bilderStreams_1",
-      "status": "partial",
-      "severity": "medium",
-      "source": "upload_export.slot1",
-      "transform": "basename_or_empty",
-      "default": "",
-      "reason": "Mapped with assumptions; business rule not fully confirmed."
-    },
-    {
-      "schema": "NWG",
-      "column": "bilderStreams_2",
-      "status": "partial",
-      "severity": "medium",
-      "source": "upload_export.slot2",
-      "transform": "basename_or_empty",
-      "default": "",
-      "reason": "Mapped with assumptions; business rule not fully confirmed."
-    },
-    {
-      "schema": "NWG",
-      "column": "fernKuehlung",
-      "status": "partial",
-      "severity": "medium",
-      "source": "nwg_kuehlung|misch_kuehlung",
-      "transform": "cooling_district_01",
-      "default": 0,
-      "reason": "Mapped with assumptions; business rule not fully confirmed."
-    },
-    {
-      "schema": "NWG",
-      "column": "passiveKuehlung",
-      "status": "partial",
-      "severity": "medium",
-      "source": "nwg_kuehlung|misch_kuehlung",
-      "transform": "cooling_passive_01",
-      "default": 0,
-      "reason": "Mapped with assumptions; business rule not fully confirmed."
-    },
-    {
-      "schema": "NWG",
-      "column": "waermeKuehlung",
-      "status": "partial",
-      "severity": "medium",
-      "source": "nwg_kuehlung|misch_kuehlung",
-      "transform": "cooling_thermal_01",
-      "default": 0,
-      "reason": "Mapped with assumptions; business rule not fully confirmed."
-    },
-    {
-      "schema": "WG",
-      "column": "Boden1_Dämmung",
-      "status": "partial",
-      "severity": "medium",
-      "source": "waermedaemmung_kellerdecke|waermedaemmung_kelleraussenwand",
-      "transform": "insulation_checkbox_to_cm_or_0",
-      "default": 0,
-      "reason": "Mapped with assumptions; business rule not fully confirmed."
-    },
-    {
-      "schema": "WG",
-      "column": "Dach1_Dämmung",
-      "status": "partial",
-      "severity": "medium",
-      "source": "waermedaemmung_dachgeschoss|waermedaemmung_oberste_geschossdecke",
-      "transform": "insulation_checkbox_to_cm_or_0",
-      "default": 0,
-      "reason": "Mapped with assumptions; business rule not fully confirmed."
-    },
-    {
-      "schema": "WG",
-      "column": "Gebäudetyp",
-      "status": "partial",
-      "severity": "medium",
-      "source": "gebaeudetyp",
-      "transform": "map_gebaeudetyp_to_v_or_g",
-      "default": "V",
-      "reason": "Mapped with assumptions; business rule not fully confirmed."
-    },
-    {
-      "schema": "WG",
-      "column": "HZ_Solar",
-      "status": "partial",
-      "severity": "medium",
-      "source": "pv_dach|misch_pv_dach",
-      "transform": "checkbox_01",
-      "default": 0,
-      "reason": "Mapped with assumptions; business rule not fully confirmed."
-    },
-    {
-      "schema": "WG",
-      "column": "Modernisierung",
-      "status": "partial",
-      "severity": "medium",
-      "source": "anlass",
-      "transform": "modernisierung_year_or_0",
-      "default": 0,
-      "reason": "Mapped with assumptions; business rule not fully confirmed."
-    },
-    {
-      "schema": "WG",
-      "column": "Wand1_Dämmung",
-      "status": "partial",
-      "severity": "medium",
-      "source": "waermedaemmung_aussenwand",
-      "transform": "insulation_checkbox_to_cm_or_0",
-      "default": 0,
-      "reason": "Mapped with assumptions; business rule not fully confirmed."
-    },
-    {
-      "schema": "WG",
-      "column": "bilderStreams_0",
-      "status": "partial",
-      "severity": "medium",
-      "source": "upload_export.slot0",
-      "transform": "basename_or_empty",
-      "default": "",
-      "reason": "Mapped with assumptions; business rule not fully confirmed."
-    },
-    {
-      "schema": "WG",
-      "column": "bilderStreams_1",
-      "status": "partial",
-      "severity": "medium",
-      "source": "upload_export.slot1",
-      "transform": "basename_or_empty",
-      "default": "",
-      "reason": "Mapped with assumptions; business rule not fully confirmed."
-    },
-    {
-      "schema": "WG",
-      "column": "bilderStreams_2",
-      "status": "partial",
-      "severity": "medium",
-      "source": "upload_export.slot2",
-      "transform": "basename_or_empty",
-      "default": "",
-      "reason": "Mapped with assumptions; business rule not fully confirmed."
-    },
-    {
-      "schema": "WG",
-      "column": "fernKuehlung",
-      "status": "partial",
-      "severity": "medium",
-      "source": "nwg_kuehlung|misch_kuehlung",
-      "transform": "cooling_district_01",
-      "default": 0,
-      "reason": "Mapped with assumptions; business rule not fully confirmed."
-    },
-    {
-      "schema": "WG",
-      "column": "isGebaeudehuelle",
-      "status": "partial",
-      "severity": "medium",
-      "source": "gebaeudetyp",
-      "transform": "wg_is_gebaeudehuelle_01",
-      "default": 1,
-      "reason": "Mapped with assumptions; business rule not fully confirmed."
-    },
-    {
-      "schema": "WG",
-      "column": "passiveKuehlung",
-      "status": "partial",
-      "severity": "medium",
-      "source": "nwg_kuehlung|misch_kuehlung",
-      "transform": "cooling_passive_01",
-      "default": 0,
-      "reason": "Mapped with assumptions; business rule not fully confirmed."
-    },
-    {
-      "schema": "WG",
-      "column": "waermeKuehlung",
-      "status": "partial",
-      "severity": "medium",
-      "source": "nwg_kuehlung|misch_kuehlung",
-      "transform": "cooling_thermal_01",
-      "default": 0,
-      "reason": "Mapped with assumptions; business rule not fully confirmed."
-    }
-  ]
+﻿{
+    "summary":  {
+                    "issues_total":  13,
+                    "high":  0,
+                    "medium":  13,
+                    "low":  0,
+                    "wg":  6,
+                    "nwg":  7
+                },
+    "issues":  [
+                   {
+                       "schema":  "WG",
+                       "column":  "isGebaeudehuelle",
+                       "status":  "partial",
+                       "severity":  "medium",
+                       "source":  "gebaeudetyp",
+                       "transform":  "wg_is_gebaeudehuelle_01",
+                       "default":  1,
+                       "reason":  "Mapped with assumptions; business rule not fully confirmed."
+                   },
+                   {
+                       "schema":  "WG",
+                       "column":  "passiveKuehlung",
+                       "status":  "partial",
+                       "severity":  "medium",
+                       "source":  "nwg_kuehlung|misch_kuehlung",
+                       "transform":  "cooling_passive_01",
+                       "default":  0,
+                       "reason":  "Mapped with assumptions; business rule not fully confirmed."
+                   },
+                   {
+                       "schema":  "WG",
+                       "column":  "fernKuehlung",
+                       "status":  "partial",
+                       "severity":  "medium",
+                       "source":  "nwg_kuehlung|misch_kuehlung",
+                       "transform":  "cooling_district_01",
+                       "default":  0,
+                       "reason":  "Mapped with assumptions; business rule not fully confirmed."
+                   },
+                   {
+                       "schema":  "WG",
+                       "column":  "waermeKuehlung",
+                       "status":  "partial",
+                       "severity":  "medium",
+                       "source":  "nwg_kuehlung|misch_kuehlung",
+                       "transform":  "cooling_thermal_01",
+                       "default":  0,
+                       "reason":  "Mapped with assumptions; business rule not fully confirmed."
+                   },
+                   {
+                       "schema":  "WG",
+                       "column":  "HZ_Solar",
+                       "status":  "partial",
+                       "severity":  "medium",
+                       "source":  "pv_dach|misch_pv_dach",
+                       "transform":  "checkbox_01",
+                       "default":  0,
+                       "reason":  "Mapped with assumptions; business rule not fully confirmed."
+                   },
+                   {
+                       "schema":  "WG",
+                       "column":  "Gebäudetyp",
+                       "status":  "partial",
+                       "severity":  "medium",
+                       "source":  "gebaeudetyp",
+                       "transform":  "map_gebaeudetyp_to_v_or_g",
+                       "default":  "V",
+                       "reason":  "Mapped with assumptions; business rule not fully confirmed."
+                   },
+                   {
+                       "schema":  "NWG",
+                       "column":  "Nutzung1_ID",
+                       "status":  "partial",
+                       "severity":  "medium",
+                       "source":  "nwg_nutzung",
+                       "transform":  "map_nutzung_to_id",
+                       "default":  "1",
+                       "reason":  "Mapped with assumptions; business rule not fully confirmed."
+                   },
+                   {
+                       "schema":  "NWG",
+                       "column":  "passiveKuehlung",
+                       "status":  "partial",
+                       "severity":  "medium",
+                       "source":  "nwg_kuehlung|misch_kuehlung",
+                       "transform":  "cooling_passive_01",
+                       "default":  0,
+                       "reason":  "Mapped with assumptions; business rule not fully confirmed."
+                   },
+                   {
+                       "schema":  "NWG",
+                       "column":  "fernKuehlung",
+                       "status":  "partial",
+                       "severity":  "medium",
+                       "source":  "nwg_kuehlung|misch_kuehlung",
+                       "transform":  "cooling_district_01",
+                       "default":  0,
+                       "reason":  "Mapped with assumptions; business rule not fully confirmed."
+                   },
+                   {
+                       "schema":  "NWG",
+                       "column":  "waermeKuehlung",
+                       "status":  "partial",
+                       "severity":  "medium",
+                       "source":  "nwg_kuehlung|misch_kuehlung",
+                       "transform":  "cooling_thermal_01",
+                       "default":  0,
+                       "reason":  "Mapped with assumptions; business rule not fully confirmed."
+                   },
+                   {
+                       "schema":  "NWG",
+                       "column":  "HZ_Solar",
+                       "status":  "partial",
+                       "severity":  "medium",
+                       "source":  "pv_dach|misch_pv_dach",
+                       "transform":  "checkbox_01",
+                       "default":  0,
+                       "reason":  "Mapped with assumptions; business rule not fully confirmed."
+                   },
+                   {
+                       "schema":  "NWG",
+                       "column":  "ETr2_Licht",
+                       "status":  "partial",
+                       "severity":  "medium",
+                       "source":  "nwg_beleuchtung",
+                       "transform":  "nwg_etr2_licht_01",
+                       "default":  1,
+                       "reason":  "Mapped with assumptions; business rule not fully confirmed."
+                   },
+                   {
+                       "schema":  "NWG",
+                       "column":  "Gebäudetyp",
+                       "status":  "partial",
+                       "severity":  "medium",
+                       "source":  "gebaeudetyp",
+                       "transform":  "map_gebaeudetyp_to_v_or_g",
+                       "default":  "V",
+                       "reason":  "Mapped with assumptions; business rule not fully confirmed."
+                   }
+               ]
 }
