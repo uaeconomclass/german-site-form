@@ -64,10 +64,10 @@
         },
         {
           "column": "Straße",
-          "source": null,
-          "transform": "constant",
-          "default": "",
-          "status": "unmapped"
+          "source": "strasse",
+          "transform": "string_trim",
+          "default": null,
+          "status": "mapped"
         },
         {
           "column": "Hausnr",
@@ -295,297 +295,297 @@
         },
         {
           "column": "ETr1_Kategorie",
-          "source": "heizung_waermeerzeuger|misch_heizung_waermeerzeuger",
-          "transform": "map_heating_to_bk_code",
+          "source": "etr1_kategorie",
+          "transform": "bk_code_identity",
           "default": "BK_GAS",
-          "status": "partial"
+          "status": "mapped"
         },
         {
           "column": "ETr1_Anteil_erneuerbar",
-          "source": null,
-          "transform": "constant",
+          "source": "etr1_anteil_erneuerbar",
+          "transform": "number_locale_de",
           "default": 0,
-          "status": "defaulted"
+          "status": "mapped"
         },
         {
           "column": "ETr1_Anteil_KWK",
-          "source": null,
-          "transform": "constant",
+          "source": "etr1_anteil_kwk",
+          "transform": "number_locale_de",
           "default": 0,
-          "status": "defaulted"
+          "status": "mapped"
         },
         {
           "column": "ETr1_isFw",
-          "source": "heizung_waermeerzeuger|misch_heizung_waermeerzeuger",
-          "transform": "is_fernwaerme_01",
+          "source": "etr1_is_fw",
+          "transform": "ja_nein_to_01",
           "default": 0,
-          "status": "derived"
+          "status": "mapped"
         },
         {
           "column": "ETr1_gebaeudeNahErzeugt",
-          "source": null,
-          "transform": "constant",
+          "source": "etr1_gebaeude_nah",
+          "transform": "ja_nein_to_01",
           "default": 0,
-          "status": "defaulted"
+          "status": "mapped"
         },
         {
           "column": "ETr1_Jahr1_von",
-          "source": "verbrauch.period1.from",
-          "transform": "date_dd_mm_yyyy",
+          "source": "etr1_periods[0].von",
+          "transform": "from_repeater_period",
           "default": null,
-          "status": "unmapped"
+          "status": "mapped"
         },
         {
           "column": "ETr1_Jahr1_bis",
-          "source": "verbrauch.period1.to",
-          "transform": "date_dd_mm_yyyy",
+          "source": "etr1_periods[0].bis",
+          "transform": "from_repeater_period",
           "default": null,
-          "status": "unmapped"
+          "status": "mapped"
         },
         {
           "column": "ETr1_Jahr1_Menge",
-          "source": "verbrauch.period1.total",
-          "transform": "number_locale_de",
+          "source": "etr1_periods[0].menge",
+          "transform": "from_repeater_period",
           "default": null,
-          "status": "unmapped"
+          "status": "mapped"
         },
         {
           "column": "ETr1_TWW",
-          "source": "warmwasser_type",
-          "transform": "warmwasser_present_01",
+          "source": "etr1_tww",
+          "transform": "ja_nein_to_01",
           "default": 1,
-          "status": "derived"
+          "status": "mapped"
         },
         {
           "column": "ETr1_Jahr1_Menge_TWW",
-          "source": "verbrauch.period1.tww",
-          "transform": "number_locale_de",
+          "source": "etr1_periods[0].menge_tww",
+          "transform": "from_repeater_period",
           "default": "",
-          "status": "unmapped"
+          "status": "mapped"
         },
         {
           "column": "ETr1_Jahr1_Leerstand",
-          "source": "verbrauch.period1.vacancy_pct",
-          "transform": "percent_0_100",
+          "source": "etr1_periods[0].leerstand_pct",
+          "transform": "from_repeater_period",
           "default": 0,
-          "status": "unmapped"
+          "status": "mapped"
         },
         {
           "column": "ETr1_Jahr2_von",
-          "source": "verbrauch.period2.from",
-          "transform": "date_dd_mm_yyyy",
+          "source": "etr1_periods[1].von",
+          "transform": "from_repeater_period",
           "default": null,
-          "status": "unmapped"
+          "status": "mapped"
         },
         {
           "column": "ETr1_Jahr2_bis",
-          "source": "verbrauch.period2.to",
-          "transform": "date_dd_mm_yyyy",
+          "source": "etr1_periods[1].bis",
+          "transform": "from_repeater_period",
           "default": null,
-          "status": "unmapped"
+          "status": "mapped"
         },
         {
           "column": "ETr1_Jahr2_Menge",
-          "source": "verbrauch.period2.total",
-          "transform": "number_locale_de",
+          "source": "etr1_periods[1].menge",
+          "transform": "from_repeater_period",
           "default": null,
-          "status": "unmapped"
+          "status": "mapped"
         },
         {
           "column": "ETr1_Jahr2_Menge_TWW",
-          "source": "verbrauch.period2.tww",
-          "transform": "number_locale_de",
+          "source": "etr1_periods[1].menge_tww",
+          "transform": "from_repeater_period",
           "default": "",
-          "status": "unmapped"
+          "status": "mapped"
         },
         {
           "column": "ETr1_Jahr2_Leerstand",
-          "source": "verbrauch.period2.vacancy_pct",
-          "transform": "percent_0_100",
+          "source": "etr1_periods[1].leerstand_pct",
+          "transform": "from_repeater_period",
           "default": 0,
-          "status": "unmapped"
+          "status": "mapped"
         },
         {
           "column": "ETr1_Jahr3_von",
-          "source": "verbrauch.period3.from",
-          "transform": "date_dd_mm_yyyy",
+          "source": "etr1_periods[2].von",
+          "transform": "from_repeater_period",
           "default": null,
-          "status": "unmapped"
+          "status": "mapped"
         },
         {
           "column": "ETr1_Jahr3_bis",
-          "source": "verbrauch.period3.to",
-          "transform": "date_dd_mm_yyyy",
+          "source": "etr1_periods[2].bis",
+          "transform": "from_repeater_period",
           "default": null,
-          "status": "unmapped"
+          "status": "mapped"
         },
         {
           "column": "ETr1_Jahr3_Menge",
-          "source": "verbrauch.period3.total",
-          "transform": "number_locale_de",
+          "source": "etr1_periods[2].menge",
+          "transform": "from_repeater_period",
           "default": null,
-          "status": "unmapped"
+          "status": "mapped"
         },
         {
           "column": "ETr1_Jahr3_Menge_TWW",
-          "source": "verbrauch.period3.tww",
-          "transform": "number_locale_de",
+          "source": "etr1_periods[2].menge_tww",
+          "transform": "from_repeater_period",
           "default": "",
-          "status": "unmapped"
+          "status": "mapped"
         },
         {
           "column": "ETr1_Jahr3_Leerstand",
-          "source": "verbrauch.period3.vacancy_pct",
-          "transform": "percent_0_100",
+          "source": "etr1_periods[2].leerstand_pct",
+          "transform": "from_repeater_period",
           "default": 0,
-          "status": "unmapped"
+          "status": "mapped"
         },
         {
           "column": "ETr1_PrimFaktor",
-          "source": "fernwaerme.primfaktor_etr1",
+          "source": "etr1_primfaktor",
           "transform": "number_locale_de",
           "default": "",
-          "status": "unmapped"
+          "status": "mapped"
         },
         {
           "column": "ETr2_Kategorie",
-          "source": "etr2.kategorie",
-          "transform": "map_to_bk_code",
+          "source": "etr2_kategorie",
+          "transform": "bk_code_identity",
           "default": "",
-          "status": "unmapped"
+          "status": "mapped"
         },
         {
           "column": "ETr2_Jahr1_von",
-          "source": "etr2.period1.from",
-          "transform": "date_dd_mm_yyyy",
+          "source": "etr2_periods[0].von",
+          "transform": "from_repeater_period",
           "default": "",
-          "status": "unmapped"
+          "status": "mapped"
         },
         {
           "column": "ETr2_Jahr1_bis",
-          "source": "etr2.period1.to",
-          "transform": "date_dd_mm_yyyy",
+          "source": "etr2_periods[0].bis",
+          "transform": "from_repeater_period",
           "default": "",
-          "status": "unmapped"
+          "status": "mapped"
         },
         {
           "column": "ETr2_Jahr1_Menge",
-          "source": "etr2.period1.total",
-          "transform": "number_locale_de",
+          "source": "etr2_periods[0].menge",
+          "transform": "from_repeater_period",
           "default": "",
-          "status": "unmapped"
+          "status": "mapped"
         },
         {
           "column": "ETr2_TWW",
-          "source": "etr2.tww",
-          "transform": "bool_01",
+          "source": "etr2_tww",
+          "transform": "ja_nein_to_01",
           "default": "",
-          "status": "unmapped"
+          "status": "mapped"
         },
         {
           "column": "ETr2_Jahr1_Menge_TWW",
-          "source": "etr2.period1.tww",
-          "transform": "number_locale_de",
+          "source": "etr2_periods[0].menge_tww",
+          "transform": "from_repeater_period",
           "default": "",
-          "status": "unmapped"
+          "status": "mapped"
         },
         {
           "column": "ETr2_Jahr1_Leerstand",
-          "source": "etr2.period1.vacancy_pct",
-          "transform": "percent_0_100",
+          "source": "etr2_periods[0].leerstand_pct",
+          "transform": "from_repeater_period",
           "default": "",
-          "status": "unmapped"
+          "status": "mapped"
         },
         {
           "column": "ETr2_Jahr2_von",
-          "source": "etr2.period2.from",
-          "transform": "date_dd_mm_yyyy",
+          "source": "etr2_periods[1].von",
+          "transform": "from_repeater_period",
           "default": "",
-          "status": "unmapped"
+          "status": "mapped"
         },
         {
           "column": "ETr2_Jahr2_bis",
-          "source": "etr2.period2.to",
-          "transform": "date_dd_mm_yyyy",
+          "source": "etr2_periods[1].bis",
+          "transform": "from_repeater_period",
           "default": "",
-          "status": "unmapped"
+          "status": "mapped"
         },
         {
           "column": "ETr2_Jahr2_Menge",
-          "source": "etr2.period2.total",
-          "transform": "number_locale_de",
+          "source": "etr2_periods[1].menge",
+          "transform": "from_repeater_period",
           "default": "",
-          "status": "unmapped"
+          "status": "mapped"
         },
         {
           "column": "ETr2_Jahr2_Menge_TWW",
-          "source": "etr2.period2.tww",
-          "transform": "number_locale_de",
+          "source": "etr2_periods[1].menge_tww",
+          "transform": "from_repeater_period",
           "default": "",
-          "status": "unmapped"
+          "status": "mapped"
         },
         {
           "column": "ETr2_Jahr2_Leerstand",
-          "source": "etr2.period2.vacancy_pct",
-          "transform": "percent_0_100",
+          "source": "etr2_periods[1].leerstand_pct",
+          "transform": "from_repeater_period",
           "default": "",
-          "status": "unmapped"
+          "status": "mapped"
         },
         {
           "column": "ETr2_Jahr3_von",
-          "source": "etr2.period3.from",
-          "transform": "date_dd_mm_yyyy",
+          "source": "etr2_periods[2].von",
+          "transform": "from_repeater_period",
           "default": "",
-          "status": "unmapped"
+          "status": "mapped"
         },
         {
           "column": "ETr2_Jahr3_bis",
-          "source": "etr2.period3.to",
-          "transform": "date_dd_mm_yyyy",
+          "source": "etr2_periods[2].bis",
+          "transform": "from_repeater_period",
           "default": "",
-          "status": "unmapped"
+          "status": "mapped"
         },
         {
           "column": "ETr2_Jahr3_Menge",
-          "source": "etr2.period3.total",
-          "transform": "number_locale_de",
+          "source": "etr2_periods[2].menge",
+          "transform": "from_repeater_period",
           "default": "",
-          "status": "unmapped"
+          "status": "mapped"
         },
         {
           "column": "ETr2_Jahr3_Menge_TWW",
-          "source": "etr2.period3.tww",
-          "transform": "number_locale_de",
+          "source": "etr2_periods[2].menge_tww",
+          "transform": "from_repeater_period",
           "default": "",
-          "status": "unmapped"
+          "status": "mapped"
         },
         {
           "column": "ETr2_Jahr3_Leerstand",
-          "source": "etr2.period3.vacancy_pct",
-          "transform": "percent_0_100",
+          "source": "etr2_periods[2].leerstand_pct",
+          "transform": "from_repeater_period",
           "default": "",
-          "status": "unmapped"
+          "status": "mapped"
         },
         {
           "column": "ETr1_Heizung",
-          "source": "heizung_waermeerzeuger|misch_heizung_waermeerzeuger",
-          "transform": "bool_from_presence_01",
+          "source": "etr1_heizung",
+          "transform": "ja_nein_to_01",
           "default": 1,
-          "status": "derived"
+          "status": "mapped"
         },
         {
           "column": "ETr2_Heizung",
-          "source": "etr2.heizung",
-          "transform": "bool_01",
+          "source": "etr2_heizung",
+          "transform": "ja_nein_to_01",
           "default": 0,
-          "status": "unmapped"
+          "status": "mapped"
         },
         {
           "column": "ETr2_PrimFaktor",
-          "source": "fernwaerme.etr2_primfaktor",
+          "source": "etr2_primfaktor",
           "transform": "number_locale_de",
           "default": "",
-          "status": "unmapped"
+          "status": "mapped"
         },
         {
           "column": "Gebäudetyp",
@@ -610,31 +610,31 @@
         },
         {
           "column": "ETr2_Anteil_KWK",
-          "source": "fernwaerme.etr2_kwk_share",
+          "source": "etr2_anteil_kwk",
           "transform": "number_locale_de",
-          "default": "#NV",
-          "status": "defaulted"
+          "default": "",
+          "status": "mapped"
         },
         {
           "column": "ETr2_Anteil_erneuerbar",
-          "source": "fernwaerme.etr2_renew_share",
+          "source": "etr2_anteil_erneuerbar",
           "transform": "number_locale_de",
-          "default": "#NV",
-          "status": "defaulted"
+          "default": "",
+          "status": "mapped"
         },
         {
           "column": "ETr2_isFw",
-          "source": "etr2.is_fw",
-          "transform": "bool_or_nv",
-          "default": "#NV",
-          "status": "defaulted"
+          "source": "etr2_is_fw",
+          "transform": "ja_nein_to_01",
+          "default": "",
+          "status": "mapped"
         },
         {
           "column": "ETr2_gebaeudeNahErzeugt",
-          "source": "etr2.gebaeudenah",
-          "transform": "bool_or_nv",
-          "default": "#NV",
-          "status": "defaulted"
+          "source": "etr2_gebaeude_nah",
+          "transform": "ja_nein_to_01",
+          "default": "",
+          "status": "mapped"
         }
       ]
     },
@@ -684,10 +684,10 @@
         },
         {
           "column": "Straße",
-          "source": null,
-          "transform": "constant",
-          "default": "",
-          "status": "unmapped"
+          "source": "strasse",
+          "transform": "string_trim",
+          "default": null,
+          "status": "mapped"
         },
         {
           "column": "Hausnr",
@@ -936,164 +936,164 @@
         },
         {
           "column": "ETr1_Kategorie",
-          "source": "heizung_waermeerzeuger|misch_heizung_waermeerzeuger",
-          "transform": "map_heating_to_bk_code",
+          "source": "etr1_kategorie",
+          "transform": "bk_code_identity",
           "default": "BK_GAS",
-          "status": "partial"
+          "status": "mapped"
         },
         {
           "column": "ETr1_Anteil_erneuerbar",
-          "source": null,
-          "transform": "constant",
+          "source": "etr1_anteil_erneuerbar",
+          "transform": "number_locale_de",
           "default": 0,
-          "status": "defaulted"
+          "status": "mapped"
         },
         {
           "column": "ETr1_Anteil_KWK",
-          "source": null,
-          "transform": "constant",
+          "source": "etr1_anteil_kwk",
+          "transform": "number_locale_de",
           "default": 0,
-          "status": "defaulted"
+          "status": "mapped"
         },
         {
           "column": "ETr1_isFw",
-          "source": "heizung_waermeerzeuger|misch_heizung_waermeerzeuger",
-          "transform": "is_fernwaerme_01",
+          "source": "etr1_is_fw",
+          "transform": "ja_nein_to_01",
           "default": 0,
-          "status": "derived"
+          "status": "mapped"
         },
         {
           "column": "ETr1_gebaeudeNahErzeugt",
-          "source": null,
-          "transform": "constant",
+          "source": "etr1_gebaeude_nah",
+          "transform": "ja_nein_to_01",
           "default": 0,
-          "status": "defaulted"
+          "status": "mapped"
         },
         {
           "column": "ETr1_Jahr1_von",
-          "source": "verbrauch.period1.from",
-          "transform": "date_dd_mm_yyyy",
+          "source": "etr1_periods[0].von",
+          "transform": "from_repeater_period",
           "default": null,
-          "status": "unmapped"
+          "status": "mapped"
         },
         {
           "column": "ETr1_Jahr1_bis",
-          "source": "verbrauch.period1.to",
-          "transform": "date_dd_mm_yyyy",
+          "source": "etr1_periods[0].bis",
+          "transform": "from_repeater_period",
           "default": null,
-          "status": "unmapped"
+          "status": "mapped"
         },
         {
           "column": "ETr1_Jahr1_Menge",
-          "source": "verbrauch.period1.total",
-          "transform": "number_locale_de",
+          "source": "etr1_periods[0].menge",
+          "transform": "from_repeater_period",
           "default": null,
-          "status": "unmapped"
+          "status": "mapped"
         },
         {
           "column": "ETr1_TWW",
-          "source": "warmwasser_type",
-          "transform": "warmwasser_present_01",
+          "source": "etr1_tww",
+          "transform": "ja_nein_to_01",
           "default": 1,
-          "status": "derived"
+          "status": "mapped"
         },
         {
           "column": "ETr1_Jahr1_Menge_TWW",
-          "source": "verbrauch.period1.tww",
-          "transform": "number_locale_de",
+          "source": "etr1_periods[0].menge_tww",
+          "transform": "from_repeater_period",
           "default": "",
-          "status": "unmapped"
+          "status": "mapped"
         },
         {
           "column": "ETr1_Jahr1_Leerstand",
-          "source": "verbrauch.period1.vacancy_pct",
-          "transform": "percent_0_100",
+          "source": "etr1_periods[0].leerstand_pct",
+          "transform": "from_repeater_period",
           "default": 0,
-          "status": "unmapped"
+          "status": "mapped"
         },
         {
           "column": "ETr1_Jahr2_von",
-          "source": "verbrauch.period2.from",
-          "transform": "date_dd_mm_yyyy",
+          "source": "etr1_periods[1].von",
+          "transform": "from_repeater_period",
           "default": null,
-          "status": "unmapped"
+          "status": "mapped"
         },
         {
           "column": "ETr1_Jahr2_bis",
-          "source": "verbrauch.period2.to",
-          "transform": "date_dd_mm_yyyy",
+          "source": "etr1_periods[1].bis",
+          "transform": "from_repeater_period",
           "default": null,
-          "status": "unmapped"
+          "status": "mapped"
         },
         {
           "column": "ETr1_Jahr2_Menge",
-          "source": "verbrauch.period2.total",
-          "transform": "number_locale_de",
+          "source": "etr1_periods[1].menge",
+          "transform": "from_repeater_period",
           "default": null,
-          "status": "unmapped"
+          "status": "mapped"
         },
         {
           "column": "ETr1_Jahr2_Menge_TWW",
-          "source": "verbrauch.period2.tww",
-          "transform": "number_locale_de",
+          "source": "etr1_periods[1].menge_tww",
+          "transform": "from_repeater_period",
           "default": "",
-          "status": "unmapped"
+          "status": "mapped"
         },
         {
           "column": "ETr1_Jahr2_Leerstand",
-          "source": "verbrauch.period2.vacancy_pct",
-          "transform": "percent_0_100",
+          "source": "etr1_periods[1].leerstand_pct",
+          "transform": "from_repeater_period",
           "default": 0,
-          "status": "unmapped"
+          "status": "mapped"
         },
         {
           "column": "ETr1_Jahr3_von",
-          "source": "verbrauch.period3.from",
-          "transform": "date_dd_mm_yyyy",
+          "source": "etr1_periods[2].von",
+          "transform": "from_repeater_period",
           "default": null,
-          "status": "unmapped"
+          "status": "mapped"
         },
         {
           "column": "ETr1_Jahr3_bis",
-          "source": "verbrauch.period3.to",
-          "transform": "date_dd_mm_yyyy",
+          "source": "etr1_periods[2].bis",
+          "transform": "from_repeater_period",
           "default": null,
-          "status": "unmapped"
+          "status": "mapped"
         },
         {
           "column": "ETr1_Jahr3_Menge",
-          "source": "verbrauch.period3.total",
-          "transform": "number_locale_de",
+          "source": "etr1_periods[2].menge",
+          "transform": "from_repeater_period",
           "default": null,
-          "status": "unmapped"
+          "status": "mapped"
         },
         {
           "column": "ETr1_Jahr3_Menge_TWW",
-          "source": "verbrauch.period3.tww",
-          "transform": "number_locale_de",
+          "source": "etr1_periods[2].menge_tww",
+          "transform": "from_repeater_period",
           "default": "",
-          "status": "unmapped"
+          "status": "mapped"
         },
         {
           "column": "ETr1_Jahr3_Leerstand",
-          "source": "verbrauch.period3.vacancy_pct",
-          "transform": "percent_0_100",
+          "source": "etr1_periods[2].leerstand_pct",
+          "transform": "from_repeater_period",
           "default": 0,
-          "status": "unmapped"
+          "status": "mapped"
         },
         {
           "column": "ETr1_PrimFaktor",
-          "source": "fernwaerme.primfaktor_etr1",
+          "source": "etr1_primfaktor",
           "transform": "number_locale_de",
           "default": "",
-          "status": "unmapped"
+          "status": "mapped"
         },
         {
           "column": "ETr2_Kategorie",
-          "source": "etr2.kategorie",
-          "transform": "map_to_bk_code",
+          "source": "etr2_kategorie",
+          "transform": "bk_code_identity",
           "default": "",
-          "status": "unmapped"
+          "status": "mapped"
         },
         {
           "column": "ETr2_Kuehlen",
@@ -1139,129 +1139,129 @@
         },
         {
           "column": "ETr2_Jahr1_von",
-          "source": "etr2.period1.from",
-          "transform": "date_dd_mm_yyyy",
+          "source": "etr2_periods[0].von",
+          "transform": "from_repeater_period",
           "default": "",
-          "status": "unmapped"
+          "status": "mapped"
         },
         {
           "column": "ETr2_Jahr1_bis",
-          "source": "etr2.period1.to",
-          "transform": "date_dd_mm_yyyy",
+          "source": "etr2_periods[0].bis",
+          "transform": "from_repeater_period",
           "default": "",
-          "status": "unmapped"
+          "status": "mapped"
         },
         {
           "column": "ETr2_Jahr1_Menge",
-          "source": "etr2.period1.total",
-          "transform": "number_locale_de",
+          "source": "etr2_periods[0].menge",
+          "transform": "from_repeater_period",
           "default": "",
-          "status": "unmapped"
+          "status": "mapped"
         },
         {
           "column": "ETr2_TWW",
-          "source": "etr2.tww",
-          "transform": "bool_01",
+          "source": "etr2_tww",
+          "transform": "ja_nein_to_01",
           "default": "",
-          "status": "unmapped"
+          "status": "mapped"
         },
         {
           "column": "ETr2_Jahr1_Menge_TWW",
-          "source": "etr2.period1.tww",
-          "transform": "number_locale_de",
+          "source": "etr2_periods[0].menge_tww",
+          "transform": "from_repeater_period",
           "default": "",
-          "status": "unmapped"
+          "status": "mapped"
         },
         {
           "column": "ETr2_Jahr1_Leerstand",
-          "source": "etr2.period1.vacancy_pct",
-          "transform": "percent_0_100",
+          "source": "etr2_periods[0].leerstand_pct",
+          "transform": "from_repeater_period",
           "default": "",
-          "status": "unmapped"
+          "status": "mapped"
         },
         {
           "column": "ETr2_Jahr2_von",
-          "source": "etr2.period2.from",
-          "transform": "date_dd_mm_yyyy",
+          "source": "etr2_periods[1].von",
+          "transform": "from_repeater_period",
           "default": "",
-          "status": "unmapped"
+          "status": "mapped"
         },
         {
           "column": "ETr2_Jahr2_bis",
-          "source": "etr2.period2.to",
-          "transform": "date_dd_mm_yyyy",
+          "source": "etr2_periods[1].bis",
+          "transform": "from_repeater_period",
           "default": "",
-          "status": "unmapped"
+          "status": "mapped"
         },
         {
           "column": "ETr2_Jahr2_Menge",
-          "source": "etr2.period2.total",
-          "transform": "number_locale_de",
+          "source": "etr2_periods[1].menge",
+          "transform": "from_repeater_period",
           "default": "",
-          "status": "unmapped"
+          "status": "mapped"
         },
         {
           "column": "ETr2_Jahr2_Menge_TWW",
-          "source": "etr2.period2.tww",
-          "transform": "number_locale_de",
+          "source": "etr2_periods[1].menge_tww",
+          "transform": "from_repeater_period",
           "default": "",
-          "status": "unmapped"
+          "status": "mapped"
         },
         {
           "column": "ETr2_Jahr2_Leerstand",
-          "source": "etr2.period2.vacancy_pct",
-          "transform": "percent_0_100",
+          "source": "etr2_periods[1].leerstand_pct",
+          "transform": "from_repeater_period",
           "default": "",
-          "status": "unmapped"
+          "status": "mapped"
         },
         {
           "column": "ETr2_Jahr3_von",
-          "source": "etr2.period3.from",
-          "transform": "date_dd_mm_yyyy",
+          "source": "etr2_periods[2].von",
+          "transform": "from_repeater_period",
           "default": "",
-          "status": "unmapped"
+          "status": "mapped"
         },
         {
           "column": "ETr2_Jahr3_bis",
-          "source": "etr2.period3.to",
-          "transform": "date_dd_mm_yyyy",
+          "source": "etr2_periods[2].bis",
+          "transform": "from_repeater_period",
           "default": "",
-          "status": "unmapped"
+          "status": "mapped"
         },
         {
           "column": "ETr2_Jahr3_Menge",
-          "source": "etr2.period3.total",
-          "transform": "number_locale_de",
+          "source": "etr2_periods[2].menge",
+          "transform": "from_repeater_period",
           "default": "",
-          "status": "unmapped"
+          "status": "mapped"
         },
         {
           "column": "ETr2_Jahr3_Menge_TWW",
-          "source": "etr2.period3.tww",
-          "transform": "number_locale_de",
+          "source": "etr2_periods[2].menge_tww",
+          "transform": "from_repeater_period",
           "default": "",
-          "status": "unmapped"
+          "status": "mapped"
         },
         {
           "column": "ETr2_Jahr3_Leerstand",
-          "source": "etr2.period3.vacancy_pct",
-          "transform": "percent_0_100",
+          "source": "etr2_periods[2].leerstand_pct",
+          "transform": "from_repeater_period",
           "default": "",
-          "status": "unmapped"
+          "status": "mapped"
         },
         {
           "column": "ETr1_Heizung",
-          "source": "heizung_waermeerzeuger|misch_heizung_waermeerzeuger",
-          "transform": "bool_from_presence_01",
+          "source": "etr1_heizung",
+          "transform": "ja_nein_to_01",
           "default": 1,
-          "status": "derived"
+          "status": "mapped"
         },
         {
           "column": "ETr2_Heizung",
-          "source": "etr2.heizung",
-          "transform": "bool_01",
+          "source": "etr2_heizung",
+          "transform": "ja_nein_to_01",
           "default": 0,
-          "status": "unmapped"
+          "status": "mapped"
         },
         {
           "column": "Gebäudetyp",
@@ -1286,31 +1286,31 @@
         },
         {
           "column": "ETr2_Anteil_KWK",
-          "source": "fernwaerme.etr2_kwk_share",
+          "source": "etr2_anteil_kwk",
           "transform": "number_locale_de",
-          "default": "#NV",
-          "status": "defaulted"
+          "default": "",
+          "status": "mapped"
         },
         {
           "column": "ETr2_Anteil_erneuerbar",
-          "source": "fernwaerme.etr2_renew_share",
+          "source": "etr2_anteil_erneuerbar",
           "transform": "number_locale_de",
-          "default": "#NV",
-          "status": "defaulted"
+          "default": "",
+          "status": "mapped"
         },
         {
           "column": "ETr2_isFw",
-          "source": "etr2.is_fw",
-          "transform": "bool_or_nv",
-          "default": "#NV",
-          "status": "defaulted"
+          "source": "etr2_is_fw",
+          "transform": "ja_nein_to_01",
+          "default": "",
+          "status": "mapped"
         },
         {
           "column": "ETr2_gebaeudeNahErzeugt",
-          "source": "etr2.gebaeudenah",
-          "transform": "bool_or_nv",
-          "default": "#NV",
-          "status": "defaulted"
+          "source": "etr2_gebaeude_nah",
+          "transform": "ja_nein_to_01",
+          "default": "",
+          "status": "mapped"
         },
         {
           "column": "stromAufzugEnthalten",

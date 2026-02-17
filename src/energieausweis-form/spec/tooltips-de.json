@@ -70,6 +70,11 @@
   "uploads_daemmung": "Seit Mai 2021 gilt in Deutschland das Gebäudeenergiegesetz (GEG). Für die fachgerechte Erstellung des Energieausweises benötigen wir Fotos zur Wärmedämmung des Gebäudes, um den energetischen Zustand beurteilen und Modernisierungsempfehlungen ableiten zu können.\n\nWichtig:\nDie hochgeladenen Bilder erscheinen nicht auf dem Energieausweis und dienen ausschließlich der fachlichen Bewertung.\n\nHinweise für geeignete Fotos:\n- Die Dämmung (oder fehlende Dämmung) sollte möglichst gut erkennbar sein\n- Ist die Dämmung durch Verkleidung oder Verschalung nicht sichtbar, genügt: ein Bild des ausgebauten Dachgeschosses und/oder ein Außenbild vom Dach-Wand-Anschluss\n- Ist die Dämmung der Außenwand nicht erkennbar, reicht: ein normales Außenbild der Fassade und/oder ein Bild vom Dach-Wand-Anschluss\n- Bitte laden Sie mindestens 2 Bilder hoch.",
 
   "upload_bedarf_plaene": "Für den Bedarfsausweis werden Angaben zur Gebäudegeometrie und Gebäudehülle benötigt. Dafür sind Gebäudepläne besonders hilfreich.\n\nDateiformate: PDF oder Bild (z. B. JPG, PNG)",
-  "upload_nwg_anlagenplaene": "Optional: Anlagenpläne (Lüftung/Kälte/Heizung) können bei NWG hilfreich sein."
+  "upload_nwg_anlagenplaene": "Optional: Anlagenpläne (Lüftung/Kälte/Heizung) können bei NWG hilfreich sein.",
+  "etr_kategorie": "Wählen Sie den passenden Energieträgercode (BK_*). Dieser Wert wird direkt für den EVEBI-Import verwendet.",
+  "etr_perioden": "Bitte geben Sie 3 zusammenhängende Abrechnungszeiträume an (TT.MM.JJJJ), jeweils mit Gesamtmenge und Leerstand.",
+  "etr_fw_flags": "Diese Angaben sind relevant, wenn der Energieträger Fernwärme ist.",
+  "etr_primfaktor": "Primärenergiefaktor des Energieträgers. Nur bei Fernwärme erforderlich.",
+  "etr_anteile": "Anteile in Prozent. Wertebereich 0 bis 100.",
+  "etr2_optional": "Nur ausfüllen, wenn ein zweiter Energieträger tatsächlich vorhanden ist."
 }
-

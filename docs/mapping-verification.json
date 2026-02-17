@@ -1,11 +1,11 @@
 {
   "summary": {
-    "issues_total": 100,
+    "issues_total": 27,
     "high": 0,
-    "medium": 29,
-    "low": 71,
-    "wg": 50,
-    "nwg": 50
+    "medium": 27,
+    "low": 0,
+    "wg": 13,
+    "nwg": 14
   },
   "issues": [
     {
@@ -16,7 +16,6 @@
       "source": "waermedaemmung_kellerdecke|waermedaemmung_kelleraussenwand",
       "transform": "insulation_checkbox_to_cm_or_0",
       "default": 0,
-      "in_pdf_extract": false,
       "reason": "Mapped with assumptions; business rule not fully confirmed."
     },
     {
@@ -27,18 +26,6 @@
       "source": "waermedaemmung_dachgeschoss|waermedaemmung_oberste_geschossdecke",
       "transform": "insulation_checkbox_to_cm_or_0",
       "default": 0,
-      "in_pdf_extract": false,
-      "reason": "Mapped with assumptions; business rule not fully confirmed."
-    },
-    {
-      "schema": "NWG",
-      "column": "ETr1_Kategorie",
-      "status": "partial",
-      "severity": "medium",
-      "source": "heizung_waermeerzeuger|misch_heizung_waermeerzeuger",
-      "transform": "map_heating_to_bk_code",
-      "default": "BK_GAS",
-      "in_pdf_extract": true,
       "reason": "Mapped with assumptions; business rule not fully confirmed."
     },
     {
@@ -49,7 +36,6 @@
       "source": "nwg_beleuchtung",
       "transform": "nwg_etr2_licht_01",
       "default": 1,
-      "in_pdf_extract": false,
       "reason": "Mapped with assumptions; business rule not fully confirmed."
     },
     {
@@ -60,7 +46,6 @@
       "source": "gebaeudetyp",
       "transform": "map_gebaeudetyp_to_v_or_g",
       "default": "V",
-      "in_pdf_extract": false,
       "reason": "Mapped with assumptions; business rule not fully confirmed."
     },
     {
@@ -71,7 +56,6 @@
       "source": "pv_dach|misch_pv_dach",
       "transform": "checkbox_01",
       "default": 0,
-      "in_pdf_extract": true,
       "reason": "Mapped with assumptions; business rule not fully confirmed."
     },
     {
@@ -82,7 +66,6 @@
       "source": "anlass",
       "transform": "modernisierung_year_or_0",
       "default": 0,
-      "in_pdf_extract": true,
       "reason": "Mapped with assumptions; business rule not fully confirmed."
     },
     {
@@ -93,7 +76,6 @@
       "source": "nwg_nutzung",
       "transform": "map_nutzung_to_id",
       "default": "1",
-      "in_pdf_extract": true,
       "reason": "Mapped with assumptions; business rule not fully confirmed."
     },
     {
@@ -104,7 +86,6 @@
       "source": "waermedaemmung_aussenwand",
       "transform": "insulation_checkbox_to_cm_or_0",
       "default": 0,
-      "in_pdf_extract": false,
       "reason": "Mapped with assumptions; business rule not fully confirmed."
     },
     {
@@ -115,7 +96,6 @@
       "source": "upload_export.slot0",
       "transform": "basename_or_empty",
       "default": "",
-      "in_pdf_extract": false,
       "reason": "Mapped with assumptions; business rule not fully confirmed."
     },
     {
@@ -126,7 +106,6 @@
       "source": "upload_export.slot1",
       "transform": "basename_or_empty",
       "default": "",
-      "in_pdf_extract": false,
       "reason": "Mapped with assumptions; business rule not fully confirmed."
     },
     {
@@ -137,7 +116,6 @@
       "source": "upload_export.slot2",
       "transform": "basename_or_empty",
       "default": "",
-      "in_pdf_extract": false,
       "reason": "Mapped with assumptions; business rule not fully confirmed."
     },
     {
@@ -148,7 +126,6 @@
       "source": "nwg_kuehlung|misch_kuehlung",
       "transform": "cooling_district_01",
       "default": 0,
-      "in_pdf_extract": false,
       "reason": "Mapped with assumptions; business rule not fully confirmed."
     },
     {
@@ -159,7 +136,6 @@
       "source": "nwg_kuehlung|misch_kuehlung",
       "transform": "cooling_passive_01",
       "default": 0,
-      "in_pdf_extract": false,
       "reason": "Mapped with assumptions; business rule not fully confirmed."
     },
     {
@@ -170,7 +146,6 @@
       "source": "nwg_kuehlung|misch_kuehlung",
       "transform": "cooling_thermal_01",
       "default": 0,
-      "in_pdf_extract": false,
       "reason": "Mapped with assumptions; business rule not fully confirmed."
     },
     {
@@ -181,7 +156,6 @@
       "source": "waermedaemmung_kellerdecke|waermedaemmung_kelleraussenwand",
       "transform": "insulation_checkbox_to_cm_or_0",
       "default": 0,
-      "in_pdf_extract": false,
       "reason": "Mapped with assumptions; business rule not fully confirmed."
     },
     {
@@ -192,18 +166,6 @@
       "source": "waermedaemmung_dachgeschoss|waermedaemmung_oberste_geschossdecke",
       "transform": "insulation_checkbox_to_cm_or_0",
       "default": 0,
-      "in_pdf_extract": false,
-      "reason": "Mapped with assumptions; business rule not fully confirmed."
-    },
-    {
-      "schema": "WG",
-      "column": "ETr1_Kategorie",
-      "status": "partial",
-      "severity": "medium",
-      "source": "heizung_waermeerzeuger|misch_heizung_waermeerzeuger",
-      "transform": "map_heating_to_bk_code",
-      "default": "BK_GAS",
-      "in_pdf_extract": true,
       "reason": "Mapped with assumptions; business rule not fully confirmed."
     },
     {
@@ -214,7 +176,6 @@
       "source": "gebaeudetyp",
       "transform": "map_gebaeudetyp_to_v_or_g",
       "default": "V",
-      "in_pdf_extract": false,
       "reason": "Mapped with assumptions; business rule not fully confirmed."
     },
     {
@@ -225,7 +186,6 @@
       "source": "pv_dach|misch_pv_dach",
       "transform": "checkbox_01",
       "default": 0,
-      "in_pdf_extract": true,
       "reason": "Mapped with assumptions; business rule not fully confirmed."
     },
     {
@@ -236,7 +196,6 @@
       "source": "anlass",
       "transform": "modernisierung_year_or_0",
       "default": 0,
-      "in_pdf_extract": true,
       "reason": "Mapped with assumptions; business rule not fully confirmed."
     },
     {
@@ -247,7 +206,6 @@
       "source": "waermedaemmung_aussenwand",
       "transform": "insulation_checkbox_to_cm_or_0",
       "default": 0,
-      "in_pdf_extract": false,
       "reason": "Mapped with assumptions; business rule not fully confirmed."
     },
     {
@@ -258,7 +216,6 @@
       "source": "upload_export.slot0",
       "transform": "basename_or_empty",
       "default": "",
-      "in_pdf_extract": false,
       "reason": "Mapped with assumptions; business rule not fully confirmed."
     },
     {
@@ -269,7 +226,6 @@
       "source": "upload_export.slot1",
       "transform": "basename_or_empty",
       "default": "",
-      "in_pdf_extract": false,
       "reason": "Mapped with assumptions; business rule not fully confirmed."
     },
     {
@@ -280,7 +236,6 @@
       "source": "upload_export.slot2",
       "transform": "basename_or_empty",
       "default": "",
-      "in_pdf_extract": false,
       "reason": "Mapped with assumptions; business rule not fully confirmed."
     },
     {
@@ -291,7 +246,6 @@
       "source": "nwg_kuehlung|misch_kuehlung",
       "transform": "cooling_district_01",
       "default": 0,
-      "in_pdf_extract": false,
       "reason": "Mapped with assumptions; business rule not fully confirmed."
     },
     {
@@ -302,7 +256,6 @@
       "source": "gebaeudetyp",
       "transform": "wg_is_gebaeudehuelle_01",
       "default": 1,
-      "in_pdf_extract": true,
       "reason": "Mapped with assumptions; business rule not fully confirmed."
     },
     {
@@ -313,7 +266,6 @@
       "source": "nwg_kuehlung|misch_kuehlung",
       "transform": "cooling_passive_01",
       "default": 0,
-      "in_pdf_extract": false,
       "reason": "Mapped with assumptions; business rule not fully confirmed."
     },
     {
@@ -324,789 +276,7 @@
       "source": "nwg_kuehlung|misch_kuehlung",
       "transform": "cooling_thermal_01",
       "default": 0,
-      "in_pdf_extract": false,
       "reason": "Mapped with assumptions; business rule not fully confirmed."
-    },
-    {
-      "schema": "NWG",
-      "column": "ETr1_Jahr1_Leerstand",
-      "status": "unmapped",
-      "severity": "low",
-      "source": "verbrauch.period1.vacancy_pct",
-      "transform": "percent_0_100",
-      "default": 0,
-      "in_pdf_extract": false,
-      "reason": "No source field in current form; export depends on placeholder/default/external data."
-    },
-    {
-      "schema": "NWG",
-      "column": "ETr1_Jahr1_Menge",
-      "status": "unmapped",
-      "severity": "low",
-      "source": "verbrauch.period1.total",
-      "transform": "number_locale_de",
-      "default": null,
-      "in_pdf_extract": true,
-      "reason": "No source field in current form; export depends on placeholder/default/external data."
-    },
-    {
-      "schema": "NWG",
-      "column": "ETr1_Jahr1_Menge_TWW",
-      "status": "unmapped",
-      "severity": "low",
-      "source": "verbrauch.period1.tww",
-      "transform": "number_locale_de",
-      "default": "",
-      "in_pdf_extract": true,
-      "reason": "No source field in current form; export depends on placeholder/default/external data."
-    },
-    {
-      "schema": "NWG",
-      "column": "ETr1_Jahr1_bis",
-      "status": "unmapped",
-      "severity": "low",
-      "source": "verbrauch.period1.to",
-      "transform": "date_dd_mm_yyyy",
-      "default": null,
-      "in_pdf_extract": true,
-      "reason": "No source field in current form; export depends on placeholder/default/external data."
-    },
-    {
-      "schema": "NWG",
-      "column": "ETr1_Jahr1_von",
-      "status": "unmapped",
-      "severity": "low",
-      "source": "verbrauch.period1.from",
-      "transform": "date_dd_mm_yyyy",
-      "default": null,
-      "in_pdf_extract": true,
-      "reason": "No source field in current form; export depends on placeholder/default/external data."
-    },
-    {
-      "schema": "NWG",
-      "column": "ETr1_Jahr2_Leerstand",
-      "status": "unmapped",
-      "severity": "low",
-      "source": "verbrauch.period2.vacancy_pct",
-      "transform": "percent_0_100",
-      "default": 0,
-      "in_pdf_extract": true,
-      "reason": "No source field in current form; export depends on placeholder/default/external data."
-    },
-    {
-      "schema": "NWG",
-      "column": "ETr1_Jahr2_Menge",
-      "status": "unmapped",
-      "severity": "low",
-      "source": "verbrauch.period2.total",
-      "transform": "number_locale_de",
-      "default": null,
-      "in_pdf_extract": true,
-      "reason": "No source field in current form; export depends on placeholder/default/external data."
-    },
-    {
-      "schema": "NWG",
-      "column": "ETr1_Jahr2_Menge_TWW",
-      "status": "unmapped",
-      "severity": "low",
-      "source": "verbrauch.period2.tww",
-      "transform": "number_locale_de",
-      "default": "",
-      "in_pdf_extract": true,
-      "reason": "No source field in current form; export depends on placeholder/default/external data."
-    },
-    {
-      "schema": "NWG",
-      "column": "ETr1_Jahr2_bis",
-      "status": "unmapped",
-      "severity": "low",
-      "source": "verbrauch.period2.to",
-      "transform": "date_dd_mm_yyyy",
-      "default": null,
-      "in_pdf_extract": true,
-      "reason": "No source field in current form; export depends on placeholder/default/external data."
-    },
-    {
-      "schema": "NWG",
-      "column": "ETr1_Jahr2_von",
-      "status": "unmapped",
-      "severity": "low",
-      "source": "verbrauch.period2.from",
-      "transform": "date_dd_mm_yyyy",
-      "default": null,
-      "in_pdf_extract": false,
-      "reason": "No source field in current form; export depends on placeholder/default/external data."
-    },
-    {
-      "schema": "NWG",
-      "column": "ETr1_Jahr3_Leerstand",
-      "status": "unmapped",
-      "severity": "low",
-      "source": "verbrauch.period3.vacancy_pct",
-      "transform": "percent_0_100",
-      "default": 0,
-      "in_pdf_extract": true,
-      "reason": "No source field in current form; export depends on placeholder/default/external data."
-    },
-    {
-      "schema": "NWG",
-      "column": "ETr1_Jahr3_Menge",
-      "status": "unmapped",
-      "severity": "low",
-      "source": "verbrauch.period3.total",
-      "transform": "number_locale_de",
-      "default": null,
-      "in_pdf_extract": true,
-      "reason": "No source field in current form; export depends on placeholder/default/external data."
-    },
-    {
-      "schema": "NWG",
-      "column": "ETr1_Jahr3_Menge_TWW",
-      "status": "unmapped",
-      "severity": "low",
-      "source": "verbrauch.period3.tww",
-      "transform": "number_locale_de",
-      "default": "",
-      "in_pdf_extract": true,
-      "reason": "No source field in current form; export depends on placeholder/default/external data."
-    },
-    {
-      "schema": "NWG",
-      "column": "ETr1_Jahr3_bis",
-      "status": "unmapped",
-      "severity": "low",
-      "source": "verbrauch.period3.to",
-      "transform": "date_dd_mm_yyyy",
-      "default": null,
-      "in_pdf_extract": true,
-      "reason": "No source field in current form; export depends on placeholder/default/external data."
-    },
-    {
-      "schema": "NWG",
-      "column": "ETr1_Jahr3_von",
-      "status": "unmapped",
-      "severity": "low",
-      "source": "verbrauch.period3.from",
-      "transform": "date_dd_mm_yyyy",
-      "default": null,
-      "in_pdf_extract": true,
-      "reason": "No source field in current form; export depends on placeholder/default/external data."
-    },
-    {
-      "schema": "NWG",
-      "column": "ETr1_PrimFaktor",
-      "status": "unmapped",
-      "severity": "low",
-      "source": "fernwaerme.primfaktor_etr1",
-      "transform": "number_locale_de",
-      "default": "",
-      "in_pdf_extract": true,
-      "reason": "No source field in current form; export depends on placeholder/default/external data."
-    },
-    {
-      "schema": "NWG",
-      "column": "ETr2_Heizung",
-      "status": "unmapped",
-      "severity": "low",
-      "source": "etr2.heizung",
-      "transform": "bool_01",
-      "default": 0,
-      "in_pdf_extract": false,
-      "reason": "No source field in current form; export depends on placeholder/default/external data."
-    },
-    {
-      "schema": "NWG",
-      "column": "ETr2_Jahr1_Leerstand",
-      "status": "unmapped",
-      "severity": "low",
-      "source": "etr2.period1.vacancy_pct",
-      "transform": "percent_0_100",
-      "default": "",
-      "in_pdf_extract": false,
-      "reason": "No source field in current form; export depends on placeholder/default/external data."
-    },
-    {
-      "schema": "NWG",
-      "column": "ETr2_Jahr1_Menge",
-      "status": "unmapped",
-      "severity": "low",
-      "source": "etr2.period1.total",
-      "transform": "number_locale_de",
-      "default": "",
-      "in_pdf_extract": false,
-      "reason": "No source field in current form; export depends on placeholder/default/external data."
-    },
-    {
-      "schema": "NWG",
-      "column": "ETr2_Jahr1_Menge_TWW",
-      "status": "unmapped",
-      "severity": "low",
-      "source": "etr2.period1.tww",
-      "transform": "number_locale_de",
-      "default": "",
-      "in_pdf_extract": false,
-      "reason": "No source field in current form; export depends on placeholder/default/external data."
-    },
-    {
-      "schema": "NWG",
-      "column": "ETr2_Jahr1_bis",
-      "status": "unmapped",
-      "severity": "low",
-      "source": "etr2.period1.to",
-      "transform": "date_dd_mm_yyyy",
-      "default": "",
-      "in_pdf_extract": false,
-      "reason": "No source field in current form; export depends on placeholder/default/external data."
-    },
-    {
-      "schema": "NWG",
-      "column": "ETr2_Jahr1_von",
-      "status": "unmapped",
-      "severity": "low",
-      "source": "etr2.period1.from",
-      "transform": "date_dd_mm_yyyy",
-      "default": "",
-      "in_pdf_extract": false,
-      "reason": "No source field in current form; export depends on placeholder/default/external data."
-    },
-    {
-      "schema": "NWG",
-      "column": "ETr2_Jahr2_Leerstand",
-      "status": "unmapped",
-      "severity": "low",
-      "source": "etr2.period2.vacancy_pct",
-      "transform": "percent_0_100",
-      "default": "",
-      "in_pdf_extract": false,
-      "reason": "No source field in current form; export depends on placeholder/default/external data."
-    },
-    {
-      "schema": "NWG",
-      "column": "ETr2_Jahr2_Menge",
-      "status": "unmapped",
-      "severity": "low",
-      "source": "etr2.period2.total",
-      "transform": "number_locale_de",
-      "default": "",
-      "in_pdf_extract": false,
-      "reason": "No source field in current form; export depends on placeholder/default/external data."
-    },
-    {
-      "schema": "NWG",
-      "column": "ETr2_Jahr2_Menge_TWW",
-      "status": "unmapped",
-      "severity": "low",
-      "source": "etr2.period2.tww",
-      "transform": "number_locale_de",
-      "default": "",
-      "in_pdf_extract": false,
-      "reason": "No source field in current form; export depends on placeholder/default/external data."
-    },
-    {
-      "schema": "NWG",
-      "column": "ETr2_Jahr2_bis",
-      "status": "unmapped",
-      "severity": "low",
-      "source": "etr2.period2.to",
-      "transform": "date_dd_mm_yyyy",
-      "default": "",
-      "in_pdf_extract": false,
-      "reason": "No source field in current form; export depends on placeholder/default/external data."
-    },
-    {
-      "schema": "NWG",
-      "column": "ETr2_Jahr2_von",
-      "status": "unmapped",
-      "severity": "low",
-      "source": "etr2.period2.from",
-      "transform": "date_dd_mm_yyyy",
-      "default": "",
-      "in_pdf_extract": false,
-      "reason": "No source field in current form; export depends on placeholder/default/external data."
-    },
-    {
-      "schema": "NWG",
-      "column": "ETr2_Jahr3_Leerstand",
-      "status": "unmapped",
-      "severity": "low",
-      "source": "etr2.period3.vacancy_pct",
-      "transform": "percent_0_100",
-      "default": "",
-      "in_pdf_extract": false,
-      "reason": "No source field in current form; export depends on placeholder/default/external data."
-    },
-    {
-      "schema": "NWG",
-      "column": "ETr2_Jahr3_Menge",
-      "status": "unmapped",
-      "severity": "low",
-      "source": "etr2.period3.total",
-      "transform": "number_locale_de",
-      "default": "",
-      "in_pdf_extract": false,
-      "reason": "No source field in current form; export depends on placeholder/default/external data."
-    },
-    {
-      "schema": "NWG",
-      "column": "ETr2_Jahr3_Menge_TWW",
-      "status": "unmapped",
-      "severity": "low",
-      "source": "etr2.period3.tww",
-      "transform": "number_locale_de",
-      "default": "",
-      "in_pdf_extract": false,
-      "reason": "No source field in current form; export depends on placeholder/default/external data."
-    },
-    {
-      "schema": "NWG",
-      "column": "ETr2_Jahr3_bis",
-      "status": "unmapped",
-      "severity": "low",
-      "source": "etr2.period3.to",
-      "transform": "date_dd_mm_yyyy",
-      "default": "",
-      "in_pdf_extract": false,
-      "reason": "No source field in current form; export depends on placeholder/default/external data."
-    },
-    {
-      "schema": "NWG",
-      "column": "ETr2_Jahr3_von",
-      "status": "unmapped",
-      "severity": "low",
-      "source": "etr2.period3.from",
-      "transform": "date_dd_mm_yyyy",
-      "default": "",
-      "in_pdf_extract": false,
-      "reason": "No source field in current form; export depends on placeholder/default/external data."
-    },
-    {
-      "schema": "NWG",
-      "column": "ETr2_Kategorie",
-      "status": "unmapped",
-      "severity": "low",
-      "source": "etr2.kategorie",
-      "transform": "map_to_bk_code",
-      "default": "",
-      "in_pdf_extract": false,
-      "reason": "No source field in current form; export depends on placeholder/default/external data."
-    },
-    {
-      "schema": "NWG",
-      "column": "ETr2_TWW",
-      "status": "unmapped",
-      "severity": "low",
-      "source": "etr2.tww",
-      "transform": "bool_01",
-      "default": "",
-      "in_pdf_extract": false,
-      "reason": "No source field in current form; export depends on placeholder/default/external data."
-    },
-    {
-      "schema": "NWG",
-      "column": "Straße",
-      "status": "unmapped",
-      "severity": "low",
-      "source": null,
-      "transform": "constant",
-      "default": "",
-      "in_pdf_extract": false,
-      "reason": "No source field in current form; export depends on placeholder/default/external data."
-    },
-    {
-      "schema": "WG",
-      "column": "ETr1_Jahr1_Leerstand",
-      "status": "unmapped",
-      "severity": "low",
-      "source": "verbrauch.period1.vacancy_pct",
-      "transform": "percent_0_100",
-      "default": 0,
-      "in_pdf_extract": false,
-      "reason": "No source field in current form; export depends on placeholder/default/external data."
-    },
-    {
-      "schema": "WG",
-      "column": "ETr1_Jahr1_Menge",
-      "status": "unmapped",
-      "severity": "low",
-      "source": "verbrauch.period1.total",
-      "transform": "number_locale_de",
-      "default": null,
-      "in_pdf_extract": true,
-      "reason": "No source field in current form; export depends on placeholder/default/external data."
-    },
-    {
-      "schema": "WG",
-      "column": "ETr1_Jahr1_Menge_TWW",
-      "status": "unmapped",
-      "severity": "low",
-      "source": "verbrauch.period1.tww",
-      "transform": "number_locale_de",
-      "default": "",
-      "in_pdf_extract": true,
-      "reason": "No source field in current form; export depends on placeholder/default/external data."
-    },
-    {
-      "schema": "WG",
-      "column": "ETr1_Jahr1_bis",
-      "status": "unmapped",
-      "severity": "low",
-      "source": "verbrauch.period1.to",
-      "transform": "date_dd_mm_yyyy",
-      "default": null,
-      "in_pdf_extract": true,
-      "reason": "No source field in current form; export depends on placeholder/default/external data."
-    },
-    {
-      "schema": "WG",
-      "column": "ETr1_Jahr1_von",
-      "status": "unmapped",
-      "severity": "low",
-      "source": "verbrauch.period1.from",
-      "transform": "date_dd_mm_yyyy",
-      "default": null,
-      "in_pdf_extract": true,
-      "reason": "No source field in current form; export depends on placeholder/default/external data."
-    },
-    {
-      "schema": "WG",
-      "column": "ETr1_Jahr2_Leerstand",
-      "status": "unmapped",
-      "severity": "low",
-      "source": "verbrauch.period2.vacancy_pct",
-      "transform": "percent_0_100",
-      "default": 0,
-      "in_pdf_extract": true,
-      "reason": "No source field in current form; export depends on placeholder/default/external data."
-    },
-    {
-      "schema": "WG",
-      "column": "ETr1_Jahr2_Menge",
-      "status": "unmapped",
-      "severity": "low",
-      "source": "verbrauch.period2.total",
-      "transform": "number_locale_de",
-      "default": null,
-      "in_pdf_extract": true,
-      "reason": "No source field in current form; export depends on placeholder/default/external data."
-    },
-    {
-      "schema": "WG",
-      "column": "ETr1_Jahr2_Menge_TWW",
-      "status": "unmapped",
-      "severity": "low",
-      "source": "verbrauch.period2.tww",
-      "transform": "number_locale_de",
-      "default": "",
-      "in_pdf_extract": true,
-      "reason": "No source field in current form; export depends on placeholder/default/external data."
-    },
-    {
-      "schema": "WG",
-      "column": "ETr1_Jahr2_bis",
-      "status": "unmapped",
-      "severity": "low",
-      "source": "verbrauch.period2.to",
-      "transform": "date_dd_mm_yyyy",
-      "default": null,
-      "in_pdf_extract": true,
-      "reason": "No source field in current form; export depends on placeholder/default/external data."
-    },
-    {
-      "schema": "WG",
-      "column": "ETr1_Jahr2_von",
-      "status": "unmapped",
-      "severity": "low",
-      "source": "verbrauch.period2.from",
-      "transform": "date_dd_mm_yyyy",
-      "default": null,
-      "in_pdf_extract": false,
-      "reason": "No source field in current form; export depends on placeholder/default/external data."
-    },
-    {
-      "schema": "WG",
-      "column": "ETr1_Jahr3_Leerstand",
-      "status": "unmapped",
-      "severity": "low",
-      "source": "verbrauch.period3.vacancy_pct",
-      "transform": "percent_0_100",
-      "default": 0,
-      "in_pdf_extract": true,
-      "reason": "No source field in current form; export depends on placeholder/default/external data."
-    },
-    {
-      "schema": "WG",
-      "column": "ETr1_Jahr3_Menge",
-      "status": "unmapped",
-      "severity": "low",
-      "source": "verbrauch.period3.total",
-      "transform": "number_locale_de",
-      "default": null,
-      "in_pdf_extract": true,
-      "reason": "No source field in current form; export depends on placeholder/default/external data."
-    },
-    {
-      "schema": "WG",
-      "column": "ETr1_Jahr3_Menge_TWW",
-      "status": "unmapped",
-      "severity": "low",
-      "source": "verbrauch.period3.tww",
-      "transform": "number_locale_de",
-      "default": "",
-      "in_pdf_extract": true,
-      "reason": "No source field in current form; export depends on placeholder/default/external data."
-    },
-    {
-      "schema": "WG",
-      "column": "ETr1_Jahr3_bis",
-      "status": "unmapped",
-      "severity": "low",
-      "source": "verbrauch.period3.to",
-      "transform": "date_dd_mm_yyyy",
-      "default": null,
-      "in_pdf_extract": true,
-      "reason": "No source field in current form; export depends on placeholder/default/external data."
-    },
-    {
-      "schema": "WG",
-      "column": "ETr1_Jahr3_von",
-      "status": "unmapped",
-      "severity": "low",
-      "source": "verbrauch.period3.from",
-      "transform": "date_dd_mm_yyyy",
-      "default": null,
-      "in_pdf_extract": true,
-      "reason": "No source field in current form; export depends on placeholder/default/external data."
-    },
-    {
-      "schema": "WG",
-      "column": "ETr1_PrimFaktor",
-      "status": "unmapped",
-      "severity": "low",
-      "source": "fernwaerme.primfaktor_etr1",
-      "transform": "number_locale_de",
-      "default": "",
-      "in_pdf_extract": true,
-      "reason": "No source field in current form; export depends on placeholder/default/external data."
-    },
-    {
-      "schema": "WG",
-      "column": "ETr2_Heizung",
-      "status": "unmapped",
-      "severity": "low",
-      "source": "etr2.heizung",
-      "transform": "bool_01",
-      "default": 0,
-      "in_pdf_extract": false,
-      "reason": "No source field in current form; export depends on placeholder/default/external data."
-    },
-    {
-      "schema": "WG",
-      "column": "ETr2_Jahr1_Leerstand",
-      "status": "unmapped",
-      "severity": "low",
-      "source": "etr2.period1.vacancy_pct",
-      "transform": "percent_0_100",
-      "default": "",
-      "in_pdf_extract": false,
-      "reason": "No source field in current form; export depends on placeholder/default/external data."
-    },
-    {
-      "schema": "WG",
-      "column": "ETr2_Jahr1_Menge",
-      "status": "unmapped",
-      "severity": "low",
-      "source": "etr2.period1.total",
-      "transform": "number_locale_de",
-      "default": "",
-      "in_pdf_extract": false,
-      "reason": "No source field in current form; export depends on placeholder/default/external data."
-    },
-    {
-      "schema": "WG",
-      "column": "ETr2_Jahr1_Menge_TWW",
-      "status": "unmapped",
-      "severity": "low",
-      "source": "etr2.period1.tww",
-      "transform": "number_locale_de",
-      "default": "",
-      "in_pdf_extract": false,
-      "reason": "No source field in current form; export depends on placeholder/default/external data."
-    },
-    {
-      "schema": "WG",
-      "column": "ETr2_Jahr1_bis",
-      "status": "unmapped",
-      "severity": "low",
-      "source": "etr2.period1.to",
-      "transform": "date_dd_mm_yyyy",
-      "default": "",
-      "in_pdf_extract": false,
-      "reason": "No source field in current form; export depends on placeholder/default/external data."
-    },
-    {
-      "schema": "WG",
-      "column": "ETr2_Jahr1_von",
-      "status": "unmapped",
-      "severity": "low",
-      "source": "etr2.period1.from",
-      "transform": "date_dd_mm_yyyy",
-      "default": "",
-      "in_pdf_extract": false,
-      "reason": "No source field in current form; export depends on placeholder/default/external data."
-    },
-    {
-      "schema": "WG",
-      "column": "ETr2_Jahr2_Leerstand",
-      "status": "unmapped",
-      "severity": "low",
-      "source": "etr2.period2.vacancy_pct",
-      "transform": "percent_0_100",
-      "default": "",
-      "in_pdf_extract": false,
-      "reason": "No source field in current form; export depends on placeholder/default/external data."
-    },
-    {
-      "schema": "WG",
-      "column": "ETr2_Jahr2_Menge",
-      "status": "unmapped",
-      "severity": "low",
-      "source": "etr2.period2.total",
-      "transform": "number_locale_de",
-      "default": "",
-      "in_pdf_extract": false,
-      "reason": "No source field in current form; export depends on placeholder/default/external data."
-    },
-    {
-      "schema": "WG",
-      "column": "ETr2_Jahr2_Menge_TWW",
-      "status": "unmapped",
-      "severity": "low",
-      "source": "etr2.period2.tww",
-      "transform": "number_locale_de",
-      "default": "",
-      "in_pdf_extract": false,
-      "reason": "No source field in current form; export depends on placeholder/default/external data."
-    },
-    {
-      "schema": "WG",
-      "column": "ETr2_Jahr2_bis",
-      "status": "unmapped",
-      "severity": "low",
-      "source": "etr2.period2.to",
-      "transform": "date_dd_mm_yyyy",
-      "default": "",
-      "in_pdf_extract": false,
-      "reason": "No source field in current form; export depends on placeholder/default/external data."
-    },
-    {
-      "schema": "WG",
-      "column": "ETr2_Jahr2_von",
-      "status": "unmapped",
-      "severity": "low",
-      "source": "etr2.period2.from",
-      "transform": "date_dd_mm_yyyy",
-      "default": "",
-      "in_pdf_extract": false,
-      "reason": "No source field in current form; export depends on placeholder/default/external data."
-    },
-    {
-      "schema": "WG",
-      "column": "ETr2_Jahr3_Leerstand",
-      "status": "unmapped",
-      "severity": "low",
-      "source": "etr2.period3.vacancy_pct",
-      "transform": "percent_0_100",
-      "default": "",
-      "in_pdf_extract": false,
-      "reason": "No source field in current form; export depends on placeholder/default/external data."
-    },
-    {
-      "schema": "WG",
-      "column": "ETr2_Jahr3_Menge",
-      "status": "unmapped",
-      "severity": "low",
-      "source": "etr2.period3.total",
-      "transform": "number_locale_de",
-      "default": "",
-      "in_pdf_extract": false,
-      "reason": "No source field in current form; export depends on placeholder/default/external data."
-    },
-    {
-      "schema": "WG",
-      "column": "ETr2_Jahr3_Menge_TWW",
-      "status": "unmapped",
-      "severity": "low",
-      "source": "etr2.period3.tww",
-      "transform": "number_locale_de",
-      "default": "",
-      "in_pdf_extract": false,
-      "reason": "No source field in current form; export depends on placeholder/default/external data."
-    },
-    {
-      "schema": "WG",
-      "column": "ETr2_Jahr3_bis",
-      "status": "unmapped",
-      "severity": "low",
-      "source": "etr2.period3.to",
-      "transform": "date_dd_mm_yyyy",
-      "default": "",
-      "in_pdf_extract": false,
-      "reason": "No source field in current form; export depends on placeholder/default/external data."
-    },
-    {
-      "schema": "WG",
-      "column": "ETr2_Jahr3_von",
-      "status": "unmapped",
-      "severity": "low",
-      "source": "etr2.period3.from",
-      "transform": "date_dd_mm_yyyy",
-      "default": "",
-      "in_pdf_extract": false,
-      "reason": "No source field in current form; export depends on placeholder/default/external data."
-    },
-    {
-      "schema": "WG",
-      "column": "ETr2_Kategorie",
-      "status": "unmapped",
-      "severity": "low",
-      "source": "etr2.kategorie",
-      "transform": "map_to_bk_code",
-      "default": "",
-      "in_pdf_extract": false,
-      "reason": "No source field in current form; export depends on placeholder/default/external data."
-    },
-    {
-      "schema": "WG",
-      "column": "ETr2_PrimFaktor",
-      "status": "unmapped",
-      "severity": "low",
-      "source": "fernwaerme.etr2_primfaktor",
-      "transform": "number_locale_de",
-      "default": "",
-      "in_pdf_extract": false,
-      "reason": "No source field in current form; export depends on placeholder/default/external data."
-    },
-    {
-      "schema": "WG",
-      "column": "ETr2_TWW",
-      "status": "unmapped",
-      "severity": "low",
-      "source": "etr2.tww",
-      "transform": "bool_01",
-      "default": "",
-      "in_pdf_extract": false,
-      "reason": "No source field in current form; export depends on placeholder/default/external data."
-    },
-    {
-      "schema": "WG",
-      "column": "Straße",
-      "status": "unmapped",
-      "severity": "low",
-      "source": null,
-      "transform": "constant",
-      "default": "",
-      "in_pdf_extract": false,
-      "reason": "No source field in current form; export depends on placeholder/default/external data."
     }
   ]
 }

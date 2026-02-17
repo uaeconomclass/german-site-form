@@ -801,12 +801,16 @@ function renderFields(step) {
             grid.appendChild(cell);
           });
 
-          // Derived preview: area + total
-          const h = Number(it.hoehe_m);
-          const w = Number(it.breite_m);
-          if (Number.isFinite(h) && Number.isFinite(w)) {
-            const a = h * w;
-            row.appendChild(el("div", { class: "rep-math" }, "Fläche: ", el("b", null, a.toFixed(3)), " m²"));
+          // Derived preview is only relevant for window measurement repeaters.
+          const hasAreaFields = (field.fields || []).some((sf) => sf.key === "hoehe_m")
+            && (field.fields || []).some((sf) => sf.key === "breite_m");
+          if (hasAreaFields) {
+            const h = Number(it.hoehe_m);
+            const w = Number(it.breite_m);
+            if (Number.isFinite(h) && Number.isFinite(w)) {
+              const a = h * w;
+              row.appendChild(el("div", { class: "rep-math" }, "Fläche: ", el("b", null, a.toFixed(3)), " m²"));
+            }
           }
 
           row.appendChild(grid);
@@ -820,16 +824,20 @@ function renderFields(step) {
           setValue(key, items, step);
         } }, "+ " + itemLabel + " hinzufügen");
 
-        // Total area
-        let total = 0;
-        for (const it of items) {
-          const h = Number(it && it.hoehe_m);
-          const w = Number(it && it.breite_m);
-          if (Number.isFinite(h) && Number.isFinite(w)) total += h * w;
+        const hasAreaFields = (field.fields || []).some((sf) => sf.key === "hoehe_m")
+          && (field.fields || []).some((sf) => sf.key === "breite_m");
+        if (hasAreaFields) {
+          let total = 0;
+          for (const it of items) {
+            const h = Number(it && it.hoehe_m);
+            const w = Number(it && it.breite_m);
+            if (Number.isFinite(h) && Number.isFinite(w)) total += h * w;
+          }
+          const totalEl = el("div", { class: "rep-total" }, "Summe: ", el("b", null, total.toFixed(3)), " mВІ");
+          control = el("div", { class: "repeater" }, list, addBtn, totalEl);
+        } else {
+          control = el("div", { class: "repeater" }, list, addBtn);
         }
-        const totalEl = el("div", { class: "rep-total" }, "Summe: ", el("b", null, total.toFixed(3)), " mВІ");
-
-        control = el("div", { class: "repeater" }, list, addBtn, totalEl);
       } else if (field.type === "checkbox") {
         wantsDefaultLabel = false;
         const id = "cb_" + key;
@@ -868,6 +876,92 @@ function renderFields(step) {
       dom.form.appendChild(wrap);
     });
   });
+}
+
+function parseDateDE(value) {
+  const s = String(value || "").trim();
+  const m = s.match(/^(\d{2})\.(\d{2})\.(\d{4})$/);
+  if (!m) return null;
+  const d = Number(m[1]);
+  const mo = Number(m[2]);
+  const y = Number(m[3]);
+  const dt = new Date(Date.UTC(y, mo - 1, d));
+  if (
+    dt.getUTCFullYear() !== y ||
+    dt.getUTCMonth() !== mo - 1 ||
+    dt.getUTCDate() !== d
+  ) return null;
+  return dt;
+}
+
+function monthsInclusive(fromDate, toDate) {
+  const fromIdx = fromDate.getUTCFullYear() * 12 + fromDate.getUTCMonth();
+  const toIdx = toDate.getUTCFullYear() * 12 + toDate.getUTCMonth();
+  return toIdx - fromIdx + 1;
+}
+
+function validateEtrPeriodsField(fieldKey, label, errors) {
+  const periods = Array.isArray(state[fieldKey]) ? state[fieldKey] : [];
+  if (periods.length !== 3) {
+    errors[fieldKey] = label + ": Bitte genau 3 Zeiträume angeben";
+    return;
+  }
+
+  let totalMonths = 0;
+  let prevTo = null;
+
+  for (let i = 0; i < periods.length; i++) {
+    const p = periods[i] || {};
+    const von = p.von;
+    const bis = p.bis;
+    const menge = p.menge;
+    const mengeTww = p.menge_tww;
+
+    if (isEmpty(von) || isEmpty(bis) || isEmpty(menge)) {
+      errors[fieldKey] = label + ": Zeitraum " + String(i + 1) + " ist unvollständig";
+      return;
+    }
+
+    const fromDate = parseDateDE(von);
+    const toDate = parseDateDE(bis);
+    if (!fromDate || !toDate) {
+      errors[fieldKey] = label + ": Datum muss im Format TT.MM.JJJJ sein";
+      return;
+    }
+    if (toDate.getTime() < fromDate.getTime()) {
+      errors[fieldKey] = label + ": \"Bis\" darf nicht vor \"Von\" liegen";
+      return;
+    }
+    if (prevTo && fromDate.getTime() <= prevTo.getTime()) {
+      errors[fieldKey] = label + ": Zeiträume dürfen sich nicht überschneiden";
+      return;
+    }
+    prevTo = toDate;
+
+    const m = Number(menge);
+    if (!Number.isFinite(m) || m <= 0) {
+      errors[fieldKey] = label + ": Gesamtmenge muss > 0 sein";
+      return;
+    }
+
+    if (!isEmpty(mengeTww)) {
+      const tww = Number(mengeTww);
+      if (!Number.isFinite(tww) || tww < 0) {
+        errors[fieldKey] = label + ": TWW-Menge muss >= 0 sein";
+        return;
+      }
+      if (tww > m) {
+        errors[fieldKey] = label + ": TWW-Menge darf die Gesamtmenge nicht überschreiten";
+        return;
+      }
+    }
+
+    totalMonths += monthsInclusive(fromDate, toDate);
+  }
+
+  if (totalMonths < 36) {
+    errors[fieldKey] = label + ": Insgesamt mindestens 36 Monate erforderlich";
+  }
 }
 
 function validateStep(idx, { silent } = {}) {
@@ -909,6 +1003,10 @@ function validateStep(idx, { silent } = {}) {
           const sfReq = sf.required === true;
           const sfVal = it && it[sf.key];
           if (sfReq && isEmpty(sfVal)) errors[key] = "Bitte alle Pflichtfelder in der Liste ausfüllen";
+          if (sf.pattern && !isEmpty(sfVal)) {
+            const re = new RegExp(sf.pattern);
+            if (!re.test(String(sfVal))) errors[key] = "Ungültiges Format in der Liste";
+          }
           if (sf.type === "number" && !isEmpty(sfVal)) {
             const n = Number(sfVal);
             if (!Number.isFinite(n)) errors[key] = "Ungültige Zahl in der Liste";
@@ -928,6 +1026,14 @@ function validateStep(idx, { silent } = {}) {
       if (!Number.isFinite(n)) errors[key] = "Zahl erforderlich";
       if (f.min != null && n < f.min) errors[key] = "Zu klein";
       if (f.max != null && n > f.max) errors[key] = "Zu groß";
+    }
+  }
+
+  // Upload step: cross-field validation for ETr period blocks.
+  if (String(st.id || "") === "uploads" && String(state.ausweisart || "") === "Verbrauchsausweis") {
+    validateEtrPeriodsField("etr1_periods", "ETr1", errors);
+    if (state.etr2_enabled === true) {
+      validateEtrPeriodsField("etr2_periods", "ETr2", errors);
     }
   }
 

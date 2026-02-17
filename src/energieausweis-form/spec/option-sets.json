@@ -175,5 +175,22 @@
     { "value": "Standard", "label": "Standard" },
     { "value": "LED", "label": "LED" },
     { "value": "unbekannt", "label": "unbekannt" }
+  ],
+  "etr_kategorie_bk": [
+    { "value": "", "label": "Bitte waehlen..." },
+    { "value": "BK_GAS", "label": "Erdgas (BK_GAS)" },
+    { "value": "BK_OEL", "label": "Heizoel (BK_OEL)" },
+    { "value": "BK_STROM", "label": "Strom (BK_STROM)" },
+    { "value": "BK_BIOGAS", "label": "Biogas (BK_BIOGAS)" },
+    { "value": "BK_BIOOEL", "label": "Biooel (BK_BIOOEL)" },
+    { "value": "BK_HOLZ", "label": "Holz (BK_HOLZ)" },
+    { "value": "BK_HHS", "label": "Holzhackschnitzel (BK_HHS)" },
+    { "value": "BK_PELLET", "label": "Holzpellets (BK_PELLET)" },
+    { "value": "BK_KOHLE", "label": "Steinkohle (BK_KOHLE)" },
+    { "value": "BK_BRAUNKOHLE", "label": "Braunkohle (BK_BRAUNKOHLE)" },
+    { "value": "BK_FLUESSIGGAS", "label": "Fluessiggas (BK_FLUESSIGGAS)" },
+    { "value": "BK_NACHTSTR", "label": "Strom NT (BK_NACHTSTR)" },
+    { "value": "BK_FW0", "label": "Fernwaerme ohne KWK (BK_FW0)" },
+    { "value": "BK_FW70", "label": "Fernwaerme mit 70% KWK (BK_FW70)" }
   ]
 }
