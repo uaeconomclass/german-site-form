@@ -781,6 +781,7 @@ select.control{ padding-right:34px; }
 .btn.wide{ width:100%; justify-content:center; }
 .btn:disabled{ opacity:.5; cursor:not-allowed; }
 .side .btn:disabled{ opacity:1; background:#f2f4f7; color:#98a2b3; }
+#buildInfo{ display:none; }
 
 .side-head{
   padding:14px 14px 10px;
