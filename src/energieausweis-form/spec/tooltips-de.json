@@ -72,7 +72,7 @@
 
   "upload_bedarf_plaene": "Für den Bedarfsausweis werden Angaben zur Gebäudegeometrie und Gebäudehülle benötigt. Dafür sind Gebäudepläne besonders hilfreich.\n\nDateiformate: PDF oder Bild (z. B. JPG, PNG)",
   "upload_nwg_anlagenplaene": "Optional: Anlagenpläne (Lüftung/Kälte/Heizung) können bei NWG hilfreich sein.",
-  "etr_kategorie": "Wählen Sie den passenden Energieträgercode (BK_*). Dieser Wert wird direkt für den EVEBI-Import verwendet.",
+  "etr_kategorie": "Bitte wählen Sie den Energieträger, der in den Abrechnungen angegeben ist (z. B. Gas, Öl, Fernwärme).",
   "etr_perioden": "Bitte geben Sie 3 zusammenhängende Abrechnungszeiträume an (TT.MM.JJJJ), jeweils mit Gesamtmenge und Leerstand.",
   "etr_fw_flags": "Diese Angaben sind relevant, wenn der Energieträger Fernwärme ist.",
   "etr_primfaktor": "Primärenergiefaktor des Energieträgers. Nur bei Fernwärme erforderlich.",

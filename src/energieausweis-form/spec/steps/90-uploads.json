@@ -31,11 +31,11 @@
       "full": true,
       "when": { "eq": ["ausweisart", "Verbrauchsausweis"] },
       "title": "Verbrauchsausweis – Verbrauchsperioden (Energieträger)",
-      "text": "Bitte erfassen Sie die Verbrauchsdaten strukturiert für den Haupt-Energieträger (ETr1). Einen zweiten Energieträger (ETr2) nur dann ausfüllen, wenn tatsächlich vorhanden."
+      "text": "Bitte erfassen Sie die Verbrauchsdaten strukturiert für den Hauptenergieträger. Einen zweiten Energieträger nur dann ausfüllen, wenn er tatsächlich vorhanden ist."
     },
     {
       "key": "etr1_kategorie",
-      "label": "ETr1 – Energieträgerkategorie",
+      "label": "Energieträger 1 – Energieträgerkategorie",
       "type": "select",
       "full": true,
       "when": { "eq": ["ausweisart", "Verbrauchsausweis"] },
@@ -45,7 +45,7 @@
     },
     {
       "key": "etr1_heizung",
-      "label": "ETr1 wird für Heizung verwendet",
+      "label": "Energieträger 1 wird für Heizung verwendet",
       "type": "radio",
       "full": true,
       "when": { "eq": ["ausweisart", "Verbrauchsausweis"] },
@@ -54,7 +54,7 @@
     },
     {
       "key": "etr1_tww",
-      "label": "ETr1 wird für Warmwasser verwendet",
+      "label": "Energieträger 1 wird für Warmwasser verwendet",
       "type": "radio",
       "full": true,
       "when": { "eq": ["ausweisart", "Verbrauchsausweis"] },
@@ -63,7 +63,7 @@
     },
     {
       "key": "etr1_is_fw",
-      "label": "ETr1 ist Fernwärme",
+      "label": "Energieträger 1 ist Fernwärme",
       "type": "radio",
       "full": true,
       "when": { "and": [{ "eq": ["ausweisart", "Verbrauchsausweis"] }, { "or": [{ "eq": ["etr1_kategorie", "BK_FW0"] }, { "eq": ["etr1_kategorie", "BK_FW70"] }] }] },
@@ -73,7 +73,7 @@
     },
     {
       "key": "etr1_gebaeude_nah",
-      "label": "ETr1 gebäudenah erzeugt",
+      "label": "Energieträger 1 gebäudenah erzeugt",
       "type": "radio",
       "full": true,
       "when": { "and": [{ "eq": ["ausweisart", "Verbrauchsausweis"] }, { "or": [{ "eq": ["etr1_kategorie", "BK_FW0"] }, { "eq": ["etr1_kategorie", "BK_FW70"] }] }] },
@@ -83,7 +83,7 @@
     },
     {
       "key": "etr1_primfaktor",
-      "label": "ETr1 Primärenergiefaktor",
+      "label": "Primärenergiefaktor (Energieträger 1)",
       "type": "number",
       "full": true,
       "when": { "and": [{ "eq": ["ausweisart", "Verbrauchsausweis"] }, { "or": [{ "eq": ["etr1_kategorie", "BK_FW0"] }, { "eq": ["etr1_kategorie", "BK_FW70"] }] }] },
@@ -94,7 +94,7 @@
     },
     {
       "key": "etr1_anteil_erneuerbar",
-      "label": "ETr1 Anteil erneuerbar (%)",
+      "label": "Anteil erneuerbar (%) – Energieträger 1",
       "type": "number",
       "full": true,
       "when": { "and": [{ "eq": ["ausweisart", "Verbrauchsausweis"] }, { "or": [{ "eq": ["etr1_kategorie", "BK_FW0"] }, { "eq": ["etr1_kategorie", "BK_FW70"] }] }] },
@@ -105,7 +105,7 @@
     },
     {
       "key": "etr1_anteil_kwk",
-      "label": "ETr1 Anteil KWK (%)",
+      "label": "Anteil KWK (%) – Energieträger 1",
       "type": "number",
       "full": true,
       "when": { "and": [{ "eq": ["ausweisart", "Verbrauchsausweis"] }, { "or": [{ "eq": ["etr1_kategorie", "BK_FW0"] }, { "eq": ["etr1_kategorie", "BK_FW70"] }] }] },
@@ -116,7 +116,7 @@
     },
     {
       "key": "etr1_periods",
-      "label": "ETr1 – Abrechnungszeiträume",
+      "label": "Energieträger 1 – Abrechnungszeiträume",
       "type": "repeater",
       "full": true,
       "when": { "eq": ["ausweisart", "Verbrauchsausweis"] },
@@ -133,7 +133,7 @@
     },
     {
       "key": "etr2_enabled",
-      "label": "Zweiten Energieträger (ETr2) erfassen",
+      "label": "Zweiten Energieträger erfassen (optional)",
       "type": "checkbox",
       "full": true,
       "when": { "eq": ["ausweisart", "Verbrauchsausweis"] },
@@ -141,7 +141,7 @@
     },
     {
       "key": "etr2_kategorie",
-      "label": "ETr2 – Energieträgerkategorie",
+      "label": "Energieträger 2 – Energieträgerkategorie",
       "type": "select",
       "full": true,
       "when": { "and": [{ "eq": ["ausweisart", "Verbrauchsausweis"] }, { "eq": ["etr2_enabled", true] }] },
@@ -151,7 +151,7 @@
     },
     {
       "key": "etr2_heizung",
-      "label": "ETr2 wird für Heizung verwendet",
+      "label": "Energieträger 2 wird für Heizung verwendet",
       "type": "radio",
       "full": true,
       "when": { "and": [{ "eq": ["ausweisart", "Verbrauchsausweis"] }, { "eq": ["etr2_enabled", true] }] },
@@ -160,7 +160,7 @@
     },
     {
       "key": "etr2_tww",
-      "label": "ETr2 wird für Warmwasser verwendet",
+      "label": "Energieträger 2 wird für Warmwasser verwendet",
       "type": "radio",
       "full": true,
       "when": { "and": [{ "eq": ["ausweisart", "Verbrauchsausweis"] }, { "eq": ["etr2_enabled", true] }] },
@@ -169,7 +169,7 @@
     },
     {
       "key": "etr2_is_fw",
-      "label": "ETr2 ist Fernwärme",
+      "label": "Energieträger 2 ist Fernwärme",
       "type": "radio",
       "full": true,
       "when": { "and": [{ "eq": ["ausweisart", "Verbrauchsausweis"] }, { "eq": ["etr2_enabled", true] }, { "or": [{ "eq": ["etr2_kategorie", "BK_FW0"] }, { "eq": ["etr2_kategorie", "BK_FW70"] }] }] },
@@ -179,7 +179,7 @@
     },
     {
       "key": "etr2_gebaeude_nah",
-      "label": "ETr2 gebäudenah erzeugt",
+      "label": "Energieträger 2 gebäudenah erzeugt",
       "type": "radio",
       "full": true,
       "when": { "and": [{ "eq": ["ausweisart", "Verbrauchsausweis"] }, { "eq": ["etr2_enabled", true] }, { "or": [{ "eq": ["etr2_kategorie", "BK_FW0"] }, { "eq": ["etr2_kategorie", "BK_FW70"] }] }] },
@@ -189,7 +189,7 @@
     },
     {
       "key": "etr2_primfaktor",
-      "label": "ETr2 Primärenergiefaktor",
+      "label": "Primärenergiefaktor (Energieträger 2)",
       "type": "number",
       "full": true,
       "when": { "and": [{ "eq": ["ausweisart", "Verbrauchsausweis"] }, { "eq": ["etr2_enabled", true] }, { "or": [{ "eq": ["etr2_kategorie", "BK_FW0"] }, { "eq": ["etr2_kategorie", "BK_FW70"] }] }] },
@@ -200,7 +200,7 @@
     },
     {
       "key": "etr2_anteil_erneuerbar",
-      "label": "ETr2 Anteil erneuerbar (%)",
+      "label": "Anteil erneuerbar (%) – Energieträger 2",
       "type": "number",
       "full": true,
       "when": { "and": [{ "eq": ["ausweisart", "Verbrauchsausweis"] }, { "eq": ["etr2_enabled", true] }, { "or": [{ "eq": ["etr2_kategorie", "BK_FW0"] }, { "eq": ["etr2_kategorie", "BK_FW70"] }] }] },
@@ -211,7 +211,7 @@
     },
     {
       "key": "etr2_anteil_kwk",
-      "label": "ETr2 Anteil KWK (%)",
+      "label": "Anteil KWK (%) – Energieträger 2",
       "type": "number",
       "full": true,
       "when": { "and": [{ "eq": ["ausweisart", "Verbrauchsausweis"] }, { "eq": ["etr2_enabled", true] }, { "or": [{ "eq": ["etr2_kategorie", "BK_FW0"] }, { "eq": ["etr2_kategorie", "BK_FW70"] }] }] },
@@ -222,7 +222,7 @@
     },
     {
       "key": "etr2_periods",
-      "label": "ETr2 – Abrechnungszeiträume",
+      "label": "Energieträger 2 – Abrechnungszeiträume",
       "type": "repeater",
       "full": true,
       "when": { "and": [{ "eq": ["ausweisart", "Verbrauchsausweis"] }, { "eq": ["etr2_enabled", true] }] },

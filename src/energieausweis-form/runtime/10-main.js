@@ -1037,9 +1037,9 @@ function validateStep(idx, { silent } = {}) {
 
   // Upload step: cross-field validation for ETr period blocks.
   if (String(st.id || "") === "uploads" && String(state.ausweisart || "") === "Verbrauchsausweis") {
-    validateEtrPeriodsField("etr1_periods", "ETr1", errors);
+    validateEtrPeriodsField("etr1_periods", "Energieträger 1", errors);
     if (state.etr2_enabled === true) {
-      validateEtrPeriodsField("etr2_periods", "ETr2", errors);
+      validateEtrPeriodsField("etr2_periods", "Energieträger 2", errors);
     }
   }
 
