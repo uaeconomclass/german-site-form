@@ -1,4 +1,4 @@
-{
+﻿{
   "id": "wg_heizung",
   "title": "WG: Heizungsanlage",
   "meta": "A4",
@@ -6,9 +6,9 @@
   "intro": { "title": "Heizung", "text": "Angaben zur Heizungsanlage." },
   "blocks": [
     {
-      "title": "Wärmeerzeuger",
+      "title": "Waermeerzeuger",
       "fields": [
-        { "key": "heizung_waermeerzeuger", "label": "Wärmeerzeuger", "type": "select", "required": true, "optionsRef": "heizung_waermeerzeuger", "tipKey": "heizung_waermeerzeuger" },
+        { "key": "heizung_waermeerzeuger", "label": "Waermeerzeuger", "type": "select", "required": true, "optionsRef": "heizung_waermeerzeuger", "tipKey": "heizung_waermeerzeuger" },
         { "key": "heizung_baujahr", "label": "Baujahr der Heizung", "type": "number", "required": false, "min": 1800, "max": 2100, "hint": "z. B. 2010" }
       ]
     },
@@ -24,35 +24,260 @@
             { "value": "Konstanttemperatur", "label": "Konstanttemperatur", "img": "../assets/images/heizung/konstanttemperaturkessel.png", "tipKey": "heizung_konstanttemperatur" },
             { "value": "Niedertemperatur", "label": "Niedertemperatur", "img": "../assets/images/heizung/niedertemperaturkessel.png", "tipKey": "heizung_niedertemperatur" },
             { "value": "Brennwert", "label": "Brennwert", "img": "../assets/images/heizung/brennwertkessel.png", "tipKey": "heizung_brennwert" },
-            { "value": "Wärmepumpe", "label": "Wärmepumpe", "img": "../assets/images/heizung/waermepumpe.png", "tipKey": "heizung_waermepumpe" }
+            { "value": "Waermepumpe", "label": "Waermepumpe", "img": "../assets/images/heizung/waermepumpe.png", "tipKey": "heizung_waermepumpe" }
           ]
         }
       ]
     },
     {
-      "title": "Wärmeabgabe",
+      "title": "Waermeabgabe",
       "fields": [
-        { "key": "heizung_waermeabgabe", "label": "Wärmeabgabe", "type": "select", "required": true, "optionsRef": "heizung_waermeabgabe" }
+        { "key": "heizung_waermeabgabe", "label": "Waermeabgabe", "type": "select", "required": true, "optionsRef": "heizung_waermeabgabe" }
       ]
     },
     {
       "title": "Zusatz",
       "fields": [
         { "key": "pv_dach", "label": "Photovoltaik (PV) auf dem Dach", "type": "checkbox", "required": false, "tipKey": "heizung_photovoltaik", "full": true },
-        { "key": "hz_solar", "label": "Solarthermie für Heizung vorhanden", "type": "radio", "required": false, "optionsRef": "ja_nein_radio", "tipKey": "heizung_hz_solar" },
+        { "key": "hz_solar", "label": "Solarthermie fuer Heizung vorhanden", "type": "radio", "required": false, "optionsRef": "ja_nein_radio", "tipKey": "heizung_hz_solar" },
         { "key": "zirkulation", "label": "Zirkulation (Warmwasser)", "type": "checkbox", "required": false, "tipKey": "heizung_zirkulation", "full": true },
-        { "key": "heizungsrohre_gedaemmt", "label": "Heizungsrohre gedämmt", "type": "radio", "required": false, "optionsRef": "ja_nein_radio", "tipKey": "heizung_rohre_gedaemmt" }
+        { "key": "heizungsrohre_gedaemmt", "label": "Heizungsrohre gedaemmt", "type": "radio", "required": false, "optionsRef": "ja_nein_radio", "tipKey": "heizung_rohre_gedaemmt" }
       ]
     },
     {
-      "title": "Kühlung",
+      "title": "Verbrauchsdaten (fuer Verbrauchsausweis)",
       "fields": [
-        { "key": "klimatisiert", "label": "Gibt es eine Kühlung im Gebäude?", "type": "radio", "required": true, "optionsRef": "ja_nein_radio" },
-        { "key": "fernKuehlung", "label": "Erfolgt Kühlung über Fernkälte?", "type": "radio", "required": { "eq": ["klimatisiert", "Ja"] }, "when": { "eq": ["klimatisiert", "Ja"] }, "optionsRef": "ja_nein_radio" },
-        { "key": "passiveKuehlung", "label": "Gibt es passive Kühlung?", "type": "radio", "required": { "eq": ["klimatisiert", "Ja"] }, "when": { "eq": ["klimatisiert", "Ja"] }, "optionsRef": "ja_nein_radio" },
-        { "key": "waermeKuehlung", "label": "Gibt es thermische Kühlung?", "type": "radio", "required": { "eq": ["klimatisiert", "Ja"] }, "when": { "eq": ["klimatisiert", "Ja"] }, "optionsRef": "ja_nein_radio" },
-        { "key": "stromKuehlung", "label": "Gibt es elektrische Kompressionskühlung?", "type": "radio", "required": { "eq": ["klimatisiert", "Ja"] }, "when": { "eq": ["klimatisiert", "Ja"] }, "optionsRef": "ja_nein_radio" },
-        { "key": "kuehlWfl", "label": "Gekühlte Fläche (m²)", "type": "number", "required": { "eq": ["klimatisiert", "Ja"] }, "when": { "eq": ["klimatisiert", "Ja"] }, "min": 1, "max": 500000, "hint": "z. B. 120" }
+        {
+          "type": "checklist",
+          "full": true,
+          "when": { "eq": ["ausweisart", "Verbrauchsausweis"] },
+          "title": "Hauptenergietraeger",
+          "text": "Nutzen Sie die Einheit direkt aus der Abrechnung (z. B. kWh, m3, l)."
+        },
+        {
+          "key": "etr1_kategorie",
+          "label": "Energietraeger",
+          "type": "select",
+          "full": true,
+          "when": { "eq": ["ausweisart", "Verbrauchsausweis"] },
+          "required": { "eq": ["ausweisart", "Verbrauchsausweis"] },
+          "optionsRef": "etr_kategorie_bk",
+          "tipKey": "etr_kategorie"
+        },
+        {
+          "key": "etr1_heizung",
+          "label": "Fuer Heizung genutzt?",
+          "type": "radio",
+          "full": true,
+          "when": { "eq": ["ausweisart", "Verbrauchsausweis"] },
+          "required": { "eq": ["ausweisart", "Verbrauchsausweis"] },
+          "optionsRef": "ja_nein_radio"
+        },
+        {
+          "key": "etr1_tww",
+          "label": "Fuer Warmwasser genutzt?",
+          "type": "radio",
+          "full": true,
+          "when": { "eq": ["ausweisart", "Verbrauchsausweis"] },
+          "required": { "eq": ["ausweisart", "Verbrauchsausweis"] },
+          "optionsRef": "ja_nein_radio"
+        },
+        {
+          "key": "etr1_periods",
+          "label": "Abrechnungszeitraeume",
+          "type": "repeater",
+          "full": true,
+          "when": { "eq": ["ausweisart", "Verbrauchsausweis"] },
+          "required": { "eq": ["ausweisart", "Verbrauchsausweis"] },
+          "itemLabel": "Zeitraum",
+          "maxItems": 3,
+          "tipKey": "etr_perioden",
+          "fields": [
+            { "key": "von", "label": "Von (TT.MM.JJJJ)", "type": "text", "required": true, "pattern": "^\\d{2}\\.\\d{2}\\.\\d{4}$", "hint": "z. B. 01.08.2022" },
+            { "key": "bis", "label": "Bis (TT.MM.JJJJ)", "type": "text", "required": true, "pattern": "^\\d{2}\\.\\d{2}\\.\\d{4}$", "hint": "z. B. 31.07.2023" },
+            { "key": "menge", "label": "Verbrauch gesamt (Einheit laut Abrechnung)", "type": "number", "required": true, "min": 0.001, "max": 999999999, "hint": "z. B. 12000 (kWh) oder 1300 (m3)" },
+            { "key": "menge_tww", "label": "Davon Warmwasser (optional)", "type": "number", "required": false, "min": 0, "max": 999999999 },
+            { "key": "leerstand_pct", "label": "Leerstand (%)", "type": "number", "required": true, "min": 0, "max": 100 }
+          ]
+        },
+        {
+          "key": "etr1_is_fw",
+          "label": "Fernwaerme?",
+          "type": "radio",
+          "full": true,
+          "when": { "and": [{ "eq": ["ausweisart", "Verbrauchsausweis"] }, { "or": [{ "eq": ["etr1_kategorie", "BK_FW0"] }, { "eq": ["etr1_kategorie", "BK_FW70"] }] }] },
+          "required": { "and": [{ "eq": ["ausweisart", "Verbrauchsausweis"] }, { "or": [{ "eq": ["etr1_kategorie", "BK_FW0"] }, { "eq": ["etr1_kategorie", "BK_FW70"] }] }] },
+          "optionsRef": "ja_nein_radio",
+          "tipKey": "etr_fw_flags"
+        },
+        {
+          "key": "etr1_gebaeude_nah",
+          "label": "Gebaeudenah erzeugt?",
+          "type": "radio",
+          "full": true,
+          "when": { "and": [{ "eq": ["ausweisart", "Verbrauchsausweis"] }, { "or": [{ "eq": ["etr1_kategorie", "BK_FW0"] }, { "eq": ["etr1_kategorie", "BK_FW70"] }] }] },
+          "required": { "and": [{ "eq": ["ausweisart", "Verbrauchsausweis"] }, { "or": [{ "eq": ["etr1_kategorie", "BK_FW0"] }, { "eq": ["etr1_kategorie", "BK_FW70"] }] }] },
+          "optionsRef": "ja_nein_radio",
+          "tipKey": "etr_fw_flags"
+        },
+        {
+          "key": "etr1_primfaktor",
+          "label": "Primaerenergiefaktor",
+          "type": "number",
+          "full": true,
+          "when": { "and": [{ "eq": ["ausweisart", "Verbrauchsausweis"] }, { "or": [{ "eq": ["etr1_kategorie", "BK_FW0"] }, { "eq": ["etr1_kategorie", "BK_FW70"] }] }] },
+          "required": { "and": [{ "eq": ["ausweisart", "Verbrauchsausweis"] }, { "or": [{ "eq": ["etr1_kategorie", "BK_FW0"] }, { "eq": ["etr1_kategorie", "BK_FW70"] }] }] },
+          "min": 0,
+          "max": 10,
+          "tipKey": "etr_primfaktor"
+        },
+        {
+          "key": "etr1_anteil_erneuerbar",
+          "label": "Anteil erneuerbar (%)",
+          "type": "number",
+          "full": true,
+          "when": { "and": [{ "eq": ["ausweisart", "Verbrauchsausweis"] }, { "or": [{ "eq": ["etr1_kategorie", "BK_FW0"] }, { "eq": ["etr1_kategorie", "BK_FW70"] }] }] },
+          "required": { "and": [{ "eq": ["ausweisart", "Verbrauchsausweis"] }, { "or": [{ "eq": ["etr1_kategorie", "BK_FW0"] }, { "eq": ["etr1_kategorie", "BK_FW70"] }] }] },
+          "min": 0,
+          "max": 100,
+          "tipKey": "etr_anteile"
+        },
+        {
+          "key": "etr1_anteil_kwk",
+          "label": "Anteil KWK (%)",
+          "type": "number",
+          "full": true,
+          "when": { "and": [{ "eq": ["ausweisart", "Verbrauchsausweis"] }, { "or": [{ "eq": ["etr1_kategorie", "BK_FW0"] }, { "eq": ["etr1_kategorie", "BK_FW70"] }] }] },
+          "required": { "and": [{ "eq": ["ausweisart", "Verbrauchsausweis"] }, { "or": [{ "eq": ["etr1_kategorie", "BK_FW0"] }, { "eq": ["etr1_kategorie", "BK_FW70"] }] }] },
+          "min": 0,
+          "max": 100,
+          "tipKey": "etr_anteile"
+        },
+        {
+          "type": "checklist",
+          "full": true,
+          "when": { "eq": ["ausweisart", "Verbrauchsausweis"] },
+          "title": "Optional: zweiter Energietraeger",
+          "text": "Nur hinzufuegen, wenn ein zusaetzlicher Energietraeger tatsaechlich im Verbrauch vorkommt."
+        },
+        {
+          "key": "etr2_enabled",
+          "label": "Zweiten Energietraeger erfassen",
+          "type": "checkbox",
+          "full": true,
+          "when": { "eq": ["ausweisart", "Verbrauchsausweis"] },
+          "tipKey": "etr2_optional"
+        },
+        {
+          "key": "etr2_kategorie",
+          "label": "Energietraeger 2",
+          "type": "select",
+          "full": true,
+          "when": { "and": [{ "eq": ["ausweisart", "Verbrauchsausweis"] }, { "eq": ["etr2_enabled", true] }] },
+          "required": { "and": [{ "eq": ["ausweisart", "Verbrauchsausweis"] }, { "eq": ["etr2_enabled", true] }] },
+          "optionsRef": "etr_kategorie_bk",
+          "tipKey": "etr_kategorie"
+        },
+        {
+          "key": "etr2_heizung",
+          "label": "Fuer Heizung genutzt?",
+          "type": "radio",
+          "full": true,
+          "when": { "and": [{ "eq": ["ausweisart", "Verbrauchsausweis"] }, { "eq": ["etr2_enabled", true] }] },
+          "required": { "and": [{ "eq": ["ausweisart", "Verbrauchsausweis"] }, { "eq": ["etr2_enabled", true] }] },
+          "optionsRef": "ja_nein_radio"
+        },
+        {
+          "key": "etr2_tww",
+          "label": "Fuer Warmwasser genutzt?",
+          "type": "radio",
+          "full": true,
+          "when": { "and": [{ "eq": ["ausweisart", "Verbrauchsausweis"] }, { "eq": ["etr2_enabled", true] }] },
+          "required": { "and": [{ "eq": ["ausweisart", "Verbrauchsausweis"] }, { "eq": ["etr2_enabled", true] }] },
+          "optionsRef": "ja_nein_radio"
+        },
+        {
+          "key": "etr2_periods",
+          "label": "Abrechnungszeitraeume (Energietraeger 2)",
+          "type": "repeater",
+          "full": true,
+          "when": { "and": [{ "eq": ["ausweisart", "Verbrauchsausweis"] }, { "eq": ["etr2_enabled", true] }] },
+          "required": { "and": [{ "eq": ["ausweisart", "Verbrauchsausweis"] }, { "eq": ["etr2_enabled", true] }] },
+          "itemLabel": "Zeitraum",
+          "maxItems": 3,
+          "tipKey": "etr_perioden",
+          "fields": [
+            { "key": "von", "label": "Von (TT.MM.JJJJ)", "type": "text", "required": true, "pattern": "^\\d{2}\\.\\d{2}\\.\\d{4}$", "hint": "z. B. 01.08.2022" },
+            { "key": "bis", "label": "Bis (TT.MM.JJJJ)", "type": "text", "required": true, "pattern": "^\\d{2}\\.\\d{2}\\.\\d{4}$", "hint": "z. B. 31.07.2023" },
+            { "key": "menge", "label": "Verbrauch gesamt (Einheit laut Abrechnung)", "type": "number", "required": true, "min": 0.001, "max": 999999999, "hint": "z. B. 12000 (kWh) oder 1300 (m3)" },
+            { "key": "menge_tww", "label": "Davon Warmwasser (optional)", "type": "number", "required": false, "min": 0, "max": 999999999 },
+            { "key": "leerstand_pct", "label": "Leerstand (%)", "type": "number", "required": true, "min": 0, "max": 100 }
+          ]
+        },
+        {
+          "key": "etr2_is_fw",
+          "label": "Fernwaerme?",
+          "type": "radio",
+          "full": true,
+          "when": { "and": [{ "eq": ["ausweisart", "Verbrauchsausweis"] }, { "eq": ["etr2_enabled", true] }, { "or": [{ "eq": ["etr2_kategorie", "BK_FW0"] }, { "eq": ["etr2_kategorie", "BK_FW70"] }] }] },
+          "required": { "and": [{ "eq": ["ausweisart", "Verbrauchsausweis"] }, { "eq": ["etr2_enabled", true] }, { "or": [{ "eq": ["etr2_kategorie", "BK_FW0"] }, { "eq": ["etr2_kategorie", "BK_FW70"] }] }] },
+          "optionsRef": "ja_nein_radio",
+          "tipKey": "etr_fw_flags"
+        },
+        {
+          "key": "etr2_gebaeude_nah",
+          "label": "Gebaeudenah erzeugt?",
+          "type": "radio",
+          "full": true,
+          "when": { "and": [{ "eq": ["ausweisart", "Verbrauchsausweis"] }, { "eq": ["etr2_enabled", true] }, { "or": [{ "eq": ["etr2_kategorie", "BK_FW0"] }, { "eq": ["etr2_kategorie", "BK_FW70"] }] }] },
+          "required": { "and": [{ "eq": ["ausweisart", "Verbrauchsausweis"] }, { "eq": ["etr2_enabled", true] }, { "or": [{ "eq": ["etr2_kategorie", "BK_FW0"] }, { "eq": ["etr2_kategorie", "BK_FW70"] }] }] },
+          "optionsRef": "ja_nein_radio",
+          "tipKey": "etr_fw_flags"
+        },
+        {
+          "key": "etr2_primfaktor",
+          "label": "Primaerenergiefaktor",
+          "type": "number",
+          "full": true,
+          "when": { "and": [{ "eq": ["ausweisart", "Verbrauchsausweis"] }, { "eq": ["etr2_enabled", true] }, { "or": [{ "eq": ["etr2_kategorie", "BK_FW0"] }, { "eq": ["etr2_kategorie", "BK_FW70"] }] }] },
+          "required": { "and": [{ "eq": ["ausweisart", "Verbrauchsausweis"] }, { "eq": ["etr2_enabled", true] }, { "or": [{ "eq": ["etr2_kategorie", "BK_FW0"] }, { "eq": ["etr2_kategorie", "BK_FW70"] }] }] },
+          "min": 0,
+          "max": 10,
+          "tipKey": "etr_primfaktor"
+        },
+        {
+          "key": "etr2_anteil_erneuerbar",
+          "label": "Anteil erneuerbar (%)",
+          "type": "number",
+          "full": true,
+          "when": { "and": [{ "eq": ["ausweisart", "Verbrauchsausweis"] }, { "eq": ["etr2_enabled", true] }, { "or": [{ "eq": ["etr2_kategorie", "BK_FW0"] }, { "eq": ["etr2_kategorie", "BK_FW70"] }] }] },
+          "required": { "and": [{ "eq": ["ausweisart", "Verbrauchsausweis"] }, { "eq": ["etr2_enabled", true] }, { "or": [{ "eq": ["etr2_kategorie", "BK_FW0"] }, { "eq": ["etr2_kategorie", "BK_FW70"] }] }] },
+          "min": 0,
+          "max": 100,
+          "tipKey": "etr_anteile"
+        },
+        {
+          "key": "etr2_anteil_kwk",
+          "label": "Anteil KWK (%)",
+          "type": "number",
+          "full": true,
+          "when": { "and": [{ "eq": ["ausweisart", "Verbrauchsausweis"] }, { "eq": ["etr2_enabled", true] }, { "or": [{ "eq": ["etr2_kategorie", "BK_FW0"] }, { "eq": ["etr2_kategorie", "BK_FW70"] }] }] },
+          "required": { "and": [{ "eq": ["ausweisart", "Verbrauchsausweis"] }, { "eq": ["etr2_enabled", true] }, { "or": [{ "eq": ["etr2_kategorie", "BK_FW0"] }, { "eq": ["etr2_kategorie", "BK_FW70"] }] }] },
+          "min": 0,
+          "max": 100,
+          "tipKey": "etr_anteile"
+        }
+      ]
+    },
+    {
+      "title": "Kuehlung",
+      "fields": [
+        { "key": "klimatisiert", "label": "Gibt es eine Kuehlung im Gebaeude?", "type": "radio", "required": true, "optionsRef": "ja_nein_radio" },
+        { "key": "fernKuehlung", "label": "Erfolgt Kuehlung ueber Fernkaelte?", "type": "radio", "required": { "eq": ["klimatisiert", "Ja"] }, "when": { "eq": ["klimatisiert", "Ja"] }, "optionsRef": "ja_nein_radio" },
+        { "key": "passiveKuehlung", "label": "Gibt es passive Kuehlung?", "type": "radio", "required": { "eq": ["klimatisiert", "Ja"] }, "when": { "eq": ["klimatisiert", "Ja"] }, "optionsRef": "ja_nein_radio" },
+        { "key": "waermeKuehlung", "label": "Gibt es thermische Kuehlung?", "type": "radio", "required": { "eq": ["klimatisiert", "Ja"] }, "when": { "eq": ["klimatisiert", "Ja"] }, "optionsRef": "ja_nein_radio" },
+        { "key": "stromKuehlung", "label": "Gibt es elektrische Kompressionskuehlung?", "type": "radio", "required": { "eq": ["klimatisiert", "Ja"] }, "when": { "eq": ["klimatisiert", "Ja"] }, "optionsRef": "ja_nein_radio" },
+        { "key": "kuehlWfl", "label": "Gekuehlte Flaeche (m2)", "type": "number", "required": { "eq": ["klimatisiert", "Ja"] }, "when": { "eq": ["klimatisiert", "Ja"] }, "min": 1, "max": 500000, "hint": "z. B. 120" }
       ]
     }
   ]
