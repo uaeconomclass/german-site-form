@@ -1377,14 +1377,16 @@ function mapVentShaft(v) {
 
 function mapVentWrg(v) {
   const s = normalizeLookupKey(v);
-  return s.includes("wrg") ? 1 : 0;
+  if (s.includes("ohnewrg")) return 0; // "Zentrale ohne WRG" is NOT with WRG
+  return (s.includes("wrg") || s.includes("warmruckgewinnung")) ? 1 : 0;
 }
 
 function mapVentNoWrg(v) {
   const s = normalizeLookupKey(v);
   if (!s) return 0;
-  if (s.includes("wrg")) return 0;
-  return (s.includes("abluft") || s.includes("ohnewrg") || s.includes("zentrale")) ? 1 : 0;
+  if (s.includes("ohnewrg")) return 1; // "Zentrale ohne WRG" → L_Ohne_WRG = 1
+  if (s.includes("wrg") || s.includes("warmruckgewinnung")) return 0; // with WRG → not L_Ohne_WRG
+  return s.includes("zentrale") ? 1 : 0; // "Zentrale Lüftungsanlage" (NWG)
 }
 
 function mapKeller01(v) {
