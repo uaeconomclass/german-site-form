@@ -36,5 +36,8 @@ add_action('init', function () {
 
 require_once EA_FORM_PLUGIN_DIR . 'includes/cpt.php';
 require_once EA_FORM_PLUGIN_DIR . 'includes/enqueue.php';
-require_once EA_FORM_PLUGIN_DIR . 'includes/rest.php';
+require_once EA_FORM_PLUGIN_DIR . 'includes/rest-helpers.php';
+require_once EA_FORM_PLUGIN_DIR . 'includes/rest-order.php';
+require_once EA_FORM_PLUGIN_DIR . 'includes/rest-upload.php';
+require_once EA_FORM_PLUGIN_DIR . 'includes/rest-export.php';
 require_once EA_FORM_PLUGIN_DIR . 'includes/shortcode.php';
