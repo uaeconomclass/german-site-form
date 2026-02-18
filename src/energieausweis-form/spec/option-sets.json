@@ -97,7 +97,8 @@
     { "value": "Elektrischer Warmwasserspeicher", "label": "Elektrischer Warmwasserspeicher", "tipKey": "warmwasser_speicher" },
     { "value": "Durchlauferhitzer", "label": "Durchlauferhitzer", "tipKey": "warmwasser_durchlauferhitzer" },
     { "value": "Kombiniert mit Heizung", "label": "Kombiniert mit Heizung", "tipKey": "warmwasser_kombiniert" },
-    { "value": "Solarthermie", "label": "Solarthermie", "tipKey": "warmwasser_solarthermie" }
+    { "value": "Solarthermie", "label": "Solarthermie", "tipKey": "warmwasser_solarthermie" },
+    { "value": "Wärmepumpe Warmwasser", "label": "Wärmepumpe (Warmwasser)", "tipKey": "warmwasser_waermepumpe" }
   ],
   "ja_nein": [
     { "value": "", "label": "Bitte wählen…" },

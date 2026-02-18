@@ -105,89 +105,68 @@
     {
       "type": "checklist",
       "full": true,
-      "when": { "eq": ["ausweisart", "Bedarfsausweis"] },
-      "title": "Angaben zur Wärmedämmung Abfrage WICHTIG:",
+      "title": "Angaben zur Wärmedämmung:",
       "text": "Bitte markieren Sie, welche Bauteile gedämmt sind."
     },
-    { "key": "waermedaemmung_aussenwand", "label": "Außenwand gedämmt", "type": "checkbox", "full": true, "when": { "eq": ["ausweisart", "Bedarfsausweis"] } },
+    { "key": "waermedaemmung_aussenwand", "label": "Außenwand gedämmt", "type": "checkbox", "full": true },
     {
       "key": "daemmstaerke_aussenwand_cm",
       "label": "Dämmstärke Außenwand (cm)",
       "type": "number",
       "full": true,
-      "when": { "and": [{ "eq": ["ausweisart", "Bedarfsausweis"] }, { "eq": ["waermedaemmung_aussenwand", true] }] },
-      "required": { "and": [{ "eq": ["ausweisart", "Bedarfsausweis"] }, { "eq": ["waermedaemmung_aussenwand", true] }] },
+      "when": { "eq": ["waermedaemmung_aussenwand", true] },
+      "required": { "eq": ["waermedaemmung_aussenwand", true] },
       "min": 1,
       "max": 80,
       "hint": "z. B. 14"
     },
-    { "key": "waermedaemmung_kelleraussenwand", "label": "Kelleraußenwand gedämmt", "type": "checkbox", "full": true, "when": { "eq": ["ausweisart", "Bedarfsausweis"] } },
-    { "key": "waermedaemmung_kellerdecke", "label": "Kellerdecke gedämmt", "type": "checkbox", "full": true, "when": { "eq": ["ausweisart", "Bedarfsausweis"] } },
+    { "key": "waermedaemmung_kelleraussenwand", "label": "Kelleraußenwand gedämmt", "type": "checkbox", "full": true },
+    { "key": "waermedaemmung_kellerdecke", "label": "Kellerdecke gedämmt", "type": "checkbox", "full": true },
     {
       "key": "daemmstaerke_boden_cm",
       "label": "Dämmstärke Kellerdecke / Kelleraußenwand (cm)",
       "type": "number",
       "full": true,
       "when": {
-        "and": [
-          { "eq": ["ausweisart", "Bedarfsausweis"] },
-          {
-            "or": [
-              { "eq": ["waermedaemmung_kellerdecke", true] },
-              { "eq": ["waermedaemmung_kelleraussenwand", true] }
-            ]
-          }
+        "or": [
+          { "eq": ["waermedaemmung_kellerdecke", true] },
+          { "eq": ["waermedaemmung_kelleraussenwand", true] }
         ]
       },
       "required": {
-        "and": [
-          { "eq": ["ausweisart", "Bedarfsausweis"] },
-          {
-            "or": [
-              { "eq": ["waermedaemmung_kellerdecke", true] },
-              { "eq": ["waermedaemmung_kelleraussenwand", true] }
-            ]
-          }
+        "or": [
+          { "eq": ["waermedaemmung_kellerdecke", true] },
+          { "eq": ["waermedaemmung_kelleraussenwand", true] }
         ]
       },
       "min": 1,
       "max": 80,
       "hint": "z. B. 10"
     },
-    { "key": "waermedaemmung_dachgeschoss", "label": "Dachgeschoss gedämmt", "type": "checkbox", "full": true, "when": { "eq": ["ausweisart", "Bedarfsausweis"] } },
-    { "key": "waermedaemmung_oberste_geschossdecke", "label": "Oberste Geschossdecke gedämmt", "type": "checkbox", "full": true, "when": { "eq": ["ausweisart", "Bedarfsausweis"] } },
+    { "key": "waermedaemmung_dachgeschoss", "label": "Dachgeschoss gedämmt", "type": "checkbox", "full": true },
+    { "key": "waermedaemmung_oberste_geschossdecke", "label": "Oberste Geschossdecke gedämmt", "type": "checkbox", "full": true },
     {
       "key": "daemmstaerke_dach_cm",
       "label": "Dämmstärke Dach / oberste Geschossdecke (cm)",
       "type": "number",
       "full": true,
       "when": {
-        "and": [
-          { "eq": ["ausweisart", "Bedarfsausweis"] },
-          {
-            "or": [
-              { "eq": ["waermedaemmung_dachgeschoss", true] },
-              { "eq": ["waermedaemmung_oberste_geschossdecke", true] }
-            ]
-          }
+        "or": [
+          { "eq": ["waermedaemmung_dachgeschoss", true] },
+          { "eq": ["waermedaemmung_oberste_geschossdecke", true] }
         ]
       },
       "required": {
-        "and": [
-          { "eq": ["ausweisart", "Bedarfsausweis"] },
-          {
-            "or": [
-              { "eq": ["waermedaemmung_dachgeschoss", true] },
-              { "eq": ["waermedaemmung_oberste_geschossdecke", true] }
-            ]
-          }
+        "or": [
+          { "eq": ["waermedaemmung_dachgeschoss", true] },
+          { "eq": ["waermedaemmung_oberste_geschossdecke", true] }
         ]
       },
       "min": 1,
       "max": 80,
       "hint": "z. B. 20"
     },
-    { "key": "waermedaemmung_oberste_geschossdecke_min12cm", "label": "Oberste Geschossdecke min. 12cm gedämmt", "type": "checkbox", "full": true, "when": { "eq": ["ausweisart", "Bedarfsausweis"] } },
+    { "key": "waermedaemmung_oberste_geschossdecke_min12cm", "label": "Oberste Geschossdecke min. 12 cm gedämmt", "type": "checkbox", "full": true },
 
     {
       "type": "checklist",

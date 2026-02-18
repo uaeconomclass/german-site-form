@@ -17,18 +17,8 @@
       "max": 2026,
       "hint": "z. B. 2019",
       "tipKey": "modernisierungsjahr",
-      "when": {
-        "and": [
-          { "eq": ["ausweisart", "Bedarfsausweis"] },
-          { "eq": ["anlass", "Modernisierung"] }
-        ]
-      },
-      "required": {
-        "and": [
-          { "eq": ["ausweisart", "Bedarfsausweis"] },
-          { "eq": ["anlass", "Modernisierung"] }
-        ]
-      }
+      "when": { "eq": ["anlass", "Modernisierung"] },
+      "required": { "eq": ["anlass", "Modernisierung"] }
     }
   ]
 }

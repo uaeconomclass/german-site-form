@@ -56,6 +56,7 @@
   "warmwasser_durchlauferhitzer": "Durchlauferhitzer (elektrisch) – nur Warmwasser\nDezentrale elektrische Warmwassererzeugung in den einzelnen Nutzungseinheiten ohne zentrale Speicher- oder Verteilanlage.",
   "warmwasser_kombiniert": "Kombiniert mit Heizung\nDie Warmwasserbereitung ist in die Heizungsanlage integriert. Ein Wärmeerzeuger (z. B. Brennwertkessel oder Wärmepumpe) übernimmt sowohl die Raumheizung als auch die Erwärmung des Trinkwassers.",
   "warmwasser_solarthermie": "Solarthermie (Warmwasser)\nAnlage zur thermischen Nutzung der Sonnenenergie zur Warmwasserbereitung über solarthermische Kollektoren; keine Stromerzeugung (keine Photovoltaik).",
+  "warmwasser_waermepumpe": "Wärmepumpe (Warmwasser)\nEine Wärmepumpe, die ausschließlich oder vorrangig zur Trinkwassererwärmung eingesetzt wird (Brauchwasserwärmepumpe). Die Wärmepumpe entzieht der Umgebungsluft Wärme und überträgt diese auf das Warmwasser.",
   "warmwasser_rohre_gedaemmt": "Warmwasserrohre gedämmt\nGemeint sind die sichtbaren Warmwasserleitungen im Gebäude. Gedämmte Rohre erkennen Sie an einer dunklen Isolierung bzw. Ummantelung (z. B. Manschetten) um das Rohr.",
 
   "lueftung_fenster": "Fensterlüftung (Natürliche Lüftung)\nLuftwechsel erfolgt ausschließlich über manuell zu öffnende Fenster; es ist keine mechanische Lüftungsanlage vorhanden.",
