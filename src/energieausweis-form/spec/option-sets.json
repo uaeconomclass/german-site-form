@@ -5,7 +5,7 @@
     { "value": "Verkauf", "label": "Verkauf" },
     { "value": "Sonstiges", "label": "Sonstiges" },
     { "value": "Neubau", "label": "Neubau", "when": { "eq": ["ausweisart", "Bedarfsausweis"] } },
-    { "value": "Modernisierung", "label": "Modernisierung", "when": { "eq": ["ausweisart", "Bedarfsausweis"] } }
+    { "value": "Modernisierung", "label": "Modernisierung" }
   ],
   "ausweisart": [
     { "value": "", "label": "Welchen Ausweis benötigen Sie?" },
