@@ -1,0 +1,46 @@
+name: Deploy WP Plugin
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ "main" ]
+    paths:
+      - "src/**"
+      - "tools/build-preview.ps1"
+      - "tools/build-wp-plugin.ps1"
+      - "wp-plugin/energieausweis-form/**"
+      - ".github/workflows/deploy-plugin.yml"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build plugin assets
+        shell: pwsh
+        run: |
+          ./tools/build-wp-plugin.ps1
+
+      - name: Ensure remote plugin dir exists
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USER }}
+          key: ${{ secrets.DEPLOY_SSH_KEY }}
+          port: ${{ secrets.DEPLOY_PORT }}
+          script: |
+            mkdir -p /energieberatung/wp-content/plugins/energieausweis-form
+
+      - name: Upload plugin files
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USER }}
+          key: ${{ secrets.DEPLOY_SSH_KEY }}
+          port: ${{ secrets.DEPLOY_PORT }}
+          source: "wp-plugin/energieausweis-form/*"
+          target: "/energieberatung/wp-content/plugins/energieausweis-form"
+          strip_components: 2
+
