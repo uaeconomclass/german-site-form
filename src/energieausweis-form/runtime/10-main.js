@@ -15,7 +15,7 @@ for (const st of (FORM_SPEC.steps || [])) {
   for (const f of collectFieldsFromStep(st)) {
     if (!f || !f.key) continue;
     if (f.type === "file") continue; // files are tracked in state.uploads
-    if (!(f.key in DEFAULTS)) DEFAULTS[f.key] = f.type === "repeater" ? [] : "";
+    if (!(f.key in DEFAULTS)) DEFAULTS[f.key] = (f.type === "repeater" || f.type === "periods3") ? [] : "";
   }
 }
 
@@ -565,6 +565,88 @@ function renderFields(step) {
         });
         control.addEventListener("change", () => setValue(key, control.value, step));
         optionTip = renderSelectedOptionTip(field, val);
+      } else if (field.type === "periods3") {
+        const startKey = String(field.startKey || (key + "_start"));
+        const unitKey = String(field.unitKey || (key + "_unit"));
+        const startVal = String(state[startKey] || "");
+        const unitVal = String(state[unitKey] || (field.defaultUnit || "kWh"));
+        const oldItems = Array.isArray(state[key]) ? state[key] : [];
+        const items = startVal ? makePeriodsFromStartToken(startVal, oldItems) : oldItems;
+        if (startVal && JSON.stringify(items) !== JSON.stringify(oldItems)) state[key] = items;
+
+        const startSel = el("select", { class: "control", name: startKey });
+        startSel.appendChild(el("option", { value: "" }, "Abrechnungsstart wählen"));
+        const now = new Date();
+        const monthsBack = Number(field.startMonthsBack || 36);
+        for (let i = 0; i <= monthsBack; i++) {
+          const st = addMonthsUTC(new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), 1)), -i);
+          const token = String(st.getUTCFullYear()) + "-" + String(st.getUTCMonth() + 1).padStart(2, "0");
+          const p1From = st;
+          const p1To = endOfMonthUTC(addMonthsUTC(st, 11));
+          const lbl = monthYearLabelDE(p1From) + " - " + monthYearLabelDE(p1To);
+          const opt = el("option", { value: token }, lbl);
+          if (token === startVal) opt.selected = true;
+          startSel.appendChild(opt);
+        }
+        startSel.addEventListener("change", () => {
+          const nextStart = String(startSel.value || "");
+          const nextItems = nextStart ? makePeriodsFromStartToken(nextStart, Array.isArray(state[key]) ? state[key] : []) : [];
+          state[startKey] = nextStart;
+          setValue(key, nextItems, step);
+        });
+
+        const unitSel = el("select", { class: "control", name: unitKey });
+        const unitOpts = Array.isArray(field.unitOptions) && field.unitOptions.length
+          ? field.unitOptions
+          : [{ value: "kWh", label: "kWh" }, { value: "m3", label: "m3" }, { value: "l", label: "l" }];
+        unitOpts.forEach((u) => {
+          const o = el("option", { value: u.value }, u.label);
+          if (String(u.value) === unitVal) o.selected = true;
+          unitSel.appendChild(o);
+        });
+        unitSel.addEventListener("change", () => setValue(unitKey, unitSel.value, step));
+
+        const topGrid = el(
+          "div",
+          { class: "rep-grid" },
+          el("div", { class: "rep-cell" }, el("label", null, "Abrechnungsstart (Monat/Jahr)"), startSel),
+          el("div", { class: "rep-cell" }, el("label", null, "Einheit"), unitSel)
+        );
+
+        const rows = el("div", { class: "rep-list" });
+        const curItems = Array.isArray(state[key]) ? state[key] : [];
+        for (let i = 0; i < 3; i++) {
+          const p = curItems[i] || {};
+          const row = el("div", { class: "rep-row" });
+          const title = (!isEmpty(p.von) && !isEmpty(p.bis))
+            ? ("Verbrauch für " + monthYearLabelDE(parseDateDE(p.von) || new Date()) + " - " + monthYearLabelDE(parseDateDE(p.bis) || new Date()))
+            : ("Verbrauch Periode " + String(i + 1));
+          row.appendChild(el("div", { class: "rep-head" }, el("b", null, title)));
+          const grid = el("div", { class: "rep-grid" });
+          const c1 = el("div", { class: "rep-cell" });
+          const inpM = el("input", { class: "control", type: "number", value: p.menge ?? "", placeholder: "z. B. 1000" });
+          inpM.setAttribute("min", "0.001");
+          inpM.setAttribute("max", "999999999");
+          inpM.addEventListener("input", () => {
+            const next = Array.isArray(state[key]) ? [...state[key]] : [];
+            const base = next[i] || { von: "", bis: "", menge_tww: "", leerstand_pct: 0 };
+            next[i] = { ...base, menge: inpM.value };
+            setValue(key, next, step, { render: false });
+          });
+          inpM.addEventListener("change", () => {
+            const next = Array.isArray(state[key]) ? [...state[key]] : [];
+            const base = next[i] || { von: "", bis: "", menge_tww: "", leerstand_pct: 0 };
+            next[i] = { ...base, menge: inpM.value };
+            setValue(key, next, step);
+          });
+          c1.appendChild(el("label", null, "Verbrauch"));
+          c1.appendChild(inpM);
+          grid.appendChild(c1);
+          row.appendChild(grid);
+          rows.appendChild(row);
+        }
+
+        control = el("div", { class: "repeater" }, topGrid, rows);
       } else if (field.type === "number" || field.type === "text") {
         control = el("input", { class: "control", name: key, type: field.type === "number" ? "number" : "text", value: val ?? "", placeholder: field.hint || "" });
         if (field.min != null) control.setAttribute("min", String(field.min));
@@ -922,6 +1004,54 @@ function monthsInclusive(fromDate, toDate) {
   const fromIdx = fromDate.getUTCFullYear() * 12 + fromDate.getUTCMonth();
   const toIdx = toDate.getUTCFullYear() * 12 + toDate.getUTCMonth();
   return toIdx - fromIdx + 1;
+}
+
+function fmtDateDE(dt) {
+  const d = String(dt.getUTCDate()).padStart(2, "0");
+  const m = String(dt.getUTCMonth() + 1).padStart(2, "0");
+  const y = String(dt.getUTCFullYear());
+  return d + "." + m + "." + y;
+}
+
+function parseYearMonthToken(token) {
+  const m = String(token || "").match(/^(\d{4})-(\d{2})$/);
+  if (!m) return null;
+  const y = Number(m[1]);
+  const mo = Number(m[2]);
+  if (!Number.isFinite(y) || !Number.isFinite(mo) || mo < 1 || mo > 12) return null;
+  return new Date(Date.UTC(y, mo - 1, 1));
+}
+
+function addMonthsUTC(dt, months) {
+  return new Date(Date.UTC(dt.getUTCFullYear(), dt.getUTCMonth() + months, 1));
+}
+
+function endOfMonthUTC(dt) {
+  return new Date(Date.UTC(dt.getUTCFullYear(), dt.getUTCMonth() + 1, 0));
+}
+
+function monthYearLabelDE(dt) {
+  return new Intl.DateTimeFormat("de-DE", { month: "short", year: "2-digit", timeZone: "UTC" }).format(dt);
+}
+
+function makePeriodsFromStartToken(token, oldItems) {
+  const start = parseYearMonthToken(token);
+  if (!start) return [];
+  const prev = Array.isArray(oldItems) ? oldItems : [];
+  const out = [];
+  for (let i = 0; i < 3; i++) {
+    const from = addMonthsUTC(start, i * 12);
+    const to = endOfMonthUTC(addMonthsUTC(from, 11));
+    const pOld = prev[i] || {};
+    out.push({
+      von: fmtDateDE(from),
+      bis: fmtDateDE(to),
+      menge: pOld.menge == null ? "" : pOld.menge,
+      menge_tww: pOld.menge_tww == null ? "" : pOld.menge_tww,
+      leerstand_pct: isEmpty(pOld.leerstand_pct) ? 0 : pOld.leerstand_pct,
+    });
+  }
+  return out;
 }
 
 function validateEtrPeriodsField(fieldKey, label, errors) {

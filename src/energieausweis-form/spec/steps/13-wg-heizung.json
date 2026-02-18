@@ -85,20 +85,21 @@
         {
           "key": "etr1_periods",
           "label": "Abrechnungszeitraeume",
-          "type": "repeater",
+          "type": "periods3",
           "full": true,
           "when": { "eq": ["ausweisart", "Verbrauchsausweis"] },
           "required": { "eq": ["ausweisart", "Verbrauchsausweis"] },
-          "itemLabel": "Zeitraum",
-          "maxItems": 3,
+          "startKey": "etr1_start",
+          "unitKey": "etr1_einheit",
+          "defaultUnit": "kWh",
+          "startMonthsBack": 36,
+          "unitOptions": [
+            { "value": "kWh", "label": "kWh" },
+            { "value": "m3", "label": "m3" },
+            { "value": "l", "label": "l" }
+          ],
           "tipKey": "etr_perioden",
-          "fields": [
-            { "key": "von", "label": "Von (TT.MM.JJJJ)", "type": "text", "required": true, "pattern": "^\\d{2}\\.\\d{2}\\.\\d{4}$", "hint": "z. B. 01.08.2022" },
-            { "key": "bis", "label": "Bis (TT.MM.JJJJ)", "type": "text", "required": true, "pattern": "^\\d{2}\\.\\d{2}\\.\\d{4}$", "hint": "z. B. 31.07.2023" },
-            { "key": "menge", "label": "Verbrauch gesamt (Einheit laut Abrechnung)", "type": "number", "required": true, "min": 0.001, "max": 999999999, "hint": "z. B. 12000 (kWh) oder 1300 (m3)" },
-            { "key": "menge_tww", "label": "Davon Warmwasser (optional)", "type": "number", "required": false, "min": 0, "max": 999999999 },
-            { "key": "leerstand_pct", "label": "Leerstand (%)", "type": "number", "required": true, "min": 0, "max": 100 }
-          ]
+          "fields": []
         },
         {
           "key": "etr1_is_fw",
@@ -199,20 +200,21 @@
         {
           "key": "etr2_periods",
           "label": "Abrechnungszeitraeume (Energietraeger 2)",
-          "type": "repeater",
+          "type": "periods3",
           "full": true,
           "when": { "and": [{ "eq": ["ausweisart", "Verbrauchsausweis"] }, { "eq": ["etr2_enabled", true] }] },
           "required": { "and": [{ "eq": ["ausweisart", "Verbrauchsausweis"] }, { "eq": ["etr2_enabled", true] }] },
-          "itemLabel": "Zeitraum",
-          "maxItems": 3,
+          "startKey": "etr2_start",
+          "unitKey": "etr2_einheit",
+          "defaultUnit": "kWh",
+          "startMonthsBack": 36,
+          "unitOptions": [
+            { "value": "kWh", "label": "kWh" },
+            { "value": "m3", "label": "m3" },
+            { "value": "l", "label": "l" }
+          ],
           "tipKey": "etr_perioden",
-          "fields": [
-            { "key": "von", "label": "Von (TT.MM.JJJJ)", "type": "text", "required": true, "pattern": "^\\d{2}\\.\\d{2}\\.\\d{4}$", "hint": "z. B. 01.08.2022" },
-            { "key": "bis", "label": "Bis (TT.MM.JJJJ)", "type": "text", "required": true, "pattern": "^\\d{2}\\.\\d{2}\\.\\d{4}$", "hint": "z. B. 31.07.2023" },
-            { "key": "menge", "label": "Verbrauch gesamt (Einheit laut Abrechnung)", "type": "number", "required": true, "min": 0.001, "max": 999999999, "hint": "z. B. 12000 (kWh) oder 1300 (m3)" },
-            { "key": "menge_tww", "label": "Davon Warmwasser (optional)", "type": "number", "required": false, "min": 0, "max": 999999999 },
-            { "key": "leerstand_pct", "label": "Leerstand (%)", "type": "number", "required": true, "min": 0, "max": 100 }
-          ]
+          "fields": []
         },
         {
           "key": "etr2_is_fw",
