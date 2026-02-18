@@ -69,25 +69,6 @@ powershell -NoProfile -ExecutionPolicy Bypass -File tools/build-preview.ps1
 powershell -NoProfile -ExecutionPolicy Bypass -File tools/build-wp-plugin.ps1
 ```
 
-GitHub CD (deploy only plugin directory):
-
-1. Add repository secrets:
-- `DEPLOY_HOST` (example: `s1074957020.online.de`)
-- `DEPLOY_USER`
-- `DEPLOY_SSH_KEY` (private key, full text)
-- `DEPLOY_PORT` (usually `22`)
-
-2. Workflow file:
-- `.github/workflows/deploy-plugin.yml`
-
-3. Deploy triggers:
-- automatic on push to `main` (for form/plugin paths)
-- manual from Actions tab (`Deploy WP Plugin`)
-
-Remote target is fixed to:
-- `/energieberatung/wp-content/plugins/energieausweis-form`
-
-
 ## Збереження (localStorage)
 
 Кнопка **Speichern** зберігає чернетку у браузері в `localStorage` (ручний сейв).
