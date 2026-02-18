@@ -578,8 +578,10 @@ function renderFields(step) {
         startSel.appendChild(el("option", { value: "" }, "Abrechnungsstart wählen"));
         const now = new Date();
         const monthsBack = Number(field.startMonthsBack || 36);
+        // Only starts where all 3 yearly periods are fully completed.
+        const latestCompletedStart = addMonthsUTC(new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), 1)), -36);
         for (let i = 0; i <= monthsBack; i++) {
-          const st = addMonthsUTC(new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), 1)), -i);
+          const st = addMonthsUTC(latestCompletedStart, -i);
           const token = String(st.getUTCFullYear()) + "-" + String(st.getUTCMonth() + 1).padStart(2, "0");
           const p1From = st;
           const p1To = endOfMonthUTC(addMonthsUTC(st, 11));
@@ -608,23 +610,24 @@ function renderFields(step) {
 
         const topGrid = el(
           "div",
-          { class: "rep-grid" },
+          { class: "rep-grid rep-grid-periods3-top" },
           el("div", { class: "rep-cell" }, el("label", null, "Abrechnungsstart (Monat/Jahr)"), startSel),
           el("div", { class: "rep-cell" }, el("label", null, "Einheit"), unitSel)
         );
 
-        const rows = el("div", { class: "rep-list" });
+        const rows = el("div", { class: "rep-list rep-list-periods3" });
         const curItems = Array.isArray(state[key]) ? state[key] : [];
         for (let i = 0; i < 3; i++) {
           const p = curItems[i] || {};
-          const row = el("div", { class: "rep-row" });
+          const row = el("div", { class: "rep-row rep-row-periods3" });
           const title = (!isEmpty(p.von) && !isEmpty(p.bis))
             ? ("Verbrauch für " + monthYearLabelDE(parseDateDE(p.von) || new Date()) + " - " + monthYearLabelDE(parseDateDE(p.bis) || new Date()))
             : ("Verbrauch Periode " + String(i + 1));
           row.appendChild(el("div", { class: "rep-head" }, el("b", null, title)));
-          const grid = el("div", { class: "rep-grid" });
+          const grid = el("div", { class: "rep-grid rep-grid-periods3" });
           const c1 = el("div", { class: "rep-cell" });
           const inpM = el("input", { class: "control", type: "number", value: p.menge ?? "", placeholder: "z. B. 1000" });
+          inpM.setAttribute("aria-label", "Verbrauch Periode " + String(i + 1));
           inpM.setAttribute("min", "0.001");
           inpM.setAttribute("max", "999999999");
           inpM.addEventListener("input", () => {
@@ -639,7 +642,6 @@ function renderFields(step) {
             next[i] = { ...base, menge: inpM.value };
             setValue(key, next, step);
           });
-          c1.appendChild(el("label", null, "Verbrauch"));
           c1.appendChild(inpM);
           grid.appendChild(c1);
           row.appendChild(grid);
@@ -1601,6 +1603,9 @@ function render() {
   stepIndex = clamp(stepIndex, 0, steps.length - 1);
   const st = currentStep();
   if (!st) return;
+
+  const forceSingleColumn = Boolean(st.singleColumn || st.oneColumn || st.layout === "single");
+  dom.form.classList.toggle("single-col", forceSingleColumn);
 
   dom.stepTitle.textContent = st.title;
   dom.stepMeta.textContent = st.meta || "";

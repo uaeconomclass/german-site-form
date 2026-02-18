@@ -2,6 +2,7 @@
   "id": "wg_heizung",
   "title": "WG: Heizungsanlage",
   "meta": "A4",
+  "singleColumn": true,
   "when": { "eq": ["gebaeudetyp", "WG"] },
   "intro": { "title": "Heizung", "text": "Angaben zur Heizungsanlage." },
   "blocks": [

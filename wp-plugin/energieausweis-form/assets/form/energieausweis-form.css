@@ -324,6 +324,9 @@ code{ font-family:var(--mono); font-size:.95em; }
   gap:12px 14px;
   margin-top:8px;
 }
+.form.single-col{
+  grid-template-columns: 1fr;
+}
 .block-title{
   grid-column:1/-1;
   margin-top:8px;
@@ -693,8 +696,35 @@ select.control{ padding-right:34px; }
   color:var(--muted);
   font-size:12px;
 }
+
+/* Compact layout for fixed 3-period Verbrauch block */
+.rep-list-periods3{
+  gap:8px;
+}
+.rep-row-periods3{
+  padding:8px 10px;
+}
+.rep-row-periods3 .rep-head{
+  margin-bottom:6px;
+}
+.rep-grid-periods3{
+  grid-template-columns:minmax(180px,260px);
+  gap:8px;
+}
+.rep-grid-periods3 .rep-cell label{
+  margin-bottom:4px;
+}
+.rep-grid-periods3 .control{
+  max-width:220px;
+}
 @media (max-width: 860px){
   .rep-grid{ grid-template-columns: 1fr; }
+  .rep-grid-periods3{
+    grid-template-columns:1fr;
+  }
+  .rep-grid-periods3 .control{
+    max-width:none;
+  }
 }
 
 .radio-row{
