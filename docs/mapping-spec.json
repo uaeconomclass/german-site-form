@@ -1344,25 +1344,25 @@
     "ausweisart_to_bv": {
       "Verbrauchsausweis": "V",
       "Bedarfsausweis": "B",
-      "wei? ich nicht": "V"
+      "weiß ich nicht": "V"
     },
     "gebaeudeteil_to_gt": {
-      "Gesamtgeb?ude": "GT_GANZES_GEB",
+      "Gesamtgebäude": "GT_GANZES_GEB",
       "Wohnen": "GT_TEIL_DES_WG"
     },
     "heizung_to_bk": {
-      "?l": "BK_OEL",
+      "Öl": "BK_OEL",
       "Gas": "BK_GAS",
-      "Fernw?rme": "BK_FW0",
-      "W?rmepumpe": "BK_STROM",
+      "Fernwärme": "BK_FW0",
+      "Wärmepumpe": "BK_STROM",
       "Biomasse": "BK_HOLZ",
       "Elektro": "BK_STROM",
-      "Einzel?fen": "BK_HOLZ",
+      "Einzelöfen": "BK_HOLZ",
       "BHKW / KWK": "BK_GAS",
       "Hybridheizung": "BK_GAS"
     },
     "nwg_nutzung_to_id": {
-      "B?ro / Verwaltung": "1",
+      "Büro / Verwaltung": "1",
       "Praxis / Gesundheit": "20",
       "Schule / Kita": "33",
       "Einzelhandel": "50",
@@ -1383,7 +1383,7 @@
       "BedarfVerbrauch",
       "PLZ",
       "Ort",
-      "Stra?e",
+      "Straße",
       "Hausnr",
       "Baujahr"
     ],
