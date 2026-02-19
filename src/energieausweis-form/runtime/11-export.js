@@ -62,7 +62,7 @@ function applyExportTransform(colSpec, ctx, schemaId, enums) {
   if (t === "map_gebaeudeteil_gt") return enumLookup(enums.gebaeudeteil_to_gt, raw, def || "GT_GANZES_GEB");
   if (t === "map_keller_beheizt_01") return mapKeller01(raw);
   if (t === "basename_or_empty") return hasRealValue(raw) ? String(raw) : "";
-  if (t === "ja_nein_to_01") return mapJaNein01(raw);
+  if (t === "ja_nein_to_01") return hasRealValue(raw) ? mapJaNein01(raw) : (def == null ? 0 : def);
   if (t === "number_locale_de") return numberToDe(raw);
   if (t === "year_or_fallback_baujahr") {
     const n = Number(raw);
