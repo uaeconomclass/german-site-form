@@ -2,7 +2,7 @@
   "id": "wg_huelle_fenster",
   "title": "WG: Gebäudehülle & Fenster",
   "meta": "A2",
-  "when": { "eq": ["gebaeudetyp", "WG"] },
+  "when": { "and": [{ "eq": ["gebaeudetyp", "WG"] }, { "eq": ["ausweisart", "Bedarfsausweis"] }] },
   "intro": { "title": "Gebäudehülle", "text": "Außenwand und Fensterangaben.", "img": "../assets/images/infografik/aussenwand-materialien-epochen.png" },
   "fields": [
     {

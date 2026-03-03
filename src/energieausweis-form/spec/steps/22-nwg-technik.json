@@ -2,7 +2,7 @@
   "id": "nwg_technik",
   "title": "NWG: Lüftung / Klima / Technik",
   "meta": "B3",
-  "when": { "eq": ["gebaeudetyp", "NWG"] },
+  "when": { "and": [{ "eq": ["gebaeudetyp", "NWG"] }, { "eq": ["ausweisart", "Bedarfsausweis"] }] },
   "intro": { "title": "Technik", "text": "Wichtig: Diese Felder sind für NWG (insb. Bedarfsausweis) relevant." },
   "fields": [
     {

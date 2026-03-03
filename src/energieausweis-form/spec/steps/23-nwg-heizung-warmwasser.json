@@ -2,7 +2,7 @@
   "id": "nwg_heizung_warmwasser",
   "title": "NWG: Heizung & Warmwasser",
   "meta": "B4",
-  "when": { "eq": ["gebaeudetyp", "NWG"] },
+  "when": { "and": [{ "eq": ["gebaeudetyp", "NWG"] }, { "eq": ["ausweisart", "Bedarfsausweis"] }] },
   "intro": { "title": "Heizung/Warmwasser", "text": "Diese Angaben entsprechen der WG-Logik (A.7 + A.8)." },
   "blocks": [
     {

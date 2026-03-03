@@ -2,7 +2,7 @@
   "id": "wg_kellerdecke",
   "title": "WG: Kellerdecke",
   "meta": "A3",
-  "when": { "eq": ["gebaeudetyp", "WG"] },
+  "when": { "and": [{ "eq": ["gebaeudetyp", "WG"] }, { "eq": ["ausweisart", "Bedarfsausweis"] }] },
   "intro": { "title": "Kellerdecke", "text": "Angaben zum Keller und zur Dämmung." },
   "fields": [
     { "key": "keller_heizstatus", "label": "Keller", "type": "radio", "required": true, "optionsRef": "kellerdecke_keller_radio" },
