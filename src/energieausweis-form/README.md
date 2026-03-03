@@ -17,6 +17,7 @@ Goal: keep the UI renderer generic, and put all steps/fields/hints/tooltips into
   - tooltip texts map: `tipKey -> text` (German)
 - `src/energieausweis-form/runtime/*.js`
   - generic renderer runtime (split into modules for maintainability)
+  - upload subsystem lives in `runtime/09-uploads.js` (upload config, API calls, file helpers/cache)
 - `src/energieausweis-form/style.css`
   - "Group 391" look and layout (light UI)
 
