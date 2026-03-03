@@ -486,6 +486,73 @@ function runPlausibilityWarnings() {
   }
 }
 
+function getAusweisAdvisorResult() {
+  if (String(state.ausweisart || "") !== "weiß ich nicht") return null;
+
+  const geb = String(state.wei_check_gebaeudetyp || "");
+  const bg = String(state.wei_check_baugenehmigung || "");
+  const mod = String(state.wei_check_modernisierung || "");
+  const leer = String(state.wei_check_leerstand || "");
+  const ready = !isEmpty(geb) && !isEmpty(bg) && !isEmpty(mod) && !isEmpty(leer);
+
+  if (!ready) {
+    return {
+      ready: false,
+      allowed: [],
+      reason: "Bitte beantworten Sie zuerst alle vier Fragen des Energieausweis-Checks.",
+    };
+  }
+
+  // Heuristic from "Welcher Energieausweis" check.
+  const needBedarfByLeerstand = leer === "ge_30";
+  const needBedarfByAltWG =
+    geb === "wg_lt5" &&
+    bg === "vor_1977" &&
+    (mod === "keine" || mod === "unbekannt");
+
+  if (needBedarfByLeerstand || needBedarfByAltWG) {
+    return {
+      ready: true,
+      allowed: ["Bedarfsausweis"],
+      reason: "Ergebnis: Bedarfsausweis erforderlich.",
+    };
+  }
+
+  return {
+    ready: true,
+    allowed: ["Verbrauchsausweis", "Bedarfsausweis"],
+    reason: "Ergebnis: Wahlfreiheit zwischen Verbrauchsausweis und Bedarfsausweis.",
+  };
+}
+
+function renderAusweisAdvisor(step) {
+  if (!step || String(step.id || "") !== "anlass_ausweisart") return;
+  if (String(state.ausweisart || "") !== "weiß ich nicht") return;
+
+  const res = getAusweisAdvisorResult();
+  if (!res) return;
+
+  const box = el("div", { class: "banner full info field ausweis-advice" });
+  box.appendChild(el("div", { class: "ico" }, "i"));
+  const right = el("div", { class: "ausweis-advice-content" });
+  right.appendChild(el("div", { class: "kicker" }, "Energieausweis-Check"));
+  right.appendChild(el("p", null, String(res.reason || "")));
+
+  if (res.ready && Array.isArray(res.allowed) && res.allowed.length) {
+    right.appendChild(el("p", { class: "small muted" }, "Erlaubte Optionen: " + res.allowed.join(" / ")));
+    const actions = el("div", { class: "ausweis-advice-actions" });
+    res.allowed.forEach((opt) => {
+      const b = el("button", { type: "button", class: "btn secondary" }, "Auswählen: " + opt);
+      b.addEventListener("click", () => setValue("ausweisart", opt, step));
+      actions.appendChild(b);
+    });
+    right.appendChild(actions);
+  }
+
+  box.appendChild(right);
+  dom.form.appendChild(box);
+}
+
 function setValue(key, value, step, opts) {
   state[key] = value;
 
@@ -498,6 +565,12 @@ function setValue(key, value, step, opts) {
     if (state.ausweisart !== "Bedarfsausweis" || state.anlass !== "Modernisierung") {
       state.modernisierungsjahr = "";
     }
+  }
+  if (key === "ausweisart" && state.ausweisart !== "weiß ich nicht") {
+    state.wei_check_gebaeudetyp = "";
+    state.wei_check_baugenehmigung = "";
+    state.wei_check_modernisierung = "";
+    state.wei_check_leerstand = "";
   }
   // Cooling consistency: when no cooling, reset dependent flags/area.
   if (key === "klimatisiert" && state.klimatisiert === "Nein") {
@@ -1233,6 +1306,15 @@ function validateStep(idx, { silent } = {}) {
     }
   }
 
+  if (String(st.id || "") === "anlass_ausweisart" && String(state.ausweisart || "") === "weiß ich nicht") {
+    const advice = getAusweisAdvisorResult();
+    if (!advice || !advice.ready) {
+      errors.ausweisart = "Bitte den Energieausweis-Check vollständig ausfüllen.";
+    } else {
+      errors.ausweisart = "Bitte über den Check eine Ausweisart auswählen.";
+    }
+  }
+
   if (!silent) {
     for (const f of fields) {
       const key = f.key;
@@ -1484,6 +1566,7 @@ function render() {
   } else {
     renderFields(st);
   }
+  renderAusweisAdvisor(st);
 
   dom.btnBack.disabled = stepIndex === 0;
 

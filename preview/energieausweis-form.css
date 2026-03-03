@@ -312,6 +312,22 @@ code{ font-family:var(--mono); font-size:.95em; }
 .banner.warn .ico{ background: rgba(245,158,11,.12); color:#9a3412; }
 .banner.info{ border-color: rgba(14,165,233,.22); }
 .banner.info .ico{ background: rgba(14,165,233,.10); color:#075985; }
+.ausweis-advice{
+  margin-top:12px;
+}
+.ausweis-advice-content{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+.ausweis-advice-content p{
+  margin:0;
+}
+.ausweis-advice-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+}
 
 .form{
   display:grid;
