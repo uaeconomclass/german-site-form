@@ -9,8 +9,8 @@
       "label": "Heizkostenabrechnungen (letzte 3 Jahre)",
       "type": "file",
       "full": true,
-      "when": { "eq": ["ausweisart", "Verbrauchsausweis"] },
-      "required": { "eq": ["ausweisart", "Verbrauchsausweis"] },
+      "when": { "or": [{ "eq": ["ausweisart", "Verbrauchsausweis"] }, { "eq": ["ausweisart", "Bedarfsausweis"] }] },
+      "required": { "or": [{ "eq": ["ausweisart", "Verbrauchsausweis"] }, { "eq": ["ausweisart", "Bedarfsausweis"] }] },
       "accept": ".pdf,.jpg,.jpeg,.png",
       "multiple": true,
       "tipKey": "upload_verbrauch_heizkosten"
@@ -20,8 +20,8 @@
       "label": "Verbrauchsdaten",
       "type": "file",
       "full": true,
-      "when": { "eq": ["ausweisart", "Verbrauchsausweis"] },
-      "required": { "eq": ["ausweisart", "Verbrauchsausweis"] },
+      "when": { "eq": ["ausweisart", "Bedarfsausweis"] },
+      "required": { "eq": ["ausweisart", "Bedarfsausweis"] },
       "accept": ".pdf,.jpg,.jpeg,.png",
       "multiple": true,
       "tipKey": "upload_verbrauch_verbrauchsdaten"
@@ -45,7 +45,8 @@
       "label": "Heizungsanlage (Fotos)",
       "type": "file",
       "full": true,
-      "required": true,
+      "when": { "eq": ["ausweisart", "Bedarfsausweis"] },
+      "required": { "eq": ["ausweisart", "Bedarfsausweis"] },
       "accept": ".jpg,.jpeg,.png",
       "multiple": true,
       "tipKey": "uploads_heizung"
@@ -70,7 +71,8 @@
       "label": "Fenster/Dachfenster/Türen (Fotos)",
       "type": "file",
       "full": true,
-      "required": true,
+      "when": { "eq": ["ausweisart", "Bedarfsausweis"] },
+      "required": { "eq": ["ausweisart", "Bedarfsausweis"] },
       "accept": ".jpg,.jpeg,.png",
       "multiple": true,
       "tipKey": "uploads_fenster"
@@ -96,7 +98,8 @@
       "label": "Wärmedämmung (Fotos)",
       "type": "file",
       "full": true,
-      "required": true,
+      "when": { "eq": ["ausweisart", "Bedarfsausweis"] },
+      "required": { "eq": ["ausweisart", "Bedarfsausweis"] },
       "accept": ".jpg,.jpeg,.png",
       "multiple": true,
       "tipKey": "uploads_daemmung"
