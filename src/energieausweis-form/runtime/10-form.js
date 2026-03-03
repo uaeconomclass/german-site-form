@@ -475,7 +475,7 @@ function runPlausibilityWarnings() {
   if (state.gebaeudetyp === "NWG") {
     if (state.nwg_fensteranteil === "hoch (>60%)") warnings.push("Hohe Glasflächen beeinflussen den Energiebedarf maßgeblich.");
     if (state.nwg_lueftung === "Zentrale Lüftungsanlage" || state.nwg_lueftung === "Lüftung mit Wärmerückgewinnung") warnings.push("Angaben zur Luftmenge können für den Bedarfsausweis erforderlich sein.");
-    if (state.nwg_aussenwand_simple === "Vorhangfassade") warnings.push("Vorhangfassaden dieser Bauzeit besitzen hГ¤ufig einen erhГ¶hten Energiebedarf.");
+    if (state.nwg_aussenwand_simple === "Vorhangfassade") warnings.push("Vorhangfassaden dieser Bauzeit besitzen häufig einen erhöhten Energiebedarf.");
   }
   if (warnings.length) {
     dom.warnBox.style.display = "";

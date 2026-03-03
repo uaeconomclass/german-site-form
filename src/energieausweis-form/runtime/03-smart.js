@@ -68,28 +68,28 @@ const AFTER_CHANGE = {
       if (y <= 1978) {
         if (isEmpty(state.nwg_aussenwand_simple)) state.nwg_aussenwand_simple = "Massiv";
         if (isEmpty(state.nwg_fensteranteil)) state.nwg_fensteranteil = "gering (<30%)";
-        if (isEmpty(state.nwg_lueftung)) state.nwg_lueftung = "FensterlГјftung";
+        if (isEmpty(state.nwg_lueftung)) state.nwg_lueftung = "Fensterlüftung";
         if (isEmpty(state.heizung_kesseltyp)) state.heizung_kesseltyp = "Konstanttemperatur";
       } else if (y <= 1994) {
         if (isEmpty(state.nwg_aussenwand_simple)) state.nwg_aussenwand_simple = "Vorhangfassade";
-        if (isEmpty(state.nwg_fensteranteil)) state.nwg_fensteranteil = "mittel (30вЂ“60%)";
-        if (isEmpty(state.nwg_lueftung)) state.nwg_lueftung = "FensterlГјftung";
+        if (isEmpty(state.nwg_fensteranteil)) state.nwg_fensteranteil = "mittel (30–60%)";
+        if (isEmpty(state.nwg_lueftung)) state.nwg_lueftung = "Fensterlüftung";
         if (isEmpty(state.heizung_kesseltyp)) state.heizung_kesseltyp = "Niedertemperatur";
       } else if (y <= 2008) {
         if (isEmpty(state.nwg_aussenwand_simple)) state.nwg_aussenwand_simple = "WDVS";
-        if (isEmpty(state.nwg_fensteranteil)) state.nwg_fensteranteil = "mittel (30вЂ“60%)";
+        if (isEmpty(state.nwg_fensteranteil)) state.nwg_fensteranteil = "mittel (30–60%)";
         if (isEmpty(state.nwg_lueftung)) state.nwg_lueftung = "Zentrale Lüftungsanlage";
         if (isEmpty(state.heizung_kesseltyp)) state.heizung_kesseltyp = "Brennwert";
       } else {
         if (isEmpty(state.nwg_aussenwand_simple)) state.nwg_aussenwand_simple = "WDVS";
-        if (isEmpty(state.nwg_fensteranteil)) state.nwg_fensteranteil = "mittel (30вЂ“60%)";
+        if (isEmpty(state.nwg_fensteranteil)) state.nwg_fensteranteil = "mittel (30–60%)";
         if (isEmpty(state.nwg_lueftung)) state.nwg_lueftung = "Lüftung mit Wärmerückgewinnung";
         if (isEmpty(state.heizung_kesseltyp)) state.heizung_kesseltyp = "Brennwert";
       }
     }
 
     // --- by Nutzung (overrides only if empty, to avoid fighting user)
-    if (nutzung === "BГјro / Verwaltung" || nutzung === "Schule / Kita") {
+    if (nutzung === "Büro / Verwaltung" || nutzung === "Schule / Kita") {
       if (isEmpty(state.nwg_aussenwand_simple)) state.nwg_aussenwand_simple = "Vorhangfassade";
       if (isEmpty(state.nwg_fensteranteil)) state.nwg_fensteranteil = "hoch (>60%)";
       if (isEmpty(state.nwg_lueftung)) state.nwg_lueftung = "Zentrale Lüftungsanlage";

@@ -7,9 +7,9 @@
   "intro": { "title": "Heizung", "text": "Angaben zur Heizungsanlage." },
   "blocks": [
     {
-      "title": "Waermeerzeuger",
+      "title": "Wärmeerzeuger",
       "fields": [
-        { "key": "heizung_waermeerzeuger", "label": "Waermeerzeuger", "type": "select", "required": true, "optionsRef": "heizung_waermeerzeuger", "tipKey": "heizung_waermeerzeuger" },
+        { "key": "heizung_waermeerzeuger", "label": "Wärmeerzeuger", "type": "select", "required": true, "optionsRef": "heizung_waermeerzeuger", "tipKey": "heizung_waermeerzeuger" },
         { "key": "heizung_baujahr", "label": "Baujahr der Heizung", "type": "number", "required": false, "min": 1800, "max": 2100, "hint": "z. B. 2010" }
       ]
     },
@@ -25,39 +25,39 @@
             { "value": "Konstanttemperatur", "label": "Konstanttemperatur", "img": "../assets/images/heizung/konstanttemperaturkessel.png", "tipKey": "heizung_konstanttemperatur" },
             { "value": "Niedertemperatur", "label": "Niedertemperatur", "img": "../assets/images/heizung/niedertemperaturkessel.png", "tipKey": "heizung_niedertemperatur" },
             { "value": "Brennwert", "label": "Brennwert", "img": "../assets/images/heizung/brennwertkessel.png", "tipKey": "heizung_brennwert" },
-            { "value": "Waermepumpe", "label": "Waermepumpe", "img": "../assets/images/heizung/waermepumpe.png", "tipKey": "heizung_waermepumpe" }
+            { "value": "Wärmepumpe", "label": "Wärmepumpe", "img": "../assets/images/heizung/waermepumpe.png", "tipKey": "heizung_waermepumpe" }
           ]
         }
       ]
     },
     {
-      "title": "Waermeabgabe",
+      "title": "Wärmeabgabe",
       "fields": [
-        { "key": "heizung_waermeabgabe", "label": "Waermeabgabe", "type": "select", "required": true, "optionsRef": "heizung_waermeabgabe" }
+        { "key": "heizung_waermeabgabe", "label": "Wärmeabgabe", "type": "select", "required": true, "optionsRef": "heizung_waermeabgabe" }
       ]
     },
     {
       "title": "Zusatz",
       "fields": [
         { "key": "pv_dach", "label": "Photovoltaik (PV) auf dem Dach", "type": "checkbox", "required": false, "tipKey": "heizung_photovoltaik", "full": true },
-        { "key": "hz_solar", "label": "Solarthermie fuer Heizung vorhanden", "type": "radio", "required": false, "optionsRef": "ja_nein_radio", "tipKey": "heizung_hz_solar" },
+        { "key": "hz_solar", "label": "Solarthermie für Heizung vorhanden", "type": "radio", "required": false, "optionsRef": "ja_nein_radio", "tipKey": "heizung_hz_solar" },
         { "key": "zirkulation", "label": "Zirkulation (Warmwasser)", "type": "checkbox", "required": false, "tipKey": "heizung_zirkulation", "full": true },
-        { "key": "heizungsrohre_gedaemmt", "label": "Heizungsrohre gedaemmt", "type": "radio", "required": false, "optionsRef": "ja_nein_radio", "tipKey": "heizung_rohre_gedaemmt" }
+        { "key": "heizungsrohre_gedaemmt", "label": "Heizungsrohre gedämmt", "type": "radio", "required": false, "optionsRef": "ja_nein_radio", "tipKey": "heizung_rohre_gedaemmt" }
       ]
     },
     {
-      "title": "Verbrauchsdaten (fuer Verbrauchsausweis)",
+      "title": "Verbrauchsdaten (für Verbrauchsausweis)",
       "fields": [
         {
           "type": "checklist",
           "full": true,
           "when": { "eq": ["ausweisart", "Verbrauchsausweis"] },
-          "title": "Hauptenergietraeger",
+          "title": "Hauptenergieträger",
           "text": "Nutzen Sie die Einheit direkt aus der Abrechnung (z. B. kWh, m3, l)."
         },
         {
           "key": "etr1_kategorie",
-          "label": "Energietraeger",
+          "label": "Energieträger",
           "type": "select",
           "full": true,
           "when": { "eq": ["ausweisart", "Verbrauchsausweis"] },
@@ -85,7 +85,7 @@
         },
         {
           "key": "etr1_periods",
-          "label": "Abrechnungszeitraeume",
+          "label": "Abrechnungszeiträume",
           "type": "periods3",
           "full": true,
           "when": { "eq": ["ausweisart", "Verbrauchsausweis"] },
@@ -104,7 +104,7 @@
         },
         {
           "key": "etr1_is_fw",
-          "label": "Fernwaerme?",
+          "label": "Fernwärme?",
           "type": "radio",
           "full": true,
           "when": { "and": [{ "eq": ["ausweisart", "Verbrauchsausweis"] }, { "or": [{ "eq": ["etr1_kategorie", "BK_FW0"] }, { "eq": ["etr1_kategorie", "BK_FW70"] }] }] },
@@ -114,7 +114,7 @@
         },
         {
           "key": "etr1_gebaeude_nah",
-          "label": "Gebaeudenah erzeugt?",
+          "label": "Gebäudenah erzeugt?",
           "type": "radio",
           "full": true,
           "when": { "and": [{ "eq": ["ausweisart", "Verbrauchsausweis"] }, { "or": [{ "eq": ["etr1_kategorie", "BK_FW0"] }, { "eq": ["etr1_kategorie", "BK_FW70"] }] }] },
@@ -159,12 +159,12 @@
           "type": "checklist",
           "full": true,
           "when": { "eq": ["ausweisart", "Verbrauchsausweis"] },
-          "title": "Optional: zweiter Energietraeger",
-          "text": "Nur hinzufuegen, wenn ein zusaetzlicher Energietraeger tatsaechlich im Verbrauch vorkommt."
+          "title": "Optional: zweiter Energieträger",
+          "text": "Nur hinzufügen, wenn ein zusätzlicher Energieträger tatsächlich im Verbrauch vorkommt."
         },
         {
           "key": "etr2_enabled",
-          "label": "Zweiten Energietraeger erfassen",
+          "label": "Zweiten Energieträger erfassen",
           "type": "checkbox",
           "full": true,
           "when": { "eq": ["ausweisart", "Verbrauchsausweis"] },
@@ -172,7 +172,7 @@
         },
         {
           "key": "etr2_kategorie",
-          "label": "Energietraeger 2",
+          "label": "Energieträger 2",
           "type": "select",
           "full": true,
           "when": { "and": [{ "eq": ["ausweisart", "Verbrauchsausweis"] }, { "eq": ["etr2_enabled", true] }] },
@@ -200,7 +200,7 @@
         },
         {
           "key": "etr2_periods",
-          "label": "Abrechnungszeitraeume (Energietraeger 2)",
+          "label": "Abrechnungszeiträume (Energieträger 2)",
           "type": "periods3",
           "full": true,
           "when": { "and": [{ "eq": ["ausweisart", "Verbrauchsausweis"] }, { "eq": ["etr2_enabled", true] }] },
@@ -219,7 +219,7 @@
         },
         {
           "key": "etr2_is_fw",
-          "label": "Fernwaerme?",
+          "label": "Fernwärme?",
           "type": "radio",
           "full": true,
           "when": { "and": [{ "eq": ["ausweisart", "Verbrauchsausweis"] }, { "eq": ["etr2_enabled", true] }, { "or": [{ "eq": ["etr2_kategorie", "BK_FW0"] }, { "eq": ["etr2_kategorie", "BK_FW70"] }] }] },
@@ -229,7 +229,7 @@
         },
         {
           "key": "etr2_gebaeude_nah",
-          "label": "Gebaeudenah erzeugt?",
+          "label": "Gebäudenah erzeugt?",
           "type": "radio",
           "full": true,
           "when": { "and": [{ "eq": ["ausweisart", "Verbrauchsausweis"] }, { "eq": ["etr2_enabled", true] }, { "or": [{ "eq": ["etr2_kategorie", "BK_FW0"] }, { "eq": ["etr2_kategorie", "BK_FW70"] }] }] },
@@ -275,7 +275,7 @@
     {
       "title": "Kuehlung",
       "fields": [
-        { "key": "klimatisiert", "label": "Gibt es eine Kuehlung im Gebaeude?", "type": "radio", "required": true, "optionsRef": "ja_nein_radio" },
+        { "key": "klimatisiert", "label": "Gibt es eine Kühlung im Gebäude?", "type": "radio", "required": true, "optionsRef": "ja_nein_radio" },
         { "key": "fernKuehlung", "label": "Erfolgt Kuehlung ueber Fernkaelte?", "type": "radio", "required": { "eq": ["klimatisiert", "Ja"] }, "when": { "eq": ["klimatisiert", "Ja"] }, "optionsRef": "ja_nein_radio" },
         { "key": "passiveKuehlung", "label": "Gibt es passive Kuehlung?", "type": "radio", "required": { "eq": ["klimatisiert", "Ja"] }, "when": { "eq": ["klimatisiert", "Ja"] }, "optionsRef": "ja_nein_radio" },
         { "key": "waermeKuehlung", "label": "Gibt es thermische Kuehlung?", "type": "radio", "required": { "eq": ["klimatisiert", "Ja"] }, "when": { "eq": ["klimatisiert", "Ja"] }, "optionsRef": "ja_nein_radio" },
