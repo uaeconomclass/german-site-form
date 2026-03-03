@@ -1114,6 +1114,24 @@ function validateEtrPeriodsField(fieldKey, label, errors) {
   }
 }
 
+function countCompleteEtrPeriods(fieldKey) {
+  const periods = Array.isArray(state[fieldKey]) ? state[fieldKey] : [];
+  let complete = 0;
+  for (let i = 0; i < periods.length; i++) {
+    const p = periods[i] || {};
+    if (!isEmpty(p.von) && !isEmpty(p.bis) && !isEmpty(p.menge)) complete++;
+  }
+  return complete;
+}
+
+function makeGoAusweisartError() {
+  return {
+    message: "Für den Verbrauchsausweis sind 3 vollständige Zeiträume erforderlich. Bitte Bedarfsausweis wählen.",
+    action: "goto_ausweisart",
+    actionLabel: "Zum Ausweisart-Schritt",
+  };
+}
+
 function validateStep(idx, { silent } = {}) {
   const steps = visibleSteps();
   const st = steps[idx];
@@ -1190,8 +1208,14 @@ function validateStep(idx, { silent } = {}) {
   // Verbrauch/legacy-upload step: cross-field validation for ETr period blocks.
   if (["wg_heizung", "uploads"].includes(String(st.id || "")) && String(state.ausweisart || "") === "Verbrauchsausweis") {
     validateEtrPeriodsField("etr1_periods", "Energieträger 1", errors);
+    if (countCompleteEtrPeriods("etr1_periods") < 3) {
+      errors.etr1_periods = makeGoAusweisartError();
+    }
     if (state.etr2_enabled === true) {
       validateEtrPeriodsField("etr2_periods", "Energieträger 2", errors);
+      if (countCompleteEtrPeriods("etr2_periods") < 3) {
+        errors.etr2_periods = makeGoAusweisartError();
+      }
     }
   }
 
@@ -1235,7 +1259,27 @@ function validateStep(idx, { silent } = {}) {
       }
 
       if (errors[key]) {
-        errEl.textContent = errors[key];
+        const err = errors[key];
+        errEl.textContent = "";
+        if (err && typeof err === "object" && err.action === "goto_ausweisart") {
+          const msg = String(err.message || "");
+          if (msg) errEl.appendChild(document.createTextNode(msg + " "));
+          const btn = el("button", { type: "button", class: "errlink" }, String(err.actionLabel || "Zum Ausweisart-Schritt"));
+          btn.addEventListener("click", () => {
+            const idx = findStepIndexById("anlass_ausweisart");
+            if (idx >= 0) {
+              stepIndex = idx;
+              render();
+              setTimeout(() => {
+                const a = document.querySelector('select[name="ausweisart"]');
+                if (a && typeof a.focus === "function") a.focus();
+              }, 0);
+            }
+          });
+          errEl.appendChild(btn);
+        } else {
+          errEl.textContent = String(err);
+        }
         errEl.classList.add("show");
       } else {
         errEl.textContent = "";
