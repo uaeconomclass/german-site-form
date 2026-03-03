@@ -941,7 +941,7 @@ function renderFields(step) {
             const w = Number(it && it.breite_m);
             if (Number.isFinite(h) && Number.isFinite(w)) total += h * w;
           }
-          const totalEl = el("div", { class: "rep-total" }, "Summe: ", el("b", null, total.toFixed(3)), " mВІ");
+          const totalEl = el("div", { class: "rep-total" }, "Summe: ", el("b", null, total.toFixed(3)), " m²");
           control = el("div", { class: "repeater" }, list, addBtn, totalEl);
         } else {
           control = el("div", { class: "repeater" }, list, addBtn);

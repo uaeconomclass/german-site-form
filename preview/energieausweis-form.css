@@ -408,6 +408,7 @@ label{
   padding:10px 12px;
   outline:none;
   color:#111827;
+  font-size: 14px;
 }
 select.control{
   appearance: none;
@@ -448,8 +449,8 @@ select.control:open{
   border-radius:12px;
   padding:10px 12px;
   color:#475467;
-  font-size:12px;
-  line-height:1.35;
+  font-size:14px;
+  line-height:20px;
 }
 
 .checklist-field{ gap:0; }
@@ -761,7 +762,8 @@ select.control:open{
   border-radius:999px;
   cursor:pointer;
   user-select:none;
-  font-size:12px;
+  font-size:14px;
+  line-height:20px;
   color:#344054;
 }
 .chip input{ margin:0; }
@@ -769,7 +771,7 @@ select.control:open{
 .img-choices{ display:grid; grid-template-columns:repeat(4,1fr); gap:10px; }
 .img-choice{ border:1px solid var(--border); border-radius:12px; overflow:hidden; background:#fff; cursor:pointer; }
 .img-choice img{ width:100%; display:block; aspect-ratio: 4 / 3; object-fit: cover; background:#f3f4f6; }
-.img-choice .cap{ padding:8px 10px; font-size:12px; color:#344054; }
+.img-choice .cap{ padding:8px 10px; font-size:14px; line-height:20px; color:#344054; }
 .img-choice.sel{ border-color: rgba(132,204,22,.45); box-shadow: 0 0 0 4px rgba(132,204,22,.12); }
 
 .upload{ border:1px dashed rgba(14,165,233,.28); background:#fff; border-radius:12px; padding:10px; }
