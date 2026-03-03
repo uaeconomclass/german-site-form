@@ -88,9 +88,6 @@ code{ font-family:var(--mono); font-size:.95em; }
   align-items:center;
   gap:8px;
   padding:7px 10px;
-  border-radius:999px;
-  background:#f2f4f7;
-  border:1px solid var(--border);
   color:#475467;
   font-size:12px;
   line-height:1;
@@ -101,7 +98,7 @@ code{ font-family:var(--mono); font-size:.95em; }
 .step-pill .num{
   width:18px;
   height:18px;
-  border-radius:999px;
+  border-radius:8px;
   display:flex;
   align-items:center;
   justify-content:center;
@@ -111,8 +108,6 @@ code{ font-family:var(--mono); font-size:.95em; }
   font-size:11px;
 }
 .step-pill.active{
-  background:#fff;
-  border-color:#d0d5dd;
   color:#111827;
 }
 .step-pill.active .num{
@@ -177,7 +172,6 @@ code{ font-family:var(--mono); font-size:.95em; }
   width:18px;
   height:18px;
   border-radius:7px;
-  border:1px solid var(--border);
   display:flex;
   align-items:center;
   justify-content:center;
@@ -190,7 +184,7 @@ code{ font-family:var(--mono); font-size:.95em; }
   overflow:hidden;
   /*border:1px solid var(--border);*/
   background:#fff;
-  height:24px;
+  height:40px;
   align-items:stretch;
   position:relative;
   --notch: 14px;
@@ -217,7 +211,7 @@ code{ font-family:var(--mono); font-size:.95em; }
 }
 .r:not(:first-child){
   /* Slight overlap to reduce visible gaps between segments. */
-  margin-left: calc(var(--notch) * -0.55);
+  margin-left: calc(var(--notch) * -0.95);
   clip-path: polygon(0 0, calc(100% - var(--notch)) 0, 100% 50%, calc(100% - var(--notch)) 100%, 0 100%, var(--notch) 50%);
 }
 .r1{ background:#16a34a; color:#fff; }
