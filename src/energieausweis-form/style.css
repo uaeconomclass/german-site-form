@@ -858,7 +858,8 @@ select.control:open{
 .side-head{
   padding:14px 14px 10px;
   font-weight:700;
-  font-size:13px;
+  font-size:18px;
+  line-height:28px;
 }
 .side-body{ padding:0 14px 14px; }
 .sp{ height:12px; }
@@ -867,7 +868,13 @@ select.control:open{
 .order-summary{ padding:4px 0; }
 .order-summary .k{ min-width:120px; }
 .order-summary .v{ font-weight:600; color:#0f172a; text-align:right; }
-.price b{ font-size:18px; }
+.price{ display:flex; align-items:baseline; }
+.price b{
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 700;
+    color: #1f2630;
+}
 .help{ display:block; color:#0ea5e9; font-size:14px; text-decoration:none; }
 .help b{ font-weight:700; }
 .okline{ margin-top:10px; color:var(--muted); font-size:14px; display:flex; gap:8px; align-items:center; }

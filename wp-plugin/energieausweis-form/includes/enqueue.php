@@ -42,6 +42,12 @@ function ea_form_plugin_enqueue_assets() {
         'nonce' => $nonce,
         // Used by runtime to rewrite ../assets/* references when embedded in WP pages.
         'assetsBaseUrl' => ea_form_plugin_assets_base_url(),
+        'prices' => function_exists('ea_form_get_prices') ? ea_form_get_prices() : array(
+            'verbrauch_wg' => 59.0,
+            'verbrauch_gewerbe' => 79.0,
+            'bedarf_wg' => 129.0,
+            'bedarf_gewerbe' => 139.0,
+        ),
     );
 
     if (is_singular(array('ea_order', 'wg', 'nwg', 'misch')) && is_user_logged_in()) {

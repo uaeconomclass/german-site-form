@@ -128,6 +128,9 @@ const dom = {
   btnAdminExportCsv: document.getElementById("btnAdminExportCsv"),
 
   overviewProgress: document.getElementById("overviewProgress"),
+  overviewPriceWrap: document.getElementById("overviewPriceWrap"),
+  overviewPriceSpacer: document.getElementById("overviewPriceSpacer"),
+  overviewPrice: document.getElementById("overviewPrice"),
   buildInfo: document.getElementById("buildInfo"),
 };
 
@@ -195,6 +198,51 @@ function buildOrderProductLabel() {
     "für Gebäude";
 
   return base + " " + suffix;
+}
+
+function getPriceConfig() {
+  const fallback = {
+    verbrauch_wg: 59,
+    verbrauch_gewerbe: 79,
+    bedarf_wg: 129,
+    bedarf_gewerbe: 139,
+  };
+  const cfg = EA_CFG && EA_CFG.prices && typeof EA_CFG.prices === "object" ? EA_CFG.prices : {};
+  const out = { ...fallback };
+  for (const k of Object.keys(fallback)) {
+    const n = Number(cfg[k]);
+    if (Number.isFinite(n) && n >= 0) out[k] = n;
+  }
+  return out;
+}
+
+function computeOverviewPrice() {
+  const prices = getPriceConfig();
+  const a = String(state.ausweisart || "");
+  const t = String(state.gebaeudetyp || "");
+
+  if (a === "Verbrauchsausweis") {
+    if (t === "WG") return prices.verbrauch_wg;
+    if (t === "NWG" || t === "MISCH") return prices.verbrauch_gewerbe;
+    return null;
+  }
+  if (a === "Bedarfsausweis") {
+    if (t === "WG") return prices.bedarf_wg;
+    if (t === "NWG" || t === "MISCH") return prices.bedarf_gewerbe;
+    return null;
+  }
+  return null;
+}
+
+function formatOverviewPrice(v) {
+  const n = Number(v);
+  if (!Number.isFinite(n) || n < 0) return "—";
+  const whole = Math.abs(n - Math.round(n)) < 0.000001;
+  const formatted = new Intl.NumberFormat("de-DE", {
+    minimumFractionDigits: whole ? 0 : 2,
+    maximumFractionDigits: 2,
+  }).format(n);
+  return formatted + " € inkl. MwSt.";
 }
 
 function buildObjectAddressLabel() {
@@ -1457,6 +1505,13 @@ function persistDraft(reason) {
 function updateOverview() {
   const steps = visibleSteps();
   dom.overviewProgress.textContent = String(stepIndex + 1) + "/" + String(steps.length);
+  if (dom.overviewPrice) {
+    const v = computeOverviewPrice();
+    const show = Number.isFinite(Number(v));
+    if (dom.overviewPriceWrap) dom.overviewPriceWrap.style.display = show ? "" : "none";
+    if (dom.overviewPriceSpacer) dom.overviewPriceSpacer.style.display = show ? "" : "none";
+    dom.overviewPrice.textContent = show ? formatOverviewPrice(v) : "";
+  }
 }
 
 function render() {

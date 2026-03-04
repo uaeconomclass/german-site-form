@@ -157,6 +157,12 @@ add_shortcode('energieausweis_form', function ($atts = array(), $content = '') {
             <aside class="card side">
               <div class="side-head">Ihre Gesamtübersicht</div>
               <div class="side-body">
+                <div class="price" id="overviewPriceWrap" style="display:none">
+                  <b id="overviewPrice">-</b>
+                </div>
+
+                <div class="sp" id="overviewPriceSpacer" style="display:none"></div>
+
                 <div class="kv">
                   <div class="muted">Voraussichtliche Fertigstellung:</div>
                   <div><b>innerhalb von 24 Stunden</b></div>
