@@ -12,8 +12,8 @@
   --shadow: 0 8px 22px rgba(16, 24, 40, .06);
   --radius:12px;
 
-  --green:#a3e635;
-  --green2:#84cc16;
+  --green:#ADE242;
+  --green2:#ADE242;
   --blue:#0ea5e9;
   --warn:#f59e0b;
   --danger:#ef4444;
@@ -111,7 +111,7 @@ code{ font-family:var(--mono); font-size:.95em; }
   color:#111827;
 }
 .step-pill.active .num{
-  background:#84cc16;
+  background:#ADE242;
   color:#fff;
 }
 .step-pill.done .num{
@@ -217,7 +217,7 @@ code{ font-family:var(--mono); font-size:.95em; }
 }
 .r1{ background:#16a34a; color:#fff; }
 .r2{ background:#22c55e; color:#05331c; }
-.r3{ background:#a3e635; color:#21310d; }
+.r3{ background:#ADE242; color:#21310d; }
 .r4{ background:#facc15; color:#3a2b00; }
 .r5{ background:#fb923c; color:#3a1a00; }
 .r6{ background:#f97316; color:#fff; }
