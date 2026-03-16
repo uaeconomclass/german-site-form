@@ -177,7 +177,7 @@ add_shortcode('energieausweis_form', function ($atts = array(), $content = '') {
 
                 <div class="sp"></div>
 
-                <a class="help" href="#" onclick="return false;">Sie haben Fragen? Wir helfen gerne or <b>Ort Beratung</b> beantragen</a>
+                <a class="help" href="#" onclick="return false;">Sie haben Fragen? Wir helfen gerne vor <b>Ort Beratung</b> beantragen</a>
 
                 <div class="sp"></div>
 
