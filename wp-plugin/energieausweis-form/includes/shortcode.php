@@ -68,6 +68,11 @@ add_shortcode('energieausweis_form', function ($atts = array(), $content = '') {
 
     ob_start();
     ?>
+      <style>
+        body {
+          background: #F5F8F4 !important;
+        }
+      </style>
       <div class="ea-form-root">
         <?php echo ea_form_render_previous_orders_link(); ?>
         <div class="wrap">
