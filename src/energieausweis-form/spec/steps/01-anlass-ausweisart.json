@@ -7,7 +7,7 @@
     "text": "Wählen Sie Anlass und Ausweisart."
   },
   "fields": [
-    { "key": "anlass", "label": "Anlass", "type": "select", "required": true, "tipKey": "anlass", "optionsRef": "anlass" },
+    { "key": "anlass", "label": "Anlass", "type": "select", "required": true, "tipKey": "anlass", "optionsRef": "anlass", "infoText": "Wofür benötigen Sie den Ausweis?" },
     { "key": "ausweisart", "label": "Ausweisart", "type": "select", "required": true, "tipKey": "ausweisart", "optionsRef": "ausweisart" },
     {
       "key": "wei_check_gebaeudetyp",

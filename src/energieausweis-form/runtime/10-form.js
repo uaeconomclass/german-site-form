@@ -1099,6 +1099,16 @@ function renderFields(step) {
 
       if (wantsDefaultLabel) wrap.appendChild(renderLabel(field));
       if (control) wrap.appendChild(control);
+      if (field.infoText) {
+        wrap.appendChild(
+          el(
+            "div",
+            { class: "field-info" },
+            el("span", { class: "field-info-ico", "aria-hidden": "true" }),
+            el("span", { class: "field-info-text" }, String(field.infoText))
+          )
+        );
+      }
       if (optionTip) wrap.appendChild(optionTip);
       if (key === "fenster_type" && (state.fenster_type === "Einfachverglasung" || state.fenster_type === "Kastenfenster")) {
         wrap.appendChild(el("div", { class: "helptext" }, "Bei Austausch gelten GEG-Mindestwerte."));
