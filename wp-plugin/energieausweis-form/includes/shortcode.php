@@ -122,7 +122,6 @@ add_shortcode('energieausweis_form', function ($atts = array(), $content = '') {
                     <span class="sep">·</span>
                     <span class="muted" id="stepMeta"></span>
                   </div>
-                  <div class="desc" id="stepDesc">Damit wir Ihren Energieausweis erstellen können, benötigen wir ein paar Angaben zu Ihrem Gebäude.</div>
                 </div>
                 <!-- removed "Ungefähre Zeit: 5min" -->
               </div>
@@ -138,7 +137,6 @@ add_shortcode('energieausweis_form', function ($atts = array(), $content = '') {
               <div id="stepIntro" class="banner info" style="display:none">
                 <div class="ico">i</div>
                 <div>
-                  <b id="introTitle">Hinweis</b>
                   <p id="introText"></p>
                 </div>
               </div>

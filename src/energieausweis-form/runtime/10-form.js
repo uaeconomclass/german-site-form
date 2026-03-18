@@ -110,7 +110,6 @@ const dom = {
   stepDesc: document.getElementById("stepDesc"),
 
   stepIntro: document.getElementById("stepIntro"),
-  introTitle: document.getElementById("introTitle"),
   introText: document.getElementById("introText"),
 
   warnBox: document.getElementById("warnBox"),
@@ -1525,11 +1524,8 @@ function render() {
 
   dom.stepTitle.textContent = st.title;
   dom.stepMeta.textContent = st.meta || "";
-  if (dom.stepDesc) dom.stepDesc.textContent = (st.intro && st.intro.text) ? st.intro.text : "";
-
   if (st.intro) {
     dom.stepIntro.style.display = "";
-    dom.introTitle.textContent = st.intro.title || "Hinweis";
     dom.introText.textContent = st.intro.text || "";
   } else {
     dom.stepIntro.style.display = "none";
