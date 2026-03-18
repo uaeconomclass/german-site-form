@@ -18,6 +18,7 @@
           "key": "rechnung_auftragsart",
           "label": "Auftragsart",
           "type": "radio",
+          "full": true,
           "required": true,
           "options": [
             { "value": "Privat-Eigentuemer", "label": "Privat-Eigentuemer" },
