@@ -1594,6 +1594,10 @@ function render() {
     dom.btnNext.setAttribute("aria-label", isSummary ? "Anfrage absenden" : "Weitermachen");
   }
   if (dom.footerBar) dom.footerBar.style.display = isThankYou ? "none" : "";
+  if (dom.btnBack) {
+    dom.btnBack.style.visibility = stepIndex === 0 ? "hidden" : "";
+    dom.btnBack.style.pointerEvents = stepIndex === 0 ? "none" : "";
+  }
   if (dom.btnAdminExportCsv) dom.btnAdminExportCsv.style.display = isThankYou ? "" : "none";
 
   if (st.id === "summary") {
