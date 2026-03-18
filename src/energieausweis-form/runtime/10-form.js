@@ -1001,7 +1001,13 @@ function renderFields(step) {
         const input = el("input", { type: "checkbox", id, name: key });
         input.checked = Boolean(val);
         input.addEventListener("change", () => setValue(key, input.checked, step));
-        control = el("div", { class: "checkbox-row" }, input, el("label", { for: id, class: "cb-label" }, field.label));
+        control = el(
+          "label",
+          { class: "checkbox-row", for: id },
+          input,
+          el("span", { class: "cb-box", "aria-hidden": "true" }),
+          el("span", { class: "cb-label" }, field.label)
+        );
         if (field.tipKey && TIPS[field.tipKey]) optionTip = el("div", { class: "optiontip" }, String(TIPS[field.tipKey]));
       } else if (field.type === "kvsummary") {
         wantsDefaultLabel = false;
