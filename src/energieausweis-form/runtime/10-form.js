@@ -461,6 +461,13 @@ function renderChecklist(field) {
   return wrap;
 }
 
+function isOptionalJaNeinRadio(field) {
+  return field
+    && field.type === "radio"
+    && field.optionsRef === "ja_nein_radio"
+    && field.required === false;
+}
+
 function renderStepper() {
   const steps = visibleSteps();
   dom.topStepper.innerHTML = "";
@@ -766,16 +773,32 @@ function renderFields(step) {
         const inc = el("button", { type: "button", class: "pm", onclick: () => setValue(key, String(clamp((Number(state[key] || cur) || 0) + 1, min, max)), step) }, "+");
         control = el("div", { class: "counter" }, dec, input, inc);
       } else if (field.type === "radio") {
-        const opts = optionsForField(field);
-        control = el("div", { class: "radio-row", role: "group" });
-        opts.forEach((opt) => {
-          const id = key + "_" + opt.value;
-          const input = el("input", { type: "radio", name: key, id, value: opt.value });
-          if (val === opt.value) input.checked = true;
-          input.addEventListener("change", () => setValue(key, opt.value, step));
-          control.appendChild(el("label", { class: "chip", for: id }, input, el("span", null, opt.label)));
-        });
-        optionTip = renderSelectedOptionTip(field, val);
+        if (isOptionalJaNeinRadio(field)) {
+          wantsDefaultLabel = false;
+          const id = key + "_ja";
+          const input = el("input", { type: "checkbox", id, name: key });
+          input.checked = String(val || "") === "Ja";
+          input.addEventListener("change", () => setValue(key, input.checked ? "Ja" : "Nein", step));
+          control = el(
+            "label",
+            { class: "checkbox-row", for: id },
+            input,
+            el("span", { class: "cb-box", "aria-hidden": "true" }),
+            el("span", { class: "cb-label" }, field.label)
+          );
+          optionTip = renderSelectedOptionTip(field, input.checked ? "Ja" : "Nein");
+        } else {
+          const opts = optionsForField(field);
+          control = el("div", { class: "radio-row", role: "group" });
+          opts.forEach((opt) => {
+            const id = key + "_" + opt.value;
+            const input = el("input", { type: "radio", name: key, id, value: opt.value });
+            if (val === opt.value) input.checked = true;
+            input.addEventListener("change", () => setValue(key, opt.value, step));
+            control.appendChild(el("label", { class: "chip", for: id }, input, el("span", null, opt.label)));
+          });
+          optionTip = renderSelectedOptionTip(field, val);
+        }
       } else if (field.type === "imgselect") {
         control = el("div", { class: "img-choices" });
         const opts = optionsForField(field);
@@ -813,7 +836,7 @@ function renderFields(step) {
           "button",
           {
             type: "button",
-            class: "btn secondary up-pick",
+            class: "btn secondary",
             onclick: (e) => {
               try { e.preventDefault(); e.stopPropagation(); } catch (err) {}
               inp.click();

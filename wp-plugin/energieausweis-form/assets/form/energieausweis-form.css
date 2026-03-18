@@ -694,7 +694,7 @@ select.control:open{
 .up-input{ display:none; }
 .up-drop{
   position:relative;
-  border:1.5px dashed #CEEE8E;
+  border:2px dashed #CEEE8E;
   border-radius:14px;
   background:#F5F8F4;
   padding:18px 16px;

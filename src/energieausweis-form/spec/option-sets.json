@@ -1,6 +1,6 @@
 {
   "anlass": [
-    { "value": "", "label": "Anlass" },
+    { "value": "", "label": "Bitte wählen…" },
     { "value": "Vermietung", "label": "Vermietung" },
     { "value": "Verkauf", "label": "Verkauf" },
     { "value": "Sonstiges", "label": "Sonstiges" },
