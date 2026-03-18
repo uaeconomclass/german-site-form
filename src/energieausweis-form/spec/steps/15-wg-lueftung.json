@@ -9,6 +9,7 @@
       "key": "lueftung_type",
       "label": "Lüftung",
       "type": "imgselect",
+      "full": true,
       "required": true,
       "options": [
         { "value": "Fensterlüftung", "label": "Fensterlüftung", "img": "../assets/images/lueftung/fensterlueftung.png", "tipKey": "lueftung_fenster" },

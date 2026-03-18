@@ -314,7 +314,12 @@ code{ font-family:var(--mono); font-size:.95em; }
 }
 .banner p{ margin:2px 0 0; color:var(--muted); font-size:14px; line-height:20px; }
 .banner.warn{ border-color: rgba(245,158,11,.25); }
-.banner.warn .ico{ background: rgba(245,158,11,.12); color:#9a3412; }
+.banner.warn .ico{
+  background: rgba(245,158,11,.12);
+  color:#9a3412;
+  font-size:14px;
+  line-height:1;
+}
 .banner.info{ border-color: rgba(14,165,233,.22); }
 .banner.info .ico{
   background-color: transparent;
@@ -689,17 +694,17 @@ select.control:open{
 .up-input{ display:none; }
 .up-drop{
   position:relative;
-  border:1.5px dashed #d0d5dd;
+  border:1.5px dashed #CEEE8E;
   border-radius:14px;
-  background:linear-gradient(180deg, rgba(255,255,255,.85), rgba(250,251,252,.85));
+  background:#F5F8F4;
   padding:18px 16px;
   text-align:center;
   cursor:pointer;
   transition: border-color .15s ease, background .15s ease, transform .08s ease;
 }
 .up-drop:hover{
-  border-color:#b7c0cc;
-  background:#fff;
+  border-color:#CEEE8E;
+  background:#F5F8F4;
 }
 .up-drop.drag{
   border-color: var(--blue);
@@ -715,10 +720,28 @@ select.control:open{
   background:var(--surface);
   color:var(--muted);
   margin:0 auto 10px;
+  overflow:hidden;
+}
+.up-ico img{
+  display:block;
+  width:64px;
+  height:64px;
+  object-fit:contain;
 }
 .up-t1{ font-weight:700; margin-bottom:4px; }
 .up-t2{ margin-bottom:12px; }
-.up-pick{ padding:10px 14px; border-radius:12px; }
+.up-pick{
+  min-height:52px;
+  padding:0 28px;
+  border-radius:14px;
+  border-color:#b9ea4b !important;
+  color:#2f4109 !important;
+  background:#fff !important;
+  box-shadow:none;
+}
+.up-pick:hover{
+  background:#fbfff2 !important;
+}
 
 .up-grid{
   display:grid;
@@ -915,7 +938,7 @@ select.control:open{
 
 .img-choices{ display:grid; grid-template-columns:repeat(4,1fr); gap:10px; }
 .img-choice{ border:1px solid var(--border); border-radius:12px; overflow:hidden; background:#fff; cursor:pointer; }
-.img-choice img{ width:100%; display:block; aspect-ratio: 4 / 3; object-fit: cover; background:#f3f4f6; }
+.img-choice img{ width:100%; display:block; aspect-ratio: 4 / 3; object-fit: contain; background:#f3f4f6; }
 .img-choice .cap{ padding:8px 10px; font-size:14px; line-height:20px; color:#344054; }
 .img-choice.sel{ border-color: rgba(132,204,22,.45); box-shadow: 0 0 0 4px rgba(132,204,22,.12); }
 

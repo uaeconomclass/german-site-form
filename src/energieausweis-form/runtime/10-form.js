@@ -824,7 +824,7 @@ function renderFields(step) {
         const drop = el(
           "div",
           { class: "up-drop", role: "button", tabindex: "0" },
-          el("div", { class: "up-ico", "aria-hidden": "true" }, "⬆"),
+          el("div", { class: "up-ico", "aria-hidden": "true" }, el("img", { src: resolveAssetUrl("../assets/images/upload/library-photo.png"), alt: "" })),
           el("div", { class: "up-t1" }, "Dateien per Drag & Drop hochladen"),
           el("div", { class: "up-t2 muted small" }, "Privat. Nur für Sie sichtbar."),
           btnPick
