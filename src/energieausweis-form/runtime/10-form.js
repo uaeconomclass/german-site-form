@@ -382,7 +382,6 @@ function renderLabel(field) {
       el(
         "span",
         { class: "tip", role: "button", tabindex: "0", "aria-label": "Info" },
-        "?",
         el("span", { class: "tipbox", html: tipToHtml(TIPS[field.tipKey]) })
       )
     );
