@@ -59,6 +59,13 @@ function resolveAssetUrl(p) {
   return s;
 }
 
+function resolveHomeUrl(p) {
+  const s = String(p || "").trim();
+  if (/^https?:\/\//i.test(s) || s.startsWith("/")) return s || "/";
+  if (EA_CFG && EA_CFG.homeUrl) return String(EA_CFG.homeUrl);
+  return "/";
+}
+
 function escapeHtml(s) {
   return String(s)
     .replaceAll("&", "&amp;")
@@ -385,12 +392,22 @@ function renderLabel(field) {
 
 function renderChecklist(field) {
   const wrap = el("div", { class: "checklistbox" + (field.variant ? (" " + String(field.variant)) : "") });
+  const isThankYouCard = String(field.variant || "") === "thankyou-card";
 
-  if (field.title) wrap.appendChild(el("div", { class: "checklist-title" }, String(field.title)));
-  if (field.text) wrap.appendChild(el("div", { class: "checklist-text muted small" }, String(field.text)));
+  const titleEl = field.title ? el("div", { class: "checklist-title" }, String(field.title)) : null;
+  const textEl = field.text ? el("div", { class: "checklist-text muted small" }, String(field.text)) : null;
+  const imgEl = field.img
+    ? el("img", { class: "checklist-img", src: resolveAssetUrl(String(field.img)), alt: String(field.imgAlt || field.title || "Example") })
+    : null;
 
-  if (field.img) {
-    wrap.appendChild(el("img", { class: "checklist-img", src: resolveAssetUrl(String(field.img)), alt: String(field.imgAlt || field.title || "Example") }));
+  if (isThankYouCard) {
+    if (imgEl) wrap.appendChild(imgEl);
+    if (titleEl) wrap.appendChild(titleEl);
+    if (textEl) wrap.appendChild(textEl);
+  } else {
+    if (titleEl) wrap.appendChild(titleEl);
+    if (textEl) wrap.appendChild(textEl);
+    if (imgEl) wrap.appendChild(imgEl);
   }
 
   const items = Array.isArray(field.items) ? field.items : [];
@@ -410,6 +427,36 @@ function renderChecklist(field) {
       );
     });
     wrap.appendChild(ul);
+  }
+
+  if (field.note) {
+    wrap.appendChild(el("div", { class: "checklist-note-block muted small" }, String(field.note)));
+  }
+
+  if (field.ctaLabel) {
+    const href = resolveHomeUrl(field.ctaHref);
+    wrap.appendChild(
+      el(
+        "div",
+        { class: "checklist-actions" },
+        el(
+          "a",
+          { class: "btn primary thankyou-home-btn", href },
+          el("span", null, String(field.ctaLabel)),
+          el(
+            "span",
+            { class: "btn-icon", "aria-hidden": "true" },
+            el(
+              "svg",
+              { width: "18", height: "18", viewBox: "0 0 18 18", fill: "none", xmlns: "http://www.w3.org/2000/svg" },
+              el("path", { d: "M3.75 9H14.25", stroke: "#2F4109", "stroke-width": "1.5", "stroke-linecap": "round", "stroke-linejoin": "round" }),
+              el("path", { d: "M9.75 13.5L14.25 9", stroke: "#2F4109", "stroke-width": "1.5", "stroke-linecap": "round", "stroke-linejoin": "round" }),
+              el("path", { d: "M9.75 4.5L14.25 9", stroke: "#2F4109", "stroke-width": "1.5", "stroke-linecap": "round", "stroke-linejoin": "round" })
+            )
+          )
+        )
+      )
+    );
   }
 
   return wrap;
@@ -1541,6 +1588,7 @@ function render() {
   dom.btnDownload.style.display = "none";
   const isThankYou = String(st.id || "") === "thank_you";
   const isSummary = String(st.id || "") === "summary";
+  document.body.classList.toggle("ea-thank-you-step", isThankYou);
   if (dom.btnNext) {
     const nextLabel = dom.btnNext.querySelector(".btn-next-label");
     if (nextLabel) nextLabel.textContent = isSummary ? "Anfrage absenden" : "Weitermachen";

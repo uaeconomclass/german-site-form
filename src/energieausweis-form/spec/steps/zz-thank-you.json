@@ -9,9 +9,15 @@
   "fields": [
     {
       "type": "checklist",
+      "variant": "thankyou-card",
       "full": true,
-      "title": "Danke für Ihre Anfrage",
-      "text": "Wir setzen uns zeitnah mit Ihnen in Verbindung. Bitte prüfen Sie auch Ihren E-Mail-Posteingang."
+      "img": "../assets/images/overview/group-390.png",
+      "imgAlt": "Bestätigung",
+      "title": "Ihr Antrag wurde erfolgreich übermittelt.",
+      "text": "Wir setzen uns zeitnah mit Ihnen in Verbindung. Bitte prüfen Sie auch Ihren E-Mail-Posteingang.",
+      "note": "Den Status Ihres Antrags können Sie in Ihrem persönlichen Benutzerkonto einsehen. Sollten Sie noch nicht registriert sein, bitten wir Sie, ein Benutzerkonto zu erstellen.",
+      "ctaLabel": "Zur Startseite",
+      "ctaHref": "/"
     }
   ]
 }

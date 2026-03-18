@@ -541,6 +541,57 @@ select.control:open{
   color:#ef4444;
 }
 .checklist-note{ margin-top:2px; }
+.checklist-note-block{
+  margin-top:26px;
+  max-width:680px;
+  margin-left:auto;
+  margin-right:auto;
+  text-align:center;
+}
+.checklist-actions{
+  margin-top:28px;
+  display:flex;
+  justify-content:center;
+}
+.checklistbox.thankyou-card{
+  border:0;
+  background:transparent;
+  box-shadow:none;
+  padding:20px 0 8px;
+  text-align:center;
+}
+.checklistbox.thankyou-card .checklist-img{
+  margin:28px auto 0;
+  max-width:170px;
+  border:0;
+  background:transparent;
+  border-radius:0;
+}
+.checklistbox.thankyou-card .checklist-title{
+  margin:24px auto 0;
+  color:#344054;
+  font-size:24px;
+  line-height:1.25;
+  font-weight:700;
+}
+.checklistbox.thankyou-card .checklist-text{
+  margin:14px auto 0;
+  max-width:760px;
+  color:#344054;
+  font-size:16px;
+  line-height:1.5;
+}
+.thankyou-home-btn{
+  min-height:50px;
+  padding:0 22px;
+  font-size:16px;
+  text-decoration:none;
+  box-shadow:0 8px 18px rgba(178, 228, 53, .24);
+}
+.thankyou-home-btn:hover,
+.thankyou-home-btn:focus-visible{
+  color:#21310d;
+}
 
 .counter{
   display:grid;
@@ -975,12 +1026,27 @@ select.control:open{
 .summary{ border:1px solid var(--border); background:#fff; border-radius:12px; padding:12px; }
 .summary pre{ margin:0; white-space:pre-wrap; word-break:break-word; font-family:var(--mono); font-size:14px; line-height:1.35; color:#344054; }
 
+@media (max-width: 1200px){
+  .effbox{ grid-template-columns: 1fr; }
+}
+
 @media (max-width: 980px){
   .layout{ grid-template-columns:1fr; }
   .layout-main{ min-width:auto; }
   .form{ grid-template-columns:1fr; }
   .img-choices{ grid-template-columns:1fr 1fr; }
-  .effbox{ grid-template-columns: 1fr; }
+  .checklistbox.thankyou-card .checklist-title{
+    font-size:20px;
+  }
+  .thankyou-home-btn{
+    width:100%;
+    min-height:58px;
+    padding:14px 20px;
+    font-size:17px;
+  }
+  .checklist-note-block{
+    margin-top:22px;
+  }
   #btnSave{
     width:72px;
     padding:0;

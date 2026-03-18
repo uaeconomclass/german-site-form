@@ -40,6 +40,7 @@ function ea_form_plugin_enqueue_assets() {
     $config = array(
         'restUrl' => $rest_base,
         'nonce' => $nonce,
+        'homeUrl' => home_url('/'),
         // Used by runtime to rewrite ../assets/* references when embedded in WP pages.
         'assetsBaseUrl' => ea_form_plugin_assets_base_url(),
         'prices' => function_exists('ea_form_get_prices') ? ea_form_get_prices() : array(
