@@ -1539,7 +1539,11 @@ function render() {
   dom.btnDownload.style.display = "none";
   const isThankYou = String(st.id || "") === "thank_you";
   const isSummary = String(st.id || "") === "summary";
-  if (dom.btnNext) dom.btnNext.textContent = isSummary ? "Anfrage absenden" : "Weiter zur Bestätigung";
+  if (dom.btnNext) {
+    const nextLabel = dom.btnNext.querySelector(".btn-next-label");
+    if (nextLabel) nextLabel.textContent = isSummary ? "Anfrage absenden" : "Weitermachen";
+    dom.btnNext.setAttribute("aria-label", isSummary ? "Anfrage absenden" : "Weitermachen");
+  }
   if (dom.footerBar) dom.footerBar.style.display = isThankYou ? "none" : "";
   if (dom.btnAdminExportCsv) dom.btnAdminExportCsv.style.display = isThankYou ? "" : "none";
 
@@ -1577,10 +1581,11 @@ dom.btnNext.addEventListener("click", async () => {
   const createUrl = EA_CFG && EA_CFG.createUrl ? String(EA_CFG.createUrl) : "";
   const hasOrderId = EA_CFG && EA_CFG.orderId;
   if (st && st.id === "gebaeudetyp" && !hasOrderId && createUrl) {
-    const old = dom.btnNext.textContent;
+    const nextLabel = dom.btnNext.querySelector(".btn-next-label");
+    const old = nextLabel ? nextLabel.textContent : "";
     try {
       dom.btnNext.disabled = true;
-      dom.btnNext.textContent = "Bitte warten...";
+      if (nextLabel) nextLabel.textContent = "Bitte warten...";
 
       const data = exportData();
       // Keep a local copy as a fallback.
@@ -1615,7 +1620,7 @@ dom.btnNext.addEventListener("click", async () => {
       if (!resp.ok || !redirectUrl) {
         alert("Order konnte nicht erstellt werden.");
         dom.btnNext.disabled = false;
-        dom.btnNext.textContent = old;
+        if (nextLabel) nextLabel.textContent = old;
         return;
       }
 
@@ -1624,7 +1629,7 @@ dom.btnNext.addEventListener("click", async () => {
     } catch (e) {
       alert("Order konnte nicht erstellt werden.");
       dom.btnNext.disabled = false;
-      dom.btnNext.textContent = old;
+      if (nextLabel) nextLabel.textContent = old;
       return;
     }
   }
@@ -1642,9 +1647,11 @@ dom.btnNext.addEventListener("click", async () => {
 dom.btnSave.addEventListener("click", () => {
   persistDraft("manual");
   try {
-    const old = dom.btnSave.textContent;
-    dom.btnSave.textContent = "Gespeichert";
-    setTimeout(() => (dom.btnSave.textContent = old), 900);
+    const label = dom.btnSave.querySelector(".btn-save-label");
+    if (!label) return;
+    const old = label.textContent;
+    label.textContent = "Gespeichert";
+    setTimeout(() => (label.textContent = old), 900);
   } catch (e) {}
 });
 

@@ -147,8 +147,40 @@ add_shortcode('energieausweis_form', function ($atts = array(), $content = '') {
               <div class="footerbar" id="footerBar">
                 <button class="linkbtn" type="button" id="btnBack">Zurück</button>
                 <div class="footer-right">
-                  <button class="btn secondary" type="button" id="btnSave">Speichern</button>
-                  <button class="btn primary" type="button" id="btnNext">Weiter zur Bestätigung</button>
+                  <button class="btn secondary" type="button" id="btnSave" aria-label="Speichern">
+                    <span class="btn-save-label">Speichern</span>
+                    <span class="btn-icon" aria-hidden="true">
+                      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <g clip-path="url(#btnSaveClip)">
+                          <path d="M4.5 3H12L15 6V13.5C15 13.8978 14.842 14.2794 14.5607 14.5607C14.2794 14.842 13.8978 15 13.5 15H4.5C4.10218 15 3.72064 14.842 3.43934 14.5607C3.15804 14.2794 3 13.8978 3 13.5V4.5C3 4.10218 3.15804 3.72064 3.43934 3.43934C3.72064 3.15804 4.10218 3 4.5 3Z" stroke="#2F4109" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                          <path d="M7.5 10.5C7.5 10.8978 7.65804 11.2794 7.93934 11.5607C8.22064 11.842 8.60218 12 9 12C9.39782 12 9.77936 11.842 10.0607 11.5607C10.342 11.2794 10.5 10.8978 10.5 10.5C10.5 10.1022 10.342 9.72064 10.0607 9.43934C9.77936 9.15804 9.39782 9 9 9C8.60218 9 8.22064 9.15804 7.93934 9.43934C7.65804 9.72064 7.5 10.1022 7.5 10.5Z" stroke="#2F4109" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                          <path d="M10.5 3V6H6V3" stroke="#2F4109" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </g>
+                        <defs>
+                          <clipPath id="btnSaveClip">
+                            <rect width="18" height="18" fill="white"/>
+                          </clipPath>
+                        </defs>
+                      </svg>
+                    </span>
+                  </button>
+                  <button class="btn primary" type="button" id="btnNext" aria-label="Weitermachen">
+                    <span class="btn-next-label">Weitermachen</span>
+                    <span class="btn-icon" aria-hidden="true">
+                      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <g clip-path="url(#btnNextClip)">
+                          <path d="M3.75 9H14.25" stroke="#2F4109" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                          <path d="M9.75 13.5L14.25 9" stroke="#2F4109" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                          <path d="M9.75 4.5L14.25 9" stroke="#2F4109" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </g>
+                        <defs>
+                          <clipPath id="btnNextClip">
+                            <rect width="18" height="18" fill="white"/>
+                          </clipPath>
+                        </defs>
+                      </svg>
+                    </span>
+                  </button>
                   <button class="btn secondary" type="button" id="btnDownload" style="display:none">Download JSON</button>
                 </div>
               </div>
