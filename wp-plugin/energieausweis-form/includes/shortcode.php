@@ -85,35 +85,36 @@ add_shortcode('energieausweis_form', function ($atts = array(), $content = '') {
             </div>
           </header>
 
-          <section class="effbox" aria-label="Energieeffizienzklasse">
-            <div class="eff-left">
-              <div class="eff-title">Ihre Energieeffizienzklasse</div>
-              <div class="muted small">Wir berechnen Ihre aktuelle Energieeffizienzklasse automatisch anhand Ihrer Angaben.</div>
-            </div>
-            <div class="eff-right">
-             <div class="potenz jetzt">
-				<svg width="13" height="15" viewBox="0 0 13 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-				<path d="M13 0H0V9L6.5 14.5L13 9V0Z" fill="#5D5A88"/>
-				</svg>
-
-                <span class="muted small">Jetzt</span>
-              </div>
-              <div class="rating" aria-hidden="true" style="--marker: 66%">
-                <span class="r r1">A+</span><span class="r r2">A</span><span class="r r3">B</span><span class="r r4">C</span><span class="r r5">D</span><span class="r r6">E</span><span class="r r7">F</span><span class="r r8">G</span><span class="r r9">H</span>
-              </div>
-              <div class="potenz">
-                <span class="pico" aria-hidden="true">
-					<svg width="13" height="15" viewBox="0 0 13 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-					<path d="M13 14.5H0V5.5L6.5 0L13 5.5V14.5Z" fill="#5D5A88"/>
-					</svg>
-
-                </span>
-                <span class="muted small">Potenz</span>
-              </div>
-            </div>
-          </section>
-
           <div class="layout">
+            <div class="layout-main">
+              <section class="effbox" aria-label="Energieeffizienzklasse">
+                <div class="eff-left">
+                  <div class="eff-title">Ihre Energieeffizienzklasse</div>
+                  <div class="muted small">Wir berechnen Ihre aktuelle Energieeffizienzklasse automatisch anhand Ihrer Angaben.</div>
+                </div>
+                <div class="eff-right">
+                 <div class="potenz jetzt">
+    				<svg width="13" height="15" viewBox="0 0 13 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+    				<path d="M13 0H0V9L6.5 14.5L13 9V0Z" fill="#5D5A88"/>
+    				</svg>
+
+                    <span class="muted small">Jetzt</span>
+                  </div>
+                  <div class="rating" aria-hidden="true" style="--marker: 66%">
+                    <span class="r r1">A+</span><span class="r r2">A</span><span class="r r3">B</span><span class="r r4">C</span><span class="r r5">D</span><span class="r r6">E</span><span class="r r7">F</span><span class="r r8">G</span><span class="r r9">H</span>
+                  </div>
+                  <div class="potenz">
+                    <span class="pico" aria-hidden="true">
+						<svg width="13" height="15" viewBox="0 0 13 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<path d="M13 14.5H0V5.5L6.5 0L13 5.5V14.5Z" fill="#5D5A88"/>
+						</svg>
+
+                    </span>
+                    <span class="muted small">Potenz</span>
+                  </div>
+                </div>
+              </section>
+
             <main class="card main">
               <div class="main-head">
                 <div>
@@ -188,6 +189,7 @@ add_shortcode('energieausweis_form', function ($atts = array(), $content = '') {
                 </div>
               </div>
             </main>
+            </div>
 
             <aside class="card side">
               <div class="side-head">Ihre Gesamtübersicht</div>
