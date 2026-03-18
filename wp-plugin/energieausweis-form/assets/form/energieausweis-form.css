@@ -798,7 +798,18 @@ select.control:open{
 .rep-grid-periods3 .control{
   max-width:220px;
 }
-@media (max-width: 860px){
+@media (max-width: 980px){
+  .stepsbar{
+    flex-wrap:nowrap;
+    overflow-x:auto;
+    overflow-y:hidden;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:thin;
+    padding-bottom:6px;
+  }
+  .step-pill{
+    flex:0 0 auto;
+  }
   .rep-grid{ grid-template-columns: 1fr; }
   .rep-grid-periods3{
     grid-template-columns:1fr;
