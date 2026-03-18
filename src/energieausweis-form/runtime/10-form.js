@@ -1307,7 +1307,7 @@ function validateStep(idx, { silent } = {}) {
   }
 
   // Verbrauch/legacy-upload step: cross-field validation for ETr period blocks.
-  if (["wg_heizung", "uploads"].includes(String(st.id || "")) && String(state.ausweisart || "") === "Verbrauchsausweis") {
+  if (String(st.id || "") === "wg_heizung" && String(state.ausweisart || "") === "Verbrauchsausweis") {
     validateEtrPeriodsField("etr1_periods", "Energieträger 1", errors);
     if (countCompleteEtrPeriods("etr1_periods") < 3) {
       errors.etr1_periods = makeGoAusweisartError();
@@ -1623,7 +1623,28 @@ dom.btnNext.addEventListener("click", async () => {
   const steps = visibleSteps();
   const st = currentStep();
   const res = validateStep(stepIndex, { silent: false });
-  if (!res.ok) return;
+  if (!res.ok) {
+    try {
+      const currentFields = collectFieldsFromStep(st);
+      const labelsByKey = Object.fromEntries(
+        currentFields
+          .filter((f) => f && f.key)
+          .map((f) => [String(f.key), String(f.label || f.title || f.key)])
+      );
+      const details = Object.entries(res.errors || {}).map(([key, err]) => ({
+        key,
+        label: labelsByKey[key] || key,
+        error: (err && typeof err === "object") ? String(err.message || err.action || "Validation error") : String(err),
+      }));
+      console.warn("[EA Form] Validation blocked next step", {
+        stepIndex,
+        stepId: st && st.id ? String(st.id) : "",
+        stepTitle: st && st.title ? String(st.title) : "",
+        details,
+      });
+    } catch (e) {}
+    return;
+  }
 
   // If we're at the branching step and don't have an order yet, create it on the server and redirect.
   // This keeps the plugin autonomous: order creation is handled via EA_CFG.createUrl.
