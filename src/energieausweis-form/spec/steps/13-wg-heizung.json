@@ -39,9 +39,9 @@
     {
       "title": "Zusatz",
       "fields": [
-        { "key": "pv_dach", "label": "Photovoltaik (PV) auf dem Dach", "type": "checkbox", "required": false, "tipKey": "heizung_photovoltaik", "full": true },
+        { "key": "pv_dach", "label": "Photovoltaik (PV) auf dem Dach", "type": "checkbox", "required": false, "infoText": "Anlage auf dem Dach, die Sonnenlicht in Strom umwandelt. Der Strom kann im Haus genutzt oder ins Netz eingespeist werden.", "full": true },
         { "key": "hz_solar", "label": "Solarthermie für Heizung vorhanden", "type": "radio", "required": false, "optionsRef": "ja_nein_radio", "tipKey": "heizung_hz_solar" },
-        { "key": "zirkulation", "label": "Zirkulation (Warmwasser)", "type": "checkbox", "required": false, "tipKey": "heizung_zirkulation", "full": true },
+        { "key": "zirkulation", "label": "Zirkulation (Warmwasser)", "type": "checkbox", "required": false, "infoText": "Kreislauf von Heizungs- oder Warmwasser in den Leitungen, damit Wärme bzw. warmes Wasser schnell und gleichmäßig im Gebäude verfügbar ist.", "full": true },
         { "key": "heizungsrohre_gedaemmt", "label": "Heizungsrohre gedämmt", "type": "radio", "required": false, "optionsRef": "ja_nein_radio", "tipKey": "heizung_rohre_gedaemmt" }
       ]
     },
