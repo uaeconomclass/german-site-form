@@ -15,6 +15,7 @@
           "label": "Kesseltyp",
           "type": "imgselect",
           "required": true,
+          "full": true,
           "options": [
             { "value": "Konstanttemperatur", "label": "Konstanttemperatur", "img": "../assets/images/heizung/konstanttemperaturkessel.png", "tipKey": "heizung_konstanttemperatur" },
             { "value": "Niedertemperatur", "label": "Niedertemperatur", "img": "../assets/images/heizung/niedertemperaturkessel.png", "tipKey": "heizung_niedertemperatur" },
