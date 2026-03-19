@@ -461,11 +461,10 @@ function renderChecklist(field) {
   return wrap;
 }
 
-function isOptionalJaNeinRadio(field) {
+function isJaNeinRadio(field) {
   return field
     && field.type === "radio"
-    && field.optionsRef === "ja_nein_radio"
-    && field.required === false;
+    && field.optionsRef === "ja_nein_radio";
 }
 
 function renderStepper() {
@@ -773,11 +772,13 @@ function renderFields(step) {
         const inc = el("button", { type: "button", class: "pm", onclick: () => setValue(key, String(clamp((Number(state[key] || cur) || 0) + 1, min, max)), step) }, "+");
         control = el("div", { class: "counter" }, dec, input, inc);
       } else if (field.type === "radio") {
-        if (isOptionalJaNeinRadio(field)) {
+        if (isJaNeinRadio(field)) {
           wantsDefaultLabel = false;
           const id = key + "_ja";
+          const currentVal = String(val || "") === "Ja" ? "Ja" : "Nein";
+          if (val !== currentVal) state[key] = currentVal;
           const input = el("input", { type: "checkbox", id, name: key });
-          input.checked = String(val || "") === "Ja";
+          input.checked = currentVal === "Ja";
           input.addEventListener("change", () => setValue(key, input.checked ? "Ja" : "Nein", step));
           control = el(
             "label",
@@ -786,7 +787,7 @@ function renderFields(step) {
             el("span", { class: "cb-box", "aria-hidden": "true" }),
             el("span", { class: "cb-label" }, field.label)
           );
-          optionTip = renderSelectedOptionTip(field, input.checked ? "Ja" : "Nein");
+          optionTip = renderSelectedOptionTip(field, currentVal);
         } else {
           const opts = optionsForField(field);
           control = el("div", { class: "radio-row", role: "group" });
