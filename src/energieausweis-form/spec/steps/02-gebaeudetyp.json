@@ -47,10 +47,10 @@
     {
       "title": "Komplexe Technik?",
       "fields": [
-        { "key": "misch_tech_lueftung", "label": "Gibt es eine eigene Lüftungsanlage?", "type": "radio", "required": true, "optionsRef": "ja_nein_radio", "full": true, "when": { "eq": ["gebaeudetyp", "MISCH"] } },
-        { "key": "misch_tech_kuehlung", "label": "Gibt es Kühlung oder Klimaanlagen?", "type": "radio", "required": true, "optionsRef": "ja_nein_radio", "full": true, "when": { "eq": ["gebaeudetyp", "MISCH"] } },
-        { "key": "misch_tech_oeffnungszeiten", "label": "Hat der Gewerbeteil lange Öffnungszeiten?", "type": "radio", "required": true, "optionsRef": "ja_nein_radio", "full": true, "when": { "eq": ["gebaeudetyp", "MISCH"] } },
-        { "key": "misch_tech_glas", "label": "Gibt es große Glasflächen oder Küchenabluft?", "type": "radio", "required": true, "optionsRef": "ja_nein_radio", "full": true, "when": { "eq": ["gebaeudetyp", "MISCH"] } }
+        { "key": "misch_tech_lueftung", "label": "Gibt es eine eigene Lüftungsanlage?", "type": "radio", "required": true, "optionsRef": "ja_nein_radio", "when": { "eq": ["gebaeudetyp", "MISCH"] } },
+        { "key": "misch_tech_kuehlung", "label": "Gibt es Kühlung oder Klimaanlagen?", "type": "radio", "required": true, "optionsRef": "ja_nein_radio", "when": { "eq": ["gebaeudetyp", "MISCH"] } },
+        { "key": "misch_tech_oeffnungszeiten", "label": "Hat der Gewerbeteil lange Öffnungszeiten?", "type": "radio", "required": true, "optionsRef": "ja_nein_radio", "when": { "eq": ["gebaeudetyp", "MISCH"] } },
+        { "key": "misch_tech_glas", "label": "Gibt es große Glasflächen oder Küchenabluft?", "type": "radio", "required": true, "optionsRef": "ja_nein_radio", "when": { "eq": ["gebaeudetyp", "MISCH"] } }
       ]
     },
     {
