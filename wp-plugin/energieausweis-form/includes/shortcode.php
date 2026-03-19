@@ -60,7 +60,7 @@ add_shortcode('energieausweis_form', function ($atts = array(), $content = '') {
             return '<div class="wrap" style="max-width:1100px;margin:30px auto;padding:0 14px">'
                 . '<div class="banner warn" style="display:flex">'
                 . '<div class="ico">!</div>'
-                . '<div><b>Zugriff eingeschrГ¤nkt</b><p>Bitte melden Sie sich an, um diese Anfrage zu sehen.</p></div>'
+                . '<div><b>Zugriff eingeschränkt</b><p>Bitte melden Sie sich an, um diese Anfrage zu sehen.</p></div>'
                 . '</div></div>';
         }
     }
