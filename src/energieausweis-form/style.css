@@ -397,7 +397,7 @@ label{
 }
 
 .req{
-  font-family:var(--mono);
+  font-family:inherit;
   font-size:14px;
   line-height:1;
   color:#ef4444;
