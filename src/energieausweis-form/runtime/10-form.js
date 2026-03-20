@@ -30,6 +30,15 @@ for (const st of (FORM_SPEC.steps || [])) {
 
 let state = deepClone(DEFAULTS);
 let stepIndex = 0;
+const ENABLE_GET_PREFILL = true;
+
+const FIELD_DEFS = {};
+for (const st of (FORM_SPEC.steps || [])) {
+  for (const f of collectFieldsFromStep(st)) {
+    if (!f || !f.key) continue;
+    FIELD_DEFS[f.key] = f;
+  }
+}
 
 const TIPS = TOOL_TIPS_DE || {};
 
@@ -189,6 +198,80 @@ function optionsForField(field) {
     [];
 
   return raw.filter((opt) => !opt.when || evalCond(opt.when, state));
+}
+
+function rawOptionsForField(field) {
+  return field.options ||
+    (field.optionsRef && FORM_SPEC.optionSets && FORM_SPEC.optionSets[field.optionsRef]) ||
+    [];
+}
+
+function isJaNeinField(field) {
+  if (!field) return false;
+  if (field.optionsRef === "ja_nein_radio") return true;
+  const opts = rawOptionsForField(field);
+  return Array.isArray(opts)
+    && opts.length === 2
+    && String(opts[0] && opts[0].value) === "Ja"
+    && String(opts[1] && opts[1].value) === "Nein";
+}
+
+function parseBoolish(raw) {
+  const s = normalizeLookupKey(raw);
+  if (!s) return null;
+  if (["1", "true", "yes", "ja", "on"].includes(s)) return true;
+  if (["0", "false", "no", "nein", "off"].includes(s)) return false;
+  return null;
+}
+
+function normalizeGetPrefillValue(field, rawValue) {
+  if (!field) return undefined;
+  const raw = rawValue == null ? "" : String(rawValue);
+
+  if (field.type === "number" || field.type === "counter") {
+    const n = Number(raw);
+    return Number.isFinite(n) ? String(raw) : undefined;
+  }
+
+  if (field.type === "checkbox") {
+    const b = parseBoolish(raw);
+    return b == null ? undefined : b;
+  }
+
+  if (field.type === "select" || field.type === "radio") {
+    if (isJaNeinField(field)) {
+      const b = parseBoolish(raw);
+      const normalized = b == null ? raw : (b ? "Ja" : "Nein");
+      return ["Ja", "Nein"].includes(String(normalized)) ? String(normalized) : undefined;
+    }
+    const opts = rawOptionsForField(field);
+    return opts.some((opt) => String(opt && opt.value) === raw) ? raw : undefined;
+  }
+
+  if (field.type === "text") return raw;
+  return undefined;
+}
+
+function applyGetPrefillToEmptyFields() {
+  if (!ENABLE_GET_PREFILL) return;
+  let params = null;
+  try {
+    params = new URLSearchParams(String(location.search || ""));
+  } catch (e) {
+    return;
+  }
+  params.forEach((rawValue, rawKey) => {
+    const key = String(rawKey || "");
+    if (!key.startsWith("ea_")) return;
+    const fieldKey = key.slice(3);
+    if (!fieldKey || !(fieldKey in state) || !isEmpty(state[fieldKey])) return;
+    const field = FIELD_DEFS[fieldKey];
+    if (!field) return;
+    if (["file", "repeater", "periods3"].includes(String(field.type || ""))) return;
+    const next = normalizeGetPrefillValue(field, rawValue);
+    if (next === undefined) return;
+    state[fieldKey] = next;
+  });
 }
 
 function selectedOptionFor(field, value) {
@@ -1845,6 +1928,8 @@ async function init() {
       }
     }
   } catch (e) {}
+
+  applyGetPrefillToEmptyFields();
 
   render();
 }
