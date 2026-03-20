@@ -32,6 +32,8 @@ function mapVentNoWrg(v) {
 function mapKeller01(v) {
   const s = normalizeLookupKey(v);
   if (!s) return 0;
+  if (v === true || s === "ja" || s === "yes" || s === "true" || s === "1") return 1;
+  if (s === "nein" || s === "no" || s === "false" || s === "0") return 0;
   if (s.includes("unbeheiz")) return 0;
   return s.includes("beheiz") ? 1 : 0;
 }
