@@ -646,6 +646,9 @@ select.control:open{
   color:#344054;
   cursor:pointer;
 }
+.counter .control{
+  text-align:center;
+}
 .counter .pm:active{ transform: translateY(1px); }
 
 .checkbox-row{

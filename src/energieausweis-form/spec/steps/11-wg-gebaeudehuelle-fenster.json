@@ -44,10 +44,7 @@
       "type": "radio",
       "full": true,
       "required": true,
-      "options": [
-        { "value": "Ja", "label": "Ja" },
-        { "value": "Nein", "label": "Nein" }
-      ]
+      "optionsRef": "ja_nein_radio"
     },
     {
       "key": "fenster_vermassung",
