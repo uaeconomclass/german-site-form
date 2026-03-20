@@ -15,7 +15,16 @@ for (const st of (FORM_SPEC.steps || [])) {
   for (const f of collectFieldsFromStep(st)) {
     if (!f || !f.key) continue;
     if (f.type === "file") continue; // files are tracked in state.uploads
-    if (!(f.key in DEFAULTS)) DEFAULTS[f.key] = (f.type === "repeater" || f.type === "periods3") ? [] : "";
+    if (!(f.key in DEFAULTS)) {
+      if (f.type === "repeater") {
+        const defaultItems = Math.max(0, Number(f.defaultItems) || 0);
+        DEFAULTS[f.key] = Array.from({ length: defaultItems }, () => ({}));
+      } else if (f.type === "periods3") {
+        DEFAULTS[f.key] = [];
+      } else {
+        DEFAULTS[f.key] = "";
+      }
+    }
   }
 }
 

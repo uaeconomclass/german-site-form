@@ -51,6 +51,8 @@
       "label": "Fenster-Vermassung (m²)",
       "type": "repeater",
       "full": true,
+      "minItems": 1,
+      "defaultItems": 1,
       "when": { "eq": ["ausweisart", "Bedarfsausweis"] },
       "required": { "eq": ["ausweisart", "Bedarfsausweis"] },
       "tipKey": "fenster_vermassung",
