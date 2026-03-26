@@ -35,7 +35,10 @@
     },
     { "key": "nwg_flaeche_basis", "label": "Angabe basiert auf", "type": "radio", "required": true, "optionsRef": "nwg_flaeche_basis" },
     { "key": "nwg_anzahl_nutzungseinheiten", "label": "Anzahl Nutzungseinheiten", "type": "number", "required": { "eq": ["ausweisart", "Bedarfsausweis"] }, "when": { "eq": ["ausweisart", "Bedarfsausweis"] }, "min": 1, "max": 50000, "hint": "z. B. 3" },
-    { "key": "nwg_geschosshoehen", "label": "Geschosshöhen (m)", "type": "number", "required": false, "when": { "eq": ["ausweisart", "Bedarfsausweis"] }, "min": 1, "max": 20, "hint": "optional" },
-    { "key": "nwg_beheiztes_volumen", "label": "Beheiztes Volumen (m³)", "type": "number", "required": false, "when": { "eq": ["ausweisart", "Bedarfsausweis"] }, "min": 1, "max": 5000000, "hint": "optional" }
+    { "key": "anzahl_vollgeschosse", "label": "Anzahl der Vollgeschosse", "type": "number", "required": { "eq": ["ausweisart", "Bedarfsausweis"] }, "when": { "eq": ["ausweisart", "Bedarfsausweis"] }, "min": 1, "max": 20, "hint": "z. B. 2" },
+    { "key": "geschosshoehen", "label": "Geschosshöhen (m)", "type": "number", "required": false, "when": { "eq": ["ausweisart", "Bedarfsausweis"] }, "min": 1, "max": 20, "hint": "optional, z. B. 3.00" },
+    { "key": "gebaeudevolumen", "label": "Beheiztes Volumen (m³)", "type": "number", "required": false, "when": { "eq": ["ausweisart", "Bedarfsausweis"] }, "min": 1, "max": 5000000, "hint": "optional" },
+    { "key": "aussenwandflaechen", "label": "Außenwandflächen (m²)", "type": "number", "required": { "eq": ["ausweisart", "Bedarfsausweis"] }, "when": { "eq": ["ausweisart", "Bedarfsausweis"] }, "min": 1, "max": 500000, "hint": "z. B. 450" },
+    { "key": "fensteranteile", "label": "Fensteranteile (m²)", "type": "number", "required": { "eq": ["ausweisart", "Bedarfsausweis"] }, "when": { "eq": ["ausweisart", "Bedarfsausweis"] }, "min": 1, "max": 500000, "hint": "z. B. 80" }
   ]
 }
