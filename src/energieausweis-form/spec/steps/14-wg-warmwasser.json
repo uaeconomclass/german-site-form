@@ -5,7 +5,10 @@
   "when": { "eq": ["gebaeudetyp", "WG"] },
   "intro": { "title": "Warmwasser", "text": "Angaben zur Warmwasserbereitung." },
   "fields": [
-    { "key": "warmwasser_type", "label": "Warmwasser", "type": "select", "required": true, "optionsRef": "warmwasser", "tipKey": "warmwasser_type" },
-    { "key": "warmwasserrohre_gedaemmt", "label": "Warmwasserrohre gedämmt", "type": "radio", "required": false, "optionsRef": "ja_nein_radio", "tipKey": "warmwasser_rohre_gedaemmt" }
+    { "key": "warmwasser_type", "label": "Warmwasserbereitung", "type": "select", "required": true, "optionsRef": "warmwasser", "tipKey": "warmwasser_type" },
+    { "key": "warmwasser_im_verbrauch", "label": "Warmwasser im Energieverbrauch enthalten?", "type": "radio", "required": { "eq": ["ausweisart", "Verbrauchsausweis"] }, "when": { "eq": ["ausweisart", "Verbrauchsausweis"] }, "optionsRef": "ja_nein_radio" },
+    { "key": "warmwasser_integriert", "label": "Ist die Warmwasserbereitung über die Heizungsanlage integriert?", "type": "radio", "required": { "eq": ["ausweisart", "Bedarfsausweis"] }, "when": { "eq": ["ausweisart", "Bedarfsausweis"] }, "optionsRef": "warmwasser_integriert" },
+    { "key": "bewohner_anzahl", "label": "Anzahl der Bewohner", "type": "number", "required": false, "min": 1, "max": 999, "hint": "z. B. 3" },
+    { "key": "warmwasserrohre_gedaemmt", "label": "Warmwasserrohre gedämmt", "type": "radio", "required": false, "when": { "neq": ["ausweisart", "Verbrauchsausweis"] }, "optionsRef": "ja_nein_radio", "tipKey": "warmwasser_rohre_gedaemmt" }
   ]
 }

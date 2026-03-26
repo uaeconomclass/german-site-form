@@ -9,8 +9,10 @@
     {
       "title": "Wärmeerzeuger",
       "fields": [
-        { "key": "heizung_waermeerzeuger", "label": "Wärmeerzeuger", "type": "select", "required": true, "optionsRef": "heizung_waermeerzeuger", "tipKey": "heizung_waermeerzeuger" },
-        { "key": "heizung_baujahr", "label": "Baujahr der Heizung", "type": "number", "required": false, "min": 1800, "max": 2100, "hint": "z. B. 2010" }
+        { "key": "heizung_waermeerzeuger", "label": "Energieträger", "type": "select", "required": true, "optionsRef": "heizung_waermeerzeuger", "tipKey": "heizung_waermeerzeuger" },
+        { "key": "heizung_heizsystem", "label": "Heizsystem", "type": "radio", "required": true, "optionsRef": "heizung_heizsystem" },
+        { "key": "heizung_baujahr", "label": "Baujahr der Heizungsanlage", "type": "number", "required": false, "min": 1800, "max": 2100, "hint": "z. B. 2010" },
+        { "key": "heizung_nennleistung", "label": "Nennleistung (kW)", "type": "number", "required": false, "min": 1, "max": 9999, "hint": "z. B. 20" }
       ]
     },
     {
@@ -20,7 +22,8 @@
           "key": "heizung_kesseltyp",
           "label": "Kesseltyp",
           "type": "imgselect",
-          "required": true,
+          "when": { "neq": ["ausweisart", "Verbrauchsausweis"] },
+          "required": { "neq": ["ausweisart", "Verbrauchsausweis"] },
           "options": [
             { "value": "Konstanttemperatur", "label": "Konstanttemperatur", "img": "../assets/images/heizung/konstanttemperaturkessel.png", "tipKey": "heizung_konstanttemperatur" },
             { "value": "Niedertemperatur", "label": "Niedertemperatur", "img": "../assets/images/heizung/niedertemperaturkessel.png", "tipKey": "heizung_niedertemperatur" },
@@ -33,16 +36,17 @@
     {
       "title": "Wärmeabgabe",
       "fields": [
-        { "key": "heizung_waermeabgabe", "label": "Wärmeabgabe", "type": "select", "required": true, "optionsRef": "heizung_waermeabgabe" }
+        { "key": "heizung_waermeabgabe", "label": "Wärmeabgabe", "type": "select", "when": { "neq": ["ausweisart", "Verbrauchsausweis"] }, "required": { "neq": ["ausweisart", "Verbrauchsausweis"] }, "optionsRef": "heizung_waermeabgabe" },
+        { "key": "heizung_waermeverteilung", "label": "Art der Wärmeverteilung", "type": "radio", "when": { "neq": ["ausweisart", "Verbrauchsausweis"] }, "required": { "neq": ["ausweisart", "Verbrauchsausweis"] }, "optionsRef": "heizung_waermeverteilung" }
       ]
     },
     {
       "title": "Zusatz",
       "fields": [
-        { "key": "pv_dach", "label": "Photovoltaik (PV) auf dem Dach", "type": "checkbox", "required": false, "infoText": "Anlage auf dem Dach, die Sonnenlicht in Strom umwandelt. Der Strom kann im Haus genutzt oder ins Netz eingespeist werden.", "full": true },
-        { "key": "hz_solar", "label": "Solarthermie für Heizung vorhanden", "type": "radio", "required": false, "optionsRef": "ja_nein_radio", "tipKey": "heizung_hz_solar" },
-        { "key": "zirkulation", "label": "Zirkulation (Warmwasser)", "type": "checkbox", "required": false, "infoText": "Kreislauf von Heizungs- oder Warmwasser in den Leitungen, damit Wärme bzw. warmes Wasser schnell und gleichmäßig im Gebäude verfügbar ist.", "full": true },
-        { "key": "heizungsrohre_gedaemmt", "label": "Heizungsrohre gedämmt", "type": "radio", "required": false, "optionsRef": "ja_nein_radio", "tipKey": "heizung_rohre_gedaemmt" }
+        { "key": "pv_dach", "label": "Photovoltaik (PV) auf dem Dach", "type": "checkbox", "required": false, "when": { "neq": ["ausweisart", "Verbrauchsausweis"] }, "infoText": "Anlage auf dem Dach, die Sonnenlicht in Strom umwandelt. Der Strom kann im Haus genutzt oder ins Netz eingespeist werden.", "full": true },
+        { "key": "hz_solar", "label": "Solarthermie für Heizung vorhanden", "type": "radio", "required": false, "when": { "neq": ["ausweisart", "Verbrauchsausweis"] }, "optionsRef": "ja_nein_radio", "tipKey": "heizung_hz_solar" },
+        { "key": "zirkulation", "label": "Zirkulation (Warmwasser)", "type": "checkbox", "required": false, "when": { "neq": ["ausweisart", "Verbrauchsausweis"] }, "infoText": "Kreislauf von Heizungs- oder Warmwasser in den Leitungen, damit Wärme bzw. warmes Wasser schnell und gleichmäßig im Gebäude verfügbar ist.", "full": true },
+        { "key": "heizungsrohre_gedaemmt", "label": "Heizungsrohre gedämmt", "type": "radio", "required": false, "when": { "neq": ["ausweisart", "Verbrauchsausweis"] }, "optionsRef": "ja_nein_radio", "tipKey": "heizung_rohre_gedaemmt" }
       ]
     },
     {
@@ -54,6 +58,49 @@
           "when": { "eq": ["ausweisart", "Verbrauchsausweis"] },
           "title": "Hauptenergieträger",
           "text": "Nutzen Sie die Einheit direkt aus der Abrechnung (z. B. kWh, m3, l)."
+        },
+        {
+          "key": "etr_traeger_gewechselt",
+          "label": "Wurde der Energieträger in den letzten 3 Jahren gewechselt?",
+          "type": "radio",
+          "full": true,
+          "when": { "eq": ["ausweisart", "Verbrauchsausweis"] },
+          "required": { "eq": ["ausweisart", "Verbrauchsausweis"] },
+          "optionsRef": "ja_nein_radio"
+        },
+        {
+          "key": "etr_traeger_von",
+          "label": "Früherer Energieträger",
+          "type": "text",
+          "full": true,
+          "when": { "and": [{ "eq": ["ausweisart", "Verbrauchsausweis"] }, { "eq": ["etr_traeger_gewechselt", "Ja"] }] },
+          "hint": "z. B. Heizöl"
+        },
+        {
+          "key": "etr_traeger_zu",
+          "label": "Neuer Energieträger",
+          "type": "text",
+          "full": true,
+          "when": { "and": [{ "eq": ["ausweisart", "Verbrauchsausweis"] }, { "eq": ["etr_traeger_gewechselt", "Ja"] }] },
+          "hint": "z. B. Wärmepumpe"
+        },
+        {
+          "key": "etr_abrechnungsart",
+          "label": "Abrechnungsart",
+          "type": "radio",
+          "full": true,
+          "when": { "eq": ["ausweisart", "Verbrauchsausweis"] },
+          "required": { "eq": ["ausweisart", "Verbrauchsausweis"] },
+          "optionsRef": "etr_abrechnungsart"
+        },
+        {
+          "key": "etr_verbrauch_betrifft",
+          "label": "Verbrauch betrifft",
+          "type": "radio",
+          "full": true,
+          "when": { "eq": ["ausweisart", "Verbrauchsausweis"] },
+          "required": { "eq": ["ausweisart", "Verbrauchsausweis"] },
+          "optionsRef": "etr_verbrauch_betrifft_wg"
         },
         {
           "key": "etr1_kategorie",

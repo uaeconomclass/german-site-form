@@ -26,10 +26,11 @@
   ],
   "wg_subtype": [
     { "value": "", "label": "Bitte wählen…" },
-    { "value": "EFH", "label": "Einfamilienhaus (EFH)" },
-    { "value": "ZFH", "label": "Zweifamilienhaus (ZFH)" },
-    { "value": "MFH", "label": "Mehrfamilienhaus (MFH)" },
-    { "value": "REIHE", "label": "Reihenhaus / Doppelhaushälfte" }
+    { "value": "EFH", "label": "Freistehendes Einfamilienhaus" },
+    { "value": "DHH", "label": "Doppelhaushälfte" },
+    { "value": "REIHE_MITTE", "label": "Reihenmittelhaus" },
+    { "value": "REIHE_ENDE", "label": "Reihenendhaus" },
+    { "value": "MFH", "label": "Mehrfamilienhaus (MFH)" }
   ],
   "fenster_type": [
     { "value": "", "label": "Bitte wählen…" },
@@ -66,12 +67,13 @@
   ],
   "heizung_waermeerzeuger": [
     { "value": "", "label": "Bitte wählen…" },
-    { "value": "Öl", "label": "Öl", "tipKey": "heizung_oel" },
-    { "value": "Gas", "label": "Gas", "tipKey": "heizung_gas" },
+    { "value": "Öl", "label": "Heizöl", "tipKey": "heizung_oel" },
+    { "value": "Gas", "label": "Erdgas", "tipKey": "heizung_gas" },
     { "value": "Fernwärme", "label": "Fernwärme", "tipKey": "heizung_fernwaerme" },
     { "value": "Wärmepumpe", "label": "Wärmepumpe", "tipKey": "heizung_waermepumpe" },
-    { "value": "Biomasse", "label": "Biomasse", "tipKey": "heizung_biomasse" },
-    { "value": "Elektro", "label": "Elektro", "tipKey": "heizung_elektro" },
+    { "value": "Biomasse", "label": "Holz / Pellets", "tipKey": "heizung_biomasse" },
+    { "value": "Elektro", "label": "Strom", "tipKey": "heizung_elektro" },
+    { "value": "Sonstiges", "label": "Sonstiges" },
     { "value": "Einzelöfen", "label": "Einzelöfen", "tipKey": "heizung_einzelofen" },
     { "value": "BHKW / KWK", "label": "BHKW / KWK", "tipKey": "heizung_bhkw" },
     { "value": "Hybridheizung", "label": "Hybridheizung", "tipKey": "heizung_hybrid" }
@@ -92,13 +94,10 @@
   ],
   "warmwasser": [
     { "value": "", "label": "Bitte wählen…" },
-    { "value": "Zentrale Warmwasserbereitung", "label": "Zentrale Warmwasserbereitung", "tipKey": "warmwasser_zentral" },
-    { "value": "Dezentrale Warmwasserbereitung", "label": "Dezentrale Warmwasserbereitung", "tipKey": "warmwasser_dezentral" },
-    { "value": "Elektrischer Warmwasserspeicher", "label": "Elektrischer Warmwasserspeicher", "tipKey": "warmwasser_speicher" },
-    { "value": "Durchlauferhitzer", "label": "Durchlauferhitzer", "tipKey": "warmwasser_durchlauferhitzer" },
-    { "value": "Kombiniert mit Heizung", "label": "Kombiniert mit Heizung", "tipKey": "warmwasser_kombiniert" },
-    { "value": "Solarthermie", "label": "Solarthermie", "tipKey": "warmwasser_solarthermie" },
-    { "value": "Wärmepumpe Warmwasser", "label": "Wärmepumpe (Warmwasser)", "tipKey": "warmwasser_waermepumpe" }
+    { "value": "kein Warmwasser", "label": "Kein Warmwasser vorhanden" },
+    { "value": "zentral", "label": "Zentral über die Heizungsanlage" },
+    { "value": "dezentral elektrisch", "label": "Dezentral elektrisch (z. B. Durchlauferhitzer / Boiler)" },
+    { "value": "teilweise zentral", "label": "Teilweise zentral / teilweise dezentral" }
   ],
   "ja_nein": [
     { "value": "", "label": "Bitte wählen…" },
@@ -129,7 +128,7 @@
     { "value": "Praxis / Gesundheit", "label": "Praxis / Gesundheit" },
     { "value": "Schule / Kita", "label": "Schule / Kita" },
     { "value": "Einzelhandel", "label": "Einzelhandel" },
-    { "value": "Gastronomie", "label": "Gastronomie" },
+    { "value": "Gastronomie", "label": "Hotel / Gastronomie" },
     { "value": "Lager / Produktion", "label": "Lager / Produktion" },
     { "value": "Sonstiges NWG", "label": "Sonstiges NWG" }
   ],
@@ -169,6 +168,150 @@
     { "value": "Standard", "label": "Standard" },
     { "value": "LED", "label": "LED" },
     { "value": "unbekannt", "label": "unbekannt" }
+  ],
+  "baualtersklasse": [
+    { "value": "vor 1977", "label": "vor 1977" },
+    { "value": "1977–1994", "label": "1977–1994" },
+    { "value": "nach 1995", "label": "nach 1995" }
+  ],
+  "heizung_heizsystem": [
+    { "value": "Zentralheizung", "label": "Zentralheizung" },
+    { "value": "Etagenheizung", "label": "Etagenheizung" },
+    { "value": "Einzelöfen", "label": "Einzelöfen" },
+    { "value": "Sonstiges", "label": "Sonstiges" }
+  ],
+  "wohnflaeche_basis": [
+    { "value": "Wohnflächenberechnung", "label": "Wohnflächenberechnung" },
+    { "value": "Bauunterlagen", "label": "Bauunterlagen" },
+    { "value": "Schätzung", "label": "Schätzung" }
+  ],
+  "etr_abrechnungsart": [
+    { "value": "Heizkostenabrechnung", "label": "Heizkostenabrechnung" },
+    { "value": "Gasrechnung", "label": "Gasrechnung" },
+    { "value": "Öllieferung", "label": "Öllieferung" },
+    { "value": "Holzlieferung", "label": "Holzlieferung" },
+    { "value": "Fernwärmeabrechnung", "label": "Fernwärmeabrechnung" }
+  ],
+  "etr_verbrauch_betrifft_wg": [
+    { "value": "Gesamtgebäude", "label": "Gesamtes Gebäude" },
+    { "value": "Teilverbrauch", "label": "Nur einzelne Wohneinheiten (Teilverbrauch)" }
+  ],
+  "nwg_heizsystem": [
+    { "value": "Zentralheizung", "label": "Zentralheizung" },
+    { "value": "Einzelheizgeräte / Einzelöfen", "label": "Einzelheizgeräte / Einzelöfen" },
+    { "value": "Etagenheizung", "label": "Etagenheizung" },
+    { "value": "Sonstiges", "label": "Sonstiges" }
+  ],
+  "nwg_flaeche_basis": [
+    { "value": "Flächenberechnung", "label": "Flächenberechnung" },
+    { "value": "Bauunterlagen", "label": "Bauunterlagen" },
+    { "value": "Schätzung", "label": "Schätzung" }
+  ],
+  "etr_verbrauch_betrifft_nwg": [
+    { "value": "Gesamtgebäude", "label": "Gesamtes Gebäude" },
+    { "value": "Teilflächen", "label": "Teilflächen des Gebäudes" }
+  ],
+  "etr_abrechnungsart_nwg": [
+    { "value": "Heizkostenabrechnung", "label": "Heizkostenabrechnung" },
+    { "value": "Gasrechnung", "label": "Gasrechnung" },
+    { "value": "Öllieferung", "label": "Öllieferung" },
+    { "value": "Biomasse / Holzlieferung", "label": "Biomasse / Holzlieferung" },
+    { "value": "Fernwärmeabrechnung", "label": "Fernwärmeabrechnung" }
+  ],
+  "nwg_strom_betrifft": [
+    { "value": "Gesamtgebäude", "label": "Gesamtes Gebäude" },
+    { "value": "Teilflächen", "label": "Nur Teilflächen" }
+  ],
+  "ja_nein_unbekannt": [
+    { "value": "Ja", "label": "Ja" },
+    { "value": "Nein", "label": "Nein" },
+    { "value": "Unbekannt", "label": "Unbekannt" }
+  ],
+  "nwg_lueftung_verbrauch": [
+    { "value": "keine", "label": "Keine" },
+    { "value": "Lüftungsanlage", "label": "Lüftungsanlage" },
+    { "value": "Lüftungsanlage mit WRG", "label": "Lüftungsanlage mit Wärmerückgewinnung" }
+  ],
+  "keller_in_wohnflaeche": [
+    { "value": "Nein", "label": "Nein" },
+    { "value": "Teilweise", "label": "Teilweise" },
+    { "value": "Vollständig", "label": "Vollständig" }
+  ],
+  "aussenwand_konstruktion": [
+    { "value": "Fachwerk", "label": "Fachwerk" },
+    { "value": "Vollziegel / Naturstein", "label": "Vollziegel / Naturstein" },
+    { "value": "Hohlblock / Bims", "label": "Hohlblock / Bims" },
+    { "value": "Kalksandstein", "label": "Kalksandstein" },
+    { "value": "Ziegel", "label": "Ziegel" },
+    { "value": "Porenbeton / Gasbeton", "label": "Porenbeton / Gasbeton" },
+    { "value": "Stahlbeton", "label": "Stahlbeton" },
+    { "value": "WDVS vorhanden", "label": "WDVS vorhanden" },
+    { "value": "Unbekannt", "label": "Unbekannt" }
+  ],
+  "dach_typ": [
+    { "value": "Steildach ungedämmt", "label": "Steildach ungedämmt" },
+    { "value": "Steildach gedämmt", "label": "Steildach gedämmt" },
+    { "value": "Flachdach", "label": "Flachdach" },
+    { "value": "Oberste Geschossdecke gedämmt", "label": "Oberste Geschossdecke gedämmt" },
+    { "value": "Oberste Geschossdecke ungedämmt", "label": "Oberste Geschossdecke ungedämmt" },
+    { "value": "Unbekannt", "label": "Unbekannt" }
+  ],
+  "dachraum_zustand": [
+    { "value": "Unbeheizt", "label": "Dachraum unbeheizt" },
+    { "value": "Ausgebaut / beheizt", "label": "Dachraum ausgebaut / beheizt" },
+    { "value": "Teilweise ausgebaut", "label": "Teilweise ausgebaut" },
+    { "value": "Unbekannt", "label": "Unbekannt" }
+  ],
+  "keller_bodenplatte": [
+    { "value": "Unbeheizter Keller", "label": "Unbeheizter Keller vorhanden" },
+    { "value": "Beheizter Keller", "label": "Beheizter Keller" },
+    { "value": "Kellerdecke gedämmt", "label": "Kellerdecke gedämmt" },
+    { "value": "Kellerdecke ungedämmt", "label": "Kellerdecke ungedämmt" },
+    { "value": "Bodenplatte ohne Keller", "label": "Bodenplatte ohne Keller" }
+  ],
+  "verglasung": [
+    { "value": "Einfachverglasung", "label": "Einfachverglasung" },
+    { "value": "Verbundfenster", "label": "Verbundfenster" },
+    { "value": "Kastenfenster", "label": "Kastenfenster" },
+    { "value": "Isolierverglasung (alt)", "label": "Isolierverglasung (alt)" },
+    { "value": "Wärmeschutzverglasung", "label": "Wärmeschutzverglasung" },
+    { "value": "3-fach Verglasung", "label": "3-fach Verglasung" }
+  ],
+  "fenster_abstandhalter": [
+    { "value": "Aluminium", "label": "Aluminium-Abstandhalter" },
+    { "value": "Warme Kante", "label": "Warme Kante (Kunststoff / Edelstahl)" },
+    { "value": "Unbekannt", "label": "Unbekannt" }
+  ],
+  "fenster_einbauzeitraum": [
+    { "value": "vor 1995", "label": "vor 1995" },
+    { "value": "1995–2005", "label": "1995–2005" },
+    { "value": "2005–2015", "label": "2005–2015" },
+    { "value": "nach 2015", "label": "nach 2015" },
+    { "value": "Unbekannt", "label": "Unbekannt" }
+  ],
+  "fenster_rahmen": [
+    { "value": "Holz", "label": "Holz" },
+    { "value": "Kunststoff", "label": "Kunststoff" },
+    { "value": "Aluminium", "label": "Aluminium" },
+    { "value": "Holz-Alu", "label": "Holz-Alu" }
+  ],
+  "lueftungssystem_wg": [
+    { "value": "Fensterlüftung", "label": "Fensterlüftung" },
+    { "value": "Mechanische Abluftanlage", "label": "Mechanische Abluftanlage" },
+    { "value": "Zentrale Lüftungsanlage", "label": "Zentrale Lüftungsanlage" },
+    { "value": "Dezentrale Lüftungsgeräte", "label": "Dezentrale Lüftungsgeräte" },
+    { "value": "Nicht bekannt", "label": "Nicht bekannt" }
+  ],
+  "heizung_waermeverteilung": [
+    { "value": "Leitungen im beheizten Bereich", "label": "Heizkörperleitungen im beheizten Bereich" },
+    { "value": "Leitungen im unbeheizten Bereich", "label": "Heizkörperleitungen im unbeheizten Bereich" },
+    { "value": "Teilweise gedämmt", "label": "Teilweise gedämmt" },
+    { "value": "Unbekannt", "label": "Unbekannt" }
+  ],
+  "warmwasser_integriert": [
+    { "value": "Ja", "label": "Ja" },
+    { "value": "Nein", "label": "Nein" },
+    { "value": "Teilweise", "label": "Teilweise" }
   ],
   "etr_kategorie_bk": [
     { "value": "", "label": "Bitte waehlen..." },

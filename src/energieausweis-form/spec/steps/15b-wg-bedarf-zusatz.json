@@ -1,0 +1,51 @@
+{
+  "id": "wg_bedarf_zusatz",
+  "title": "WG: Gebäudezustand",
+  "meta": "A5b",
+  "when": { "and": [{ "eq": ["gebaeudetyp", "WG"] }, { "eq": ["ausweisart", "Bedarfsausweis"] }] },
+  "intro": { "title": "Zusatzangaben zum Gebäudezustand", "text": "Diese Angaben helfen bei der genauen Bewertung des energetischen Zustands." },
+  "blocks": [
+    {
+      "title": "Energetische Modernisierungen",
+      "fields": [
+        { "key": "bedarf_z_modernisierung", "label": "Wurden in den letzten Jahren energetische Modernisierungen durchgeführt?", "type": "radio", "required": true, "optionsRef": "ja_nein_radio", "full": true },
+        { "key": "bedarf_z_modern_jahr", "label": "Jahr der Maßnahme", "type": "number", "required": { "eq": ["bedarf_z_modernisierung", "Ja"] }, "when": { "eq": ["bedarf_z_modernisierung", "Ja"] }, "min": 2000, "max": 2100, "hint": "z. B. 2020" },
+        { "key": "bedarf_z_modern_art", "label": "Art der Maßnahme", "type": "text", "required": { "eq": ["bedarf_z_modernisierung", "Ja"] }, "when": { "eq": ["bedarf_z_modernisierung", "Ja"] }, "hint": "z. B. Fenstertausch / Fassadendämmung / Dachdämmung", "full": true }
+      ]
+    },
+    {
+      "title": "Heizungsanlage erneuert",
+      "fields": [
+        { "key": "bedarf_z_heizung_erneuert", "label": "Wurde die Heizungsanlage erneuert oder wesentlich verändert?", "type": "radio", "required": true, "optionsRef": "ja_nein_radio", "full": true },
+        { "key": "bedarf_z_heizung_jahr", "label": "Jahr der Änderung", "type": "number", "required": { "eq": ["bedarf_z_heizung_erneuert", "Ja"] }, "when": { "eq": ["bedarf_z_heizung_erneuert", "Ja"] }, "min": 2000, "max": 2100, "hint": "z. B. 2022" },
+        { "key": "bedarf_z_heizung_art", "label": "Art der Anlage", "type": "text", "required": { "eq": ["bedarf_z_heizung_erneuert", "Ja"] }, "when": { "eq": ["bedarf_z_heizung_erneuert", "Ja"] }, "hint": "z. B. Wärmepumpe, Gasbrennwert", "full": true }
+      ]
+    },
+    {
+      "title": "Beheizung der Räume",
+      "fields": [
+        { "key": "bedarf_z_alle_raeume_beheizt", "label": "Werden alle Räume innerhalb der Gebäudehülle beheizt?", "type": "radio", "required": true, "optionsRef": "ja_nein_radio", "full": true },
+        { "key": "bedarf_z_unbeheizt_bereich", "label": "Welche Bereiche werden nicht beheizt?", "type": "text", "required": { "eq": ["bedarf_z_alle_raeume_beheizt", "Nein"] }, "when": { "eq": ["bedarf_z_alle_raeume_beheizt", "Nein"] }, "full": true },
+        { "key": "bedarf_z_unbeheizt_flaeche", "label": "Ungefähre Fläche (m²)", "type": "number", "required": { "eq": ["bedarf_z_alle_raeume_beheizt", "Nein"] }, "when": { "eq": ["bedarf_z_alle_raeume_beheizt", "Nein"] }, "min": 1, "max": 20000, "hint": "z. B. 30" }
+      ]
+    },
+    {
+      "title": "Bauliche Veränderungen",
+      "fields": [
+        { "key": "bedarf_z_bau_veraendert", "label": "Gab es größere bauliche Veränderungen am Gebäude?", "type": "radio", "required": true, "optionsRef": "ja_nein_radio", "full": true },
+        { "key": "bedarf_z_bau_art", "label": "Art der Veränderung", "type": "text", "required": { "eq": ["bedarf_z_bau_veraendert", "Ja"] }, "when": { "eq": ["bedarf_z_bau_veraendert", "Ja"] }, "hint": "z. B. Anbau / Dachausbau / Umbau", "full": true },
+        { "key": "bedarf_z_bau_jahr", "label": "Jahr der Änderung", "type": "number", "required": { "eq": ["bedarf_z_bau_veraendert", "Ja"] }, "when": { "eq": ["bedarf_z_bau_veraendert", "Ja"] }, "min": 2000, "max": 2100, "hint": "z. B. 2019" }
+      ]
+    },
+    {
+      "title": "Nachträgliche Dämmung",
+      "fields": [
+        { "key": "bedarf_z_bauteil_gedaemmt", "label": "Wurden Außenbauteile nachträglich gedämmt?", "type": "radio", "required": true, "optionsRef": "ja_nein_radio", "full": true },
+        { "key": "bedarf_z_daemmung_fassade", "label": "Fassadendämmung", "type": "checkbox", "required": false, "when": { "eq": ["bedarf_z_bauteil_gedaemmt", "Ja"] }, "full": true },
+        { "key": "bedarf_z_daemmung_dach", "label": "Dachdämmung", "type": "checkbox", "required": false, "when": { "eq": ["bedarf_z_bauteil_gedaemmt", "Ja"] }, "full": true },
+        { "key": "bedarf_z_daemmung_keller", "label": "Kellerdeckendämmung", "type": "checkbox", "required": false, "when": { "eq": ["bedarf_z_bauteil_gedaemmt", "Ja"] }, "full": true },
+        { "key": "bedarf_z_daemmung_jahr", "label": "Jahr der Maßnahme", "type": "number", "required": { "eq": ["bedarf_z_bauteil_gedaemmt", "Ja"] }, "when": { "eq": ["bedarf_z_bauteil_gedaemmt", "Ja"] }, "min": 2000, "max": 2100, "hint": "z. B. 2021" }
+      ]
+    }
+  ]
+}

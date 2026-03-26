@@ -19,7 +19,6 @@
           "full": true,
           "options": [
             { "value": "Wohnen", "label": "Wohnen" },
-            { "value": "Gewerbe", "label": "Gewerbe" },
             { "value": "Kombination", "label": "Kombination aus Wohnen und Gewerbe" }
           ]
         },
@@ -56,33 +55,43 @@
     {
       "title": "Untertyp",
       "fields": [
-        { "key": "wg_subtype", "label": "Gebäude", "type": "select", "required": true, "optionsRef": "wg_subtype", "when": { "eq": ["gebaeudetyp", "WG"] }, "full": true }
+        { "key": "wg_subtype", "label": "Gebäudetyp", "type": "select", "required": true, "optionsRef": "wg_subtype", "when": { "eq": ["gebaeudetyp", "WG"] }, "full": true }
       ]
     },
     {
       "title": "Basisdaten",
       "fields": [
         {
+          "key": "baualtersklasse",
+          "label": "Baualtersklasse",
+          "type": "radio",
+          "required": true,
+          "optionsRef": "baualtersklasse",
+          "when": { "eq": ["gebaeudetyp", "WG"] }
+        },
+        {
           "key": "baujahr",
           "label": "Baujahr Gebäude",
           "type": "number",
-          "required": true,
+          "required": { "eq": ["ausweisart", "Bedarfsausweis"] },
           "min": 1800,
           "max": 2100,
           "hint": "z. B. 1985",
           "when": { "eq": ["gebaeudetyp", "WG"] }
         },
-        { "key": "anzahl_wohneinheiten", "label": "Anzahl Wohneinheiten", "type": "counter", "required": true, "min": 1, "max": 999, "hint": "z. B. 1", "when": { "eq": ["gebaeudetyp", "WG"] } },
-        { "key": "wohnflaeche", "label": "Wohnfläche (m²)", "type": "number", "required": true, "min": 1, "max": 20000, "tipKey": "wohnflaeche", "hint": "z. B. 120", "when": { "eq": ["gebaeudetyp", "WG"] } },
-        { "key": "nutzflaeche", "label": "Nutzfläche (m²)", "type": "number", "required": true, "min": 1, "max": 20000, "tipKey": "nutzflaeche", "hint": "z. B. 155", "when": { "eq": ["gebaeudetyp", "WG"] } }
+        { "key": "anzahl_wohneinheiten", "label": "Anzahl der Wohnungen", "type": "counter", "required": true, "min": 1, "max": 999, "hint": "z. B. 1", "when": { "eq": ["gebaeudetyp", "WG"] } },
+        { "key": "wohnflaeche", "label": "Beheizte Wohnfläche (m²)", "type": "number", "required": true, "min": 1, "max": 20000, "tipKey": "wohnflaeche", "hint": "z. B. 120", "when": { "eq": ["gebaeudetyp", "WG"] } },
+        { "key": "wohnflaeche_basis", "label": "Angabe basiert auf", "type": "radio", "required": true, "optionsRef": "wohnflaeche_basis", "when": { "eq": ["gebaeudetyp", "WG"] } },
+        { "key": "nutzflaeche", "label": "Nettogrundfläche – NGF (m²)", "type": "number", "required": false, "min": 1, "max": 20000, "tipKey": "nutzflaeche", "hint": "z. B. 155", "infoText": "Die Nettogrundfläche (NGF) umfasst alle nutzbaren Flächen innerhalb der Außenwände (z. B. Wohnen, Flure, Abstellräume, Technikräume). Angabe optional.", "when": { "eq": ["gebaeudetyp", "WG"] } },
+        { "key": "keller_in_wohnflaeche", "label": "Ist ein Keller oder Untergeschoss in der beheizten Wohnfläche enthalten?", "type": "radio", "required": { "eq": ["ausweisart", "Bedarfsausweis"] }, "when": { "and": [{ "eq": ["gebaeudetyp", "WG"] }, { "eq": ["ausweisart", "Bedarfsausweis"] }] }, "optionsRef": "keller_in_wohnflaeche", "full": true }
       ]
     },
     {
       "title": "Grundprüfung",
       "fields": [
-        { "key": "gebaeudeanteil", "label": "Gebäudeteil", "type": "radio", "required": true, "optionsRef": "gebaeudeanteil", "when": { "eq": ["gebaeudetyp", "WG"] } },
-        { "key": "dachgeschoss", "label": "Dachgeschoss", "type": "radio", "required": true, "optionsRef": "dachgeschoss", "when": { "eq": ["gebaeudetyp", "WG"] } },
-        { "key": "keller", "label": "Keller", "type": "radio", "required": true, "optionsRef": "keller", "when": { "eq": ["gebaeudetyp", "WG"] } }
+        { "key": "gebaeudeanteil", "label": "Gebäudeteil", "type": "radio", "required": true, "optionsRef": "gebaeudeanteil", "when": { "and": [{ "eq": ["gebaeudetyp", "WG"] }, { "neq": ["ausweisart", "Verbrauchsausweis"] }] } },
+        { "key": "dachgeschoss", "label": "Dachgeschoss", "type": "radio", "required": true, "optionsRef": "dachgeschoss", "when": { "and": [{ "eq": ["gebaeudetyp", "WG"] }, { "neq": ["ausweisart", "Verbrauchsausweis"] }] } },
+        { "key": "keller", "label": "Keller", "type": "radio", "required": true, "optionsRef": "keller", "when": { "and": [{ "eq": ["gebaeudetyp", "WG"] }, { "neq": ["ausweisart", "Verbrauchsausweis"] }] } }
       ]
     }
   ]

@@ -2,61 +2,85 @@
   "id": "nwg_technik",
   "title": "NWG: Lüftung / Klima / Technik",
   "meta": "B3",
-  "when": { "and": [{ "eq": ["gebaeudetyp", "NWG"] }, { "eq": ["ausweisart", "Bedarfsausweis"] }] },
-  "intro": { "title": "Technik", "text": "Wichtig: Diese Felder sind für NWG (insb. Bedarfsausweis) relevant." },
-  "fields": [
+  "when": { "eq": ["gebaeudetyp", "NWG"] },
+  "intro": { "title": "Gebäudetechnik", "text": "Angaben zu Lüftung und Kühlung." },
+  "blocks": [
     {
-      "key": "nwg_lueftung",
-      "label": "Lüftung",
-      "type": "select",
-      "required": { "eq": ["ausweisart", "Bedarfsausweis"] },
-      "optionsRef": "nwg_lueftung"
+      "title": "Lüftung",
+      "fields": [
+        {
+          "key": "nwg_lueftung_verbrauch",
+          "label": "Lüftung",
+          "type": "radio",
+          "required": true,
+          "when": { "eq": ["ausweisart", "Verbrauchsausweis"] },
+          "optionsRef": "nwg_lueftung_verbrauch"
+        },
+        {
+          "key": "nwg_lueftung",
+          "label": "Lüftung",
+          "type": "select",
+          "required": { "eq": ["ausweisart", "Bedarfsausweis"] },
+          "when": { "eq": ["ausweisart", "Bedarfsausweis"] },
+          "optionsRef": "nwg_lueftung"
+        }
+      ]
     },
     {
-      "key": "klimatisiert",
-      "label": "Gibt es eine Kühlung im Gebäude?",
-      "type": "radio",
-      "required": true,
-      "optionsRef": "ja_nein_radio"
+      "title": "Kühlung",
+      "fields": [
+        {
+          "key": "klimatisiert",
+          "label": "Gibt es eine Kühlung im Gebäude?",
+          "type": "radio",
+          "required": true,
+          "optionsRef": "ja_nein_radio"
+        },
+        {
+          "key": "nwg_kuehlung_art",
+          "label": "Art der Kühlung",
+          "type": "radio",
+          "required": { "eq": ["klimatisiert", "Ja"] },
+          "when": { "and": [{ "eq": ["klimatisiert", "Ja"] }, { "eq": ["ausweisart", "Verbrauchsausweis"] }] },
+          "options": [
+            { "value": "Klimaanlage", "label": "Klimaanlage vorhanden" },
+            { "value": "Zentrale Kälteanlage", "label": "Zentrale Kälteanlage" }
+          ],
+          "full": true
+        },
+        {
+          "key": "nwg_kuehlung_umfang",
+          "label": "Umfang der Kühlung",
+          "type": "radio",
+          "required": { "eq": ["klimatisiert", "Ja"] },
+          "when": { "and": [{ "eq": ["klimatisiert", "Ja"] }, { "eq": ["ausweisart", "Verbrauchsausweis"] }] },
+          "options": [
+            { "value": "Gesamtgebäude", "label": "Gesamtes Gebäude klimatisiert" },
+            { "value": "Teilflächen", "label": "Nur Teilflächen klimatisiert" }
+          ],
+          "full": true
+        },
+        {
+          "key": "nwg_kuehlung_teilflaeche_m2",
+          "label": "Gekühlte Fläche ca. (m²)",
+          "type": "number",
+          "required": false,
+          "when": { "and": [{ "eq": ["klimatisiert", "Ja"] }, { "eq": ["nwg_kuehlung_umfang", "Teilflächen"] }] },
+          "min": 1,
+          "max": 500000,
+          "hint": "z. B. 200"
+        },
+        { "key": "fernKuehlung", "label": "Erfolgt Kühlung über Fernkälte?", "type": "radio", "required": { "eq": ["klimatisiert", "Ja"] }, "when": { "and": [{ "eq": ["klimatisiert", "Ja"] }, { "eq": ["ausweisart", "Bedarfsausweis"] }] }, "optionsRef": "ja_nein_radio" },
+        { "key": "passiveKuehlung", "label": "Gibt es passive Kühlung?", "type": "radio", "required": { "eq": ["klimatisiert", "Ja"] }, "when": { "and": [{ "eq": ["klimatisiert", "Ja"] }, { "eq": ["ausweisart", "Bedarfsausweis"] }] }, "optionsRef": "ja_nein_radio" },
+        { "key": "waermeKuehlung", "label": "Gibt es thermische Kühlung?", "type": "radio", "required": { "eq": ["klimatisiert", "Ja"] }, "when": { "and": [{ "eq": ["klimatisiert", "Ja"] }, { "eq": ["ausweisart", "Bedarfsausweis"] }] }, "optionsRef": "ja_nein_radio" },
+        { "key": "stromKuehlung", "label": "Gibt es elektrische Kompressionskühlung?", "type": "radio", "required": { "eq": ["klimatisiert", "Ja"] }, "when": { "and": [{ "eq": ["klimatisiert", "Ja"] }, { "eq": ["ausweisart", "Bedarfsausweis"] }] }, "optionsRef": "ja_nein_radio" }
+      ]
     },
     {
-      "key": "fernKuehlung",
-      "label": "Erfolgt Kühlung über Fernkälte?",
-      "type": "radio",
-      "required": { "eq": ["klimatisiert", "Ja"] },
-      "when": { "eq": ["klimatisiert", "Ja"] },
-      "optionsRef": "ja_nein_radio"
-    },
-    {
-      "key": "passiveKuehlung",
-      "label": "Gibt es passive Kühlung?",
-      "type": "radio",
-      "required": { "eq": ["klimatisiert", "Ja"] },
-      "when": { "eq": ["klimatisiert", "Ja"] },
-      "optionsRef": "ja_nein_radio"
-    },
-    {
-      "key": "waermeKuehlung",
-      "label": "Gibt es thermische Kühlung?",
-      "type": "radio",
-      "required": { "eq": ["klimatisiert", "Ja"] },
-      "when": { "eq": ["klimatisiert", "Ja"] },
-      "optionsRef": "ja_nein_radio"
-    },
-    {
-      "key": "stromKuehlung",
-      "label": "Gibt es elektrische Kompressionskühlung?",
-      "type": "radio",
-      "required": { "eq": ["klimatisiert", "Ja"] },
-      "when": { "eq": ["klimatisiert", "Ja"] },
-      "optionsRef": "ja_nein_radio"
-    },
-    {
-      "key": "nwg_beleuchtung",
-      "label": "Beleuchtung",
-      "type": "select",
-      "required": { "eq": ["ausweisart", "Bedarfsausweis"] },
-      "optionsRef": "nwg_beleuchtung"
+      "title": "Beleuchtung",
+      "fields": [
+        { "key": "nwg_beleuchtung", "label": "Beleuchtung", "type": "select", "required": { "eq": ["ausweisart", "Bedarfsausweis"] }, "when": { "eq": ["ausweisart", "Bedarfsausweis"] }, "optionsRef": "nwg_beleuchtung" }
+      ]
     }
   ]
 }

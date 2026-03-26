@@ -6,11 +6,36 @@
   "afterChangeRef": "smart_nwg",
   "intro": { "title": "Nichtwohngebäude", "text": "Nutzung und Flächenangaben." },
   "fields": [
-    { "key": "baujahr", "label": "Baujahr Gebäude", "type": "number", "required": true, "min": 1800, "max": 2100, "hint": "z. B. 1998" },
-    { "key": "nwg_nutzung", "label": "Gebäudenutzung", "type": "select", "required": true, "optionsRef": "nwg_nutzung" },
-    { "key": "nwg_nettogrundflaeche", "label": "Nettogrundfläche (m²)", "type": "number", "required": true, "min": 1, "max": 500000, "hint": "z. B. 350" },
-    { "key": "nwg_anzahl_nutzungseinheiten", "label": "Anzahl Nutzungseinheiten", "type": "number", "required": true, "min": 1, "max": 50000, "hint": "z. B. 3" },
-    { "key": "nwg_geschosshoehen", "label": "Geschosshöhen (m)", "type": "number", "required": false, "min": 1, "max": 20, "hint": "optional" },
-    { "key": "nwg_beheiztes_volumen", "label": "Beheiztes Volumen (m³)", "type": "number", "required": false, "min": 1, "max": 5000000, "hint": "optional" }
+    { "key": "nwg_nutzung", "label": "Art der Gebäudenutzung", "type": "select", "required": true, "optionsRef": "nwg_nutzung" },
+    {
+      "key": "baualtersklasse",
+      "label": "Baualtersklasse",
+      "type": "radio",
+      "required": true,
+      "optionsRef": "baualtersklasse"
+    },
+    {
+      "key": "baujahr",
+      "label": "Baujahr Gebäude",
+      "type": "number",
+      "required": { "eq": ["ausweisart", "Bedarfsausweis"] },
+      "min": 1800,
+      "max": 2100,
+      "hint": "z. B. 1998"
+    },
+    {
+      "key": "nwg_nettogrundflaeche",
+      "label": "Nettogrundfläche – NGF (m²)",
+      "type": "number",
+      "required": true,
+      "min": 1,
+      "max": 500000,
+      "hint": "z. B. 350",
+      "infoText": "Die Nettogrundfläche (NGF) umfasst die nutzbaren Flächen des Gebäudes innerhalb der Außenwände nach DIN 277. Für den Energieverbrauchsausweis werden in der Regel nur beheizte oder gekühlte Gebäudebereiche berücksichtigt."
+    },
+    { "key": "nwg_flaeche_basis", "label": "Angabe basiert auf", "type": "radio", "required": true, "optionsRef": "nwg_flaeche_basis" },
+    { "key": "nwg_anzahl_nutzungseinheiten", "label": "Anzahl Nutzungseinheiten", "type": "number", "required": { "eq": ["ausweisart", "Bedarfsausweis"] }, "when": { "eq": ["ausweisart", "Bedarfsausweis"] }, "min": 1, "max": 50000, "hint": "z. B. 3" },
+    { "key": "nwg_geschosshoehen", "label": "Geschosshöhen (m)", "type": "number", "required": false, "when": { "eq": ["ausweisart", "Bedarfsausweis"] }, "min": 1, "max": 20, "hint": "optional" },
+    { "key": "nwg_beheiztes_volumen", "label": "Beheiztes Volumen (m³)", "type": "number", "required": false, "when": { "eq": ["ausweisart", "Bedarfsausweis"] }, "min": 1, "max": 5000000, "hint": "optional" }
   ]
 }

@@ -1351,6 +1351,28 @@ function countCompleteEtrPeriods(fieldKey) {
   return complete;
 }
 
+function validatePeriodsSpanAndRecency(fieldKey, label, errors) {
+  if (errors[fieldKey]) return; // already has an error from field-level validation
+  const periods = Array.isArray(state[fieldKey]) ? state[fieldKey] : [];
+  const complete = periods.filter(function (p) {
+    return !isEmpty((p || {}).von) && !isEmpty((p || {}).bis) && !isEmpty((p || {}).menge);
+  });
+  if (complete.length < 3) return; // not enough periods to check span
+  const firstFrom = parseDateDE(complete[0].von);
+  const lastTo = parseDateDE(complete[complete.length - 1].bis);
+  if (!firstFrom || !lastTo) return;
+  const spanMonths = monthsInclusive(firstFrom, lastTo);
+  if (spanMonths < 36) {
+    errors[fieldKey] = label + ": Die Abrechnungszeiträume müssen mindestens 36 zusammenhängende Monate umfassen (aktuell " + spanMonths + " Monate)";
+    return;
+  }
+  const now = new Date();
+  const cutoff = addMonthsUTC(new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), 1)), -18);
+  if (lastTo.getTime() < cutoff.getTime()) {
+    errors[fieldKey] = label + ": Die jüngste Abrechnung darf nicht älter als 18 Monate sein";
+  }
+}
+
 function makeGoAusweisartError() {
   return {
     message: "Für den Verbrauchsausweis sind 3 vollständige Zeiträume erforderlich. Bitte Bedarfsausweis wählen.",
@@ -1437,11 +1459,39 @@ function validateStep(idx, { silent } = {}) {
     validateEtrPeriodsField("etr1_periods", "Energieträger 1", errors);
     if (countCompleteEtrPeriods("etr1_periods") < 3) {
       errors.etr1_periods = makeGoAusweisartError();
+    } else {
+      validatePeriodsSpanAndRecency("etr1_periods", "Energieträger 1", errors);
     }
     if (state.etr2_enabled === true) {
       validateEtrPeriodsField("etr2_periods", "Energieträger 2", errors);
       if (countCompleteEtrPeriods("etr2_periods") < 3) {
         errors.etr2_periods = makeGoAusweisartError();
+      } else {
+        validatePeriodsSpanAndRecency("etr2_periods", "Energieträger 2", errors);
+      }
+    }
+  }
+
+  // NWG Verbrauchsausweis: validate electricity and heat periods.
+  if (String(st.id || "") === "nwg_stromverbrauch" && String(state.ausweisart || "") === "Verbrauchsausweis") {
+    validateEtrPeriodsField("nwg_strom_periods", "Stromverbrauch", errors);
+    if (countCompleteEtrPeriods("nwg_strom_periods") < 3) {
+      errors.nwg_strom_periods = makeGoAusweisartError();
+    } else {
+      validatePeriodsSpanAndRecency("nwg_strom_periods", "Stromverbrauch", errors);
+    }
+    validateEtrPeriodsField("etr1_periods", "Wärmeverbrauch Energieträger 1", errors);
+    if (countCompleteEtrPeriods("etr1_periods") < 3) {
+      errors.etr1_periods = makeGoAusweisartError();
+    } else {
+      validatePeriodsSpanAndRecency("etr1_periods", "Wärmeverbrauch Energieträger 1", errors);
+    }
+    if (state.etr2_enabled === true) {
+      validateEtrPeriodsField("etr2_periods", "Wärmeverbrauch Energieträger 2", errors);
+      if (countCompleteEtrPeriods("etr2_periods") < 3) {
+        errors.etr2_periods = makeGoAusweisartError();
+      } else {
+        validatePeriodsSpanAndRecency("etr2_periods", "Wärmeverbrauch Energieträger 2", errors);
       }
     }
   }

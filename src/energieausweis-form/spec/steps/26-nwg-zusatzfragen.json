@@ -1,0 +1,59 @@
+{
+  "id": "nwg_zusatzfragen",
+  "title": "NWG: Zusatzfragen",
+  "meta": "B6",
+  "when": { "and": [{ "eq": ["gebaeudetyp", "NWG"] }, { "eq": ["ausweisart", "Verbrauchsausweis"] }] },
+  "intro": { "title": "Zusatzfragen", "text": "Diese Angaben dienen der Plausibilitätsprüfung des Energieverbrauchs." },
+  "blocks": [
+    {
+      "title": "Leerstand",
+      "fields": [
+        { "key": "nwg_zf_leerstand", "label": "Gab es Leerstand in den letzten 3 Jahren?", "type": "radio", "required": true, "optionsRef": "ja_nein_radio", "full": true },
+        { "key": "nwg_zf_leerstand_zeitraum", "label": "Zeitraum des Leerstands", "type": "text", "required": { "eq": ["nwg_zf_leerstand", "Ja"] }, "when": { "eq": ["nwg_zf_leerstand", "Ja"] }, "hint": "z. B. Jan 2022 – Jun 2022", "full": true },
+        { "key": "nwg_zf_leerstand_flaeche", "label": "Betroffene Fläche (m² oder Anteil)", "type": "text", "required": { "eq": ["nwg_zf_leerstand", "Ja"] }, "when": { "eq": ["nwg_zf_leerstand", "Ja"] }, "hint": "z. B. 80 m² oder ca. 30%", "full": true },
+        { "key": "nwg_zf_leerstand_nutzungsart", "label": "Art der Nutzung", "type": "text", "required": false, "when": { "eq": ["nwg_zf_leerstand", "Ja"] }, "hint": "z. B. Büro, Ladenfläche", "full": true }
+      ]
+    },
+    {
+      "title": "Beheizung",
+      "fields": [
+        { "key": "nwg_zf_ueberwiegend_beheizt", "label": "Wurde das Gebäude während des gesamten Abrechnungszeitraums überwiegend beheizt?", "type": "radio", "required": true, "optionsRef": "ja_nein_radio", "full": true },
+        { "key": "nwg_zf_nicht_beheizt_bereich", "label": "Welche Bereiche wurden nicht beheizt?", "type": "text", "required": { "eq": ["nwg_zf_ueberwiegend_beheizt", "Nein"] }, "when": { "eq": ["nwg_zf_ueberwiegend_beheizt", "Nein"] }, "full": true },
+        { "key": "nwg_zf_nicht_beheizt_flaeche", "label": "Ungefähre Fläche der unbeheizten Bereiche (m² oder Anteil)", "type": "text", "required": { "eq": ["nwg_zf_ueberwiegend_beheizt", "Nein"] }, "when": { "eq": ["nwg_zf_ueberwiegend_beheizt", "Nein"] }, "hint": "z. B. 40 m² oder ca. 15%", "full": true }
+      ]
+    },
+    {
+      "title": "Dauerhaft beheizt",
+      "fields": [
+        { "key": "nwg_zf_alle_raeume_beheizt", "label": "Wurden alle Räume dauerhaft beheizt?", "type": "radio", "required": true, "optionsRef": "ja_nein_radio", "full": true },
+        { "key": "nwg_zf_nicht_dauernd_zeitraum", "label": "Zeitraum", "type": "text", "required": { "eq": ["nwg_zf_alle_raeume_beheizt", "Nein"] }, "when": { "eq": ["nwg_zf_alle_raeume_beheizt", "Nein"] }, "hint": "z. B. Okt 2021 – Mär 2022", "full": true },
+        { "key": "nwg_zf_nicht_dauernd_flaeche", "label": "Betroffene Fläche (m² oder Anteil)", "type": "text", "required": { "eq": ["nwg_zf_alle_raeume_beheizt", "Nein"] }, "when": { "eq": ["nwg_zf_alle_raeume_beheizt", "Nein"] }, "hint": "z. B. 30 m² oder ca. 20%", "full": true }
+      ]
+    },
+    {
+      "title": "Nutzungsänderung",
+      "fields": [
+        { "key": "nwg_zf_nutzung_geaendert", "label": "Hat sich die Nutzung des Gebäudes in den letzten drei Jahren wesentlich verändert?", "type": "radio", "required": true, "optionsRef": "ja_nein_radio", "full": true },
+        { "key": "nwg_zf_nutzung_frueher", "label": "Frühere Nutzung", "type": "text", "required": { "eq": ["nwg_zf_nutzung_geaendert", "Ja"] }, "when": { "eq": ["nwg_zf_nutzung_geaendert", "Ja"] }, "full": true },
+        { "key": "nwg_zf_nutzung_heute", "label": "Heutige Nutzung", "type": "text", "required": { "eq": ["nwg_zf_nutzung_geaendert", "Ja"] }, "when": { "eq": ["nwg_zf_nutzung_geaendert", "Ja"] }, "full": true },
+        { "key": "nwg_zf_nutzung_zeitpunkt", "label": "Zeitpunkt der Änderung", "type": "text", "required": false, "when": { "eq": ["nwg_zf_nutzung_geaendert", "Ja"] }, "hint": "z. B. 2022", "full": true }
+      ]
+    },
+    {
+      "title": "Heizungsanlage erneuert",
+      "fields": [
+        { "key": "nwg_zf_heizung_erneuert", "label": "Wurde die Heizungsanlage innerhalb der letzten drei Jahre erneuert oder wesentlich verändert?", "type": "radio", "required": true, "optionsRef": "ja_nein_radio", "full": true },
+        { "key": "nwg_zf_heizung_erneuerung_jahr", "label": "Jahr der Änderung", "type": "number", "required": { "eq": ["nwg_zf_heizung_erneuert", "Ja"] }, "when": { "eq": ["nwg_zf_heizung_erneuert", "Ja"] }, "min": 2000, "max": 2100, "hint": "z. B. 2022" },
+        { "key": "nwg_zf_heizung_erneuerung_art", "label": "Art der Anlage", "type": "text", "required": { "eq": ["nwg_zf_heizung_erneuert", "Ja"] }, "when": { "eq": ["nwg_zf_heizung_erneuert", "Ja"] }, "hint": "z. B. Wärmepumpe, Gasbrennwert", "full": true }
+      ]
+    },
+    {
+      "title": "Energetische Sanierungen",
+      "fields": [
+        { "key": "nwg_zf_sanierung", "label": "Wurden größere energetische Sanierungen durchgeführt?", "type": "radio", "required": true, "optionsRef": "ja_nein_radio", "full": true },
+        { "key": "nwg_zf_sanierung_jahr", "label": "Jahr der Maßnahme", "type": "number", "required": { "eq": ["nwg_zf_sanierung", "Ja"] }, "when": { "eq": ["nwg_zf_sanierung", "Ja"] }, "min": 2000, "max": 2100, "hint": "z. B. 2021" },
+        { "key": "nwg_zf_sanierung_massnahme", "label": "Welche Maßnahme?", "type": "text", "required": { "eq": ["nwg_zf_sanierung", "Ja"] }, "when": { "eq": ["nwg_zf_sanierung", "Ja"] }, "hint": "z. B. Fassadendämmung, Fenstertausch", "full": true }
+      ]
+    }
+  ]
+}

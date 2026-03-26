@@ -2,19 +2,22 @@
   "id": "nwg_heizung_warmwasser",
   "title": "NWG: Heizung & Warmwasser",
   "meta": "B4",
-  "when": { "and": [{ "eq": ["gebaeudetyp", "NWG"] }, { "eq": ["ausweisart", "Bedarfsausweis"] }] },
-  "intro": { "title": "Heizung/Warmwasser", "text": "Diese Angaben entsprechen der WG-Logik (A.7 + A.8)." },
+  "when": { "eq": ["gebaeudetyp", "NWG"] },
+  "intro": { "title": "Heizung & Warmwasser", "text": "Angaben zur Heizungsanlage und Warmwasserbereitung." },
   "blocks": [
     {
-      "title": "Heizung",
+      "title": "Heizungsanlage",
       "fields": [
-        { "key": "heizung_waermeerzeuger", "label": "Wärmeerzeuger", "type": "select", "required": true, "optionsRef": "heizung_waermeerzeuger", "tipKey": "heizung_waermeerzeuger" },
-        { "key": "heizung_baujahr", "label": "Baujahr der Heizung", "type": "number", "required": false, "min": 1800, "max": 2100, "hint": "z. B. 2010" },
+        { "key": "heizung_waermeerzeuger", "label": "Energieträger", "type": "select", "required": true, "optionsRef": "heizung_waermeerzeuger", "tipKey": "heizung_waermeerzeuger" },
+        { "key": "nwg_heizsystem", "label": "Heizsystem", "type": "radio", "required": { "eq": ["ausweisart", "Verbrauchsausweis"] }, "when": { "eq": ["ausweisart", "Verbrauchsausweis"] }, "optionsRef": "nwg_heizsystem" },
+        { "key": "heizung_baujahr", "label": "Baujahr der Heizungsanlage", "type": "number", "required": false, "min": 1800, "max": 2100, "hint": "z. B. 2010" },
+        { "key": "heizung_nennleistung", "label": "Nennleistung (kW)", "type": "number", "required": false, "min": 1, "max": 9999, "hint": "z. B. 50" },
         {
           "key": "heizung_kesseltyp",
           "label": "Kesseltyp",
           "type": "imgselect",
-          "required": true,
+          "when": { "eq": ["ausweisart", "Bedarfsausweis"] },
+          "required": { "eq": ["ausweisart", "Bedarfsausweis"] },
           "options": [
             { "value": "Konstanttemperatur", "label": "Konstanttemperatur", "img": "../assets/images/heizung/konstanttemperaturkessel.png", "tipKey": "heizung_konstanttemperatur" },
             { "value": "Niedertemperatur", "label": "Niedertemperatur", "img": "../assets/images/heizung/niedertemperaturkessel.png", "tipKey": "heizung_niedertemperatur" },
@@ -22,18 +25,19 @@
             { "value": "Wärmepumpe", "label": "Wärmepumpe", "img": "../assets/images/heizung/waermepumpe.png", "tipKey": "heizung_waermepumpe" }
           ]
         },
-        { "key": "heizung_waermeabgabe", "label": "Wärmeabgabe", "type": "select", "required": true, "optionsRef": "heizung_waermeabgabe" },
-        { "key": "pv_dach", "label": "Photovoltaik (PV) auf dem Dach", "type": "checkbox", "required": false, "infoText": "Anlage auf dem Dach, die Sonnenlicht in Strom umwandelt. Der Strom kann im Haus genutzt oder ins Netz eingespeist werden.", "full": true },
-        { "key": "hz_solar", "label": "Solarthermie für Heizung vorhanden", "type": "radio", "required": false, "optionsRef": "ja_nein_radio", "tipKey": "heizung_hz_solar" },
-        { "key": "zirkulation", "label": "Zirkulation (Warmwasser)", "type": "checkbox", "required": false, "infoText": "Kreislauf von Heizungs- oder Warmwasser in den Leitungen, damit Wärme bzw. warmes Wasser schnell und gleichmäßig im Gebäude verfügbar ist.", "full": true },
-        { "key": "heizungsrohre_gedaemmt", "label": "Heizungsrohre gedämmt", "type": "radio", "required": false, "optionsRef": "ja_nein_radio", "tipKey": "heizung_rohre_gedaemmt" }
+        { "key": "heizung_waermeabgabe", "label": "Wärmeabgabe", "type": "select", "when": { "eq": ["ausweisart", "Bedarfsausweis"] }, "required": { "eq": ["ausweisart", "Bedarfsausweis"] }, "optionsRef": "heizung_waermeabgabe" },
+        { "key": "pv_dach", "label": "Photovoltaik (PV) auf dem Dach", "type": "checkbox", "required": false, "when": { "eq": ["ausweisart", "Bedarfsausweis"] }, "infoText": "Anlage auf dem Dach, die Sonnenlicht in Strom umwandelt.", "full": true },
+        { "key": "hz_solar", "label": "Solarthermie für Heizung vorhanden", "type": "radio", "required": false, "when": { "eq": ["ausweisart", "Bedarfsausweis"] }, "optionsRef": "ja_nein_radio", "tipKey": "heizung_hz_solar" },
+        { "key": "heizungsrohre_gedaemmt", "label": "Heizungsrohre gedämmt", "type": "radio", "required": false, "when": { "eq": ["ausweisart", "Bedarfsausweis"] }, "optionsRef": "ja_nein_radio", "tipKey": "heizung_rohre_gedaemmt" }
       ]
     },
     {
-      "title": "Warmwasser",
+      "title": "Warmwasserbereitung",
       "fields": [
-        { "key": "warmwasser_type", "label": "Warmwasser", "type": "select", "required": true, "optionsRef": "warmwasser", "tipKey": "warmwasser_type" },
-        { "key": "warmwasserrohre_gedaemmt", "label": "Warmwasserrohre gedämmt", "type": "radio", "required": false, "optionsRef": "ja_nein_radio", "tipKey": "warmwasser_rohre_gedaemmt" }
+        { "key": "warmwasser_type", "label": "Warmwasserbereitung", "type": "select", "required": true, "optionsRef": "warmwasser", "tipKey": "warmwasser_type" },
+        { "key": "warmwasser_im_verbrauch", "label": "Ist das Warmwasser im Energieverbrauch enthalten?", "type": "radio", "required": { "eq": ["ausweisart", "Verbrauchsausweis"] }, "when": { "eq": ["ausweisart", "Verbrauchsausweis"] }, "optionsRef": "ja_nein_radio" },
+        { "key": "warmwasser_sep_verbrauch", "label": "Separater Verbrauch (falls bekannt)", "type": "number", "required": false, "when": { "and": [{ "eq": ["ausweisart", "Verbrauchsausweis"] }, { "eq": ["warmwasser_im_verbrauch", "Nein"] }] }, "hint": "kWh/Jahr", "min": 0, "max": 9999999 },
+        { "key": "warmwasserrohre_gedaemmt", "label": "Warmwasserrohre gedämmt", "type": "radio", "required": false, "when": { "eq": ["ausweisart", "Bedarfsausweis"] }, "optionsRef": "ja_nein_radio", "tipKey": "warmwasser_rohre_gedaemmt" }
       ]
     }
   ]

@@ -10,18 +10,39 @@
       "type": "file",
       "full": true,
       "when": { "or": [{ "eq": ["ausweisart", "Verbrauchsausweis"] }, { "eq": ["ausweisart", "Bedarfsausweis"] }] },
-      "required": { "or": [{ "eq": ["ausweisart", "Verbrauchsausweis"] }, { "eq": ["ausweisart", "Bedarfsausweis"] }] },
+      "required": { "eq": ["ausweisart", "Verbrauchsausweis"] },
       "accept": ".pdf,.jpg,.jpeg,.png",
       "multiple": true,
       "tipKey": "upload_verbrauch_heizkosten"
+    },
+    {
+      "key": "upload_nwg_stromabrechnungen",
+      "label": "Stromabrechnungen (letzte 3 Jahre)",
+      "type": "file",
+      "full": true,
+      "when": { "and": [{ "eq": ["gebaeudetyp", "NWG"] }, { "eq": ["ausweisart", "Verbrauchsausweis"] }] },
+      "required": { "and": [{ "eq": ["gebaeudetyp", "NWG"] }, { "eq": ["ausweisart", "Verbrauchsausweis"] }] },
+      "accept": ".pdf,.jpg,.jpeg,.png",
+      "multiple": true
+    },
+    {
+      "key": "upload_schornsteinfeger",
+      "label": "Schornsteinfegerprotokoll (optional)",
+      "type": "file",
+      "full": true,
+      "when": { "or": [{ "eq": ["ausweisart", "Verbrauchsausweis"] }, { "eq": ["ausweisart", "Bedarfsausweis"] }] },
+      "required": false,
+      "accept": ".pdf,.jpg,.jpeg,.png",
+      "multiple": true,
+      "tipKey": "upload_schornsteinfeger"
     },
     {
       "key": "upload_verbrauch_verbrauchsdaten",
       "label": "Verbrauchsdaten",
       "type": "file",
       "full": true,
-      "when": { "eq": ["ausweisart", "Bedarfsausweis"] },
-      "required": { "eq": ["ausweisart", "Bedarfsausweis"] },
+      "when": { "eq": ["ausweisart", "Verbrauchsausweis"] },
+      "required": false,
       "accept": ".pdf,.jpg,.jpeg,.png",
       "multiple": true,
       "tipKey": "upload_verbrauch_verbrauchsdaten"
@@ -181,6 +202,17 @@
       "imgAlt": "Fenster-Vermassung (lichte Maße + 3cm)"
     },
     {
+      "key": "anzahl_vollgeschosse",
+      "label": "Anzahl der Vollgeschosse",
+      "type": "number",
+      "full": true,
+      "when": { "eq": ["ausweisart", "Bedarfsausweis"] },
+      "required": { "eq": ["ausweisart", "Bedarfsausweis"] },
+      "min": 1,
+      "max": 20,
+      "hint": "z. B. 2"
+    },
+    {
       "key": "geschosshoehen",
       "label": "Geschosshöhen (m)",
       "type": "number",
@@ -219,6 +251,28 @@
       "required": { "eq": ["ausweisart", "Bedarfsausweis"] },
       "min": 1,
       "max": 500000
+    },
+    {
+      "key": "gebaeudelaenge",
+      "label": "Gebäudelänge (m) – Außenmaß",
+      "type": "number",
+      "full": true,
+      "when": { "and": [{ "eq": ["ausweisart", "Bedarfsausweis"] }, { "eq": ["gebaeudetyp", "WG"] }] },
+      "required": false,
+      "min": 1,
+      "max": 500,
+      "hint": "optional, z. B. 10"
+    },
+    {
+      "key": "gebaeudebreite",
+      "label": "Gebäudebreite (m) – Außenmaß",
+      "type": "number",
+      "full": true,
+      "when": { "and": [{ "eq": ["ausweisart", "Bedarfsausweis"] }, { "eq": ["gebaeudetyp", "WG"] }] },
+      "required": false,
+      "min": 1,
+      "max": 500,
+      "hint": "optional, z. B. 8"
     },
 
     {

@@ -7,6 +7,18 @@
     { "key": "strasse", "label": "Straße", "type": "text", "required": true, "hint": "Straße" },
     { "key": "hausnummer", "label": "Hausnummer", "type": "text", "required": true, "hint": "Nr." },
     { "key": "plz", "label": "PLZ", "type": "text", "required": true, "pattern": "^\\d{5}$", "hint": "z. B. 10115" },
-    { "key": "ort", "label": "Ort", "type": "text", "required": true, "hint": "z. B. München" }
+    { "key": "ort", "label": "Ort", "type": "text", "required": true, "hint": "z. B. München" },
+    { "key": "bundesland", "label": "Bundesland", "type": "text", "required": false, "hint": "z. B. Bayern" },
+    {
+      "key": "eigentuemer_verhaeltnis",
+      "label": "Eigentümer des Gebäudes",
+      "type": "radio",
+      "required": true,
+      "full": true,
+      "options": [
+        { "value": "Auftraggeber", "label": "Auftraggeber = Eigentümer" },
+        { "value": "Abweichend", "label": "Abweichender Eigentümer" }
+      ]
+    }
   ]
 }
