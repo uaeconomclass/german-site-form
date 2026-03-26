@@ -15,14 +15,20 @@
         {
           "key": "heizung_kesseltyp",
           "label": "Kesseltyp",
-          "type": "imgselect",
+          "type": "select",
           "when": { "eq": ["ausweisart", "Bedarfsausweis"] },
           "required": { "eq": ["ausweisart", "Bedarfsausweis"] },
+          "tipGrid": [
+            { "img": "../assets/images/heizung/konstanttemperaturkessel.png", "label": "Konstanttemperatur" },
+            { "img": "../assets/images/heizung/niedertemperaturkessel.png", "label": "Niedertemperatur" },
+            { "img": "../assets/images/heizung/brennwertkessel.png", "label": "Brennwert" },
+            { "img": "../assets/images/heizung/waermepumpe.png", "label": "Wärmepumpe" }
+          ],
           "options": [
-            { "value": "Konstanttemperatur", "label": "Konstanttemperatur", "img": "../assets/images/heizung/konstanttemperaturkessel.png", "tipKey": "heizung_konstanttemperatur" },
-            { "value": "Niedertemperatur", "label": "Niedertemperatur", "img": "../assets/images/heizung/niedertemperaturkessel.png", "tipKey": "heizung_niedertemperatur" },
-            { "value": "Brennwert", "label": "Brennwert", "img": "../assets/images/heizung/brennwertkessel.png", "tipKey": "heizung_brennwert" },
-            { "value": "Wärmepumpe", "label": "Wärmepumpe", "img": "../assets/images/heizung/waermepumpe.png", "tipKey": "heizung_waermepumpe" }
+            { "value": "Konstanttemperatur", "label": "Konstanttemperatur" },
+            { "value": "Niedertemperatur", "label": "Niedertemperatur" },
+            { "value": "Brennwert", "label": "Brennwert" },
+            { "value": "Wärmepumpe", "label": "Wärmepumpe" }
           ]
         },
         { "key": "heizung_waermeabgabe", "label": "Wärmeabgabe", "type": "select", "when": { "eq": ["ausweisart", "Bedarfsausweis"] }, "required": { "eq": ["ausweisart", "Bedarfsausweis"] }, "optionsRef": "heizung_waermeabgabe" },

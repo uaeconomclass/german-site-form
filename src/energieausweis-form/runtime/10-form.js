@@ -469,7 +469,20 @@ document.addEventListener("click", (e) => {
 function renderLabel(field) {
   const pieces = [el("span", null, field.label)];
   if (isRequired(field)) pieces.push(el("span", { class: "req", "aria-hidden": "true" }, "*"));
-  if (field.tipKey && TIPS[field.tipKey]) {
+  if (field.tipGrid && Array.isArray(field.tipGrid) && field.tipGrid.length) {
+    const grid = el("span", { class: "tipgrid" });
+    field.tipGrid.forEach(function (item) {
+      const card = el("span", { class: "tipgrid-item" });
+      card.appendChild(el("img", { src: resolveAssetUrl(String(item.img || "")), alt: String(item.label || ""), loading: "lazy" }));
+      card.appendChild(el("span", null, String(item.label || "")));
+      grid.appendChild(card);
+    });
+    pieces.push(
+      el("span", { class: "tip", role: "button", tabindex: "0", "aria-label": "Info" },
+        el("span", { class: "tipbox" }, grid)
+      )
+    );
+  } else if (field.tipKey && TIPS[field.tipKey]) {
     pieces.push(
       el(
         "span",

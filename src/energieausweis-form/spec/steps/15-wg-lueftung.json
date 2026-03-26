@@ -8,15 +8,21 @@
     {
       "key": "lueftung_type",
       "label": "Lüftungssystem",
-      "type": "imgselect",
+      "type": "select",
       "full": true,
       "required": true,
+      "tipGrid": [
+        { "img": "../assets/images/lueftung/fensterlueftung.png", "label": "Fensterlüftung" },
+        { "img": "../assets/images/lueftung/mechanische-abluft.png", "label": "Mechanische Abluftanlage" },
+        { "img": "../assets/images/lueftung/zentrale-lueftungsanlage.png", "label": "Zentrale Lüftungsanlage" },
+        { "img": "../assets/images/lueftung/dezentrale-lueftungsanlage.png", "label": "Dezentrale Lüftungsgeräte" }
+      ],
       "options": [
-        { "value": "Fensterlüftung", "label": "Fensterlüftung", "img": "../assets/images/lueftung/fensterlueftung.png", "tipKey": "lueftung_fenster" },
-        { "value": "Mechanische Abluftanlage", "label": "Mechanische Abluftanlage", "img": "../assets/images/lueftung/mechanische-abluft.png", "tipKey": "lueftung_abluft" },
-        { "value": "Zentrale Lüftungsanlage", "label": "Zentrale Lüftungsanlage", "img": "../assets/images/lueftung/zentrale-lueftungsanlage.png", "tipKey": "lueftung_zentral_ohne_wrg" },
-        { "value": "Dezentrale Lüftungsgeräte", "label": "Dezentrale Lüftungsgeräte", "img": "../assets/images/lueftung/dezentrale-lueftungsanlage.png", "tipKey": "lueftung_dezentral_wrg" },
-        { "value": "Nicht bekannt", "label": "Nicht bekannt", "img": "../assets/images/lueftung/fensterlueftung.png" }
+        { "value": "Fensterlüftung", "label": "Fensterlüftung" },
+        { "value": "Mechanische Abluftanlage", "label": "Mechanische Abluftanlage" },
+        { "value": "Zentrale Lüftungsanlage", "label": "Zentrale Lüftungsanlage" },
+        { "value": "Dezentrale Lüftungsgeräte", "label": "Dezentrale Lüftungsgeräte" },
+        { "value": "Nicht bekannt", "label": "Nicht bekannt" }
       ]
     },
     {
