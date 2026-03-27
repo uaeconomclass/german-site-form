@@ -1,50 +1,99 @@
-{
-  "id": "erklaerung",
-  "title": "Erklärung",
-  "meta": "A7",
-  "intro": { "title": "Erklärung des Auftraggebers", "text": "Bitte bestätigen Sie die Richtigkeit Ihrer Angaben." },
-  "fields": [
-    {
-      "key": "erklaerung_bestaetigung",
-      "label": "Ich bestätige, dass die gemachten Angaben sowie die bereitgestellten Unterlagen vollständig und nach bestem Wissen korrekt sind.",
-      "type": "checkbox",
-      "required": true,
-      "full": true
-    },
-    {
-      "type": "checklist",
-      "full": true,
-      "when": { "eq": ["ausweisart", "Verbrauchsausweis"] },
-      "title": "",
-      "text": "Die Erstellung des Energieverbrauchsausweises erfolgt auf Grundlage der vom Auftraggeber bereitgestellten Angaben zum Gebäude, zur Nutzung und zum Energieverbrauch. Eine technische Überprüfung der Anlagen oder der übermittelten Daten erfolgt im Rahmen des Energieverbrauchsausweises in der Regel nicht.\n\nDer Auftraggeber ist verpflichtet, alle für die Erstellung des Energieausweises erforderlichen Angaben vollständig und wahrheitsgemäß bereitzustellen. Für die Richtigkeit und Vollständigkeit der bereitgestellten Daten und Unterlagen ist der Auftraggeber verantwortlich."
-    },
-    {
-      "type": "checklist",
-      "full": true,
-      "when": { "eq": ["ausweisart", "Bedarfsausweis"] },
-      "title": "",
-      "text": "Die Erstellung des Energiebedarfsausweises erfolgt auf Grundlage der vom Auftraggeber bereitgestellten Angaben zum Gebäude, zur Nutzung sowie zur Anlagentechnik. Eine technische Überprüfung der Bauteile, Anlagen oder der übermittelten Daten vor Ort erfolgt in der Regel nicht.\n\nDer Auftraggeber ist verpflichtet, alle erforderlichen Angaben vollständig und wahrheitsgemäß bereitzustellen. Für die Richtigkeit und Vollständigkeit ist der Auftraggeber verantwortlich."
-    },
-    {
-      "type": "checklist",
-      "full": true,
-      "when": { "and": [{ "eq": ["ausweisart", "Verbrauchsausweis"] }, { "neq": ["gebaeudetyp", "NWG"] }] },
-      "title": "Rechtliche Hinweise",
-      "text": "1. Datengrundlage – Der Energieverbrauchsausweis wird auf Grundlage der vom Auftraggeber bereitgestellten Gebäude-, Nutzungs- und Verbrauchsdaten erstellt. Eine technische Überprüfung der Angaben erfolgt nicht.\n2. Mitwirkungspflicht des Auftraggebers – Der Auftraggeber ist verpflichtet, alle Angaben vollständig und nach bestem Wissen bereitzustellen.\n3. Nutzerabhängigkeit – Das Ergebnis kann durch die Nutzung des Gebäudes, Betriebszeiten und das Verhalten der Nutzer beeinflusst werden.\n4. Erforderliche Verbrauchsdaten – Mindestens drei zusammenhängende Abrechnungsjahre. Bei Wohngebäuden: Heizenergieverbrauch der letzten drei Jahre.\n5. Einsatzbereich – Für viele bestehende Wohngebäude möglich. In bestimmten Fällen ist ein Bedarfsausweis erforderlich.\n6. Registrierungsnummer – Gemäß GEG erhält jeder Energieausweis eine Registriernummer des DIBt.\n7. Vor-Ort-Begehung – Beim Verbrauchsausweis in der Regel keine Vor-Ort-Begehung."
-    },
-    {
-      "type": "checklist",
-      "full": true,
-      "when": { "eq": ["ausweisart", "Bedarfsausweis"] },
-      "title": "Rechtliche Hinweise",
-      "text": "1. Datengrundlage – Berechnung auf Grundlage der bereitgestellten Angaben zu Gebäudehülle, Technik und Geometrie. Plausibilitätsprüfung, keine Vor-Ort-Überprüfung.\n2. Mitwirkungspflicht – Vollständige und wahrheitsgemäße Angaben sind Pflicht des Auftraggebers.\n3. Berechnungsgrundlage – Rechnerische Bewertung; unabhängig vom individuellen Heiz- und Nutzungsverhalten.\n4. Angaben zum Gebäudezustand – Nachträgliche Änderungen können das Ergebnis beeinflussen.\n5. Einsatzbereich – Insbesondere für: Neubauten, Gebäude < 5 WE mit Bauantrag vor 01.11.1977, Gebäude ohne ausreichende Verbrauchsdaten.\n6. Registriernummer – Jeder Energieausweis erhält eine Registriernummer des DIBt.\n7. Vor-Ort-Begehung – Kann erforderlich sein, ist aber nicht in jedem Fall zwingend notwendig."
-    },
-    {
-      "type": "checklist",
-      "full": true,
-      "when": { "and": [{ "eq": ["gebaeudetyp", "NWG"] }, { "eq": ["ausweisart", "Verbrauchsausweis"] }] },
-      "title": "Rechtliche Hinweise",
-      "text": "1. Datengrundlage – Erstellung auf Grundlage der bereitgestellten Gebäude-, Nutzungs- und Verbrauchsdaten. Plausibilitätsprüfung, keine technische Überprüfung.\n2. Mitwirkungspflicht – Vollständige und wahrheitsgemäße Angaben sind Pflicht des Auftraggebers.\n3. Nutzerabhängigkeit – Ergebnis kann durch Nutzung, Betriebszeiten und Nutzerverhalten beeinflusst werden.\n4. Erforderliche Verbrauchsdaten – Mindestens drei zusammenhängende Abrechnungsjahre; bei NWG: Wärme- und Stromverbräuche.\n5. Einsatzbereich – Für viele bestehende NWG möglich; bei fehlenden Daten ggf. Bedarfsausweis erforderlich.\n6. Registrierungsnummer – Jeder Energieausweis erhält eine Registriernummer des DIBt.\n7. Vor-Ort-Begehung – In der Regel keine Vor-Ort-Begehung beim Verbrauchsausweis."
-    }
-  ]
+﻿{
+    "id":  "erklaerung",
+    "title":  "Erklärung",
+    "meta":  "A7",
+    "intro":  {
+                  "title":  "Erklärung des Auftraggebers",
+                  "text":  "Bitte bestätigen Sie die Richtigkeit Ihrer Angaben."
+              },
+    "fields":  [
+                   {
+                       "key":  "erklaerung_bestaetigung",
+                       "label":  "Ich bestätige, dass die gemachten Angaben sowie die bereitgestellten Unterlagen vollständig und nach bestem Wissen korrekt sind.",
+                       "type":  "checkbox",
+                       "required":  true,
+                       "full":  true
+                   },
+                   {
+                       "type":  "checklist",
+                       "full":  true,
+                       "when":  {
+                                    "eq":  [
+                                               "ausweisart",
+                                               "Verbrauchsausweis"
+                                           ]
+                                },
+                       "title":  "",
+                       "text":  "Die Erstellung des Energieverbrauchsausweises erfolgt auf Grundlage der vom Auftraggeber bereitgestellten Angaben zum Gebäude, zur Nutzung und zum Energieverbrauch. Eine technische Überprüfung der Anlagen oder der übermittelten Daten erfolgt im Rahmen des Energieverbrauchsausweises in der Regel nicht.\n\nDer Auftraggeber ist verpflichtet, alle für die Erstellung des Energieausweises erforderlichen Angaben vollständig und wahrheitsgemäß bereitzustellen. Für die Richtigkeit und Vollständigkeit der bereitgestellten Daten und Unterlagen ist der Auftraggeber verantwortlich."
+                   },
+                   {
+                       "type":  "checklist",
+                       "full":  true,
+                       "when":  {
+                                    "eq":  [
+                                               "ausweisart",
+                                               "Bedarfsausweis"
+                                           ]
+                                },
+                       "title":  "",
+                       "text":  "Die Erstellung des Energiebedarfsausweises erfolgt auf Grundlage der vom Auftraggeber bereitgestellten Angaben zum Gebäude, zur Nutzung sowie zur Anlagentechnik. Eine technische Überprüfung der Bauteile, Anlagen oder der übermittelten Daten vor Ort erfolgt in der Regel nicht.\n\nDer Auftraggeber ist verpflichtet, alle erforderlichen Angaben vollständig und wahrheitsgemäß bereitzustellen. Für die Richtigkeit und Vollständigkeit ist der Auftraggeber verantwortlich."
+                   },
+                   {
+                       "type":  "checklist",
+                       "full":  true,
+                       "when":  {
+                                    "and":  [
+                                                {
+                                                    "eq":  [
+                                                               "ausweisart",
+                                                               "Verbrauchsausweis"
+                                                           ]
+                                                },
+                                                {
+                                                    "neq":  [
+                                                                "gebaeudetyp",
+                                                                "NWG"
+                                                            ]
+                                                }
+                                            ]
+                                },
+                       "title":  "Rechtliche Hinweise",
+                       "text":  "1. Datengrundlage – Der Energieverbrauchsausweis wird auf Grundlage der vom Auftraggeber bereitgestellten Gebäude-, Nutzungs- und Verbrauchsdaten erstellt. Eine technische Überprüfung der Angaben erfolgt nicht.\n2. Mitwirkungspflicht des Auftraggebers – Der Auftraggeber ist verpflichtet, alle Angaben vollständig und nach bestem Wissen bereitzustellen.\n3. Nutzerabhängigkeit – Das Ergebnis kann durch die Nutzung des Gebäudes, Betriebszeiten und das Verhalten der Nutzer beeinflusst werden.\n4. Erforderliche Verbrauchsdaten – Mindestens drei zusammenhängende Abrechnungsjahre. Bei Wohngebäuden: Heizenergieverbrauch der letzten drei Jahre.\n5. Einsatzbereich – Für viele bestehende Wohngebäude möglich. In bestimmten Fällen ist ein Bedarfsausweis erforderlich.\n6. Registrierungsnummer – Gemäß GEG erhält jeder Energieausweis eine Registriernummer des DIBt.\n7. Vor-Ort-Begehung – Beim Verbrauchsausweis in der Regel keine Vor-Ort-Begehung."
+                   },
+                   {
+                       "type":  "checklist",
+                       "full":  true,
+                       "when":  {
+                                    "eq":  [
+                                               "ausweisart",
+                                               "Bedarfsausweis"
+                                           ]
+                                },
+                       "title":  "Rechtliche Hinweise",
+                       "text":  "1. Datengrundlage – Berechnung auf Grundlage der bereitgestellten Angaben zu Gebäudehülle, Technik und Geometrie. Plausibilitätsprüfung, keine Vor-Ort-Überprüfung.\n2. Mitwirkungspflicht – Vollständige und wahrheitsgemäße Angaben sind Pflicht des Auftraggebers.\n3. Berechnungsgrundlage – Rechnerische Bewertung; unabhängig vom individuellen Heiz- und Nutzungsverhalten.\n4. Angaben zum Gebäudezustand – Nachträgliche Änderungen können das Ergebnis beeinflussen.\n5. Einsatzbereich – Insbesondere für: Neubauten, Gebäude \u003c 5 WE mit Bauantrag vor 01.11.1977, Gebäude ohne ausreichende Verbrauchsdaten.\n6. Registriernummer – Jeder Energieausweis erhält eine Registriernummer des DIBt.\n7. Vor-Ort-Begehung – Kann erforderlich sein, ist aber nicht in jedem Fall zwingend notwendig."
+                   },
+                   {
+                       "type":  "checklist",
+                       "full":  true,
+                       "when":  {
+                                    "and":  [
+                                                {
+                                                    "eq":  [
+                                                               "gebaeudetyp",
+                                                               "NWG"
+                                                           ]
+                                                },
+                                                {
+                                                    "eq":  [
+                                                               "ausweisart",
+                                                               "Verbrauchsausweis"
+                                                           ]
+                                                }
+                                            ]
+                                },
+                       "title":  "Rechtliche Hinweise",
+                       "text":  "1. Datengrundlage – Erstellung auf Grundlage der bereitgestellten Gebäude-, Nutzungs- und Verbrauchsdaten. Plausibilitätsprüfung, keine technische Überprüfung.\n2. Mitwirkungspflicht – Vollständige und wahrheitsgemäße Angaben sind Pflicht des Auftraggebers.\n3. Nutzerabhängigkeit – Ergebnis kann durch Nutzung, Betriebszeiten und Nutzerverhalten beeinflusst werden.\n4. Erforderliche Verbrauchsdaten – Mindestens drei zusammenhängende Abrechnungsjahre; bei NWG: Wärme- und Stromverbräuche.\n5. Einsatzbereich – Für viele bestehende NWG möglich; bei fehlenden Daten ggf. Bedarfsausweis erforderlich.\n6. Registrierungsnummer – Jeder Energieausweis erhält eine Registriernummer des DIBt.\n7. Vor-Ort-Begehung – In der Regel keine Vor-Ort-Begehung beim Verbrauchsausweis."
+                   }
+               ],
+    "group":  "Abschluss"
 }

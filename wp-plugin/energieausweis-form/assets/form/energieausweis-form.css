@@ -124,6 +124,40 @@ code{ font-family:var(--mono); font-size:.95em; }
   pointer-events:none;
 }
 
+.groupbar{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  align-items:center;
+  margin:0 0 10px;
+}
+.group-pill{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  padding:5px 12px;
+  border-radius:20px;
+  background:#e4e7ec;
+  color:#475467;
+  font-size:13px;
+  line-height:18px;
+  white-space:nowrap;
+  font-weight:500;
+}
+.group-pill.active{
+  background:#ADE242;
+  color:#1a2e05;
+}
+.group-pill.done{
+  background:#d1fadf;
+  color:#027a48;
+}
+.group-count{
+  font-size:11px;
+  font-weight:700;
+  opacity:0.75;
+}
+
 .headtop{ margin:2px 0 10px; }
 .head-left h1{ margin:0; font-size:16px; font-weight:700; }
 .sub{ margin:3px 0 0; color:var(--muted); font-size:14px; line-height:20px; }

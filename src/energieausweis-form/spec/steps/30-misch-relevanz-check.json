@@ -1,41 +1,47 @@
-{
-  "id": "misch_relevanz",
-  "title": "Mischgebäude: Komplexe Technik?",
-  "meta": "C1",
-  "when": { "eq": ["__step30_enabled", "1"] },
-  "intro": {
-    "title": "Prüfung",
-    "text": "Bei Mischgebäuden hängt die energetische Einordnung oft von der Technik ab. Hinweis: Die endgültige Bewertung erfolgt nach GEG.",
-    "img": "../assets/images/infografik/relevanz-check-flowchart.png"
-  },
-  "fields": [
-    {
-      "key": "misch_tech_lueftung",
-      "label": "Gibt es eine eigene Lüftungsanlage?",
-      "type": "radio",
-      "required": true,
-      "optionsRef": "ja_nein_radio"
-    },
-    {
-      "key": "misch_tech_kuehlung",
-      "label": "Gibt es Kühlung oder Klimaanlagen?",
-      "type": "radio",
-      "required": true,
-      "optionsRef": "ja_nein_radio"
-    },
-    {
-      "key": "misch_tech_oeffnungszeiten",
-      "label": "Hat der Gewerbeteil lange Öffnungszeiten?",
-      "type": "radio",
-      "required": true,
-      "optionsRef": "ja_nein_radio"
-    },
-    {
-      "key": "misch_tech_glas",
-      "label": "Gibt es große Glasflächen oder Küchenabluft?",
-      "type": "radio",
-      "required": true,
-      "optionsRef": "ja_nein_radio"
-    }
-  ]
+﻿{
+    "id":  "misch_relevanz",
+    "title":  "Mischgebäude: Komplexe Technik?",
+    "meta":  "C1",
+    "when":  {
+                 "eq":  [
+                            "__step30_enabled",
+                            "1"
+                        ]
+             },
+    "intro":  {
+                  "title":  "Prüfung",
+                  "text":  "Bei Mischgebäuden hängt die energetische Einordnung oft von der Technik ab. Hinweis: Die endgültige Bewertung erfolgt nach GEG.",
+                  "img":  "../assets/images/infografik/relevanz-check-flowchart.png"
+              },
+    "fields":  [
+                   {
+                       "key":  "misch_tech_lueftung",
+                       "label":  "Gibt es eine eigene Lüftungsanlage?",
+                       "type":  "radio",
+                       "required":  true,
+                       "optionsRef":  "ja_nein_radio"
+                   },
+                   {
+                       "key":  "misch_tech_kuehlung",
+                       "label":  "Gibt es Kühlung oder Klimaanlagen?",
+                       "type":  "radio",
+                       "required":  true,
+                       "optionsRef":  "ja_nein_radio"
+                   },
+                   {
+                       "key":  "misch_tech_oeffnungszeiten",
+                       "label":  "Hat der Gewerbeteil lange Öffnungszeiten?",
+                       "type":  "radio",
+                       "required":  true,
+                       "optionsRef":  "ja_nein_radio"
+                   },
+                   {
+                       "key":  "misch_tech_glas",
+                       "label":  "Gibt es große Glasflächen oder Küchenabluft?",
+                       "type":  "radio",
+                       "required":  true,
+                       "optionsRef":  "ja_nein_radio"
+                   }
+               ],
+    "group":  "Gebäude"
 }

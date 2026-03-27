@@ -1,142 +1,314 @@
-{
-  "id": "nwg_stromverbrauch",
-  "title": "NWG: Strom- & Energieverbrauch",
-  "meta": "B5",
-  "when": { "and": [{ "eq": ["gebaeudetyp", "NWG"] }, { "eq": ["ausweisart", "Verbrauchsausweis"] }] },
-  "intro": { "title": "Energieverbrauch", "text": "Strom- und Wärmeverbrauch der letzten 3 Jahre. Der Verbrauch muss mindestens 36 Monate zusammenhängend umfassen (die jüngste Abrechnung max. 18 Monate alt)." },
-  "blocks": [
-    {
-      "title": "Stromverbrauch",
-      "fields": [
-        { "key": "nwg_strom_betrifft", "label": "Stromverbrauch betrifft", "type": "radio", "required": true, "optionsRef": "nwg_strom_betrifft", "full": true },
-        { "key": "nwg_strom_enthaelt_beleuchtung", "label": "Beleuchtung enthalten?", "type": "radio", "required": true, "optionsRef": "ja_nein_unbekannt" },
-        { "key": "nwg_strom_enthaelt_lueftung", "label": "Lüftung enthalten?", "type": "radio", "required": true, "optionsRef": "ja_nein_unbekannt" },
-        { "key": "nwg_strom_enthaelt_kuehlung", "label": "Kühlung enthalten?", "type": "radio", "required": true, "optionsRef": "ja_nein_unbekannt" },
-        { "key": "nwg_strom_enthaelt_sonstiges", "label": "Sonstige Gebäudetechnik enthalten?", "type": "radio", "required": true, "optionsRef": "ja_nein_unbekannt" },
-        { "key": "nwg_strom_sep_kwh", "label": "Separater Stromverbrauch dieser Anlagen (kWh/Jahr)", "type": "number", "required": false, "min": 0, "max": 99999999, "hint": "optional, falls bekannt" },
-        {
-          "key": "nwg_strom_periods",
-          "label": "Stromverbrauch (letzte 3 Jahre)",
-          "type": "periods3",
-          "full": true,
-          "required": true,
-          "startKey": "nwg_strom_start",
-          "unitKey": "nwg_strom_einheit",
-          "defaultUnit": "kWh",
-          "startMonthsBack": 36,
-          "unitOptions": [
-            { "value": "kWh", "label": "kWh" }
-          ],
-          "tipKey": "etr_perioden",
-          "fields": []
-        }
-      ]
-    },
-    {
-      "title": "Wärmeverbrauch",
-      "fields": [
-        { "key": "etr_traeger_gewechselt", "label": "Wurde der Energieträger in den letzten 3 Jahren gewechselt?", "type": "radio", "required": true, "optionsRef": "ja_nein_radio", "full": true },
-        { "key": "etr_traeger_von", "label": "Früherer Energieträger", "type": "text", "required": false, "when": { "eq": ["etr_traeger_gewechselt", "Ja"] }, "hint": "z. B. Heizöl", "full": true },
-        { "key": "etr_traeger_zu", "label": "Neuer Energieträger", "type": "text", "required": false, "when": { "eq": ["etr_traeger_gewechselt", "Ja"] }, "hint": "z. B. Wärmepumpe", "full": true },
-        { "key": "etr_abrechnungsart_nwg", "label": "Abrechnungsart", "type": "radio", "required": true, "optionsRef": "etr_abrechnungsart_nwg", "full": true },
-        { "key": "etr_verbrauch_betrifft_nwg", "label": "Verbrauch betrifft", "type": "radio", "required": true, "optionsRef": "etr_verbrauch_betrifft_nwg", "full": true },
-        {
-          "key": "etr1_kategorie",
-          "label": "Energieträger",
-          "type": "select",
-          "full": true,
-          "required": true,
-          "optionsRef": "etr_kategorie_bk",
-          "tipKey": "etr_kategorie"
-        },
-        {
-          "key": "etr1_heizung",
-          "label": "Für Heizung genutzt?",
-          "type": "radio",
-          "full": true,
-          "required": true,
-          "optionsRef": "ja_nein_radio"
-        },
-        {
-          "key": "etr1_tww",
-          "label": "Für Warmwasser genutzt?",
-          "type": "radio",
-          "full": true,
-          "required": true,
-          "optionsRef": "ja_nein_radio"
-        },
-        {
-          "key": "etr1_periods",
-          "label": "Wärmeverbrauch (letzte 3 Jahre)",
-          "type": "periods3",
-          "full": true,
-          "required": true,
-          "startKey": "etr1_start",
-          "unitKey": "etr1_einheit",
-          "defaultUnit": "kWh",
-          "startMonthsBack": 36,
-          "unitOptions": [
-            { "value": "kWh", "label": "kWh" },
-            { "value": "m3", "label": "m3" },
-            { "value": "l", "label": "l" }
-          ],
-          "tipKey": "etr_perioden",
-          "fields": []
-        },
-        {
-          "key": "etr2_enabled",
-          "label": "Zweiten Energieträger erfassen",
-          "type": "checkbox",
-          "full": true,
-          "tipKey": "etr2_optional"
-        },
-        {
-          "key": "etr2_kategorie",
-          "label": "Energieträger 2",
-          "type": "select",
-          "full": true,
-          "when": { "eq": ["etr2_enabled", true] },
-          "required": { "eq": ["etr2_enabled", true] },
-          "optionsRef": "etr_kategorie_bk"
-        },
-        {
-          "key": "etr2_heizung",
-          "label": "Für Heizung genutzt?",
-          "type": "radio",
-          "full": true,
-          "when": { "eq": ["etr2_enabled", true] },
-          "required": { "eq": ["etr2_enabled", true] },
-          "optionsRef": "ja_nein_radio"
-        },
-        {
-          "key": "etr2_tww",
-          "label": "Für Warmwasser genutzt?",
-          "type": "radio",
-          "full": true,
-          "when": { "eq": ["etr2_enabled", true] },
-          "required": { "eq": ["etr2_enabled", true] },
-          "optionsRef": "ja_nein_radio"
-        },
-        {
-          "key": "etr2_periods",
-          "label": "Wärmeverbrauch Energieträger 2 (letzte 3 Jahre)",
-          "type": "periods3",
-          "full": true,
-          "when": { "eq": ["etr2_enabled", true] },
-          "required": { "eq": ["etr2_enabled", true] },
-          "startKey": "etr2_start",
-          "unitKey": "etr2_einheit",
-          "defaultUnit": "kWh",
-          "startMonthsBack": 36,
-          "unitOptions": [
-            { "value": "kWh", "label": "kWh" },
-            { "value": "m3", "label": "m3" },
-            { "value": "l", "label": "l" }
-          ],
-          "tipKey": "etr_perioden",
-          "fields": []
-        }
-      ]
-    }
-  ]
+﻿{
+    "id":  "nwg_stromverbrauch",
+    "title":  "NWG: Strom- \u0026 Energieverbrauch",
+    "meta":  "B5",
+    "when":  {
+                 "and":  [
+                             {
+                                 "eq":  [
+                                            "gebaeudetyp",
+                                            "NWG"
+                                        ]
+                             },
+                             {
+                                 "eq":  [
+                                            "ausweisart",
+                                            "Verbrauchsausweis"
+                                        ]
+                             }
+                         ]
+             },
+    "intro":  {
+                  "title":  "Energieverbrauch",
+                  "text":  "Strom- und Wärmeverbrauch der letzten 3 Jahre. Der Verbrauch muss mindestens 36 Monate zusammenhängend umfassen (die jüngste Abrechnung max. 18 Monate alt)."
+              },
+    "blocks":  [
+                   {
+                       "title":  "Stromverbrauch",
+                       "fields":  [
+                                      {
+                                          "key":  "nwg_strom_betrifft",
+                                          "label":  "Stromverbrauch betrifft",
+                                          "type":  "radio",
+                                          "required":  true,
+                                          "optionsRef":  "nwg_strom_betrifft",
+                                          "full":  true
+                                      },
+                                      {
+                                          "key":  "nwg_strom_enthaelt_beleuchtung",
+                                          "label":  "Beleuchtung enthalten?",
+                                          "type":  "radio",
+                                          "required":  true,
+                                          "optionsRef":  "ja_nein_unbekannt"
+                                      },
+                                      {
+                                          "key":  "nwg_strom_enthaelt_lueftung",
+                                          "label":  "Lüftung enthalten?",
+                                          "type":  "radio",
+                                          "required":  true,
+                                          "optionsRef":  "ja_nein_unbekannt"
+                                      },
+                                      {
+                                          "key":  "nwg_strom_enthaelt_kuehlung",
+                                          "label":  "Kühlung enthalten?",
+                                          "type":  "radio",
+                                          "required":  true,
+                                          "optionsRef":  "ja_nein_unbekannt"
+                                      },
+                                      {
+                                          "key":  "nwg_strom_enthaelt_sonstiges",
+                                          "label":  "Sonstige Gebäudetechnik enthalten?",
+                                          "type":  "radio",
+                                          "required":  true,
+                                          "optionsRef":  "ja_nein_unbekannt"
+                                      },
+                                      {
+                                          "key":  "nwg_strom_sep_kwh",
+                                          "label":  "Separater Stromverbrauch dieser Anlagen (kWh/Jahr)",
+                                          "type":  "number",
+                                          "required":  false,
+                                          "min":  0,
+                                          "max":  99999999,
+                                          "hint":  "optional, falls bekannt"
+                                      },
+                                      {
+                                          "key":  "nwg_strom_periods",
+                                          "label":  "Stromverbrauch (letzte 3 Jahre)",
+                                          "type":  "periods3",
+                                          "full":  true,
+                                          "required":  true,
+                                          "startKey":  "nwg_strom_start",
+                                          "unitKey":  "nwg_strom_einheit",
+                                          "defaultUnit":  "kWh",
+                                          "startMonthsBack":  36,
+                                          "unitOptions":  [
+                                                              {
+                                                                  "value":  "kWh",
+                                                                  "label":  "kWh"
+                                                              }
+                                                          ],
+                                          "tipKey":  "etr_perioden",
+                                          "fields":  [
+
+                                                     ]
+                                      }
+                                  ]
+                   },
+                   {
+                       "title":  "Wärmeverbrauch",
+                       "fields":  [
+                                      {
+                                          "key":  "etr_traeger_gewechselt",
+                                          "label":  "Wurde der Energieträger in den letzten 3 Jahren gewechselt?",
+                                          "type":  "radio",
+                                          "required":  true,
+                                          "optionsRef":  "ja_nein_radio",
+                                          "full":  true
+                                      },
+                                      {
+                                          "key":  "etr_traeger_von",
+                                          "label":  "Früherer Energieträger",
+                                          "type":  "text",
+                                          "required":  false,
+                                          "when":  {
+                                                       "eq":  [
+                                                                  "etr_traeger_gewechselt",
+                                                                  "Ja"
+                                                              ]
+                                                   },
+                                          "hint":  "z. B. Heizöl",
+                                          "full":  true
+                                      },
+                                      {
+                                          "key":  "etr_traeger_zu",
+                                          "label":  "Neuer Energieträger",
+                                          "type":  "text",
+                                          "required":  false,
+                                          "when":  {
+                                                       "eq":  [
+                                                                  "etr_traeger_gewechselt",
+                                                                  "Ja"
+                                                              ]
+                                                   },
+                                          "hint":  "z. B. Wärmepumpe",
+                                          "full":  true
+                                      },
+                                      {
+                                          "key":  "etr_abrechnungsart_nwg",
+                                          "label":  "Abrechnungsart",
+                                          "type":  "radio",
+                                          "required":  true,
+                                          "optionsRef":  "etr_abrechnungsart_nwg",
+                                          "full":  true
+                                      },
+                                      {
+                                          "key":  "etr_verbrauch_betrifft_nwg",
+                                          "label":  "Verbrauch betrifft",
+                                          "type":  "radio",
+                                          "required":  true,
+                                          "optionsRef":  "etr_verbrauch_betrifft_nwg",
+                                          "full":  true
+                                      },
+                                      {
+                                          "key":  "etr1_kategorie",
+                                          "label":  "Energieträger",
+                                          "type":  "select",
+                                          "full":  true,
+                                          "required":  true,
+                                          "optionsRef":  "etr_kategorie_bk",
+                                          "tipKey":  "etr_kategorie"
+                                      },
+                                      {
+                                          "key":  "etr1_heizung",
+                                          "label":  "Für Heizung genutzt?",
+                                          "type":  "radio",
+                                          "full":  true,
+                                          "required":  true,
+                                          "optionsRef":  "ja_nein_radio"
+                                      },
+                                      {
+                                          "key":  "etr1_tww",
+                                          "label":  "Für Warmwasser genutzt?",
+                                          "type":  "radio",
+                                          "full":  true,
+                                          "required":  true,
+                                          "optionsRef":  "ja_nein_radio"
+                                      },
+                                      {
+                                          "key":  "etr1_periods",
+                                          "label":  "Wärmeverbrauch (letzte 3 Jahre)",
+                                          "type":  "periods3",
+                                          "full":  true,
+                                          "required":  true,
+                                          "startKey":  "etr1_start",
+                                          "unitKey":  "etr1_einheit",
+                                          "defaultUnit":  "kWh",
+                                          "startMonthsBack":  36,
+                                          "unitOptions":  [
+                                                              {
+                                                                  "value":  "kWh",
+                                                                  "label":  "kWh"
+                                                              },
+                                                              {
+                                                                  "value":  "m3",
+                                                                  "label":  "m3"
+                                                              },
+                                                              {
+                                                                  "value":  "l",
+                                                                  "label":  "l"
+                                                              }
+                                                          ],
+                                          "tipKey":  "etr_perioden",
+                                          "fields":  [
+
+                                                     ]
+                                      },
+                                      {
+                                          "key":  "etr2_enabled",
+                                          "label":  "Zweiten Energieträger erfassen",
+                                          "type":  "checkbox",
+                                          "full":  true,
+                                          "tipKey":  "etr2_optional"
+                                      },
+                                      {
+                                          "key":  "etr2_kategorie",
+                                          "label":  "Energieträger 2",
+                                          "type":  "select",
+                                          "full":  true,
+                                          "when":  {
+                                                       "eq":  [
+                                                                  "etr2_enabled",
+                                                                  true
+                                                              ]
+                                                   },
+                                          "required":  {
+                                                           "eq":  [
+                                                                      "etr2_enabled",
+                                                                      true
+                                                                  ]
+                                                       },
+                                          "optionsRef":  "etr_kategorie_bk"
+                                      },
+                                      {
+                                          "key":  "etr2_heizung",
+                                          "label":  "Für Heizung genutzt?",
+                                          "type":  "radio",
+                                          "full":  true,
+                                          "when":  {
+                                                       "eq":  [
+                                                                  "etr2_enabled",
+                                                                  true
+                                                              ]
+                                                   },
+                                          "required":  {
+                                                           "eq":  [
+                                                                      "etr2_enabled",
+                                                                      true
+                                                                  ]
+                                                       },
+                                          "optionsRef":  "ja_nein_radio"
+                                      },
+                                      {
+                                          "key":  "etr2_tww",
+                                          "label":  "Für Warmwasser genutzt?",
+                                          "type":  "radio",
+                                          "full":  true,
+                                          "when":  {
+                                                       "eq":  [
+                                                                  "etr2_enabled",
+                                                                  true
+                                                              ]
+                                                   },
+                                          "required":  {
+                                                           "eq":  [
+                                                                      "etr2_enabled",
+                                                                      true
+                                                                  ]
+                                                       },
+                                          "optionsRef":  "ja_nein_radio"
+                                      },
+                                      {
+                                          "key":  "etr2_periods",
+                                          "label":  "Wärmeverbrauch Energieträger 2 (letzte 3 Jahre)",
+                                          "type":  "periods3",
+                                          "full":  true,
+                                          "when":  {
+                                                       "eq":  [
+                                                                  "etr2_enabled",
+                                                                  true
+                                                              ]
+                                                   },
+                                          "required":  {
+                                                           "eq":  [
+                                                                      "etr2_enabled",
+                                                                      true
+                                                                  ]
+                                                       },
+                                          "startKey":  "etr2_start",
+                                          "unitKey":  "etr2_einheit",
+                                          "defaultUnit":  "kWh",
+                                          "startMonthsBack":  36,
+                                          "unitOptions":  [
+                                                              {
+                                                                  "value":  "kWh",
+                                                                  "label":  "kWh"
+                                                              },
+                                                              {
+                                                                  "value":  "m3",
+                                                                  "label":  "m3"
+                                                              },
+                                                              {
+                                                                  "value":  "l",
+                                                                  "label":  "l"
+                                                              }
+                                                          ],
+                                          "tipKey":  "etr_perioden",
+                                          "fields":  [
+
+                                                     ]
+                                      }
+                                  ]
+                   }
+               ],
+    "group":  "Technik"
 }

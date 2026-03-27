@@ -130,6 +130,7 @@ function getStorageKey() {
 
 const dom = {
   topStepper: document.getElementById("topStepper"),
+  groupStepper: document.getElementById("groupStepper"),
   stepTitle: document.getElementById("stepTitle"),
   stepMeta: document.getElementById("stepMeta"),
   stepDesc: document.getElementById("stepDesc"),
@@ -588,6 +589,40 @@ function renderStepper() {
       el("span", null, st.title)
     );
     dom.topStepper.appendChild(pill);
+  });
+}
+
+var GROUP_ORDER = ["Gebäude", "Technik", "Zusatz", "Abschluss"];
+
+function renderGroupStepper() {
+  if (!dom.groupStepper) return;
+  const steps = visibleSteps();
+  const currentSt = steps[stepIndex];
+  const currentGroup = currentSt && currentSt.group ? currentSt.group : null;
+
+  // Count total and done steps per group
+  var groupData = {};
+  GROUP_ORDER.forEach(function(g) { groupData[g] = { total: 0, done: 0 }; });
+  steps.forEach(function(st, idx) {
+    var g = st.group;
+    if (!g || !groupData[g]) return;
+    groupData[g].total++;
+    if (idx < stepIndex) groupData[g].done++;
+  });
+
+  dom.groupStepper.innerHTML = "";
+  GROUP_ORDER.forEach(function(g) {
+    var d = groupData[g];
+    if (!d || d.total === 0) return;
+    var isActive = g === currentGroup;
+    var isDone = d.done === d.total;
+    var badge = el("div", {
+      class: "group-pill" + (isActive ? " active" : "") + (isDone ? " done" : ""),
+    },
+      el("span", { class: "group-label" }, g),
+      el("span", { class: "group-count" }, String(d.done) + "/" + String(d.total))
+    );
+    dom.groupStepper.appendChild(badge);
   });
 }
 
@@ -1801,6 +1836,7 @@ function render() {
   dom.btnBack.disabled = stepIndex === 0;
 
   renderStepper();
+  renderGroupStepper();
   runPlausibilityWarnings();
   updateOverview();
   updateEfficiencyMarkers();

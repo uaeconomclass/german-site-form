@@ -1,23 +1,24 @@
-{
-  "id": "thank_you",
-  "title": "Bestätigung",
-  "meta": "8",
-  "intro": {
-    "title": "Vielen Dank",
-    "text": "Ihre Anfrage wurde erfolgreich übermittelt. Wir prüfen die Angaben und melden uns bei Ihnen."
-  },
-  "fields": [
-    {
-      "type": "checklist",
-      "variant": "thankyou-card",
-      "full": true,
-      "img": "../assets/images/overview/group-390.png",
-      "imgAlt": "Bestätigung",
-      "title": "Ihr Antrag wurde erfolgreich übermittelt.",
-      "text": "Wir setzen uns zeitnah mit Ihnen in Verbindung. Bitte prüfen Sie auch Ihren E-Mail-Posteingang.",
-      "note": "Den Status Ihres Antrags können Sie in Ihrem persönlichen Benutzerkonto einsehen. Sollten Sie noch nicht registriert sein, bitten wir Sie, ein Benutzerkonto zu erstellen.",
-      "ctaLabel": "Zur Startseite",
-      "ctaHref": "/"
-    }
-  ]
+﻿{
+    "id":  "thank_you",
+    "title":  "Bestätigung",
+    "meta":  "8",
+    "intro":  {
+                  "title":  "Vielen Dank",
+                  "text":  "Ihre Anfrage wurde erfolgreich übermittelt. Wir prüfen die Angaben und melden uns bei Ihnen."
+              },
+    "fields":  [
+                   {
+                       "type":  "checklist",
+                       "variant":  "thankyou-card",
+                       "full":  true,
+                       "img":  "../assets/images/overview/group-390.png",
+                       "imgAlt":  "Bestätigung",
+                       "title":  "Ihr Antrag wurde erfolgreich übermittelt.",
+                       "text":  "Wir setzen uns zeitnah mit Ihnen in Verbindung. Bitte prüfen Sie auch Ihren E-Mail-Posteingang.",
+                       "note":  "Den Status Ihres Antrags können Sie in Ihrem persönlichen Benutzerkonto einsehen. Sollten Sie noch nicht registriert sein, bitten wir Sie, ein Benutzerkonto zu erstellen.",
+                       "ctaLabel":  "Zur Startseite",
+                       "ctaHref":  "/"
+                   }
+               ],
+    "group":  "Abschluss"
 }

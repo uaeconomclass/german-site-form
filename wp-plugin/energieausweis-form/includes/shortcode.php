@@ -77,6 +77,7 @@ add_shortcode('energieausweis_form', function ($atts = array(), $content = '') {
         <?php echo ea_form_render_previous_orders_link(); ?>
         <div class="wrap">
           <div class="stepsbar" id="topStepper" aria-label="Schritte"></div>
+          <div class="groupbar" id="groupStepper" aria-label="Abschnitte"></div>
 
           <header class="headtop">
             <div class="head-left">

@@ -1,93 +1,175 @@
-{
-  "id": "wg_bedarf_verbrauch",
-  "title": "WG: Energieverbrauch (optional)",
-  "meta": "A5c",
-  "when": { "and": [{ "eq": ["gebaeudetyp", "WG"] }, { "eq": ["ausweisart", "Bedarfsausweis"] }] },
-  "intro": {
-    "title": "Energieverbrauch (optional)",
-    "text": "Falls vorhanden, können Sie freiwillig Energieverbrauchsdaten angeben. Diese dienen ausschließlich der Plausibilitätsprüfung und sind nicht Grundlage des Bedarfsausweises."
-  },
-  "fields": [
-    {
-      "key": "bedarf_verbrauch_enabled",
-      "label": "Ich möchte freiwillig Verbrauchsdaten angeben",
-      "type": "checkbox",
-      "full": true,
-      "required": false
-    },
-    {
-      "key": "etr_traeger_gewechselt",
-      "label": "Wurde der Energieträger in den letzten 3 Jahren gewechselt?",
-      "type": "radio",
-      "full": true,
-      "when": { "eq": ["bedarf_verbrauch_enabled", true] },
-      "required": false,
-      "optionsRef": "ja_nein_radio"
-    },
-    {
-      "key": "etr_traeger_von",
-      "label": "Früherer Energieträger",
-      "type": "text",
-      "full": true,
-      "when": { "and": [{ "eq": ["bedarf_verbrauch_enabled", true] }, { "eq": ["etr_traeger_gewechselt", "Ja"] }] },
-      "required": false,
-      "hint": "z. B. Heizöl"
-    },
-    {
-      "key": "etr_traeger_zu",
-      "label": "Neuer Energieträger",
-      "type": "text",
-      "full": true,
-      "when": { "and": [{ "eq": ["bedarf_verbrauch_enabled", true] }, { "eq": ["etr_traeger_gewechselt", "Ja"] }] },
-      "required": false,
-      "hint": "z. B. Wärmepumpe"
-    },
-    {
-      "key": "etr_abrechnungsart",
-      "label": "Abrechnungsart",
-      "type": "radio",
-      "full": true,
-      "when": { "eq": ["bedarf_verbrauch_enabled", true] },
-      "required": false,
-      "optionsRef": "etr_abrechnungsart"
-    },
-    {
-      "key": "etr_verbrauch_betrifft_wg",
-      "label": "Verbrauch betrifft",
-      "type": "radio",
-      "full": true,
-      "when": { "eq": ["bedarf_verbrauch_enabled", true] },
-      "required": false,
-      "optionsRef": "etr_verbrauch_betrifft_wg"
-    },
-    {
-      "key": "etr1_kategorie",
-      "label": "Energieträger",
-      "type": "select",
-      "full": true,
-      "when": { "eq": ["bedarf_verbrauch_enabled", true] },
-      "required": false,
-      "optionsRef": "etr_kategorie_bk",
-      "tipKey": "etr_kategorie"
-    },
-    {
-      "key": "etr1_periods",
-      "label": "Abrechnungszeiträume",
-      "type": "periods3",
-      "full": true,
-      "when": { "eq": ["bedarf_verbrauch_enabled", true] },
-      "required": false,
-      "startKey": "etr1_start",
-      "unitKey": "etr1_einheit",
-      "defaultUnit": "kWh",
-      "startMonthsBack": 36,
-      "unitOptions": [
-        { "value": "kWh", "label": "kWh" },
-        { "value": "m3", "label": "m3" },
-        { "value": "l", "label": "l" }
-      ],
-      "tipKey": "etr_perioden",
-      "fields": []
-    }
-  ]
+﻿{
+    "id":  "wg_bedarf_verbrauch",
+    "title":  "WG: Energieverbrauch (optional)",
+    "meta":  "A5c",
+    "when":  {
+                 "and":  [
+                             {
+                                 "eq":  [
+                                            "gebaeudetyp",
+                                            "WG"
+                                        ]
+                             },
+                             {
+                                 "eq":  [
+                                            "ausweisart",
+                                            "Bedarfsausweis"
+                                        ]
+                             }
+                         ]
+             },
+    "intro":  {
+                  "title":  "Energieverbrauch (optional)",
+                  "text":  "Falls vorhanden, können Sie freiwillig Energieverbrauchsdaten angeben. Diese dienen ausschließlich der Plausibilitätsprüfung und sind nicht Grundlage des Bedarfsausweises."
+              },
+    "fields":  [
+                   {
+                       "key":  "bedarf_verbrauch_enabled",
+                       "label":  "Ich möchte freiwillig Verbrauchsdaten angeben",
+                       "type":  "checkbox",
+                       "full":  true,
+                       "required":  false
+                   },
+                   {
+                       "key":  "etr_traeger_gewechselt",
+                       "label":  "Wurde der Energieträger in den letzten 3 Jahren gewechselt?",
+                       "type":  "radio",
+                       "full":  true,
+                       "when":  {
+                                    "eq":  [
+                                               "bedarf_verbrauch_enabled",
+                                               true
+                                           ]
+                                },
+                       "required":  false,
+                       "optionsRef":  "ja_nein_radio"
+                   },
+                   {
+                       "key":  "etr_traeger_von",
+                       "label":  "Früherer Energieträger",
+                       "type":  "text",
+                       "full":  true,
+                       "when":  {
+                                    "and":  [
+                                                {
+                                                    "eq":  [
+                                                               "bedarf_verbrauch_enabled",
+                                                               true
+                                                           ]
+                                                },
+                                                {
+                                                    "eq":  [
+                                                               "etr_traeger_gewechselt",
+                                                               "Ja"
+                                                           ]
+                                                }
+                                            ]
+                                },
+                       "required":  false,
+                       "hint":  "z. B. Heizöl"
+                   },
+                   {
+                       "key":  "etr_traeger_zu",
+                       "label":  "Neuer Energieträger",
+                       "type":  "text",
+                       "full":  true,
+                       "when":  {
+                                    "and":  [
+                                                {
+                                                    "eq":  [
+                                                               "bedarf_verbrauch_enabled",
+                                                               true
+                                                           ]
+                                                },
+                                                {
+                                                    "eq":  [
+                                                               "etr_traeger_gewechselt",
+                                                               "Ja"
+                                                           ]
+                                                }
+                                            ]
+                                },
+                       "required":  false,
+                       "hint":  "z. B. Wärmepumpe"
+                   },
+                   {
+                       "key":  "etr_abrechnungsart",
+                       "label":  "Abrechnungsart",
+                       "type":  "radio",
+                       "full":  true,
+                       "when":  {
+                                    "eq":  [
+                                               "bedarf_verbrauch_enabled",
+                                               true
+                                           ]
+                                },
+                       "required":  false,
+                       "optionsRef":  "etr_abrechnungsart"
+                   },
+                   {
+                       "key":  "etr_verbrauch_betrifft_wg",
+                       "label":  "Verbrauch betrifft",
+                       "type":  "radio",
+                       "full":  true,
+                       "when":  {
+                                    "eq":  [
+                                               "bedarf_verbrauch_enabled",
+                                               true
+                                           ]
+                                },
+                       "required":  false,
+                       "optionsRef":  "etr_verbrauch_betrifft_wg"
+                   },
+                   {
+                       "key":  "etr1_kategorie",
+                       "label":  "Energieträger",
+                       "type":  "select",
+                       "full":  true,
+                       "when":  {
+                                    "eq":  [
+                                               "bedarf_verbrauch_enabled",
+                                               true
+                                           ]
+                                },
+                       "required":  false,
+                       "optionsRef":  "etr_kategorie_bk",
+                       "tipKey":  "etr_kategorie"
+                   },
+                   {
+                       "key":  "etr1_periods",
+                       "label":  "Abrechnungszeiträume",
+                       "type":  "periods3",
+                       "full":  true,
+                       "when":  {
+                                    "eq":  [
+                                               "bedarf_verbrauch_enabled",
+                                               true
+                                           ]
+                                },
+                       "required":  false,
+                       "startKey":  "etr1_start",
+                       "unitKey":  "etr1_einheit",
+                       "defaultUnit":  "kWh",
+                       "startMonthsBack":  36,
+                       "unitOptions":  [
+                                           {
+                                               "value":  "kWh",
+                                               "label":  "kWh"
+                                           },
+                                           {
+                                               "value":  "m3",
+                                               "label":  "m3"
+                                           },
+                                           {
+                                               "value":  "l",
+                                               "label":  "l"
+                                           }
+                                       ],
+                       "tipKey":  "etr_perioden",
+                       "fields":  [
+
+                                  ]
+                   }
+               ],
+    "group":  "Zusatz"
 }

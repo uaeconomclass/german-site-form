@@ -1,13 +1,60 @@
-{
-  "id": "nwg_nutzungszeiten",
-  "title": "NWG: Nutzungszeiten",
-  "meta": "B2",
-  "when": { "and": [{ "eq": ["gebaeudetyp", "NWG"] }, { "eq": ["ausweisart", "Verbrauchsausweis"] }] },
-  "intro": { "title": "Nutzungszeiten", "text": "Angaben zur Betriebszeit des Gebäudes." },
-  "fields": [
-    { "key": "nwg_nutzungstage_woche", "label": "Nutzungstage pro Woche", "type": "number", "required": true, "min": 1, "max": 7, "hint": "z. B. 5" },
-    { "key": "nwg_nutzungszeit_von", "label": "Nutzungszeit von (Uhr)", "type": "text", "required": true, "hint": "z. B. 07:00" },
-    { "key": "nwg_nutzungszeit_bis", "label": "Nutzungszeit bis (Uhr)", "type": "text", "required": true, "hint": "z. B. 18:00" },
-    { "key": "nwg_nutzungsdauer_woche", "label": "Geschätzte Nutzungsdauer pro Woche (Stunden)", "type": "number", "required": false, "min": 1, "max": 168, "hint": "optional, z. B. 45" }
-  ]
+﻿{
+    "id":  "nwg_nutzungszeiten",
+    "title":  "NWG: Nutzungszeiten",
+    "meta":  "B2",
+    "when":  {
+                 "and":  [
+                             {
+                                 "eq":  [
+                                            "gebaeudetyp",
+                                            "NWG"
+                                        ]
+                             },
+                             {
+                                 "eq":  [
+                                            "ausweisart",
+                                            "Verbrauchsausweis"
+                                        ]
+                             }
+                         ]
+             },
+    "intro":  {
+                  "title":  "Nutzungszeiten",
+                  "text":  "Angaben zur Betriebszeit des Gebäudes."
+              },
+    "fields":  [
+                   {
+                       "key":  "nwg_nutzungstage_woche",
+                       "label":  "Nutzungstage pro Woche",
+                       "type":  "number",
+                       "required":  true,
+                       "min":  1,
+                       "max":  7,
+                       "hint":  "z. B. 5"
+                   },
+                   {
+                       "key":  "nwg_nutzungszeit_von",
+                       "label":  "Nutzungszeit von (Uhr)",
+                       "type":  "text",
+                       "required":  true,
+                       "hint":  "z. B. 07:00"
+                   },
+                   {
+                       "key":  "nwg_nutzungszeit_bis",
+                       "label":  "Nutzungszeit bis (Uhr)",
+                       "type":  "text",
+                       "required":  true,
+                       "hint":  "z. B. 18:00"
+                   },
+                   {
+                       "key":  "nwg_nutzungsdauer_woche",
+                       "label":  "Geschätzte Nutzungsdauer pro Woche (Stunden)",
+                       "type":  "number",
+                       "required":  false,
+                       "min":  1,
+                       "max":  168,
+                       "hint":  "optional, z. B. 45"
+                   }
+               ],
+    "group":  "Technik"
 }

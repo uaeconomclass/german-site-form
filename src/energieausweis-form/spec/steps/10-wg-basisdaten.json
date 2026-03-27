@@ -1,7 +1,15 @@
-{
-  "id": "wg_basisdaten",
-  "title": "WG: Basisdaten (merged into step 2)",
-  "meta": "A1",
-  "when": { "eq": ["__wg_basisdaten_enabled", "1"] },
-  "blocks": []
+﻿{
+    "id":  "wg_basisdaten",
+    "title":  "WG: Basisdaten (merged into step 2)",
+    "meta":  "A1",
+    "when":  {
+                 "eq":  [
+                            "__wg_basisdaten_enabled",
+                            "1"
+                        ]
+             },
+    "blocks":  [
+
+               ],
+    "group":  "Gebäude"
 }

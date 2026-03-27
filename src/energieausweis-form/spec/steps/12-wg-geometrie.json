@@ -1,74 +1,90 @@
-{
-  "id": "wg_geometrie",
-  "title": "WG: Gebäudegeometrie",
-  "meta": "A3a",
-  "when": { "and": [{ "eq": ["gebaeudetyp", "WG"] }, { "eq": ["ausweisart", "Bedarfsausweis"] }] },
-  "intro": {
-    "title": "Gebäudegeometrie",
-    "text": "Maßangaben zur rechnerischen Bewertung des Gebäudes.",
-    "img": "../assets/images/fenster/vermassung-fenster.png",
-    "imgAlt": "Fenster-Vermassung (lichte Maße + 3 cm)"
-  },
-  "fields": [
-    {
-      "key": "anzahl_vollgeschosse",
-      "label": "Anzahl der Vollgeschosse",
-      "type": "number",
-      "full": true,
-      "required": true,
-      "min": 1,
-      "max": 20,
-      "hint": "z. B. 2"
-    },
-    {
-      "key": "geschosshoehen",
-      "label": "Geschosshöhen (m)",
-      "type": "number",
-      "full": true,
-      "required": true,
-      "min": 1,
-      "max": 20,
-      "hint": "z. B. 2.50"
-    },
-    {
-      "key": "gebaeudevolumen",
-      "label": "Gebäudevolumen (m³)",
-      "type": "number",
-      "full": true,
-      "required": true,
-      "min": 1,
-      "max": 5000000,
-      "hint": "z. B. 800"
-    },
-    {
-      "key": "aussenwandflaechen",
-      "label": "Außenwandflächen (m²)",
-      "type": "number",
-      "full": true,
-      "required": true,
-      "min": 1,
-      "max": 500000,
-      "hint": "z. B. 320"
-    },
-    {
-      "key": "gebaeudelaenge",
-      "label": "Gebäudelänge (m) – Außenmaß",
-      "type": "number",
-      "full": true,
-      "required": false,
-      "min": 1,
-      "max": 500,
-      "hint": "optional, z. B. 10"
-    },
-    {
-      "key": "gebaeudebreite",
-      "label": "Gebäudebreite (m) – Außenmaß",
-      "type": "number",
-      "full": true,
-      "required": false,
-      "min": 1,
-      "max": 500,
-      "hint": "optional, z. B. 8"
-    }
-  ]
+﻿{
+    "id":  "wg_geometrie",
+    "title":  "WG: Gebäudegeometrie",
+    "meta":  "A3a",
+    "when":  {
+                 "and":  [
+                             {
+                                 "eq":  [
+                                            "gebaeudetyp",
+                                            "WG"
+                                        ]
+                             },
+                             {
+                                 "eq":  [
+                                            "ausweisart",
+                                            "Bedarfsausweis"
+                                        ]
+                             }
+                         ]
+             },
+    "intro":  {
+                  "title":  "Gebäudegeometrie",
+                  "text":  "Maßangaben zur rechnerischen Bewertung des Gebäudes.",
+                  "img":  "../assets/images/fenster/vermassung-fenster.png",
+                  "imgAlt":  "Fenster-Vermassung (lichte Maße + 3 cm)"
+              },
+    "fields":  [
+                   {
+                       "key":  "anzahl_vollgeschosse",
+                       "label":  "Anzahl der Vollgeschosse",
+                       "type":  "number",
+                       "full":  true,
+                       "required":  true,
+                       "min":  1,
+                       "max":  20,
+                       "hint":  "z. B. 2"
+                   },
+                   {
+                       "key":  "geschosshoehen",
+                       "label":  "Geschosshöhen (m)",
+                       "type":  "number",
+                       "full":  true,
+                       "required":  true,
+                       "min":  1,
+                       "max":  20,
+                       "hint":  "z. B. 2.50"
+                   },
+                   {
+                       "key":  "gebaeudevolumen",
+                       "label":  "Gebäudevolumen (m³)",
+                       "type":  "number",
+                       "full":  true,
+                       "required":  true,
+                       "min":  1,
+                       "max":  5000000,
+                       "hint":  "z. B. 800"
+                   },
+                   {
+                       "key":  "aussenwandflaechen",
+                       "label":  "Außenwandflächen (m²)",
+                       "type":  "number",
+                       "full":  true,
+                       "required":  true,
+                       "min":  1,
+                       "max":  500000,
+                       "hint":  "z. B. 320"
+                   },
+                   {
+                       "key":  "gebaeudelaenge",
+                       "label":  "Gebäudelänge (m) – Außenmaß",
+                       "type":  "number",
+                       "full":  true,
+                       "required":  false,
+                       "min":  1,
+                       "max":  500,
+                       "hint":  "optional, z. B. 10"
+                   },
+                   {
+                       "key":  "gebaeudebreite",
+                       "label":  "Gebäudebreite (m) – Außenmaß",
+                       "type":  "number",
+                       "full":  true,
+                       "required":  false,
+                       "min":  1,
+                       "max":  500,
+                       "hint":  "optional, z. B. 8"
+                   }
+               ],
+    "group":  "Gebäude"
 }
