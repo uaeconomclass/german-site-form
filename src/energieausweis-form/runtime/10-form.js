@@ -616,9 +616,11 @@ function renderGroupStepper() {
     if (!d || d.total === 0) return;
     var isActive = g === currentGroup;
     var isDone = d.done === d.total;
+    var groupIdx = GROUP_ORDER.indexOf(g) + 1;
     var badge = el("div", {
       class: "group-pill" + (isActive ? " active" : "") + (isDone ? " done" : ""),
     },
+      el("span", { class: "num" }, String(groupIdx)),
       el("span", { class: "group-label" }, g),
       el("span", { class: "group-count" }, String(d.done) + "/" + String(d.total))
     );

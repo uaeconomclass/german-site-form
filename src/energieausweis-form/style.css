@@ -126,7 +126,7 @@ code{ font-family:var(--mono); font-size:.95em; }
 
 .groupbar{
   display:flex;
-  gap:8px;
+  gap:10px;
   flex-wrap:wrap;
   align-items:center;
   margin:0 0 10px;
@@ -134,28 +134,29 @@ code{ font-family:var(--mono); font-size:.95em; }
 .group-pill{
   display:flex;
   align-items:center;
-  gap:6px;
-  padding:5px 12px;
-  border-radius:20px;
-  background:#e4e7ec;
+  gap:8px;
+  padding:7px 10px;
   color:#475467;
-  font-size:13px;
-  line-height:18px;
+  font-size:14px;
+  line-height:20px;
   white-space:nowrap;
-  font-weight:500;
-}
-.group-pill.active{
-  background:#ADE242;
-  color:#1a2e05;
-}
-.group-pill.done{
-  background:#d1fadf;
-  color:#027a48;
 }
 .group-count{
-  font-size:11px;
-  font-weight:700;
-  opacity:0.75;
+  font-size:12px;
+  font-weight:600;
+  color:inherit;
+  opacity:0.65;
+}
+.group-pill.active{
+  color:#111827;
+}
+.group-pill.active .num{
+  background:#ADE242;
+  color:#fff;
+}
+.group-pill.done .num{
+  background:#d1fadf;
+  color:#027a48;
 }
 
 .headtop{ margin:2px 0 10px; }
