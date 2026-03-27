@@ -402,7 +402,7 @@ code{ font-family:var(--mono); font-size:.95em; }
   margin-top:16px;
   padding-top:14px;
   border-top:1px solid var(--border);
-  font-size:14px;
+  font-size:16px;
   font-weight:700;
   color:#111827;
 }
