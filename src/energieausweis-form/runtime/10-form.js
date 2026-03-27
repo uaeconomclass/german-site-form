@@ -449,7 +449,10 @@ function renderSelectedOptionTip(field, value) {
   const { opt } = selectedOptionFor(field, value);
   const key = opt && opt.tipKey;
   if (!key || !TIPS[key]) return null;
-  return el("div", { class: "optiontip", html: tipToHtml(TIPS[key]) });
+  return el("div", { class: "field-info" },
+    el("span", { class: "field-info-ico", "aria-hidden": "true" }),
+    el("span", { class: "field-info-text", html: tipToHtml(TIPS[key]) })
+  );
 }
 
 function setTipOpen(tipEl, open) {
@@ -1224,7 +1227,10 @@ function renderFields(step) {
           el("span", { class: "cb-box", "aria-hidden": "true" }),
           el("span", { class: "cb-label" }, field.label)
         );
-        if (field.tipKey && TIPS[field.tipKey]) optionTip = el("div", { class: "optiontip" }, String(TIPS[field.tipKey]));
+        if (field.tipKey && TIPS[field.tipKey]) optionTip = el("div", { class: "field-info" },
+          el("span", { class: "field-info-ico", "aria-hidden": "true" }),
+          el("span", { class: "field-info-text" }, String(TIPS[field.tipKey]))
+        );
       } else if (field.type === "kvsummary") {
         wantsDefaultLabel = false;
 
