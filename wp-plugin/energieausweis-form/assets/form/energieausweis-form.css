@@ -136,7 +136,7 @@ code{ font-family:var(--mono); font-size:.95em; }
   display:flex;
   align-items:center;
   gap:8px;
-  padding:7px 10px;
+  padding:7px 20px 7px 0;
   color:#475467;
   font-size:14px;
   line-height:20px;
