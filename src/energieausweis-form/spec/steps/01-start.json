@@ -1,40 +1,30 @@
 {
   "id": "gebaeudetyp",
   "title": "Gebäude-Stammdaten",
-  "meta": "2",
+  "meta": "1",
   "afterChangeRef": "smart_step2_split",
   "intro": {
-    "title": "Gebäudetyp",
-    "text": "Das ist der wichtigste Abzweig der Form."
+    "title": "Start",
+    "text": "Ausweisart und Gebäudetyp."
   },
   "blocks": [
     {
+      "title": "Ausweisart",
+      "fields": [
+        { "key": "anlass", "label": "Anlass", "type": "select", "required": true, "tipKey": "anlass", "optionsRef": "anlass", "infoText": "Wofür benötigen Sie den Ausweis?" },
+        { "key": "ausweisart", "label": "Ausweisart", "type": "select", "required": true, "tipKey": "ausweisart", "optionsRef": "ausweisart" },
+        { "key": "modernisierungsjahr", "label": "Modernisierungsjahr", "type": "number", "min": 1900, "max": 2026, "hint": "z. B. 2019", "tipKey": "modernisierungsjahr", "when": { "eq": ["anlass", "Modernisierung"] }, "required": { "eq": ["anlass", "Modernisierung"] } },
+        { "key": "wei_check_gebaeudetyp", "label": "Gebäudetyp", "type": "radio", "full": true, "when": { "eq": ["ausweisart", "weiß ich nicht"] }, "required": { "eq": ["ausweisart", "weiß ich nicht"] }, "options": [ { "value": "wg_lt5", "label": "Wohngebäude mit weniger als 5 Wohnungen" }, { "value": "wg_ge5", "label": "Wohngebäude mit 5 oder mehr Wohnungen" }, { "value": "nwg", "label": "Nichtwohngebäude" } ] },
+        { "key": "wei_check_baugenehmigung", "label": "Datum der Baugenehmigung", "type": "radio", "full": true, "when": { "eq": ["ausweisart", "weiß ich nicht"] }, "required": { "eq": ["ausweisart", "weiß ich nicht"] }, "options": [ { "value": "vor_1977", "label": "Vor 01.11.1977" }, { "value": "nach_1977", "label": "Nach 01.11.1977" } ] },
+        { "key": "wei_check_modernisierung", "label": "Modernisierung", "type": "radio", "full": true, "when": { "eq": ["ausweisart", "weiß ich nicht"] }, "required": { "eq": ["ausweisart", "weiß ich nicht"] }, "options": [ { "value": "keine", "label": "Keine" }, { "value": "unbekannt", "label": "Unbekannt" }, { "value": "wschv_1977", "label": "Gemäß Wärmeschutzverordnung vom 01.11.1977" } ] },
+        { "key": "wei_check_leerstand", "label": "Leerstand", "type": "radio", "full": true, "when": { "eq": ["ausweisart", "weiß ich nicht"] }, "required": { "eq": ["ausweisart", "weiß ich nicht"] }, "options": [ { "value": "ge_30", "label": "30% oder mehr der Gesamtfläche" }, { "value": "lt_30", "label": "Weniger als 30% der Gesamtfläche" } ] }
+      ]
+    },
+    {
       "title": "Relevanz-Check",
       "fields": [
-        {
-          "key": "misch_nutzung",
-          "label": "Welche Nutzung liegt im Gebäude vor?",
-          "type": "radio",
-          "required": true,
-          "full": true,
-          "options": [
-            { "value": "Wohnen", "label": "Wohnen" },
-            { "value": "Kombination", "label": "Kombination aus Wohnen und Gewerbe" }
-          ]
-        },
-        {
-          "key": "misch_gewerbe_anteil",
-          "label": "Wie groß ist der gewerbliche Anteil ungefähr?",
-          "type": "radio",
-          "full": true,
-          "when": { "eq": ["misch_nutzung", "Kombination"] },
-          "required": { "eq": ["misch_nutzung", "Kombination"] },
-          "options": [
-            { "value": "unter 10%", "label": "unter 10%" },
-            { "value": "ca. 10–50%", "label": "ca. 10–50%" },
-            { "value": "über 50%", "label": "über 50%" }
-          ]
-        }
+        { "key": "misch_nutzung", "label": "Welche Nutzung liegt im Gebäude vor?", "type": "radio", "required": true, "full": true, "options": [ { "value": "Wohnen", "label": "Wohnen" }, { "value": "Kombination", "label": "Kombination aus Wohnen und Gewerbe" } ] },
+        { "key": "misch_gewerbe_anteil", "label": "Wie groß ist der gewerbliche Anteil ungefähr?", "type": "radio", "full": true, "when": { "eq": ["misch_nutzung", "Kombination"] }, "required": { "eq": ["misch_nutzung", "Kombination"] }, "options": [ { "value": "unter 10%", "label": "unter 10%" }, { "value": "ca. 10–50%", "label": "ca. 10–50%" }, { "value": "über 50%", "label": "über 50%" } ] }
       ]
     },
     {
@@ -61,24 +51,8 @@
     {
       "title": "Basisdaten",
       "fields": [
-        {
-          "key": "baualtersklasse",
-          "label": "Baualtersklasse",
-          "type": "radio",
-          "required": true,
-          "optionsRef": "baualtersklasse",
-          "when": { "eq": ["gebaeudetyp", "WG"] }
-        },
-        {
-          "key": "baujahr",
-          "label": "Baujahr Gebäude",
-          "type": "number",
-          "required": { "eq": ["ausweisart", "Bedarfsausweis"] },
-          "min": 1800,
-          "max": 2100,
-          "hint": "z. B. 1985",
-          "when": { "eq": ["gebaeudetyp", "WG"] }
-        },
+        { "key": "baualtersklasse", "label": "Baualtersklasse", "type": "radio", "required": true, "optionsRef": "baualtersklasse", "when": { "eq": ["gebaeudetyp", "WG"] } },
+        { "key": "baujahr", "label": "Baujahr Gebäude", "type": "number", "required": { "eq": ["ausweisart", "Bedarfsausweis"] }, "min": 1800, "max": 2100, "hint": "z. B. 1985", "when": { "eq": ["gebaeudetyp", "WG"] } },
         { "key": "anzahl_wohneinheiten", "label": "Anzahl der Wohnungen", "type": "counter", "required": true, "min": 1, "max": 999, "hint": "z. B. 1", "when": { "eq": ["gebaeudetyp", "WG"] } },
         { "key": "wohnflaeche", "label": "Beheizte Wohnfläche (m²)", "type": "number", "required": true, "min": 1, "max": 20000, "tipKey": "wohnflaeche", "hint": "z. B. 120", "when": { "eq": ["gebaeudetyp", "WG"] } },
         { "key": "wohnflaeche_basis", "label": "Angabe basiert auf", "type": "radio", "required": true, "optionsRef": "wohnflaeche_basis", "when": { "eq": ["gebaeudetyp", "WG"] } },

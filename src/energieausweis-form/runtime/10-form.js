@@ -659,7 +659,7 @@ function getAusweisAdvisorResult() {
 }
 
 function renderAusweisAdvisor(step) {
-  if (!step || String(step.id || "") !== "anlass_ausweisart") return;
+  if (!step || String(step.id || "") !== "gebaeudetyp") return;
   if (String(state.ausweisart || "") !== "weiß ich nicht") return;
 
   const res = getAusweisAdvisorResult();
@@ -1565,7 +1565,7 @@ function validateStep(idx, { silent } = {}) {
           if (msg) errEl.appendChild(document.createTextNode(msg + " "));
           const btn = el("button", { type: "button", class: "errlink" }, String(err.actionLabel || "Zum Ausweisart-Schritt"));
           btn.addEventListener("click", () => {
-            const idx = findStepIndexById("anlass_ausweisart");
+            const idx = findStepIndexById("gebaeudetyp");
             if (idx >= 0) {
               stepIndex = idx;
               render();
