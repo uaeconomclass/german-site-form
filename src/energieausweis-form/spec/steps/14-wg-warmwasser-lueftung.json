@@ -1,0 +1,47 @@
+{
+  "id": "wg_warmwasser",
+  "title": "WG: Warmwasser & Lüftung",
+  "meta": "A5",
+  "when": { "eq": ["gebaeudetyp", "WG"] },
+  "intro": { "title": "Warmwasser & Lüftung", "text": "Angaben zur Warmwasserbereitung und zum Lüftungssystem." },
+  "blocks": [
+    {
+      "title": "Warmwasser",
+      "fields": [
+        { "key": "warmwasser_type", "label": "Warmwasserbereitung", "type": "select", "required": true, "optionsRef": "warmwasser", "tipKey": "warmwasser_type" },
+        { "key": "warmwasser_im_verbrauch", "label": "Warmwasser im Energieverbrauch enthalten?", "type": "radio", "required": { "eq": ["ausweisart", "Verbrauchsausweis"] }, "when": { "eq": ["ausweisart", "Verbrauchsausweis"] }, "optionsRef": "ja_nein_radio" },
+        { "key": "warmwasser_integriert", "label": "Ist die Warmwasserbereitung über die Heizungsanlage integriert?", "type": "radio", "required": { "eq": ["ausweisart", "Bedarfsausweis"] }, "when": { "eq": ["ausweisart", "Bedarfsausweis"] }, "optionsRef": "warmwasser_integriert" },
+        { "key": "bewohner_anzahl", "label": "Anzahl der Bewohner", "type": "number", "required": false, "min": 1, "max": 999, "hint": "z. B. 3" },
+        { "key": "warmwasserrohre_gedaemmt", "label": "Warmwasserrohre gedämmt", "type": "radio", "required": false, "when": { "neq": ["ausweisart", "Verbrauchsausweis"] }, "optionsRef": "ja_nein_radio", "tipKey": "warmwasser_rohre_gedaemmt" }
+      ]
+    },
+    {
+      "title": "Lüftung",
+      "fields": [
+        {
+          "key": "lueftung_type",
+          "label": "Lüftungssystem",
+          "type": "select",
+          "full": true,
+          "required": true,
+          "when": { "eq": ["ausweisart", "Bedarfsausweis"] },
+          "tipGrid": [
+            { "img": "../assets/images/lueftung/fensterlueftung.png", "label": "Fensterlüftung" },
+            { "img": "../assets/images/lueftung/mechanische-abluft.png", "label": "Mechanische Abluftanlage" },
+            { "img": "../assets/images/lueftung/zentrale-lueftungsanlage.png", "label": "Zentrale Lüftungsanlage" },
+            { "img": "../assets/images/lueftung/dezentrale-lueftungsanlage.png", "label": "Dezentrale Lüftungsgeräte" }
+          ],
+          "options": [
+            { "value": "Fensterlüftung", "label": "Fensterlüftung" },
+            { "value": "Mechanische Abluftanlage", "label": "Mechanische Abluftanlage" },
+            { "value": "Zentrale Lüftungsanlage", "label": "Zentrale Lüftungsanlage" },
+            { "value": "Dezentrale Lüftungsgeräte", "label": "Dezentrale Lüftungsgeräte" },
+            { "value": "Nicht bekannt", "label": "Nicht bekannt" }
+          ]
+        },
+        { "key": "lueftung_waermerueckgewinnung", "label": "Wärmerückgewinnung vorhanden?", "type": "radio", "required": false, "when": { "eq": ["ausweisart", "Bedarfsausweis"] }, "optionsRef": "ja_nein_unbekannt" },
+        { "key": "lueftung_baujahr", "label": "Baujahr der Lüftungsanlage", "type": "number", "required": false, "when": { "eq": ["ausweisart", "Bedarfsausweis"] }, "min": 1900, "max": 2100, "hint": "optional, z. B. 2018" }
+      ]
+    }
+  ]
+}
