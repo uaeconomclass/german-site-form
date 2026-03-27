@@ -114,7 +114,7 @@
                                   ]
                    },
                    {
-                       "title":  "Dach / Oberste Geschossdecke",
+                       "title": "",
                        "fields":  [
                                       {
                                           "key":  "dach_typ",
@@ -135,7 +135,7 @@
                                   ]
                    },
                    {
-                       "title":  "Kellerdecke / Bodenplatte",
+                       "title": "",
                        "fields":  [
                                       {
                                           "key":  "keller_bodenplatte",

@@ -14,7 +14,7 @@
               },
     "blocks":  [
                    {
-                       "title":  "Lüftung",
+                       "title": "",
                        "fields":  [
                                       {
                                           "key":  "nwg_lueftung_verbrauch",
@@ -275,7 +275,7 @@
                                   ]
                    },
                    {
-                       "title":  "Beleuchtung",
+                       "title": "",
                        "fields":  [
                                       {
                                           "key":  "nwg_beleuchtung",

@@ -9,7 +9,7 @@
               },
     "blocks":  [
                    {
-                       "title":  "Ihre Bestellung",
+                       "title": "",
                        "fields":  [
                                       {
                                           "key":  "order_summary",
