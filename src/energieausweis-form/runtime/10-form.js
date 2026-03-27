@@ -617,8 +617,12 @@ function renderGroupStepper() {
     var isActive = g === currentGroup;
     var isDone = d.done === d.total;
     var groupIdx = GROUP_ORDER.indexOf(g) + 1;
+    var firstIdx = -1;
+    steps.forEach(function(st, idx) { if (firstIdx === -1 && st.group === g) firstIdx = idx; });
+    var locked = firstIdx > stepIndex;
     var badge = el("div", {
-      class: "group-pill" + (isActive ? " active" : "") + (isDone ? " done" : ""),
+      class: "group-pill" + (isActive ? " active" : "") + (isDone ? " done" : "") + (locked ? " locked" : ""),
+      ...(locked ? {} : { onclick: function() { stepIndex = firstIdx; render(); } }),
     },
       el("span", { class: "num" }, String(groupIdx)),
       el("span", { class: "group-label" }, g),

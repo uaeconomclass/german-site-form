@@ -141,6 +141,13 @@ code{ font-family:var(--mono); font-size:.95em; }
   font-size:14px;
   line-height:20px;
   white-space:nowrap;
+  cursor:pointer;
+  user-select:none;
+}
+.group-pill.locked{
+  opacity:0.4;
+  cursor:not-allowed;
+  pointer-events:none;
 }
 .group-count{
   font-size:12px;
