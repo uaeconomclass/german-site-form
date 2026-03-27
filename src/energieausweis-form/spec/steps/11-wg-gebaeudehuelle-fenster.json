@@ -124,6 +124,23 @@
           "full": true,
           "required": false,
           "optionsRef": "fenster_rahmenmaterial"
+        },
+        {
+          "key": "fenster_vermassung",
+          "label": "Fenster- und Türvermassung",
+          "type": "repeater",
+          "full": true,
+          "when": { "eq": ["ausweisart", "Bedarfsausweis"] },
+          "required": { "eq": ["ausweisart", "Bedarfsausweis"] },
+          "tipKey": "fenster_vermassung",
+          "itemLabel": "Fenster / Tür",
+          "minItems": 1,
+          "defaultItems": 1,
+          "fields": [
+            { "key": "raum", "label": "Raum / Bezeichnung", "type": "text", "required": false, "hint": "z. B. Küche, Haustür" },
+            { "key": "hoehe_m", "label": "Höhe (m)", "type": "number", "required": true, "min": 0.1, "max": 10, "hint": "z. B. 1.23" },
+            { "key": "breite_m", "label": "Breite (m)", "type": "number", "required": true, "min": 0.1, "max": 10, "hint": "z. B. 1.49" }
+          ]
         }
       ]
     }

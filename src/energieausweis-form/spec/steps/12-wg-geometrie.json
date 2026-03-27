@@ -51,17 +51,6 @@
       "hint": "z. B. 320"
     },
     {
-      "key": "fensteranteile",
-      "label": "Fensteranteile (m²)",
-      "type": "number",
-      "full": true,
-      "required": true,
-      "min": 1,
-      "max": 500000,
-      "hint": "z. B. 45",
-      "infoText": "Gesamtfläche aller Fenster im Gebäude, gemessen von innen zwischen den Fensterlaibungen (lichte Höhe + 3 cm und lichte Breite + 3 cm). Beispiel: Küchenfenster (1,20 m + 0,03 m) × (1,46 m + 0,03 m) ≈ 1,833 m²."
-    },
-    {
       "key": "gebaeudelaenge",
       "label": "Gebäudelänge (m) – Außenmaß",
       "type": "number",
