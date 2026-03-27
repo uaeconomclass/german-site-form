@@ -53,7 +53,7 @@
                                   ]
                    },
                    {
-                       "title":  "Kesseltyp",
+                       "title":  "",
                        "fields":  [
                                       {
                                           "key":  "heizung_kesseltyp",
@@ -111,7 +111,7 @@
                                   ]
                    },
                    {
-                       "title":  "Wärmeabgabe",
+                       "title":  "",
                        "fields":  [
                                       {
                                           "key":  "heizung_waermeabgabe",
@@ -152,7 +152,7 @@
                                   ]
                    },
                    {
-                       "title":  "Zusatz",
+                       "title":  "",
                        "fields":  [
                                       {
                                           "key":  "pv_dach",

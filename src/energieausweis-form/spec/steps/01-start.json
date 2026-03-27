@@ -9,7 +9,7 @@
   },
   "blocks": [
     {
-      "title": "Ausweisart",
+      "title": "",
       "fields": [
         {
           "key": "anlass",
@@ -172,7 +172,7 @@
       ]
     },
     {
-      "title": "Relevanz-Check",
+      "title": "",
       "fields": [
         {
           "key": "misch_nutzung",
@@ -298,7 +298,7 @@
       ]
     },
     {
-      "title": "Untertyp",
+      "title": "",
       "fields": [
         {
           "key": "wg_subtype",
@@ -445,7 +445,7 @@
       ]
     },
     {
-      "title": "Grundprüfung",
+      "title": "",
       "fields": [
         {
           "key": "gebaeudeanteil",
