@@ -391,19 +391,25 @@ code{ font-family:var(--mono); font-size:.95em; }
 .form{
   display:grid;
   grid-template-columns: 1fr 1fr;
-  gap:12px 14px;
-  margin-top:8px;
+  gap:18px 16px;
+  margin-top:14px;
 }
 .form.single-col{
   grid-template-columns: 1fr;
 }
 .block-title{
   grid-column:1/-1;
-  margin-top:8px;
-  padding-top:6px;
+  margin-top:16px;
+  padding-top:14px;
+  border-top:1px solid var(--border);
   font-size:14px;
   font-weight:700;
   color:#111827;
+}
+.block-title:first-child{
+  margin-top:0;
+  padding-top:0;
+  border-top:none;
 }
 .field{ display:flex; flex-direction:column; gap:6px; }
 .field.full{ grid-column:1/-1; }

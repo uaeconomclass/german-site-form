@@ -451,6 +451,7 @@
           "key": "gebaeudeanteil",
           "label": "Gebäudeteil",
           "type": "radio",
+          "full": true,
           "required": true,
           "optionsRef": "gebaeudeanteil",
           "when": {
@@ -474,6 +475,7 @@
           "key": "dachgeschoss",
           "label": "Dachgeschoss",
           "type": "radio",
+          "full": true,
           "required": true,
           "optionsRef": "dachgeschoss",
           "when": {
@@ -497,6 +499,7 @@
           "key": "keller",
           "label": "Keller",
           "type": "radio",
+          "full": true,
           "required": true,
           "optionsRef": "keller",
           "when": {
