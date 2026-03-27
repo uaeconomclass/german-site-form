@@ -95,7 +95,8 @@ code{ font-family:var(--mono); font-size:.95em; }
   user-select:none;
   white-space:nowrap;
 }
-.step-pill .num{
+.step-pill .num,
+.group-pill .num{
   width:32px;
   height:32px;
   border-radius:8px;
