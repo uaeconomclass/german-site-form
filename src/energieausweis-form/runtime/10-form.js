@@ -395,7 +395,7 @@ function computeEfficiencyMarkerPct() {
   else if (kt === "Wärmepumpe") pct -= 7;
 
   // Conservative clamp to avoid overflowing outside the bar.
-  return clamp(pct, 2, 98);
+  return clamp(pct, 2, 87);
 }
 
 function computeEfficiencyPotenzPct(nowPct) {
