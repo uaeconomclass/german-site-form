@@ -86,10 +86,10 @@
   ],
   "heizung_waermeabgabe": [
     { "value": "", "label": "Bitte wählen…" },
-    { "value": "Radiatoren", "label": "Radiatoren" },
-    { "value": "Flachheizkörper", "label": "Flachheizkörper" },
+    { "value": "Heizkörper", "label": "Heizkörper" },
     { "value": "Fußbodenheizung", "label": "Fußbodenheizung" },
-    { "value": "Konvektoren", "label": "Konvektoren" }
+    { "value": "Wandheizung", "label": "Wandheizung" },
+    { "value": "Kombination", "label": "Kombination" }
   ],
   "warmwasser": [
     { "value": "", "label": "Bitte wählen…" },
@@ -305,6 +305,7 @@
     { "value": "Nicht bekannt", "label": "Nicht bekannt" }
   ],
   "heizung_waermeverteilung": [
+    { "value": "", "label": "Bitte wählen…" },
     { "value": "Leitungen im beheizten Bereich", "label": "Heizkörperleitungen im beheizten Bereich" },
     { "value": "Leitungen im unbeheizten Bereich", "label": "Heizkörperleitungen im unbeheizten Bereich" },
     { "value": "Teilweise gedämmt", "label": "Teilweise gedämmt" },

@@ -413,6 +413,7 @@ code{ font-family:var(--mono); font-size:.95em; }
 }
 .field{ display:flex; flex-direction:column; gap:6px; }
 .field.full{ grid-column:1/-1; }
+.field-indent{ padding-left:28px; }
 .field-info{
   display:flex;
   align-items:flex-start;

@@ -641,12 +641,12 @@ function runPlausibilityWarnings() {
   // Spec examples:
   // - alte Fenster + Neubau -> prüfen
   // - Baujahr < 1960 + Fußbodenheizung -> prüfen
-  // - Wärmepumpe + Radiatoren -> Hinweis
+  // - Wärmepumpe + Heizkörper -> Hinweis
   if (Number.isFinite(y) && y >= 2000) {
     if (state.fenster_type === "Einfachverglasung" || state.fenster_type === "Kastenfenster") warnings.push("Alte Fenster + neueres Baujahr: bitte prüfen.");
   }
   if (Number.isFinite(y) && y < 1960 && state.heizung_waermeabgabe === "Fußbodenheizung") warnings.push("Baujahr < 1960 + Fußbodenheizung: bitte prüfen.");
-  if (state.heizung_kesseltyp === "Wärmepumpe" && state.heizung_waermeabgabe === "Radiatoren") warnings.push("Wärmepumpe + Radiatoren: Hinweis (bitte prüfen).");
+  if (state.heizung_kesseltyp === "Wärmepumpe" && state.heizung_waermeabgabe === "Heizkörper") warnings.push("Wärmepumpe + Heizkörper: Hinweis (bitte prüfen).");
 
   // NWG SMART warnings (from spec examples)
   if (state.gebaeudetyp === "NWG") {
@@ -798,7 +798,7 @@ function renderFields(step) {
       const key = field.key;
       const val = state[key];
 
-      const wrap = el("div", { class: "field" + (field.full ? " full" : ""), "data-key": key });
+      const wrap = el("div", { class: "field" + (field.full ? " full" : "") + (field.indent ? " field-indent" : ""), "data-key": key });
       const err = el("div", { class: "errtxt", id: "err_" + key });
 
       let control = null;

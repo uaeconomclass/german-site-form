@@ -43,70 +43,12 @@
                                       },
                                       {
                                           "key":  "heizung_nennleistung",
-                                          "label":  "Nennleistung (kW)",
+                                          "label":  "Nennleistung der Heizungsanlage (kW)",
                                           "type":  "number",
                                           "required":  false,
                                           "min":  1,
                                           "max":  9999,
-                                          "hint":  "z. B. 20"
-                                      }
-                                  ]
-                   },
-                   {
-                       "title":  "",
-                       "fields":  [
-                                      {
-                                          "key":  "heizung_kesseltyp",
-                                          "label":  "Kesseltyp",
-                                          "type":  "select",
-                                          "when":  {
-                                                       "neq":  [
-                                                                   "ausweisart",
-                                                                   "Verbrauchsausweis"
-                                                               ]
-                                                   },
-                                          "required":  {
-                                                           "neq":  [
-                                                                       "ausweisart",
-                                                                       "Verbrauchsausweis"
-                                                                   ]
-                                                       },
-                                          "tipGrid":  [
-                                                          {
-                                                              "img":  "../assets/images/heizung/konstanttemperaturkessel.png",
-                                                              "label":  "Konstanttemperatur"
-                                                          },
-                                                          {
-                                                              "img":  "../assets/images/heizung/niedertemperaturkessel.png",
-                                                              "label":  "Niedertemperatur"
-                                                          },
-                                                          {
-                                                              "img":  "../assets/images/heizung/brennwertkessel.png",
-                                                              "label":  "Brennwert"
-                                                          },
-                                                          {
-                                                              "img":  "../assets/images/heizung/waermepumpe.png",
-                                                              "label":  "Wärmepumpe"
-                                                          }
-                                                      ],
-                                          "options":  [
-                                                          {
-                                                              "value":  "Konstanttemperatur",
-                                                              "label":  "Konstanttemperatur"
-                                                          },
-                                                          {
-                                                              "value":  "Niedertemperatur",
-                                                              "label":  "Niedertemperatur"
-                                                          },
-                                                          {
-                                                              "value":  "Brennwert",
-                                                              "label":  "Brennwert"
-                                                          },
-                                                          {
-                                                              "value":  "Wärmepumpe",
-                                                              "label":  "Wärmepumpe"
-                                                          }
-                                                      ]
+                                          "hint":  "optional / falls bekannt, z. B. 20"
                                       }
                                   ]
                    },
@@ -134,7 +76,7 @@
                                       {
                                           "key":  "heizung_waermeverteilung",
                                           "label":  "Art der Wärmeverteilung",
-                                          "type":  "radio",
+                                          "type":  "select",
                                           "when":  {
                                                        "neq":  [
                                                                    "ausweisart",
@@ -1252,6 +1194,7 @@
                                           "key":  "fernKuehlung",
                                           "label":  "Erfolgt Kuehlung ueber Fernkaelte?",
                                           "type":  "radio",
+                                          "indent":  true,
                                           "required":  {
                                                            "eq":  [
                                                                       "klimatisiert",
@@ -1270,6 +1213,7 @@
                                           "key":  "passiveKuehlung",
                                           "label":  "Gibt es passive Kuehlung?",
                                           "type":  "radio",
+                                          "indent":  true,
                                           "required":  {
                                                            "eq":  [
                                                                       "klimatisiert",
@@ -1288,6 +1232,7 @@
                                           "key":  "waermeKuehlung",
                                           "label":  "Gibt es thermische Kuehlung?",
                                           "type":  "radio",
+                                          "indent":  true,
                                           "required":  {
                                                            "eq":  [
                                                                       "klimatisiert",
@@ -1306,6 +1251,7 @@
                                           "key":  "stromKuehlung",
                                           "label":  "Gibt es elektrische Kompressionskuehlung?",
                                           "type":  "radio",
+                                          "indent":  true,
                                           "required":  {
                                                            "eq":  [
                                                                       "klimatisiert",
@@ -1324,6 +1270,7 @@
                                           "key":  "kuehlWfl",
                                           "label":  "Gekuehlte Flaeche (m2)",
                                           "type":  "number",
+                                          "indent":  true,
                                           "required":  {
                                                            "eq":  [
                                                                       "klimatisiert",
