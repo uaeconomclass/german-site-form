@@ -43,7 +43,8 @@
     { "value": "", "label": "Bitte wählen…" },
     { "value": "Holz", "label": "Holz" },
     { "value": "Kunststoff", "label": "Kunststoff" },
-    { "value": "Metall", "label": "Metall" }
+    { "value": "Aluminium", "label": "Aluminium" },
+    { "value": "Holz-Alu", "label": "Holz-Alu" }
   ],
   "kellerdecke_keller": [
     { "value": "", "label": "Bitte wählen…" },
@@ -247,6 +248,7 @@
     { "value": "Unbekannt", "label": "Unbekannt" }
   ],
   "dach_typ": [
+    { "value": "", "label": "Bitte wählen…" },
     { "value": "Steildach ungedämmt", "label": "Steildach ungedämmt" },
     { "value": "Steildach gedämmt", "label": "Steildach gedämmt" },
     { "value": "Flachdach", "label": "Flachdach" },
@@ -255,12 +257,14 @@
     { "value": "Unbekannt", "label": "Unbekannt" }
   ],
   "dachraum_zustand": [
+    { "value": "", "label": "Bitte wählen…" },
     { "value": "Unbeheizt", "label": "Dachraum unbeheizt" },
     { "value": "Ausgebaut / beheizt", "label": "Dachraum ausgebaut / beheizt" },
     { "value": "Teilweise ausgebaut", "label": "Teilweise ausgebaut" },
     { "value": "Unbekannt", "label": "Unbekannt" }
   ],
   "keller_bodenplatte": [
+    { "value": "", "label": "Bitte wählen…" },
     { "value": "Unbeheizter Keller", "label": "Unbeheizter Keller vorhanden" },
     { "value": "Beheizter Keller", "label": "Beheizter Keller" },
     { "value": "Kellerdecke gedämmt", "label": "Kellerdecke gedämmt" },
