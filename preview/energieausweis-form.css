@@ -961,6 +961,11 @@ select.control:open{
 .rep-add{
   align-self:flex-start;
 }
+.rep-add-row{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+}
 .rep-total{
   color:var(--muted);
   font-size:14px;

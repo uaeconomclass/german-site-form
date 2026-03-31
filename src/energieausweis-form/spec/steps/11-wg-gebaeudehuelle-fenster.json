@@ -168,15 +168,6 @@
                                           "optionsRef":  "fenster_abstandhalter"
                                       },
                                       {
-                                          "key":  "fenster_baujahr",
-                                          "label":  "Baujahr der Fenster",
-                                          "type":  "number",
-                                          "required":  false,
-                                          "min":  1800,
-                                          "max":  2100,
-                                          "hint":  "z. B. 2005"
-                                      },
-                                      {
                                           "key":  "fenster_einbauzeitraum",
                                           "label":  "Einbauzeitraum (falls Baujahr unbekannt)",
                                           "type":  "radio",
@@ -210,10 +201,40 @@
                                                                   ]
                                                        },
                                           "tipKey":  "fenster_vermassung",
-                                          "itemLabel":  "Fenster / Tür",
+                                          "itemLabel":  "Element",
                                           "minItems":  1,
                                           "defaultItems":  1,
+                                          "addButtons":  [
+                                                             {
+                                                                 "label":  "Fenster hinzufügen",
+                                                                 "defaults":  {
+                                                                                  "typ":  "Fenster"
+                                                                              }
+                                                             },
+                                                             {
+                                                                 "label":  "Tür hinzufügen",
+                                                                 "defaults":  {
+                                                                                  "typ":  "Tür"
+                                                                              }
+                                                             }
+                                                         ],
                                           "fields":  [
+                                                         {
+                                                             "key":  "typ",
+                                                             "label":  "Typ",
+                                                             "type":  "radio",
+                                                             "required":  true,
+                                                             "options":  [
+                                                                             {
+                                                                                 "value":  "Fenster",
+                                                                                 "label":  "Fenster"
+                                                                             },
+                                                                             {
+                                                                                 "value":  "Tür",
+                                                                                 "label":  "Tür"
+                                                                             }
+                                                                         ]
+                                                         },
                                                          {
                                                              "key":  "raum",
                                                              "label":  "Raum / Bezeichnung",
@@ -238,6 +259,15 @@
                                                              "min":  0.1,
                                                              "max":  10,
                                                              "hint":  "z. B. 1.49"
+                                                         },
+                                                         {
+                                                             "key":  "baujahr",
+                                                             "label":  "Baujahr",
+                                                             "type":  "number",
+                                                             "required":  false,
+                                                             "min":  1800,
+                                                             "max":  2100,
+                                                             "hint":  "z. B. 2005"
                                                          }
                                                      ]
                                       }

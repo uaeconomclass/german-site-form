@@ -1135,11 +1135,12 @@ function renderFields(step) {
         const list = el("div", { class: "rep-list" });
         const renderRow = (idx) => {
           const it = items[idx] || {};
+          const typeLabel = String(it.typ || "").trim();
           const row = el("div", { class: "rep-row" });
           const head = el(
             "div",
             { class: "rep-head" },
-            el("b", null, itemLabel + " " + String(idx + 1)),
+            el("b", null, (typeLabel || itemLabel) + " " + String(idx + 1)),
             el("button", { type: "button", class: "rep-remove", onclick: () => {
               items.splice(idx, 1);
               setValue(key, items, step);
@@ -1154,22 +1155,40 @@ function renderFields(step) {
             const cell = el("div", { class: "rep-cell" });
             cell.appendChild(renderLabel(sf));
 
-            const inp = el("input", {
-              class: "control",
-              type: sf.type === "number" ? "number" : "text",
-              value: sfVal,
-              placeholder: sf.hint || ""
-            });
-            if (sf.min != null) inp.setAttribute("min", String(sf.min));
-            if (sf.max != null) inp.setAttribute("max", String(sf.max));
-            inp.addEventListener("input", () => {
-              const next = { ...(items[idx] || {}) };
-              next[sfKey] = inp.value;
-              items[idx] = next;
-              setValue(key, items, step, { render: false });
-            });
-            inp.addEventListener("change", () => setValue(key, items, step));
-            cell.appendChild(inp);
+            if (sf.type === "radio") {
+              const opts = Array.isArray(sf.options) ? sf.options : [];
+              const radioWrap = el("div", { class: "radio-row", role: "group" });
+              opts.forEach((opt) => {
+                const id = key + "_" + idx + "_" + sfKey + "_" + String(opt.value);
+                const input = el("input", { type: "radio", name: key + "_" + idx + "_" + sfKey, id, value: opt.value });
+                if (String(sfVal) === String(opt.value)) input.checked = true;
+                input.addEventListener("change", () => {
+                  const next = { ...(items[idx] || {}) };
+                  next[sfKey] = opt.value;
+                  items[idx] = next;
+                  setValue(key, items, step);
+                });
+                radioWrap.appendChild(el("label", { class: "chip", for: id }, input, el("span", null, opt.label)));
+              });
+              cell.appendChild(radioWrap);
+            } else {
+              const inp = el("input", {
+                class: "control",
+                type: sf.type === "number" ? "number" : "text",
+                value: sfVal,
+                placeholder: sf.hint || ""
+              });
+              if (sf.min != null) inp.setAttribute("min", String(sf.min));
+              if (sf.max != null) inp.setAttribute("max", String(sf.max));
+              inp.addEventListener("input", () => {
+                const next = { ...(items[idx] || {}) };
+                next[sfKey] = inp.value;
+                items[idx] = next;
+                setValue(key, items, step, { render: false });
+              });
+              inp.addEventListener("change", () => setValue(key, items, step));
+              cell.appendChild(inp);
+            }
             grid.appendChild(cell);
           });
 
@@ -1193,12 +1212,28 @@ function renderFields(step) {
 
         const maxItems = Number(field.maxItems);
         const canAddMore = !Number.isFinite(maxItems) || items.length < maxItems;
-        const addBtn = el("button", { type: "button", class: "btn secondary rep-add", onclick: () => {
-          if (!canAddMore) return;
-          items.push({});
-          setValue(key, items, step);
-        } }, "+ " + itemLabel + " hinzufügen");
-        if (!canAddMore) addBtn.setAttribute("disabled", "disabled");
+        let addControls = null;
+        if (Array.isArray(field.addButtons) && field.addButtons.length) {
+          const addRow = el("div", { class: "rep-add-row" });
+          field.addButtons.forEach((btnCfg) => {
+            const addBtn = el("button", { type: "button", class: "btn secondary rep-add", onclick: () => {
+              if (!canAddMore) return;
+              items.push({ ...(btnCfg.defaults || {}) });
+              setValue(key, items, step);
+            } }, "+ " + String(btnCfg.label || (itemLabel + " hinzufügen")));
+            if (!canAddMore) addBtn.setAttribute("disabled", "disabled");
+            addRow.appendChild(addBtn);
+          });
+          addControls = addRow;
+        } else {
+          const addBtn = el("button", { type: "button", class: "btn secondary rep-add", onclick: () => {
+            if (!canAddMore) return;
+            items.push({});
+            setValue(key, items, step);
+          } }, "+ " + itemLabel + " hinzufügen");
+          if (!canAddMore) addBtn.setAttribute("disabled", "disabled");
+          addControls = addBtn;
+        }
 
         const hasAreaFields = (field.fields || []).some((sf) => sf.key === "hoehe_m")
           && (field.fields || []).some((sf) => sf.key === "breite_m");
@@ -1210,9 +1245,9 @@ function renderFields(step) {
             if (Number.isFinite(h) && Number.isFinite(w)) total += h * w;
           }
           const totalEl = el("div", { class: "rep-total" }, "Summe: ", el("b", null, total.toFixed(3)), " m²");
-          control = el("div", { class: "repeater" }, list, addBtn, totalEl);
+          control = el("div", { class: "repeater" }, list, addControls, totalEl);
         } else {
-          control = el("div", { class: "repeater" }, list, addBtn);
+          control = el("div", { class: "repeater" }, list, addControls);
         }
       } else if (field.type === "checkbox") {
         wantsDefaultLabel = false;
