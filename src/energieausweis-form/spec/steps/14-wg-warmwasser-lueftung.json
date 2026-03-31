@@ -14,11 +14,11 @@
               },
     "blocks":  [
                    {
-                       "title":  "Warmwasser",
+                       "title":  "Warmwasserbereitung",
                        "fields":  [
                                       {
                                           "key":  "warmwasser_type",
-                                          "label":  "Warmwasserbereitung",
+                                          "label":  "Wie wird das Warmwasser erzeugt?",
                                           "type":  "select",
                                           "required":  true,
                                           "optionsRef":  "warmwasser",
@@ -62,26 +62,12 @@
                                       },
                                       {
                                           "key":  "bewohner_anzahl",
-                                          "label":  "Anzahl der Bewohner",
+                                          "label":  "Wie viele Personen leben im Gebäude?",
                                           "type":  "number",
                                           "required":  false,
                                           "min":  1,
                                           "max":  999,
                                           "hint":  "z. B. 3"
-                                      },
-                                      {
-                                          "key":  "warmwasserrohre_gedaemmt",
-                                          "label":  "Warmwasserrohre gedämmt",
-                                          "type":  "radio",
-                                          "required":  false,
-                                          "when":  {
-                                                       "neq":  [
-                                                                   "ausweisart",
-                                                                   "Verbrauchsausweis"
-                                                               ]
-                                                   },
-                                          "optionsRef":  "ja_nein_radio",
-                                          "tipKey":  "warmwasser_rohre_gedaemmt"
                                       }
                                   ]
                    },
@@ -90,7 +76,7 @@
                        "fields":  [
                                       {
                                           "key":  "lueftung_type",
-                                          "label":  "Lüftungssystem",
+                                          "label":  "Welches Lüftungssystem ist im Gebäude vorhanden?",
                                           "type":  "select",
                                           "full":  true,
                                           "required":  true,
