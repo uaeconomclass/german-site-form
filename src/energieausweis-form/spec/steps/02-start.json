@@ -216,10 +216,6 @@
             {
               "value": "ca. 10–50%",
               "label": "ca. 10–50%"
-            },
-            {
-              "value": "über 50%",
-              "label": "über 50%"
             }
           ]
         }
@@ -230,7 +226,7 @@
       "fields": [
         {
           "key": "gebaeudetyp",
-          "label": "Gebäudetyp",
+          "label": "Gebäudenutzung",
           "type": "radio",
           "required": true,
           "tipKey": "gebaeudetyp",
@@ -405,7 +401,6 @@
           "max": 20000,
           "tipKey": "nutzflaeche",
           "hint": "z. B. 155",
-          "infoText": "Die Nettogrundfläche (NGF) umfasst alle nutzbaren Flächen innerhalb der Außenwände (z. B. Wohnen, Flure, Abstellräume, Technikräume). Angabe optional.",
           "when": {
             "eq": [
               "gebaeudetyp",
