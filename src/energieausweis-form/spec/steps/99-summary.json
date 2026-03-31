@@ -95,6 +95,24 @@
                                           "hint":  "München"
                                       },
                                       {
+                                          "key":  "rechnung_ust_id",
+                                          "label":  "USt. ID",
+                                          "type":  "text",
+                                          "required":  {
+                                                           "eq":  [
+                                                                      "rechnung_auftragsart",
+                                                                      "Gewerblich"
+                                                                  ]
+                                                       },
+                                          "when":  {
+                                                       "eq":  [
+                                                                  "rechnung_auftragsart",
+                                                                  "Gewerblich"
+                                                              ]
+                                                   },
+                                          "hint":  "z. B. DE123456789"
+                                      },
+                                      {
                                           "key":  "rechnung_gleich_objektadresse",
                                           "label":  "Rechnungsadresse entspricht Objektadresse",
                                           "type":  "checkbox",
