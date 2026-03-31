@@ -24,7 +24,7 @@
               },
     "blocks":  [
                    {
-                       "title":  "Energetische Modernisierungen",
+                       "title":  "",
                        "fields":  [
                                       {
                                           "key":  "bedarf_z_modernisierung",
@@ -38,6 +38,7 @@
                                           "key":  "bedarf_z_modern_jahr",
                                           "label":  "Jahr der Maßnahme",
                                           "type":  "number",
+                                          "indent":  true,
                                           "required":  {
                                                            "eq":  [
                                                                       "bedarf_z_modernisierung",
@@ -58,6 +59,7 @@
                                           "key":  "bedarf_z_modern_art",
                                           "label":  "Art der Maßnahme",
                                           "type":  "text",
+                                          "indent":  true,
                                           "required":  {
                                                            "eq":  [
                                                                       "bedarf_z_modernisierung",
@@ -76,7 +78,7 @@
                                   ]
                    },
                    {
-                       "title":  "Heizungsanlage erneuert",
+                       "title":  "",
                        "fields":  [
                                       {
                                           "key":  "bedarf_z_heizung_erneuert",
@@ -90,6 +92,7 @@
                                           "key":  "bedarf_z_heizung_jahr",
                                           "label":  "Jahr der Änderung",
                                           "type":  "number",
+                                          "indent":  true,
                                           "required":  {
                                                            "eq":  [
                                                                       "bedarf_z_heizung_erneuert",
@@ -110,6 +113,7 @@
                                           "key":  "bedarf_z_heizung_art",
                                           "label":  "Art der Anlage",
                                           "type":  "text",
+                                          "indent":  true,
                                           "required":  {
                                                            "eq":  [
                                                                       "bedarf_z_heizung_erneuert",
@@ -128,11 +132,12 @@
                                   ]
                    },
                    {
-                       "title":  "Beheizung der Räume",
+                       "title":  "",
                        "fields":  [
                                       {
                                           "key":  "bedarf_z_alle_raeume_beheizt",
                                           "label":  "Werden alle Räume innerhalb der Gebäudehülle beheizt?",
+                                          "labelHtml":  "Werden <strong>alle Räume</strong> innerhalb der Gebäudehülle beheizt?",
                                           "type":  "radio",
                                           "required":  true,
                                           "optionsRef":  "ja_nein_radio",
@@ -142,6 +147,7 @@
                                           "key":  "bedarf_z_unbeheizt_bereich",
                                           "label":  "Welche Bereiche werden nicht beheizt?",
                                           "type":  "text",
+                                          "indent":  true,
                                           "required":  {
                                                            "eq":  [
                                                                       "bedarf_z_alle_raeume_beheizt",
@@ -160,6 +166,7 @@
                                           "key":  "bedarf_z_unbeheizt_flaeche",
                                           "label":  "Ungefähre Fläche (m²)",
                                           "type":  "number",
+                                          "indent":  true,
                                           "required":  {
                                                            "eq":  [
                                                                       "bedarf_z_alle_raeume_beheizt",
@@ -179,7 +186,7 @@
                                   ]
                    },
                    {
-                       "title":  "Bauliche Veränderungen",
+                       "title":  "",
                        "fields":  [
                                       {
                                           "key":  "bedarf_z_bau_veraendert",
@@ -193,6 +200,7 @@
                                           "key":  "bedarf_z_bau_art",
                                           "label":  "Art der Veränderung",
                                           "type":  "text",
+                                          "indent":  true,
                                           "required":  {
                                                            "eq":  [
                                                                       "bedarf_z_bau_veraendert",
@@ -212,6 +220,7 @@
                                           "key":  "bedarf_z_bau_jahr",
                                           "label":  "Jahr der Änderung",
                                           "type":  "number",
+                                          "indent":  true,
                                           "required":  {
                                                            "eq":  [
                                                                       "bedarf_z_bau_veraendert",
@@ -231,7 +240,7 @@
                                   ]
                    },
                    {
-                       "title":  "Nachträgliche Dämmung",
+                       "title":  "",
                        "fields":  [
                                       {
                                           "key":  "bedarf_z_bauteil_gedaemmt",
@@ -245,6 +254,7 @@
                                           "key":  "bedarf_z_daemmung_fassade",
                                           "label":  "Fassadendämmung",
                                           "type":  "checkbox",
+                                          "indent":  true,
                                           "required":  false,
                                           "when":  {
                                                        "eq":  [
@@ -258,6 +268,7 @@
                                           "key":  "bedarf_z_daemmung_dach",
                                           "label":  "Dachdämmung",
                                           "type":  "checkbox",
+                                          "indent":  true,
                                           "required":  false,
                                           "when":  {
                                                        "eq":  [
@@ -271,6 +282,7 @@
                                           "key":  "bedarf_z_daemmung_keller",
                                           "label":  "Kellerdeckendämmung",
                                           "type":  "checkbox",
+                                          "indent":  true,
                                           "required":  false,
                                           "when":  {
                                                        "eq":  [
@@ -284,6 +296,7 @@
                                           "key":  "bedarf_z_daemmung_jahr",
                                           "label":  "Jahr der Maßnahme",
                                           "type":  "number",
+                                          "indent":  true,
                                           "required":  {
                                                            "eq":  [
                                                                       "bedarf_z_bauteil_gedaemmt",

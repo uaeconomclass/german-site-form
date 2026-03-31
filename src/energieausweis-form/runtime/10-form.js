@@ -470,8 +470,14 @@ document.addEventListener("click", (e) => {
   }
 });
 
+function renderFieldLabelSpan(field, className) {
+  const attrs = className ? { class: className } : null;
+  if (field && field.labelHtml) return el("span", Object.assign({}, attrs || {}, { html: String(field.labelHtml) }));
+  return el("span", attrs, field && field.label != null ? String(field.label) : "");
+}
+
 function renderLabel(field) {
-  const pieces = [el("span", null, field.label)];
+  const pieces = [renderFieldLabelSpan(field)];
   if (isRequired(field)) pieces.push(el("span", { class: "req", "aria-hidden": "true" }, "*"));
   if (field.tipGrid && Array.isArray(field.tipGrid) && field.tipGrid.length) {
     const grid = el("span", { class: "tipgrid" });
@@ -934,7 +940,7 @@ function renderFields(step) {
             { class: "checkbox-row", for: id },
             input,
             el("span", { class: "cb-box", "aria-hidden": "true" }),
-            el("span", { class: "cb-label" }, field.label)
+            renderFieldLabelSpan(field, "cb-label")
           );
           optionTip = renderSelectedOptionTip(field, currentVal);
         } else {
@@ -1260,7 +1266,7 @@ function renderFields(step) {
           { class: "checkbox-row", for: id },
           input,
           el("span", { class: "cb-box", "aria-hidden": "true" }),
-          el("span", { class: "cb-label" }, field.label)
+          renderFieldLabelSpan(field, "cb-label")
         );
         if (field.tipKey && TIPS[field.tipKey]) optionTip = el("div", { class: "field-info" },
           el("span", { class: "field-info-ico", "aria-hidden": "true" }),
