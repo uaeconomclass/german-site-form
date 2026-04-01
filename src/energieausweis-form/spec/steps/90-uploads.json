@@ -560,18 +560,6 @@
                        "hint":  "z. B. 20"
                    },
                    {
-                       "key":  "waermedaemmung_oberste_geschossdecke_min12cm",
-                       "label":  "Oberste Geschossdecke min. 12 cm gedämmt",
-                       "type":  "checkbox",
-                       "when":  {
-                                    "eq":  [
-                                               "ausweisart",
-                                               "Bedarfsausweis"
-                                           ]
-                                },
-                       "full":  true
-                   },
-                   {
                        "key":  "checklist_bedarf_unterlagen",
                        "type":  "checklist",
                        "when":  {
