@@ -212,68 +212,11 @@
                                           "optionsRef":  "etr_verbrauch_betrifft_wg"
                                       },
                                       {
-                                          "key":  "etr1_kategorie",
-                                          "label":  "Energieträger",
-                                          "type":  "select",
-                                          "full":  true,
-                                          "when":  {
-                                                       "eq":  [
-                                                                  "ausweisart",
-                                                                  "Verbrauchsausweis"
-                                                              ]
-                                                   },
-                                          "required":  {
-                                                           "eq":  [
-                                                                      "ausweisart",
-                                                                      "Verbrauchsausweis"
-                                                                  ]
-                                                       },
-                                          "optionsRef":  "etr_kategorie_bk",
-                                          "tipKey":  "etr_kategorie"
-                                      },
-                                      {
-                                          "key":  "etr1_heizung",
-                                          "label":  "Für Heizung genutzt?",
-                                          "type":  "radio",
-                                          "full":  true,
-                                          "when":  {
-                                                       "eq":  [
-                                                                  "ausweisart",
-                                                                  "Verbrauchsausweis"
-                                                              ]
-                                                   },
-                                          "required":  {
-                                                           "eq":  [
-                                                                      "ausweisart",
-                                                                      "Verbrauchsausweis"
-                                                                  ]
-                                                       },
-                                          "optionsRef":  "ja_nein_radio"
-                                      },
-                                      {
-                                          "key":  "etr1_tww",
-                                          "label":  "Für Warmwasser genutzt?",
-                                          "type":  "radio",
-                                          "full":  true,
-                                          "when":  {
-                                                       "eq":  [
-                                                                  "ausweisart",
-                                                                  "Verbrauchsausweis"
-                                                              ]
-                                                   },
-                                          "required":  {
-                                                           "eq":  [
-                                                                      "ausweisart",
-                                                                      "Verbrauchsausweis"
-                                                                  ]
-                                                       },
-                                          "optionsRef":  "ja_nein_radio"
-                                      },
-                                      {
                                           "key":  "etr1_periods",
-                                          "label":  "Abrechnungszeiträume",
+                                          "label":  "Energieverbrauch der letzten 3 Jahre",
                                           "type":  "periods3",
                                           "full":  true,
+                                          "infoText":  "Der Heizenergieverbrauch muss mindestens 36 Monate zusammenhängend umfassen (die jüngste Abrechnung max. 18 Monate alt).",
                                           "when":  {
                                                        "eq":  [
                                                                   "ausweisart",
@@ -308,875 +251,6 @@
                                           "fields":  [
 
                                                      ]
-                                      },
-                                      {
-                                          "key":  "etr1_is_fw",
-                                          "label":  "Fernwärme?",
-                                          "type":  "radio",
-                                          "full":  true,
-                                          "when":  {
-                                                       "and":  [
-                                                                   {
-                                                                       "eq":  [
-                                                                                  "ausweisart",
-                                                                                  "Verbrauchsausweis"
-                                                                              ]
-                                                                   },
-                                                                   {
-                                                                       "or":  [
-                                                                                  {
-                                                                                      "eq":  [
-                                                                                                 "etr1_kategorie",
-                                                                                                 "BK_FW0"
-                                                                                             ]
-                                                                                  },
-                                                                                  {
-                                                                                      "eq":  [
-                                                                                                 "etr1_kategorie",
-                                                                                                 "BK_FW70"
-                                                                                             ]
-                                                                                  }
-                                                                              ]
-                                                                   }
-                                                               ]
-                                                   },
-                                          "required":  {
-                                                           "and":  [
-                                                                       {
-                                                                           "eq":  [
-                                                                                      "ausweisart",
-                                                                                      "Verbrauchsausweis"
-                                                                                  ]
-                                                                       },
-                                                                       {
-                                                                           "or":  [
-                                                                                      {
-                                                                                          "eq":  [
-                                                                                                     "etr1_kategorie",
-                                                                                                     "BK_FW0"
-                                                                                                 ]
-                                                                                      },
-                                                                                      {
-                                                                                          "eq":  [
-                                                                                                     "etr1_kategorie",
-                                                                                                     "BK_FW70"
-                                                                                                 ]
-                                                                                      }
-                                                                                  ]
-                                                                       }
-                                                                   ]
-                                                       },
-                                          "optionsRef":  "ja_nein_radio",
-                                          "tipKey":  "etr_fw_flags"
-                                      },
-                                      {
-                                          "key":  "etr1_gebaeude_nah",
-                                          "label":  "Gebäudenah erzeugt?",
-                                          "type":  "radio",
-                                          "full":  true,
-                                          "when":  {
-                                                       "and":  [
-                                                                   {
-                                                                       "eq":  [
-                                                                                  "ausweisart",
-                                                                                  "Verbrauchsausweis"
-                                                                              ]
-                                                                   },
-                                                                   {
-                                                                       "or":  [
-                                                                                  {
-                                                                                      "eq":  [
-                                                                                                 "etr1_kategorie",
-                                                                                                 "BK_FW0"
-                                                                                             ]
-                                                                                  },
-                                                                                  {
-                                                                                      "eq":  [
-                                                                                                 "etr1_kategorie",
-                                                                                                 "BK_FW70"
-                                                                                             ]
-                                                                                  }
-                                                                              ]
-                                                                   }
-                                                               ]
-                                                   },
-                                          "required":  {
-                                                           "and":  [
-                                                                       {
-                                                                           "eq":  [
-                                                                                      "ausweisart",
-                                                                                      "Verbrauchsausweis"
-                                                                                  ]
-                                                                       },
-                                                                       {
-                                                                           "or":  [
-                                                                                      {
-                                                                                          "eq":  [
-                                                                                                     "etr1_kategorie",
-                                                                                                     "BK_FW0"
-                                                                                                 ]
-                                                                                      },
-                                                                                      {
-                                                                                          "eq":  [
-                                                                                                     "etr1_kategorie",
-                                                                                                     "BK_FW70"
-                                                                                                 ]
-                                                                                      }
-                                                                                  ]
-                                                                       }
-                                                                   ]
-                                                       },
-                                          "optionsRef":  "ja_nein_radio",
-                                          "tipKey":  "etr_fw_flags"
-                                      },
-                                      {
-                                          "key":  "etr1_primfaktor",
-                                          "label":  "Primaerenergiefaktor",
-                                          "type":  "number",
-                                          "full":  true,
-                                          "when":  {
-                                                       "and":  [
-                                                                   {
-                                                                       "eq":  [
-                                                                                  "ausweisart",
-                                                                                  "Verbrauchsausweis"
-                                                                              ]
-                                                                   },
-                                                                   {
-                                                                       "or":  [
-                                                                                  {
-                                                                                      "eq":  [
-                                                                                                 "etr1_kategorie",
-                                                                                                 "BK_FW0"
-                                                                                             ]
-                                                                                  },
-                                                                                  {
-                                                                                      "eq":  [
-                                                                                                 "etr1_kategorie",
-                                                                                                 "BK_FW70"
-                                                                                             ]
-                                                                                  }
-                                                                              ]
-                                                                   }
-                                                               ]
-                                                   },
-                                          "required":  {
-                                                           "and":  [
-                                                                       {
-                                                                           "eq":  [
-                                                                                      "ausweisart",
-                                                                                      "Verbrauchsausweis"
-                                                                                  ]
-                                                                       },
-                                                                       {
-                                                                           "or":  [
-                                                                                      {
-                                                                                          "eq":  [
-                                                                                                     "etr1_kategorie",
-                                                                                                     "BK_FW0"
-                                                                                                 ]
-                                                                                      },
-                                                                                      {
-                                                                                          "eq":  [
-                                                                                                     "etr1_kategorie",
-                                                                                                     "BK_FW70"
-                                                                                                 ]
-                                                                                      }
-                                                                                  ]
-                                                                       }
-                                                                   ]
-                                                       },
-                                          "min":  0,
-                                          "max":  10,
-                                          "tipKey":  "etr_primfaktor"
-                                      },
-                                      {
-                                          "key":  "etr1_anteil_erneuerbar",
-                                          "label":  "Anteil erneuerbar (%)",
-                                          "type":  "number",
-                                          "full":  true,
-                                          "when":  {
-                                                       "and":  [
-                                                                   {
-                                                                       "eq":  [
-                                                                                  "ausweisart",
-                                                                                  "Verbrauchsausweis"
-                                                                              ]
-                                                                   },
-                                                                   {
-                                                                       "or":  [
-                                                                                  {
-                                                                                      "eq":  [
-                                                                                                 "etr1_kategorie",
-                                                                                                 "BK_FW0"
-                                                                                             ]
-                                                                                  },
-                                                                                  {
-                                                                                      "eq":  [
-                                                                                                 "etr1_kategorie",
-                                                                                                 "BK_FW70"
-                                                                                             ]
-                                                                                  }
-                                                                              ]
-                                                                   }
-                                                               ]
-                                                   },
-                                          "required":  {
-                                                           "and":  [
-                                                                       {
-                                                                           "eq":  [
-                                                                                      "ausweisart",
-                                                                                      "Verbrauchsausweis"
-                                                                                  ]
-                                                                       },
-                                                                       {
-                                                                           "or":  [
-                                                                                      {
-                                                                                          "eq":  [
-                                                                                                     "etr1_kategorie",
-                                                                                                     "BK_FW0"
-                                                                                                 ]
-                                                                                      },
-                                                                                      {
-                                                                                          "eq":  [
-                                                                                                     "etr1_kategorie",
-                                                                                                     "BK_FW70"
-                                                                                                 ]
-                                                                                      }
-                                                                                  ]
-                                                                       }
-                                                                   ]
-                                                       },
-                                          "min":  0,
-                                          "max":  100,
-                                          "tipKey":  "etr_anteile"
-                                      },
-                                      {
-                                          "key":  "etr1_anteil_kwk",
-                                          "label":  "Anteil KWK (%)",
-                                          "type":  "number",
-                                          "full":  true,
-                                          "when":  {
-                                                       "and":  [
-                                                                   {
-                                                                       "eq":  [
-                                                                                  "ausweisart",
-                                                                                  "Verbrauchsausweis"
-                                                                              ]
-                                                                   },
-                                                                   {
-                                                                       "or":  [
-                                                                                  {
-                                                                                      "eq":  [
-                                                                                                 "etr1_kategorie",
-                                                                                                 "BK_FW0"
-                                                                                             ]
-                                                                                  },
-                                                                                  {
-                                                                                      "eq":  [
-                                                                                                 "etr1_kategorie",
-                                                                                                 "BK_FW70"
-                                                                                             ]
-                                                                                  }
-                                                                              ]
-                                                                   }
-                                                               ]
-                                                   },
-                                          "required":  {
-                                                           "and":  [
-                                                                       {
-                                                                           "eq":  [
-                                                                                      "ausweisart",
-                                                                                      "Verbrauchsausweis"
-                                                                                  ]
-                                                                       },
-                                                                       {
-                                                                           "or":  [
-                                                                                      {
-                                                                                          "eq":  [
-                                                                                                     "etr1_kategorie",
-                                                                                                     "BK_FW0"
-                                                                                                 ]
-                                                                                      },
-                                                                                      {
-                                                                                          "eq":  [
-                                                                                                     "etr1_kategorie",
-                                                                                                     "BK_FW70"
-                                                                                                 ]
-                                                                                      }
-                                                                                  ]
-                                                                       }
-                                                                   ]
-                                                       },
-                                          "min":  0,
-                                          "max":  100,
-                                          "tipKey":  "etr_anteile"
-                                      },
-                                      {
-                                          "type":  "checklist",
-                                          "full":  true,
-                                          "when":  {
-                                                       "eq":  [
-                                                                  "ausweisart",
-                                                                  "Verbrauchsausweis"
-                                                              ]
-                                                   },
-                                          "title":  "Optional: zweiter Energieträger",
-                                          "text":  "Nur hinzufügen, wenn ein zusätzlicher Energieträger tatsächlich im Verbrauch vorkommt."
-                                      },
-                                      {
-                                          "key":  "etr2_enabled",
-                                          "label":  "Zweiten Energieträger erfassen",
-                                          "type":  "checkbox",
-                                          "full":  true,
-                                          "when":  {
-                                                       "eq":  [
-                                                                  "ausweisart",
-                                                                  "Verbrauchsausweis"
-                                                              ]
-                                                   },
-                                          "tipKey":  "etr2_optional"
-                                      },
-                                      {
-                                          "key":  "etr2_kategorie",
-                                          "label":  "Energieträger 2",
-                                          "type":  "select",
-                                          "full":  true,
-                                          "when":  {
-                                                       "and":  [
-                                                                   {
-                                                                       "eq":  [
-                                                                                  "ausweisart",
-                                                                                  "Verbrauchsausweis"
-                                                                              ]
-                                                                   },
-                                                                   {
-                                                                       "eq":  [
-                                                                                  "etr2_enabled",
-                                                                                  true
-                                                                              ]
-                                                                   }
-                                                               ]
-                                                   },
-                                          "required":  {
-                                                           "and":  [
-                                                                       {
-                                                                           "eq":  [
-                                                                                      "ausweisart",
-                                                                                      "Verbrauchsausweis"
-                                                                                  ]
-                                                                       },
-                                                                       {
-                                                                           "eq":  [
-                                                                                      "etr2_enabled",
-                                                                                      true
-                                                                                  ]
-                                                                       }
-                                                                   ]
-                                                       },
-                                          "optionsRef":  "etr_kategorie_bk",
-                                          "tipKey":  "etr_kategorie"
-                                      },
-                                      {
-                                          "key":  "etr2_heizung",
-                                          "label":  "Für Heizung genutzt?",
-                                          "type":  "radio",
-                                          "full":  true,
-                                          "when":  {
-                                                       "and":  [
-                                                                   {
-                                                                       "eq":  [
-                                                                                  "ausweisart",
-                                                                                  "Verbrauchsausweis"
-                                                                              ]
-                                                                   },
-                                                                   {
-                                                                       "eq":  [
-                                                                                  "etr2_enabled",
-                                                                                  true
-                                                                              ]
-                                                                   }
-                                                               ]
-                                                   },
-                                          "required":  {
-                                                           "and":  [
-                                                                       {
-                                                                           "eq":  [
-                                                                                      "ausweisart",
-                                                                                      "Verbrauchsausweis"
-                                                                                  ]
-                                                                       },
-                                                                       {
-                                                                           "eq":  [
-                                                                                      "etr2_enabled",
-                                                                                      true
-                                                                                  ]
-                                                                       }
-                                                                   ]
-                                                       },
-                                          "optionsRef":  "ja_nein_radio"
-                                      },
-                                      {
-                                          "key":  "etr2_tww",
-                                          "label":  "Für Warmwasser genutzt?",
-                                          "type":  "radio",
-                                          "full":  true,
-                                          "when":  {
-                                                       "and":  [
-                                                                   {
-                                                                       "eq":  [
-                                                                                  "ausweisart",
-                                                                                  "Verbrauchsausweis"
-                                                                              ]
-                                                                   },
-                                                                   {
-                                                                       "eq":  [
-                                                                                  "etr2_enabled",
-                                                                                  true
-                                                                              ]
-                                                                   }
-                                                               ]
-                                                   },
-                                          "required":  {
-                                                           "and":  [
-                                                                       {
-                                                                           "eq":  [
-                                                                                      "ausweisart",
-                                                                                      "Verbrauchsausweis"
-                                                                                  ]
-                                                                       },
-                                                                       {
-                                                                           "eq":  [
-                                                                                      "etr2_enabled",
-                                                                                      true
-                                                                                  ]
-                                                                       }
-                                                                   ]
-                                                       },
-                                          "optionsRef":  "ja_nein_radio"
-                                      },
-                                      {
-                                          "key":  "etr2_periods",
-                                          "label":  "Abrechnungszeiträume (Energieträger 2)",
-                                          "type":  "periods3",
-                                          "full":  true,
-                                          "when":  {
-                                                       "and":  [
-                                                                   {
-                                                                       "eq":  [
-                                                                                  "ausweisart",
-                                                                                  "Verbrauchsausweis"
-                                                                              ]
-                                                                   },
-                                                                   {
-                                                                       "eq":  [
-                                                                                  "etr2_enabled",
-                                                                                  true
-                                                                              ]
-                                                                   }
-                                                               ]
-                                                   },
-                                          "required":  {
-                                                           "and":  [
-                                                                       {
-                                                                           "eq":  [
-                                                                                      "ausweisart",
-                                                                                      "Verbrauchsausweis"
-                                                                                  ]
-                                                                       },
-                                                                       {
-                                                                           "eq":  [
-                                                                                      "etr2_enabled",
-                                                                                      true
-                                                                                  ]
-                                                                       }
-                                                                   ]
-                                                       },
-                                          "startKey":  "etr2_start",
-                                          "unitKey":  "etr2_einheit",
-                                          "defaultUnit":  "kWh",
-                                          "startMonthsBack":  36,
-                                          "unitOptions":  [
-                                                              {
-                                                                  "value":  "kWh",
-                                                                  "label":  "kWh"
-                                                              },
-                                                              {
-                                                                  "value":  "m3",
-                                                                  "label":  "m3"
-                                                              },
-                                                              {
-                                                                  "value":  "l",
-                                                                  "label":  "l"
-                                                              }
-                                                          ],
-                                          "tipKey":  "etr_perioden",
-                                          "fields":  [
-
-                                                     ]
-                                      },
-                                      {
-                                          "key":  "etr2_is_fw",
-                                          "label":  "Fernwärme?",
-                                          "type":  "radio",
-                                          "full":  true,
-                                          "when":  {
-                                                       "and":  [
-                                                                   {
-                                                                       "eq":  [
-                                                                                  "ausweisart",
-                                                                                  "Verbrauchsausweis"
-                                                                              ]
-                                                                   },
-                                                                   {
-                                                                       "eq":  [
-                                                                                  "etr2_enabled",
-                                                                                  true
-                                                                              ]
-                                                                   },
-                                                                   {
-                                                                       "or":  [
-                                                                                  {
-                                                                                      "eq":  [
-                                                                                                 "etr2_kategorie",
-                                                                                                 "BK_FW0"
-                                                                                             ]
-                                                                                  },
-                                                                                  {
-                                                                                      "eq":  [
-                                                                                                 "etr2_kategorie",
-                                                                                                 "BK_FW70"
-                                                                                             ]
-                                                                                  }
-                                                                              ]
-                                                                   }
-                                                               ]
-                                                   },
-                                          "required":  {
-                                                           "and":  [
-                                                                       {
-                                                                           "eq":  [
-                                                                                      "ausweisart",
-                                                                                      "Verbrauchsausweis"
-                                                                                  ]
-                                                                       },
-                                                                       {
-                                                                           "eq":  [
-                                                                                      "etr2_enabled",
-                                                                                      true
-                                                                                  ]
-                                                                       },
-                                                                       {
-                                                                           "or":  [
-                                                                                      {
-                                                                                          "eq":  [
-                                                                                                     "etr2_kategorie",
-                                                                                                     "BK_FW0"
-                                                                                                 ]
-                                                                                      },
-                                                                                      {
-                                                                                          "eq":  [
-                                                                                                     "etr2_kategorie",
-                                                                                                     "BK_FW70"
-                                                                                                 ]
-                                                                                      }
-                                                                                  ]
-                                                                       }
-                                                                   ]
-                                                       },
-                                          "optionsRef":  "ja_nein_radio",
-                                          "tipKey":  "etr_fw_flags"
-                                      },
-                                      {
-                                          "key":  "etr2_gebaeude_nah",
-                                          "label":  "Gebäudenah erzeugt?",
-                                          "type":  "radio",
-                                          "full":  true,
-                                          "when":  {
-                                                       "and":  [
-                                                                   {
-                                                                       "eq":  [
-                                                                                  "ausweisart",
-                                                                                  "Verbrauchsausweis"
-                                                                              ]
-                                                                   },
-                                                                   {
-                                                                       "eq":  [
-                                                                                  "etr2_enabled",
-                                                                                  true
-                                                                              ]
-                                                                   },
-                                                                   {
-                                                                       "or":  [
-                                                                                  {
-                                                                                      "eq":  [
-                                                                                                 "etr2_kategorie",
-                                                                                                 "BK_FW0"
-                                                                                             ]
-                                                                                  },
-                                                                                  {
-                                                                                      "eq":  [
-                                                                                                 "etr2_kategorie",
-                                                                                                 "BK_FW70"
-                                                                                             ]
-                                                                                  }
-                                                                              ]
-                                                                   }
-                                                               ]
-                                                   },
-                                          "required":  {
-                                                           "and":  [
-                                                                       {
-                                                                           "eq":  [
-                                                                                      "ausweisart",
-                                                                                      "Verbrauchsausweis"
-                                                                                  ]
-                                                                       },
-                                                                       {
-                                                                           "eq":  [
-                                                                                      "etr2_enabled",
-                                                                                      true
-                                                                                  ]
-                                                                       },
-                                                                       {
-                                                                           "or":  [
-                                                                                      {
-                                                                                          "eq":  [
-                                                                                                     "etr2_kategorie",
-                                                                                                     "BK_FW0"
-                                                                                                 ]
-                                                                                      },
-                                                                                      {
-                                                                                          "eq":  [
-                                                                                                     "etr2_kategorie",
-                                                                                                     "BK_FW70"
-                                                                                                 ]
-                                                                                      }
-                                                                                  ]
-                                                                       }
-                                                                   ]
-                                                       },
-                                          "optionsRef":  "ja_nein_radio",
-                                          "tipKey":  "etr_fw_flags"
-                                      },
-                                      {
-                                          "key":  "etr2_primfaktor",
-                                          "label":  "Primaerenergiefaktor",
-                                          "type":  "number",
-                                          "full":  true,
-                                          "when":  {
-                                                       "and":  [
-                                                                   {
-                                                                       "eq":  [
-                                                                                  "ausweisart",
-                                                                                  "Verbrauchsausweis"
-                                                                              ]
-                                                                   },
-                                                                   {
-                                                                       "eq":  [
-                                                                                  "etr2_enabled",
-                                                                                  true
-                                                                              ]
-                                                                   },
-                                                                   {
-                                                                       "or":  [
-                                                                                  {
-                                                                                      "eq":  [
-                                                                                                 "etr2_kategorie",
-                                                                                                 "BK_FW0"
-                                                                                             ]
-                                                                                  },
-                                                                                  {
-                                                                                      "eq":  [
-                                                                                                 "etr2_kategorie",
-                                                                                                 "BK_FW70"
-                                                                                             ]
-                                                                                  }
-                                                                              ]
-                                                                   }
-                                                               ]
-                                                   },
-                                          "required":  {
-                                                           "and":  [
-                                                                       {
-                                                                           "eq":  [
-                                                                                      "ausweisart",
-                                                                                      "Verbrauchsausweis"
-                                                                                  ]
-                                                                       },
-                                                                       {
-                                                                           "eq":  [
-                                                                                      "etr2_enabled",
-                                                                                      true
-                                                                                  ]
-                                                                       },
-                                                                       {
-                                                                           "or":  [
-                                                                                      {
-                                                                                          "eq":  [
-                                                                                                     "etr2_kategorie",
-                                                                                                     "BK_FW0"
-                                                                                                 ]
-                                                                                      },
-                                                                                      {
-                                                                                          "eq":  [
-                                                                                                     "etr2_kategorie",
-                                                                                                     "BK_FW70"
-                                                                                                 ]
-                                                                                      }
-                                                                                  ]
-                                                                       }
-                                                                   ]
-                                                       },
-                                          "min":  0,
-                                          "max":  10,
-                                          "tipKey":  "etr_primfaktor"
-                                      },
-                                      {
-                                          "key":  "etr2_anteil_erneuerbar",
-                                          "label":  "Anteil erneuerbar (%)",
-                                          "type":  "number",
-                                          "full":  true,
-                                          "when":  {
-                                                       "and":  [
-                                                                   {
-                                                                       "eq":  [
-                                                                                  "ausweisart",
-                                                                                  "Verbrauchsausweis"
-                                                                              ]
-                                                                   },
-                                                                   {
-                                                                       "eq":  [
-                                                                                  "etr2_enabled",
-                                                                                  true
-                                                                              ]
-                                                                   },
-                                                                   {
-                                                                       "or":  [
-                                                                                  {
-                                                                                      "eq":  [
-                                                                                                 "etr2_kategorie",
-                                                                                                 "BK_FW0"
-                                                                                             ]
-                                                                                  },
-                                                                                  {
-                                                                                      "eq":  [
-                                                                                                 "etr2_kategorie",
-                                                                                                 "BK_FW70"
-                                                                                             ]
-                                                                                  }
-                                                                              ]
-                                                                   }
-                                                               ]
-                                                   },
-                                          "required":  {
-                                                           "and":  [
-                                                                       {
-                                                                           "eq":  [
-                                                                                      "ausweisart",
-                                                                                      "Verbrauchsausweis"
-                                                                                  ]
-                                                                       },
-                                                                       {
-                                                                           "eq":  [
-                                                                                      "etr2_enabled",
-                                                                                      true
-                                                                                  ]
-                                                                       },
-                                                                       {
-                                                                           "or":  [
-                                                                                      {
-                                                                                          "eq":  [
-                                                                                                     "etr2_kategorie",
-                                                                                                     "BK_FW0"
-                                                                                                 ]
-                                                                                      },
-                                                                                      {
-                                                                                          "eq":  [
-                                                                                                     "etr2_kategorie",
-                                                                                                     "BK_FW70"
-                                                                                                 ]
-                                                                                      }
-                                                                                  ]
-                                                                       }
-                                                                   ]
-                                                       },
-                                          "min":  0,
-                                          "max":  100,
-                                          "tipKey":  "etr_anteile"
-                                      },
-                                      {
-                                          "key":  "etr2_anteil_kwk",
-                                          "label":  "Anteil KWK (%)",
-                                          "type":  "number",
-                                          "full":  true,
-                                          "when":  {
-                                                       "and":  [
-                                                                   {
-                                                                       "eq":  [
-                                                                                  "ausweisart",
-                                                                                  "Verbrauchsausweis"
-                                                                              ]
-                                                                   },
-                                                                   {
-                                                                       "eq":  [
-                                                                                  "etr2_enabled",
-                                                                                  true
-                                                                              ]
-                                                                   },
-                                                                   {
-                                                                       "or":  [
-                                                                                  {
-                                                                                      "eq":  [
-                                                                                                 "etr2_kategorie",
-                                                                                                 "BK_FW0"
-                                                                                             ]
-                                                                                  },
-                                                                                  {
-                                                                                      "eq":  [
-                                                                                                 "etr2_kategorie",
-                                                                                                 "BK_FW70"
-                                                                                             ]
-                                                                                  }
-                                                                              ]
-                                                                   }
-                                                               ]
-                                                   },
-                                          "required":  {
-                                                           "and":  [
-                                                                       {
-                                                                           "eq":  [
-                                                                                      "ausweisart",
-                                                                                      "Verbrauchsausweis"
-                                                                                  ]
-                                                                       },
-                                                                       {
-                                                                           "eq":  [
-                                                                                      "etr2_enabled",
-                                                                                      true
-                                                                                  ]
-                                                                       },
-                                                                       {
-                                                                           "or":  [
-                                                                                      {
-                                                                                          "eq":  [
-                                                                                                     "etr2_kategorie",
-                                                                                                     "BK_FW0"
-                                                                                                 ]
-                                                                                      },
-                                                                                      {
-                                                                                          "eq":  [
-                                                                                                     "etr2_kategorie",
-                                                                                                     "BK_FW70"
-                                                                                                 ]
-                                                                                      }
-                                                                                  ]
-                                                                       }
-                                                                   ]
-                                                       },
-                                          "min":  0,
-                                          "max":  100,
-                                          "tipKey":  "etr_anteile"
                                       }
                                   ]
                    },
@@ -1187,7 +261,18 @@
                                           "key":  "klimatisiert",
                                           "label":  "Gibt es eine Kühlung im Gebäude?",
                                           "type":  "radio",
-                                          "required":  true,
+                                          "when":  {
+                                                       "neq":  [
+                                                                   "ausweisart",
+                                                                   "Verbrauchsausweis"
+                                                               ]
+                                                   },
+                                          "required":  {
+                                                           "neq":  [
+                                                                       "ausweisart",
+                                                                       "Verbrauchsausweis"
+                                                                   ]
+                                                       },
                                           "optionsRef":  "ja_nein_radio"
                                       },
                                       {
@@ -1196,16 +281,36 @@
                                           "type":  "radio",
                                           "indent":  true,
                                           "required":  {
-                                                           "eq":  [
-                                                                      "klimatisiert",
-                                                                      "Ja"
-                                                                  ]
+                                                           "and":  [
+                                                                       {
+                                                                           "neq":  [
+                                                                                        "ausweisart",
+                                                                                        "Verbrauchsausweis"
+                                                                                    ]
+                                                                       },
+                                                                       {
+                                                                           "eq":  [
+                                                                                      "klimatisiert",
+                                                                                      "Ja"
+                                                                                  ]
+                                                                       }
+                                                                   ]
                                                        },
                                           "when":  {
-                                                       "eq":  [
-                                                                  "klimatisiert",
-                                                                  "Ja"
-                                                              ]
+                                                       "and":  [
+                                                                   {
+                                                                       "neq":  [
+                                                                                    "ausweisart",
+                                                                                    "Verbrauchsausweis"
+                                                                                ]
+                                                                   },
+                                                                   {
+                                                                       "eq":  [
+                                                                                  "klimatisiert",
+                                                                                  "Ja"
+                                                                              ]
+                                                                   }
+                                                               ]
                                                    },
                                           "optionsRef":  "ja_nein_radio"
                                       },
@@ -1215,16 +320,36 @@
                                           "type":  "radio",
                                           "indent":  true,
                                           "required":  {
-                                                           "eq":  [
-                                                                      "klimatisiert",
-                                                                      "Ja"
-                                                                  ]
+                                                           "and":  [
+                                                                       {
+                                                                           "neq":  [
+                                                                                        "ausweisart",
+                                                                                        "Verbrauchsausweis"
+                                                                                    ]
+                                                                       },
+                                                                       {
+                                                                           "eq":  [
+                                                                                      "klimatisiert",
+                                                                                      "Ja"
+                                                                                  ]
+                                                                       }
+                                                                   ]
                                                        },
                                           "when":  {
-                                                       "eq":  [
-                                                                  "klimatisiert",
-                                                                  "Ja"
-                                                              ]
+                                                       "and":  [
+                                                                   {
+                                                                       "neq":  [
+                                                                                    "ausweisart",
+                                                                                    "Verbrauchsausweis"
+                                                                                ]
+                                                                   },
+                                                                   {
+                                                                       "eq":  [
+                                                                                  "klimatisiert",
+                                                                                  "Ja"
+                                                                              ]
+                                                                   }
+                                                               ]
                                                    },
                                           "optionsRef":  "ja_nein_radio"
                                       },
@@ -1234,16 +359,36 @@
                                           "type":  "radio",
                                           "indent":  true,
                                           "required":  {
-                                                           "eq":  [
-                                                                      "klimatisiert",
-                                                                      "Ja"
-                                                                  ]
+                                                           "and":  [
+                                                                       {
+                                                                           "neq":  [
+                                                                                        "ausweisart",
+                                                                                        "Verbrauchsausweis"
+                                                                                    ]
+                                                                       },
+                                                                       {
+                                                                           "eq":  [
+                                                                                      "klimatisiert",
+                                                                                      "Ja"
+                                                                                  ]
+                                                                       }
+                                                                   ]
                                                        },
                                           "when":  {
-                                                       "eq":  [
-                                                                  "klimatisiert",
-                                                                  "Ja"
-                                                              ]
+                                                       "and":  [
+                                                                   {
+                                                                       "neq":  [
+                                                                                    "ausweisart",
+                                                                                    "Verbrauchsausweis"
+                                                                                ]
+                                                                   },
+                                                                   {
+                                                                       "eq":  [
+                                                                                  "klimatisiert",
+                                                                                  "Ja"
+                                                                              ]
+                                                                   }
+                                                               ]
                                                    },
                                           "optionsRef":  "ja_nein_radio"
                                       },
@@ -1253,16 +398,36 @@
                                           "type":  "radio",
                                           "indent":  true,
                                           "required":  {
-                                                           "eq":  [
-                                                                      "klimatisiert",
-                                                                      "Ja"
-                                                                  ]
+                                                           "and":  [
+                                                                       {
+                                                                           "neq":  [
+                                                                                        "ausweisart",
+                                                                                        "Verbrauchsausweis"
+                                                                                    ]
+                                                                       },
+                                                                       {
+                                                                           "eq":  [
+                                                                                      "klimatisiert",
+                                                                                      "Ja"
+                                                                                  ]
+                                                                       }
+                                                                   ]
                                                        },
                                           "when":  {
-                                                       "eq":  [
-                                                                  "klimatisiert",
-                                                                  "Ja"
-                                                              ]
+                                                       "and":  [
+                                                                   {
+                                                                       "neq":  [
+                                                                                    "ausweisart",
+                                                                                    "Verbrauchsausweis"
+                                                                                ]
+                                                                   },
+                                                                   {
+                                                                       "eq":  [
+                                                                                  "klimatisiert",
+                                                                                  "Ja"
+                                                                              ]
+                                                                   }
+                                                               ]
                                                    },
                                           "optionsRef":  "ja_nein_radio"
                                       },
@@ -1272,16 +437,36 @@
                                           "type":  "number",
                                           "indent":  true,
                                           "required":  {
-                                                           "eq":  [
-                                                                      "klimatisiert",
-                                                                      "Ja"
-                                                                  ]
+                                                           "and":  [
+                                                                       {
+                                                                           "neq":  [
+                                                                                        "ausweisart",
+                                                                                        "Verbrauchsausweis"
+                                                                                    ]
+                                                                       },
+                                                                       {
+                                                                           "eq":  [
+                                                                                      "klimatisiert",
+                                                                                      "Ja"
+                                                                                  ]
+                                                                       }
+                                                                   ]
                                                        },
                                           "when":  {
-                                                       "eq":  [
-                                                                  "klimatisiert",
-                                                                  "Ja"
-                                                              ]
+                                                       "and":  [
+                                                                   {
+                                                                       "neq":  [
+                                                                                    "ausweisart",
+                                                                                    "Verbrauchsausweis"
+                                                                                ]
+                                                                   },
+                                                                   {
+                                                                       "eq":  [
+                                                                                  "klimatisiert",
+                                                                                  "Ja"
+                                                                              ]
+                                                                   }
+                                                               ]
                                                    },
                                           "min":  1,
                                           "max":  500000,

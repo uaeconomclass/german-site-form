@@ -1559,19 +1559,11 @@ function validateStep(idx, { silent } = {}) {
 
   // Verbrauch/legacy-upload step: cross-field validation for ETr period blocks.
   if (String(st.id || "") === "wg_heizung" && String(state.ausweisart || "") === "Verbrauchsausweis") {
-    validateEtrPeriodsField("etr1_periods", "Energieträger 1", errors);
+    validateEtrPeriodsField("etr1_periods", "Energieverbrauch", errors);
     if (countCompleteEtrPeriods("etr1_periods") < 3) {
       errors.etr1_periods = makeGoAusweisartError();
     } else {
-      validatePeriodsSpanAndRecency("etr1_periods", "Energieträger 1", errors);
-    }
-    if (state.etr2_enabled === true) {
-      validateEtrPeriodsField("etr2_periods", "Energieträger 2", errors);
-      if (countCompleteEtrPeriods("etr2_periods") < 3) {
-        errors.etr2_periods = makeGoAusweisartError();
-      } else {
-        validatePeriodsSpanAndRecency("etr2_periods", "Energieträger 2", errors);
-      }
+      validatePeriodsSpanAndRecency("etr1_periods", "Energieverbrauch", errors);
     }
   }
 
