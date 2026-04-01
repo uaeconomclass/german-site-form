@@ -13,7 +13,7 @@
                              {
                                  "eq":  [
                                             "ausweisart",
-                                            "Verbrauchsausweis"
+                                            "Bedarfsausweis"
                                         ]
                              }
                          ]
