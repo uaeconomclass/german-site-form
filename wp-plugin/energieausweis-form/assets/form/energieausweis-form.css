@@ -992,6 +992,26 @@ select.control:open{
 .rep-grid-periods3 .control{
   max-width:220px;
 }
+.control-suffix-wrap{
+  position:relative;
+  display:inline-flex;
+  align-items:center;
+  width:100%;
+  max-width:220px;
+}
+.control-suffix-wrap .control{
+  width:100%;
+  max-width:none;
+  padding-right:54px;
+}
+.control-suffix{
+  position:absolute;
+  right:12px;
+  color:var(--muted);
+  font-size:14px;
+  line-height:1;
+  pointer-events:none;
+}
 @media (max-width: 980px){
   .stepsbar{
     flex-wrap:nowrap;

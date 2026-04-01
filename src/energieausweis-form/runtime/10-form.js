@@ -883,6 +883,7 @@ function renderFields(step) {
           const grid = el("div", { class: "rep-grid rep-grid-periods3" });
           const c1 = el("div", { class: "rep-cell" });
           const inpM = el("input", { class: "control", type: "number", value: p.menge ?? "", placeholder: "z. B. 1000" });
+          const unitText = String(unitOpts.find((u) => String(u.value) === unitVal)?.label || unitVal || "");
           inpM.setAttribute("aria-label", "Verbrauch Periode " + String(i + 1));
           inpM.setAttribute("min", "0.001");
           inpM.setAttribute("max", "999999999");
@@ -898,7 +899,7 @@ function renderFields(step) {
             next[i] = { ...base, menge: inpM.value };
             setValue(key, next, step);
           });
-          c1.appendChild(inpM);
+          c1.appendChild(el("div", { class: "control-suffix-wrap" }, inpM, el("span", { class: "control-suffix" }, unitText)));
           grid.appendChild(c1);
           row.appendChild(grid);
           rows.appendChild(row);
