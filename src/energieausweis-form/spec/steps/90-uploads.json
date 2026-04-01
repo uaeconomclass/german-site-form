@@ -9,8 +9,27 @@
     "fields":  [
                    {
                        "key":  "upload_verbrauch_heizkosten",
-                       "label":  "Heizkostenabrechnungen (letzte 3 Jahre)",
+                       "label":  "Heizkostenabrechnungen",
                        "labelByCond":  [
+                                           {
+                                               "when":  {
+                                                            "and":  [
+                                                                        {
+                                                                            "eq":  [
+                                                                                       "gebaeudetyp",
+                                                                                       "NWG"
+                                                                                   ]
+                                                                        },
+                                                                        {
+                                                                            "eq":  [
+                                                                                       "ausweisart",
+                                                                                       "Verbrauchsausweis"
+                                                                                   ]
+                                                                        }
+                                                                    ]
+                                                        },
+                                               "value":  "Heizkostenabrechnungen (falls vorhanden)"
+                                           },
                                            {
                                                "when":  {
                                                             "eq":  [
@@ -40,10 +59,20 @@
                                            ]
                                 },
                        "required":  {
-                                        "eq":  [
-                                                   "ausweisart",
-                                                   "Verbrauchsausweis"
-                                               ]
+                                        "and":  [
+                                                    {
+                                                        "eq":  [
+                                                                   "ausweisart",
+                                                                   "Verbrauchsausweis"
+                                                               ]
+                                                    },
+                                                    {
+                                                        "neq":  [
+                                                                    "gebaeudetyp",
+                                                                    "NWG"
+                                                                ]
+                                                    }
+                                                ]
                                     },
                        "accept":  ".pdf,.jpg,.jpeg,.png",
                        "multiple":  true,
