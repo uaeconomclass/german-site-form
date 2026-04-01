@@ -35,34 +35,6 @@
                                           "full":  true
                                       },
                                       {
-                                          "key":  "nwg_strom_enthaelt_beleuchtung",
-                                          "label":  "Beleuchtung enthalten?",
-                                          "type":  "radio",
-                                          "required":  true,
-                                          "optionsRef":  "ja_nein_unbekannt"
-                                      },
-                                      {
-                                          "key":  "nwg_strom_enthaelt_lueftung",
-                                          "label":  "Lüftung enthalten?",
-                                          "type":  "radio",
-                                          "required":  true,
-                                          "optionsRef":  "ja_nein_unbekannt"
-                                      },
-                                      {
-                                          "key":  "nwg_strom_enthaelt_kuehlung",
-                                          "label":  "Kühlung enthalten?",
-                                          "type":  "radio",
-                                          "required":  true,
-                                          "optionsRef":  "ja_nein_unbekannt"
-                                      },
-                                      {
-                                          "key":  "nwg_strom_enthaelt_sonstiges",
-                                          "label":  "Sonstige Gebäudetechnik enthalten?",
-                                          "type":  "radio",
-                                          "required":  true,
-                                          "optionsRef":  "ja_nein_unbekannt"
-                                      },
-                                      {
                                           "key":  "nwg_strom_sep_kwh",
                                           "label":  "Separater Stromverbrauch dieser Anlagen (kWh/Jahr)",
                                           "type":  "number",
@@ -91,6 +63,39 @@
                                           "fields":  [
 
                                                      ]
+                                      }
+                                  ]
+                   },
+                   {
+                       "title":  "Stromverbrauch enthält:",
+                       "fields":  [
+                                      {
+                                          "key":  "nwg_strom_enthaelt_beleuchtung",
+                                          "label":  "Beleuchtung",
+                                          "type":  "radio",
+                                          "required":  true,
+                                          "optionsRef":  "ja_nein_unbekannt"
+                                      },
+                                      {
+                                          "key":  "nwg_strom_enthaelt_lueftung",
+                                          "label":  "Lüftung",
+                                          "type":  "radio",
+                                          "required":  true,
+                                          "optionsRef":  "ja_nein_unbekannt"
+                                      },
+                                      {
+                                          "key":  "nwg_strom_enthaelt_kuehlung",
+                                          "label":  "Kühlung",
+                                          "type":  "radio",
+                                          "required":  true,
+                                          "optionsRef":  "ja_nein_unbekannt"
+                                      },
+                                      {
+                                          "key":  "nwg_strom_enthaelt_sonstiges",
+                                          "label":  "Sonstige Gebäudetechnik",
+                                          "type":  "radio",
+                                          "required":  true,
+                                          "optionsRef":  "ja_nein_unbekannt"
                                       }
                                   ]
                    },
