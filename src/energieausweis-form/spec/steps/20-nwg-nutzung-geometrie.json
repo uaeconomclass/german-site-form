@@ -1,6 +1,6 @@
 ﻿{
     "id":  "nwg_nutzung_geometrie",
-    "title":  "NWG: Nutzung \u0026 Geometrie",
+    "title":  "Gebäudedaten",
     "meta":  "B1",
     "when":  {
                  "eq":  [

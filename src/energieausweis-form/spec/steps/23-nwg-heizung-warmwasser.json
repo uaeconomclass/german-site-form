@@ -1,6 +1,6 @@
 ﻿{
     "id":  "nwg_heizung_warmwasser",
-    "title":  "NWG: Heizung \u0026 Warmwasser",
+    "title":  "Heizungsanlage \u0026 Warmwasserbereitung",
     "meta":  "B4",
     "when":  {
                  "eq":  [

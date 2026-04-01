@@ -1,6 +1,6 @@
 ﻿{
     "id":  "nwg_technik",
-    "title":  "NWG: Lüftung / Klima / Technik",
+    "title":  "Gebäudetechnik",
     "meta":  "B3",
     "when":  {
                  "eq":  [
@@ -53,57 +53,31 @@
                        "title":  "Kühlung",
                        "fields":  [
                                       {
-                                          "key":  "klimatisiert",
-                                          "label":  "Gibt es eine Kühlung im Gebäude?",
-                                          "type":  "radio",
-                                          "required":  true,
-                                          "optionsRef":  "ja_nein_radio"
-                                      },
-                                      {
-                                          "key":  "nwg_kuehlung_art",
-                                          "label":  "Art der Kühlung",
+                                          "key":  "nwg_kuehlung_klimaanlage",
+                                          "label":  "Klimaanlage vorhanden",
                                           "type":  "radio",
                                           "required":  {
                                                            "eq":  [
-                                                                      "klimatisiert",
-                                                                      "Ja"
+                                                                      "ausweisart",
+                                                                      "Verbrauchsausweis"
                                                                   ]
                                                        },
                                           "when":  {
-                                                       "and":  [
-                                                                   {
-                                                                       "eq":  [
-                                                                                  "klimatisiert",
-                                                                                  "Ja"
-                                                                              ]
-                                                                   },
-                                                                   {
-                                                                       "eq":  [
-                                                                                  "ausweisart",
-                                                                                  "Verbrauchsausweis"
-                                                                              ]
-                                                                   }
-                                                               ]
+                                                       "eq":  [
+                                                                  "ausweisart",
+                                                                  "Verbrauchsausweis"
+                                                              ]
                                                    },
-                                          "options":  [
-                                                          {
-                                                              "value":  "Klimaanlage",
-                                                              "label":  "Klimaanlage vorhanden"
-                                                          },
-                                                          {
-                                                              "value":  "Zentrale Kälteanlage",
-                                                              "label":  "Zentrale Kälteanlage"
-                                                          }
-                                                      ],
+                                          "optionsRef":  "ja_nein_unbekannt",
                                           "full":  true
                                       },
                                       {
-                                          "key":  "nwg_kuehlung_umfang",
-                                          "label":  "Umfang der Kühlung",
+                                          "key":  "nwg_kuehlung_klimaanlage_umfang",
+                                          "label":  "Umfang der Klimaanlage",
                                           "type":  "radio",
                                           "required":  {
                                                            "eq":  [
-                                                                      "klimatisiert",
+                                                                      "nwg_kuehlung_klimaanlage",
                                                                       "Ja"
                                                                   ]
                                                        },
@@ -111,14 +85,14 @@
                                                        "and":  [
                                                                    {
                                                                        "eq":  [
-                                                                                  "klimatisiert",
-                                                                                  "Ja"
+                                                                                  "ausweisart",
+                                                                                  "Verbrauchsausweis"
                                                                               ]
                                                                    },
                                                                    {
                                                                        "eq":  [
-                                                                                  "ausweisart",
-                                                                                  "Verbrauchsausweis"
+                                                                                  "nwg_kuehlung_klimaanlage",
+                                                                                  "Ja"
                                                                               ]
                                                                    }
                                                                ]
@@ -133,29 +107,125 @@
                                                               "label":  "Nur Teilflächen klimatisiert"
                                                           }
                                                       ],
+                                          "indent":  true,
                                           "full":  true
                                       },
                                       {
-                                          "key":  "nwg_kuehlung_teilflaeche_m2",
-                                          "label":  "Gekühlte Fläche ca. (m²)",
+                                          "key":  "nwg_kuehlung_klimaanlage_flaeche_m2",
+                                          "label":  "Fläche ca. (m²)",
                                           "type":  "number",
-                                          "required":  false,
+                                          "required":  {
+                                                           "eq":  [
+                                                                      "nwg_kuehlung_klimaanlage_umfang",
+                                                                      "Teilflächen"
+                                                                  ]
+                                                       },
                                           "when":  {
                                                        "and":  [
                                                                    {
                                                                        "eq":  [
-                                                                                  "klimatisiert",
-                                                                                  "Ja"
+                                                                                  "ausweisart",
+                                                                                  "Verbrauchsausweis"
                                                                               ]
                                                                    },
                                                                    {
                                                                        "eq":  [
-                                                                                  "nwg_kuehlung_umfang",
+                                                                                  "nwg_kuehlung_klimaanlage_umfang",
                                                                                   "Teilflächen"
                                                                               ]
                                                                    }
                                                                ]
                                                    },
+                                          "indent":  true,
+                                          "min":  1,
+                                          "max":  500000,
+                                          "hint":  "z. B. 200"
+                                      },
+                                      {
+                                          "key":  "nwg_kuehlung_kaelteanlage",
+                                          "label":  "Zentrale Kälteanlage",
+                                          "type":  "radio",
+                                          "required":  {
+                                                           "eq":  [
+                                                                      "ausweisart",
+                                                                      "Verbrauchsausweis"
+                                                                  ]
+                                                       },
+                                          "when":  {
+                                                       "eq":  [
+                                                                  "ausweisart",
+                                                                  "Verbrauchsausweis"
+                                                              ]
+                                                   },
+                                          "optionsRef":  "ja_nein_unbekannt",
+                                          "full":  true
+                                      },
+                                      {
+                                          "key":  "nwg_kuehlung_kaelteanlage_umfang",
+                                          "label":  "Umfang der zentralen Kälteanlage",
+                                          "type":  "radio",
+                                          "required":  {
+                                                           "eq":  [
+                                                                      "nwg_kuehlung_kaelteanlage",
+                                                                      "Ja"
+                                                                  ]
+                                                       },
+                                          "when":  {
+                                                       "and":  [
+                                                                   {
+                                                                       "eq":  [
+                                                                                  "ausweisart",
+                                                                                  "Verbrauchsausweis"
+                                                                              ]
+                                                                   },
+                                                                   {
+                                                                       "eq":  [
+                                                                                  "nwg_kuehlung_kaelteanlage",
+                                                                                  "Ja"
+                                                                              ]
+                                                                   }
+                                                               ]
+                                                   },
+                                          "options":  [
+                                                          {
+                                                              "value":  "Gesamtgebäude",
+                                                              "label":  "Gesamtes Gebäude"
+                                                          },
+                                                          {
+                                                              "value":  "Teilflächen",
+                                                              "label":  "Nur Teilflächen"
+                                                          }
+                                                      ],
+                                          "indent":  true,
+                                          "full":  true
+                                      },
+                                      {
+                                          "key":  "nwg_kuehlung_kaelteanlage_flaeche_m2",
+                                          "label":  "Fläche ca. (m²)",
+                                          "type":  "number",
+                                          "required":  {
+                                                           "eq":  [
+                                                                      "nwg_kuehlung_kaelteanlage_umfang",
+                                                                      "Teilflächen"
+                                                                  ]
+                                                       },
+                                          "when":  {
+                                                       "and":  [
+                                                                   {
+                                                                       "eq":  [
+                                                                                  "ausweisart",
+                                                                                  "Verbrauchsausweis"
+                                                                              ]
+                                                                   },
+                                                                   {
+                                                                       "eq":  [
+                                                                                  "nwg_kuehlung_kaelteanlage_umfang",
+                                                                                  "Teilflächen"
+                                                                              ]
+                                                                   }
+                                                               ]
+                                                   },
+                                          "indent":  true,
                                           "min":  1,
                                           "max":  500000,
                                           "hint":  "z. B. 200"
@@ -172,6 +242,12 @@
                                                        },
                                           "when":  {
                                                        "and":  [
+                                                                   {
+                                                                       "neq":  [
+                                                                                    "ausweisart",
+                                                                                    "Verbrauchsausweis"
+                                                                                ]
+                                                                   },
                                                                    {
                                                                        "eq":  [
                                                                                   "klimatisiert",
@@ -201,6 +277,12 @@
                                           "when":  {
                                                        "and":  [
                                                                    {
+                                                                       "neq":  [
+                                                                                    "ausweisart",
+                                                                                    "Verbrauchsausweis"
+                                                                                ]
+                                                                   },
+                                                                   {
                                                                        "eq":  [
                                                                                   "klimatisiert",
                                                                                   "Ja"
@@ -228,6 +310,12 @@
                                                        },
                                           "when":  {
                                                        "and":  [
+                                                                   {
+                                                                       "neq":  [
+                                                                                    "ausweisart",
+                                                                                    "Verbrauchsausweis"
+                                                                                ]
+                                                                   },
                                                                    {
                                                                        "eq":  [
                                                                                   "klimatisiert",
@@ -261,6 +349,12 @@
                                                                                   "klimatisiert",
                                                                                   "Ja"
                                                                               ]
+                                                                   },
+                                                                   {
+                                                                       "neq":  [
+                                                                                    "ausweisart",
+                                                                                    "Verbrauchsausweis"
+                                                                                ]
                                                                    },
                                                                    {
                                                                        "eq":  [
