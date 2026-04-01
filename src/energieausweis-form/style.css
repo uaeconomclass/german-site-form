@@ -979,8 +979,15 @@ select.control:open{
   margin-bottom:4px;
 }
 .rep-grid-window-doors{
-  grid-template-columns:minmax(128px,.78fr) minmax(220px,1.55fr) repeat(3,minmax(96px,.7fr));
+  grid-template-columns:minmax(148px,.82fr) minmax(220px,1.55fr) repeat(3,minmax(96px,.7fr));
   align-items:end;
+  row-gap:8px;
+}
+.rep-grid-window-doors .rep-cell-ausrichtung{
+  grid-column:1;
+}
+.rep-grid-window-doors .rep-cell-ausrichtung .control{
+  max-width:180px;
 }
 .rep-grid-window-doors .rep-cell-typ .radio-row{
   min-height:auto;

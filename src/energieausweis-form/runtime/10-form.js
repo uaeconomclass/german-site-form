@@ -220,6 +220,11 @@ function fieldWhen(field) {
   return evalCond(field.when, state);
 }
 
+function repeaterFieldWhen(field, itemState) {
+  if (!field || !field.when) return true;
+  return evalCond(field.when, { ...state, ...(itemState || {}) });
+}
+
 function optionsForField(field) {
   const raw =
     field.options ||
@@ -1188,6 +1193,7 @@ function renderFields(step) {
 
           const grid = el("div", { class: "rep-grid" + (repeaterWindowDoors ? " rep-grid-window-doors" : "") });
           (field.fields || []).forEach((sf) => {
+            if (!repeaterFieldWhen(sf, it)) return;
             const sfKey = sf.key;
             const sfVal = it[sfKey] ?? "";
             const cell = el("div", { class: "rep-cell rep-cell-" + sfKey });
@@ -1209,6 +1215,21 @@ function renderFields(step) {
                 radioWrap.appendChild(el("label", { class: "chip", for: id }, input, el("span", null, opt.label)));
               });
               cell.appendChild(radioWrap);
+            } else if (sf.type === "select") {
+              const inp = el("select", { class: "control" });
+              const opts = Array.isArray(sf.options) ? sf.options : [];
+              opts.forEach((opt) => {
+                const optionEl = el("option", { value: opt.value }, opt.label);
+                if (String(sfVal) === String(opt.value)) optionEl.selected = true;
+                inp.appendChild(optionEl);
+              });
+              inp.addEventListener("change", () => {
+                const next = { ...(items[idx] || {}) };
+                next[sfKey] = inp.value;
+                items[idx] = next;
+                setValue(key, items, step);
+              });
+              cell.appendChild(inp);
             } else {
               const inp = el("input", {
                 class: "control",

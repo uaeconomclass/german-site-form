@@ -244,6 +244,56 @@
                                                              "hint":  "z. B. Küche, Haustür"
                                                          },
                                                          {
+                                                             "key":  "ausrichtung",
+                                                             "label":  "Ausrichtung",
+                                                             "type":  "select",
+                                                             "required":  false,
+                                                             "when":  {
+                                                                          "eq":  [
+                                                                                     "typ",
+                                                                                     "Fenster"
+                                                                                 ]
+                                                                      },
+                                                             "options":  [
+                                                                             {
+                                                                                 "value":  "",
+                                                                                 "label":  "Bitte wählen…"
+                                                                             },
+                                                                             {
+                                                                                 "value":  "Nord",
+                                                                                 "label":  "Nord"
+                                                                             },
+                                                                             {
+                                                                                 "value":  "Nord-Ost",
+                                                                                 "label":  "Nord-Ost"
+                                                                             },
+                                                                             {
+                                                                                 "value":  "Ost",
+                                                                                 "label":  "Ost"
+                                                                             },
+                                                                             {
+                                                                                 "value":  "Süd-Ost",
+                                                                                 "label":  "Süd-Ost"
+                                                                             },
+                                                                             {
+                                                                                 "value":  "Süd",
+                                                                                 "label":  "Süd"
+                                                                             },
+                                                                             {
+                                                                                 "value":  "Süd-West",
+                                                                                 "label":  "Süd-West"
+                                                                             },
+                                                                             {
+                                                                                 "value":  "West",
+                                                                                 "label":  "West"
+                                                                             },
+                                                                             {
+                                                                                 "value":  "Nord-West",
+                                                                                 "label":  "Nord-West"
+                                                                             }
+                                                                         ]
+                                                         },
+                                                         {
                                                              "key":  "hoehe_m",
                                                              "label":  "Höhe (m)",
                                                              "type":  "number",
