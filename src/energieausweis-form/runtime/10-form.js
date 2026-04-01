@@ -169,6 +169,34 @@ function visibleSteps() {
   return (FORM_SPEC.steps || []).filter((st) => !st.when || evalCond(st.when, state));
 }
 
+function resolveStepTitle(step) {
+  const variants = Array.isArray(step && step.titleByCond) ? step.titleByCond : [];
+  for (const variant of variants) {
+    if (!variant || !variant.when) continue;
+    if (evalCond(variant.when, state)) return String(variant.value || "");
+  }
+  return step && step.title ? String(step.title) : "";
+}
+
+function resolveStepIntro(step) {
+  const variants = Array.isArray(step && step.introByCond) ? step.introByCond : [];
+  for (const variant of variants) {
+    if (!variant || !variant.when) continue;
+    if (evalCond(variant.when, state)) return variant.value || null;
+  }
+  return step && step.intro ? step.intro : null;
+}
+
+function resolveFieldProp(field, prop) {
+  if (!field || !prop) return undefined;
+  const variants = Array.isArray(field[prop + "ByCond"]) ? field[prop + "ByCond"] : [];
+  for (const variant of variants) {
+    if (!variant || !variant.when) continue;
+    if (evalCond(variant.when, state)) return variant.value;
+  }
+  return field[prop];
+}
+
 function currentStep() {
   const steps = visibleSteps();
   return steps[stepIndex] || steps[0];
@@ -472,8 +500,10 @@ document.addEventListener("click", (e) => {
 
 function renderFieldLabelSpan(field, className) {
   const attrs = className ? { class: className } : null;
-  if (field && field.labelHtml) return el("span", Object.assign({}, attrs || {}, { html: String(field.labelHtml) }));
-  return el("span", attrs, field && field.label != null ? String(field.label) : "");
+  const labelHtml = resolveFieldProp(field, "labelHtml");
+  const label = resolveFieldProp(field, "label");
+  if (labelHtml) return el("span", Object.assign({}, attrs || {}, { html: String(labelHtml) }));
+  return el("span", attrs, label != null ? String(label) : "");
 }
 
 function renderLabel(field) {
@@ -595,7 +625,7 @@ function renderStepper() {
         ...(locked ? {} : { onclick: () => { stepIndex = idx; render(); } }),
       },
       el("span", { class: "num" }, String(idx + 1)),
-      el("span", null, st.title)
+      el("span", null, resolveStepTitle(st))
     );
     dom.topStepper.appendChild(pill);
   });
@@ -907,7 +937,7 @@ function renderFields(step) {
 
         control = el("div", { class: "repeater" }, topGrid, rows);
       } else if (field.type === "number" || field.type === "text") {
-        control = el("input", { class: "control", name: key, type: field.type === "number" ? "number" : "text", value: val ?? "", placeholder: field.hint || "" });
+        control = el("input", { class: "control", name: key, type: field.type === "number" ? "number" : "text", value: val ?? "", placeholder: resolveFieldProp(field, "hint") || "" });
         if (field.min != null) control.setAttribute("min", String(field.min));
         if (field.max != null) control.setAttribute("max", String(field.max));
         // While typing, do not re-render (otherwise the input element gets recreated and typing feels broken).
@@ -918,7 +948,7 @@ function renderFields(step) {
         const min = field.min != null ? Number(field.min) : 0;
         const max = field.max != null ? Number(field.max) : 999999;
         const cur = Number(val || 0);
-        const input = el("input", { class: "control", name: key, type: "number", value: val ?? "", placeholder: field.hint || "" });
+        const input = el("input", { class: "control", name: key, type: "number", value: val ?? "", placeholder: resolveFieldProp(field, "hint") || "" });
         if (field.min != null) input.setAttribute("min", String(field.min));
         if (field.max != null) input.setAttribute("max", String(field.max));
         input.addEventListener("input", () => setValue(key, input.value, step, { render: false }));
@@ -1294,14 +1324,26 @@ function renderFields(step) {
       }
 
       if (wantsDefaultLabel) wrap.appendChild(renderLabel(field));
-      if (control) wrap.appendChild(control);
-      if (field.infoText) {
+      const infoTextTop = resolveFieldProp(field, "infoTextTop");
+      if (infoTextTop) {
         wrap.appendChild(
           el(
             "div",
             { class: "field-info" },
             el("span", { class: "field-info-ico", "aria-hidden": "true" }),
-            el("span", { class: "field-info-text" }, String(field.infoText))
+            el("span", { class: "field-info-text" }, String(infoTextTop))
+          )
+        );
+      }
+      if (control) wrap.appendChild(control);
+      const infoText = resolveFieldProp(field, "infoText");
+      if (infoText) {
+        wrap.appendChild(
+          el(
+            "div",
+            { class: "field-info" },
+            el("span", { class: "field-info-ico", "aria-hidden": "true" }),
+            el("span", { class: "field-info-text" }, String(infoText))
           )
         );
       }
@@ -1309,7 +1351,8 @@ function renderFields(step) {
       if (key === "fenster_type" && (state.fenster_type === "Einfachverglasung" || state.fenster_type === "Kastenfenster")) {
         wrap.appendChild(el("div", { class: "helptext" }, "Bei Austausch gelten GEG-Mindestwerte."));
       }
-      if (field.help) wrap.appendChild(el("div", { class: "helptext" }, field.help));
+      const help = resolveFieldProp(field, "help");
+      if (help) wrap.appendChild(el("div", { class: "helptext" }, help));
       wrap.appendChild(err);
       dom.form.appendChild(wrap);
     });
@@ -1845,11 +1888,12 @@ function render() {
   const forceSingleColumn = Boolean(st.singleColumn || st.oneColumn || st.layout === "single");
   dom.form.classList.toggle("single-col", forceSingleColumn);
 
-  dom.stepTitle.textContent = st.title;
+  dom.stepTitle.textContent = resolveStepTitle(st);
   dom.stepMeta.textContent = st.meta || "";
-  if (st.intro) {
+  const intro = resolveStepIntro(st);
+  if (intro) {
     dom.stepIntro.style.display = "";
-    dom.introText.textContent = st.intro.text || "";
+    dom.introText.textContent = intro.text || "";
   } else {
     dom.stepIntro.style.display = "none";
   }
@@ -1915,7 +1959,7 @@ dom.btnNext.addEventListener("click", async () => {
       console.warn("[EA Form] Validation blocked next step", {
         stepIndex,
         stepId: st && st.id ? String(st.id) : "",
-        stepTitle: st && st.title ? String(st.title) : "",
+        stepTitle: resolveStepTitle(st),
         details,
       });
     } catch (e) {}

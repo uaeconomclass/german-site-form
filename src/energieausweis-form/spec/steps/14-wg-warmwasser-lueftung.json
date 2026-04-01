@@ -8,10 +8,35 @@
                             "WG"
                         ]
              },
+    "titleByCond":  [
+                        {
+                            "when":  {
+                                         "eq":  [
+                                                    "ausweisart",
+                                                    "Verbrauchsausweis"
+                                                ]
+                                     },
+                            "value":  "Warmwasserbereitung"
+                        }
+                    ],
     "intro":  {
                   "title":  "Warmwasser \u0026 Lüftung",
                   "text":  "Angaben zur Warmwasserbereitung und zum Lüftungssystem."
               },
+    "introByCond":  [
+                        {
+                            "when":  {
+                                         "eq":  [
+                                                    "ausweisart",
+                                                    "Verbrauchsausweis"
+                                                ]
+                                     },
+                            "value":  {
+                                          "title":  "Warmwasserbereitung",
+                                          "text":  "Angaben zur Warmwasserbereitung."
+                                      }
+                        }
+                    ],
     "blocks":  [
                    {
                        "title":  "Warmwasserbereitung",
@@ -20,6 +45,7 @@
                                           "key":  "warmwasser_type",
                                           "label":  "Wie wird das Warmwasser erzeugt?",
                                           "type":  "select",
+                                          "full":  true,
                                           "required":  true,
                                           "optionsRef":  "warmwasser",
                                           "tipKey":  "warmwasser_type"
@@ -28,6 +54,7 @@
                                           "key":  "warmwasser_im_verbrauch",
                                           "label":  "Warmwasser im Energieverbrauch enthalten?",
                                           "type":  "radio",
+                                          "full":  true,
                                           "required":  {
                                                            "eq":  [
                                                                       "ausweisart",
@@ -46,6 +73,7 @@
                                           "key":  "warmwasser_integriert",
                                           "label":  "Ist die Warmwasserbereitung über die Heizungsanlage integriert?",
                                           "type":  "radio",
+                                          "full":  true,
                                           "required":  {
                                                            "eq":  [
                                                                       "ausweisart",
@@ -64,6 +92,7 @@
                                           "key":  "bewohner_anzahl",
                                           "label":  "Wie viele Personen leben im Gebäude?",
                                           "type":  "number",
+                                          "full":  true,
                                           "required":  false,
                                           "min":  1,
                                           "max":  999,

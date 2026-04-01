@@ -24,7 +24,7 @@
               },
     "blocks":  [
                    {
-                       "title":  "Leerstand",
+                       "title":  "",
                        "fields":  [
                                       {
                                           "key":  "zf_leerstand",
@@ -38,6 +38,7 @@
                                           "key":  "zf_leerstand_zeitraum",
                                           "label":  "Zeitraum des Leerstands",
                                           "type":  "text",
+                                          "indent":  true,
                                           "required":  {
                                                            "eq":  [
                                                                       "zf_leerstand",
@@ -57,6 +58,7 @@
                                           "key":  "zf_leerstand_flaeche",
                                           "label":  "Betroffene Fläche (m² oder Anteil)",
                                           "type":  "text",
+                                          "indent":  true,
                                           "required":  {
                                                            "eq":  [
                                                                       "zf_leerstand",
@@ -76,6 +78,7 @@
                                           "key":  "zf_leerstand_nutzungsart",
                                           "label":  "Art der Nutzung",
                                           "type":  "text",
+                                          "indent":  true,
                                           "required":  false,
                                           "when":  {
                                                        "eq":  [
@@ -89,7 +92,7 @@
                                   ]
                    },
                    {
-                       "title":  "Beheizung",
+                       "title":  "",
                        "fields":  [
                                       {
                                           "key":  "zf_ueberwiegend_beheizt",
@@ -103,6 +106,7 @@
                                           "key":  "zf_nicht_beheizt_bereich",
                                           "label":  "Welche Bereiche wurden nicht beheizt?",
                                           "type":  "text",
+                                          "indent":  true,
                                           "required":  {
                                                            "eq":  [
                                                                       "zf_ueberwiegend_beheizt",
@@ -121,6 +125,7 @@
                                           "key":  "zf_nicht_beheizt_flaeche",
                                           "label":  "Ungefähre Fläche der unbeheizten Bereiche (m² oder Anteil)",
                                           "type":  "text",
+                                          "indent":  true,
                                           "required":  {
                                                            "eq":  [
                                                                       "zf_ueberwiegend_beheizt",
@@ -139,7 +144,7 @@
                                   ]
                    },
                    {
-                       "title":  "Dauerhaft beheizt",
+                       "title":  "",
                        "fields":  [
                                       {
                                           "key":  "zf_alle_raeume_beheizt",
@@ -153,6 +158,7 @@
                                           "key":  "zf_nicht_dauernd_zeitraum",
                                           "label":  "Zeitraum",
                                           "type":  "text",
+                                          "indent":  true,
                                           "required":  {
                                                            "eq":  [
                                                                       "zf_alle_raeume_beheizt",
@@ -172,6 +178,7 @@
                                           "key":  "zf_nicht_dauernd_flaeche",
                                           "label":  "Betroffene Fläche (m² oder Anteil)",
                                           "type":  "text",
+                                          "indent":  true,
                                           "required":  {
                                                            "eq":  [
                                                                       "zf_alle_raeume_beheizt",
@@ -190,7 +197,7 @@
                                   ]
                    },
                    {
-                       "title":  "Nutzungsänderung",
+                       "title":  "",
                        "fields":  [
                                       {
                                           "key":  "zf_nutzung_geaendert",
@@ -204,6 +211,7 @@
                                           "key":  "zf_nutzung_frueher",
                                           "label":  "Frühere Nutzung",
                                           "type":  "text",
+                                          "indent":  true,
                                           "required":  {
                                                            "eq":  [
                                                                       "zf_nutzung_geaendert",
@@ -222,6 +230,7 @@
                                           "key":  "zf_nutzung_heute",
                                           "label":  "Heutige Nutzung",
                                           "type":  "text",
+                                          "indent":  true,
                                           "required":  {
                                                            "eq":  [
                                                                       "zf_nutzung_geaendert",
@@ -240,6 +249,7 @@
                                           "key":  "zf_nutzung_zeitpunkt",
                                           "label":  "Zeitpunkt der Änderung",
                                           "type":  "text",
+                                          "indent":  true,
                                           "required":  false,
                                           "when":  {
                                                        "eq":  [
@@ -253,7 +263,7 @@
                                   ]
                    },
                    {
-                       "title":  "Heizungsanlage erneuert",
+                       "title":  "",
                        "fields":  [
                                       {
                                           "key":  "zf_heizung_erneuert",
@@ -267,6 +277,7 @@
                                           "key":  "zf_heizung_erneuerung_jahr",
                                           "label":  "Jahr der Änderung",
                                           "type":  "number",
+                                          "indent":  true,
                                           "required":  {
                                                            "eq":  [
                                                                       "zf_heizung_erneuert",
@@ -287,6 +298,7 @@
                                           "key":  "zf_heizung_erneuerung_art",
                                           "label":  "Art der Anlage",
                                           "type":  "text",
+                                          "indent":  true,
                                           "required":  {
                                                            "eq":  [
                                                                       "zf_heizung_erneuert",
@@ -305,7 +317,7 @@
                                   ]
                    },
                    {
-                       "title":  "Energetische Sanierungen",
+                       "title":  "",
                        "fields":  [
                                       {
                                           "key":  "zf_sanierung",
@@ -319,6 +331,7 @@
                                           "key":  "zf_sanierung_jahr",
                                           "label":  "Jahr der Maßnahme",
                                           "type":  "number",
+                                          "indent":  true,
                                           "required":  {
                                                            "eq":  [
                                                                       "zf_sanierung",
@@ -339,6 +352,7 @@
                                           "key":  "zf_sanierung_massnahme",
                                           "label":  "Welche Maßnahme?",
                                           "type":  "text",
+                                          "indent":  true,
                                           "required":  {
                                                            "eq":  [
                                                                       "zf_sanierung",

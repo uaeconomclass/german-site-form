@@ -1,15 +1,26 @@
 ﻿{
     "id":  "uploads",
-    "title":  "Uploadbereich",
+    "title":  "Unterlagen",
     "meta":  "6",
     "intro":  {
-                  "title":  "Uploadbereich",
-                  "text":  "Bitte laden Sie die benötigten Unterlagen hoch."
+                  "title":  "Unterlagen",
+                  "text":  "Bitte laden Sie möglichst folgende Unterlagen hoch."
               },
     "fields":  [
                    {
                        "key":  "upload_verbrauch_heizkosten",
                        "label":  "Heizkostenabrechnungen (letzte 3 Jahre)",
+                       "labelByCond":  [
+                                           {
+                                               "when":  {
+                                                            "eq":  [
+                                                                       "ausweisart",
+                                                                       "Bedarfsausweis"
+                                                                   ]
+                                                        },
+                                               "value":  "Energieabrechnungen der letzten Jahre"
+                                           }
+                                       ],
                        "type":  "file",
                        "full":  true,
                        "when":  {
@@ -36,6 +47,17 @@
                                     },
                        "accept":  ".pdf,.jpg,.jpeg,.png",
                        "multiple":  true,
+                       "helpByCond":  [
+                                          {
+                                              "when":  {
+                                                           "eq":  [
+                                                                      "ausweisart",
+                                                                      "Bedarfsausweis"
+                                                                  ]
+                                                       },
+                                              "value":  "Nur zur Plausibilitätsprüfung."
+                                          }
+                                      ],
                        "tipKey":  "upload_verbrauch_heizkosten"
                    },
                    {
@@ -106,7 +128,7 @@
                    },
                    {
                        "key":  "upload_verbrauch_verbrauchsdaten",
-                       "label":  "Verbrauchsdaten",
+                       "label":  "Energieabrechnungen der letzten 3 Jahre",
                        "type":  "file",
                        "full":  true,
                        "when":  {
@@ -305,6 +327,12 @@
                    },
                    {
                        "type":  "checklist",
+                       "when":  {
+                                    "eq":  [
+                                               "ausweisart",
+                                               "Bedarfsausweis"
+                                           ]
+                                },
                        "full":  true,
                        "title":  "Angaben zur Wärmedämmung:",
                        "text":  "Bitte markieren Sie, welche Bauteile gedämmt sind."
@@ -313,6 +341,12 @@
                        "key":  "waermedaemmung_aussenwand",
                        "label":  "Außenwand gedämmt",
                        "type":  "checkbox",
+                       "when":  {
+                                    "eq":  [
+                                               "ausweisart",
+                                               "Bedarfsausweis"
+                                           ]
+                                },
                        "full":  true
                    },
                    {
@@ -320,11 +354,21 @@
                        "label":  "Dämmstärke Außenwand (cm)",
                        "type":  "number",
                        "full":  true,
-                       "when":  {
-                                    "eq":  [
-                                               "waermedaemmung_aussenwand",
-                                               true
-                                           ]
+                        "when":  {
+                                    "and":  [
+                                                {
+                                                    "eq":  [
+                                                               "ausweisart",
+                                                               "Bedarfsausweis"
+                                                           ]
+                                                },
+                                                {
+                                                    "eq":  [
+                                                               "waermedaemmung_aussenwand",
+                                                               true
+                                                           ]
+                                                }
+                                            ]
                                 },
                        "required":  {
                                         "eq":  [
@@ -340,12 +384,24 @@
                        "key":  "waermedaemmung_kelleraussenwand",
                        "label":  "Kelleraußenwand gedämmt",
                        "type":  "checkbox",
+                       "when":  {
+                                    "eq":  [
+                                               "ausweisart",
+                                               "Bedarfsausweis"
+                                           ]
+                                },
                        "full":  true
                    },
                    {
                        "key":  "waermedaemmung_kellerdecke",
                        "label":  "Kellerdecke gedämmt",
                        "type":  "checkbox",
+                       "when":  {
+                                    "eq":  [
+                                               "ausweisart",
+                                               "Bedarfsausweis"
+                                           ]
+                                },
                        "full":  true
                    },
                    {
@@ -354,20 +410,30 @@
                        "type":  "number",
                        "full":  true,
                        "when":  {
-                                    "or":  [
-                                               {
-                                                   "eq":  [
-                                                              "waermedaemmung_kellerdecke",
-                                                              true
-                                                          ]
-                                               },
-                                               {
-                                                   "eq":  [
-                                                              "waermedaemmung_kelleraussenwand",
-                                                              true
-                                                          ]
-                                               }
-                                           ]
+                                    "and":  [
+                                                {
+                                                    "eq":  [
+                                                               "ausweisart",
+                                                               "Bedarfsausweis"
+                                                           ]
+                                                },
+                                                {
+                                                    "or":  [
+                                                               {
+                                                                   "eq":  [
+                                                                              "waermedaemmung_kellerdecke",
+                                                                              true
+                                                                          ]
+                                                               },
+                                                               {
+                                                                   "eq":  [
+                                                                              "waermedaemmung_kelleraussenwand",
+                                                                              true
+                                                                          ]
+                                                               }
+                                                           ]
+                                                }
+                                            ]
                                 },
                        "required":  {
                                         "or":  [
@@ -393,12 +459,24 @@
                        "key":  "waermedaemmung_dachgeschoss",
                        "label":  "Dachgeschoss gedämmt",
                        "type":  "checkbox",
+                       "when":  {
+                                    "eq":  [
+                                               "ausweisart",
+                                               "Bedarfsausweis"
+                                           ]
+                                },
                        "full":  true
                    },
                    {
                        "key":  "waermedaemmung_oberste_geschossdecke",
                        "label":  "Oberste Geschossdecke gedämmt",
                        "type":  "checkbox",
+                       "when":  {
+                                    "eq":  [
+                                               "ausweisart",
+                                               "Bedarfsausweis"
+                                           ]
+                                },
                        "full":  true
                    },
                    {
@@ -407,20 +485,30 @@
                        "type":  "number",
                        "full":  true,
                        "when":  {
-                                    "or":  [
-                                               {
-                                                   "eq":  [
-                                                              "waermedaemmung_dachgeschoss",
-                                                              true
-                                                          ]
-                                               },
-                                               {
-                                                   "eq":  [
-                                                              "waermedaemmung_oberste_geschossdecke",
-                                                              true
-                                                          ]
-                                               }
-                                           ]
+                                    "and":  [
+                                                {
+                                                    "eq":  [
+                                                               "ausweisart",
+                                                               "Bedarfsausweis"
+                                                           ]
+                                                },
+                                                {
+                                                    "or":  [
+                                                               {
+                                                                   "eq":  [
+                                                                              "waermedaemmung_dachgeschoss",
+                                                                              true
+                                                                          ]
+                                                               },
+                                                               {
+                                                                   "eq":  [
+                                                                              "waermedaemmung_oberste_geschossdecke",
+                                                                              true
+                                                                          ]
+                                                               }
+                                                           ]
+                                                }
+                                            ]
                                 },
                        "required":  {
                                         "or":  [
@@ -446,6 +534,12 @@
                        "key":  "waermedaemmung_oberste_geschossdecke_min12cm",
                        "label":  "Oberste Geschossdecke min. 12 cm gedämmt",
                        "type":  "checkbox",
+                       "when":  {
+                                    "eq":  [
+                                               "ausweisart",
+                                               "Bedarfsausweis"
+                                           ]
+                                },
                        "full":  true
                    },
                    {

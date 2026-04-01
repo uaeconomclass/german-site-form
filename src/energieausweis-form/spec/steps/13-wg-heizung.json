@@ -216,7 +216,7 @@
                                           "label":  "Energieverbrauch der letzten 3 Jahre",
                                           "type":  "periods3",
                                           "full":  true,
-                                          "infoText":  "Der Heizenergieverbrauch muss mindestens 36 Monate zusammenhängend umfassen (die jüngste Abrechnung max. 18 Monate alt).",
+                                          "infoTextTop":  "Der Heizenergieverbrauch muss mindestens 36 Monate zusammenhängend umfassen (die jüngste Abrechnung max. 18 Monate alt).",
                                           "when":  {
                                                        "eq":  [
                                                                   "ausweisart",
