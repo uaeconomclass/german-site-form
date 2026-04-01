@@ -16,10 +16,12 @@
   "gebaeudetyp": [
     { "value": "", "label": "Gebäudetyp" },
     { "value": "WG", "label": "Wohngebäude (WG)" },
+    { "value": "NWG", "label": "Nichtwohngebäude (NWG)", "when": { "eq": ["ausweisart", "Verbrauchsausweis"] } },
     { "value": "MISCH", "label": "Mischgebäude" }
   ],
   "gebaeudetyp_radio": [
     { "value": "WG", "label": "Wohngebäude (WG)" },
+    { "value": "NWG", "label": "Nichtwohngebäude (NWG)", "when": { "eq": ["ausweisart", "Verbrauchsausweis"] } },
     { "value": "MISCH", "label": "Mischgebäude" }
   ],
   "wg_subtype": [

@@ -186,6 +186,16 @@
               "label": "Wohnen"
             },
             {
+              "value": "Gewerbe",
+              "label": "Gewerbe",
+              "when": {
+                "eq": [
+                  "ausweisart",
+                  "Verbrauchsausweis"
+                ]
+              }
+            },
+            {
               "value": "Kombination",
               "label": "Kombination aus Wohnen und Gewerbe"
             }
@@ -216,6 +226,16 @@
             {
               "value": "ca. 10–50%",
               "label": "ca. 10–50%"
+            },
+            {
+              "value": "über 50%",
+              "label": "über 50%",
+              "when": {
+                "eq": [
+                  "ausweisart",
+                  "Verbrauchsausweis"
+                ]
+              }
             }
           ]
         }

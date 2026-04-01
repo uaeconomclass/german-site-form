@@ -222,6 +222,7 @@
                                                          {
                                                              "key":  "typ",
                                                              "label":  "Typ",
+                                                             "hideLabel":  true,
                                                              "type":  "radio",
                                                              "required":  true,
                                                              "options":  [

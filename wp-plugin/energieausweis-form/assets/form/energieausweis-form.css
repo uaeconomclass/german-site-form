@@ -971,6 +971,28 @@ select.control:open{
   color:var(--muted);
   font-size:14px;
 }
+.repeater-window-doors .rep-row{
+  padding:10px 12px;
+}
+.repeater-window-doors .rep-head{
+  margin-bottom:4px;
+}
+.rep-grid-window-doors{
+  grid-template-columns:minmax(128px,.78fr) minmax(220px,1.55fr) repeat(3,minmax(96px,.7fr));
+  align-items:end;
+}
+.rep-grid-window-doors .rep-cell-typ .radio-row{
+  min-height:auto;
+  gap:6px;
+}
+.rep-grid-window-doors .rep-cell-typ .chip{
+  padding:4px 10px 4px 0;
+  font-size:13px;
+  line-height:18px;
+}
+.rep-grid-window-doors .rep-cell .control{
+  width:100%;
+}
 
 /* Compact layout for fixed 3-period Verbrauch block */
 .rep-list-periods3{

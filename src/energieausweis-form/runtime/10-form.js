@@ -1139,11 +1139,12 @@ function renderFields(step) {
         const items = Array.isArray(val) ? val : [];
         const itemLabel = field.itemLabel || "Eintrag";
 
-        const list = el("div", { class: "rep-list" });
+        const repeaterWindowDoors = key === "fenster_vermassung";
+        const list = el("div", { class: "rep-list" + (repeaterWindowDoors ? " rep-list-window-doors" : "") });
         const renderRow = (idx) => {
           const it = items[idx] || {};
           const typeLabel = String(it.typ || "").trim();
-          const row = el("div", { class: "rep-row" });
+          const row = el("div", { class: "rep-row" + (repeaterWindowDoors ? " rep-row-window-doors" : "") });
           const head = el(
             "div",
             { class: "rep-head" },
@@ -1155,12 +1156,12 @@ function renderFields(step) {
           );
           row.appendChild(head);
 
-          const grid = el("div", { class: "rep-grid" });
+          const grid = el("div", { class: "rep-grid" + (repeaterWindowDoors ? " rep-grid-window-doors" : "") });
           (field.fields || []).forEach((sf) => {
             const sfKey = sf.key;
             const sfVal = it[sfKey] ?? "";
-            const cell = el("div", { class: "rep-cell" });
-            cell.appendChild(renderLabel(sf));
+            const cell = el("div", { class: "rep-cell rep-cell-" + sfKey });
+            if (!sf.hideLabel) cell.appendChild(renderLabel(sf));
 
             if (sf.type === "radio") {
               const opts = Array.isArray(sf.options) ? sf.options : [];
@@ -1252,9 +1253,9 @@ function renderFields(step) {
             if (Number.isFinite(h) && Number.isFinite(w)) total += h * w;
           }
           const totalEl = el("div", { class: "rep-total" }, "Summe: ", el("b", null, total.toFixed(3)), " m²");
-          control = el("div", { class: "repeater" }, list, addControls, totalEl);
+          control = el("div", { class: "repeater" + (repeaterWindowDoors ? " repeater-window-doors" : "") }, list, addControls, totalEl);
         } else {
-          control = el("div", { class: "repeater" }, list, addControls);
+          control = el("div", { class: "repeater" + (repeaterWindowDoors ? " repeater-window-doors" : "") }, list, addControls);
         }
       } else if (field.type === "checkbox") {
         wantsDefaultLabel = false;

@@ -32,6 +32,15 @@ const AFTER_CHANGE = {
 
     // Auto-classification (Relevanz-Check) per 06.02 spec.
     // If user edits the relevanz-check inputs, re-enable auto classification (manual override is no longer trusted).
+    if (changedKey === "ausweisart") {
+      if (state.ausweisart === "Bedarfsausweis") {
+        if (String(state.misch_nutzung || "") === "Gewerbe") state.misch_nutzung = "";
+        if (String(state.misch_gewerbe_anteil || "") === "über 50%") state.misch_gewerbe_anteil = "";
+        if (String(state.gebaeudetyp || "") === "NWG") state.gebaeudetyp = "";
+      }
+      return;
+    }
+
     if (changedKey !== "misch_nutzung" && changedKey !== "misch_gewerbe_anteil") return;
     state.__gebaeudetyp_manual = "";
 

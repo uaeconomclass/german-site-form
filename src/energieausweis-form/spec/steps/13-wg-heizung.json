@@ -233,7 +233,7 @@
                                       },
                                       {
                                           "key":  "etr1_heizung",
-                                          "label":  "Fuer Heizung genutzt?",
+                                          "label":  "Für Heizung genutzt?",
                                           "type":  "radio",
                                           "full":  true,
                                           "when":  {
@@ -252,7 +252,7 @@
                                       },
                                       {
                                           "key":  "etr1_tww",
-                                          "label":  "Fuer Warmwasser genutzt?",
+                                          "label":  "Für Warmwasser genutzt?",
                                           "type":  "radio",
                                           "full":  true,
                                           "when":  {
@@ -679,7 +679,7 @@
                                       },
                                       {
                                           "key":  "etr2_heizung",
-                                          "label":  "Fuer Heizung genutzt?",
+                                          "label":  "Für Heizung genutzt?",
                                           "type":  "radio",
                                           "full":  true,
                                           "when":  {
@@ -718,7 +718,7 @@
                                       },
                                       {
                                           "key":  "etr2_tww",
-                                          "label":  "Fuer Warmwasser genutzt?",
+                                          "label":  "Für Warmwasser genutzt?",
                                           "type":  "radio",
                                           "full":  true,
                                           "when":  {
