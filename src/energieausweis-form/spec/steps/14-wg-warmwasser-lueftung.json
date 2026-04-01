@@ -1,6 +1,6 @@
 ﻿{
     "id":  "wg_warmwasser",
-    "title":  "WG: Warmwasser \u0026 Lüftung",
+    "title":  "Warmwasser \u0026 Lüftung",
     "meta":  "A5",
     "when":  {
                  "eq":  [

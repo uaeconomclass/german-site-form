@@ -1,6 +1,6 @@
 ﻿{
     "id":  "wg_bedarf_zusatz",
-    "title":  "WG: Gebäudezustand",
+    "title":  "Gebäudezustand",
     "meta":  "A5b",
     "when":  {
                  "and":  [

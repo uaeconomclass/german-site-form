@@ -1,6 +1,6 @@
 ﻿{
     "id":  "wg_bedarf_verbrauch",
-    "title":  "WG: Energieverbrauch (optional)",
+    "title":  "Energieverbrauch",
     "meta":  "A5c",
     "when":  {
                  "and":  [
@@ -19,7 +19,7 @@
                          ]
              },
     "intro":  {
-                  "title":  "Energieverbrauch (optional)",
+                  "title":  "Energieverbrauch",
                   "text":  "Falls vorhanden, können Sie freiwillig Energieverbrauchsdaten angeben. Diese dienen ausschließlich der Plausibilitätsprüfung und sind nicht Grundlage des Bedarfsausweises."
               },
     "fields":  [
