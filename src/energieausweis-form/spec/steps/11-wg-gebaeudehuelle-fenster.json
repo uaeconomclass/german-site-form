@@ -169,7 +169,7 @@
                                       },
                                       {
                                           "key":  "fenster_einbauzeitraum",
-                                          "label":  "Einbauzeitraum (falls Baujahr unbekannt)",
+                                          "label":  "Einbauzeitraum (Falls Baujahr bekannt)",
                                           "type":  "radio",
                                           "required":  false,
                                           "full":  true,
