@@ -125,6 +125,46 @@
                                           "optionsRef":  "dach_typ"
                                       },
                                       {
+                                          "key":  "dach_daemmstaerke_cm",
+                                          "label":  "Dämmstärke in cm",
+                                          "type":  "number",
+                                          "full":  true,
+                                          "min":  1,
+                                          "hint":  "z. B. 10",
+                                          "when":  {
+                                                       "or":  [
+                                                                  {
+                                                                      "eq":  [
+                                                                                 "dach_typ",
+                                                                                 "Steildach gedämmt"
+                                                                             ]
+                                                                  },
+                                                                  {
+                                                                      "eq":  [
+                                                                                 "dach_typ",
+                                                                                 "Oberste Geschossdecke gedämmt"
+                                                                             ]
+                                                                  }
+                                                              ]
+                                                   },
+                                          "required":  {
+                                                           "or":  [
+                                                                      {
+                                                                          "eq":  [
+                                                                                     "dach_typ",
+                                                                                     "Steildach gedämmt"
+                                                                                 ]
+                                                                      },
+                                                                      {
+                                                                          "eq":  [
+                                                                                     "dach_typ",
+                                                                                     "Oberste Geschossdecke gedämmt"
+                                                                                 ]
+                                                                      }
+                                                                  ]
+                                                       }
+                                      },
+                                      {
                                           "key":  "dachraum_zustand",
                                           "label":  "Ist der Dachraum beheizt oder ausgebaut?",
                                           "type":  "select",
@@ -144,6 +184,26 @@
                                           "required":  true,
                                           "full":  true,
                                           "optionsRef":  "keller_bodenplatte"
+                                      },
+                                      {
+                                          "key":  "kellerdecke_daemmstaerke_cm",
+                                          "label":  "Dämmstärke in cm",
+                                          "type":  "number",
+                                          "full":  true,
+                                          "min":  1,
+                                          "hint":  "z. B. 10",
+                                          "when":  {
+                                                       "eq":  [
+                                                                  "keller_bodenplatte",
+                                                                  "Kellerdecke gedämmt"
+                                                              ]
+                                                   },
+                                          "required":  {
+                                                           "eq":  [
+                                                                      "keller_bodenplatte",
+                                                                      "Kellerdecke gedämmt"
+                                                                  ]
+                                                       }
                                       }
                                   ]
                    },
