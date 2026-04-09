@@ -105,6 +105,9 @@ function tipToHtml(raw) {
     (m) => '<span class="tipimgwrap"><img class="tipimg" src="' + resolveAssetUrl(m) + '" alt="" loading="lazy" /></span>'
   );
 
+  // Simple bold formatting: **text** -> <b>text</b>
+  html = html.replace(/\*\*([^*]+)\*\*/g, "<b>$1</b>");
+
   html = html.replaceAll("\n", "<br>");
   return html;
 }
