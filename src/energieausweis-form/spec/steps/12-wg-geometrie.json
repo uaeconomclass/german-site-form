@@ -24,60 +24,146 @@
                   "img":  "../assets/images/fenster/vermassung-fenster.png",
                   "imgAlt":  "Fenster-Vermassung (lichte Maße + 3 cm)"
               },
-    "fields":  [
+    "blocks":  [
                    {
-                       "key":  "anzahl_vollgeschosse",
-                       "label":  "Anzahl der Vollgeschosse",
-                       "type":  "number",
-                       "required":  true,
-                       "min":  1,
-                       "max":  20,
-                       "hint":  "z. B. 2"
+                       "title":  "",
+                       "fields":  [
+                                      {
+                                          "key":  "anzahl_vollgeschosse",
+                                          "label":  "Anzahl der Vollgeschosse",
+                                          "type":  "number",
+                                          "required":  true,
+                                          "min":  1,
+                                          "max":  20,
+                                          "hint":  "z. B. 2"
+                                      },
+                                      {
+                                          "key":  "geschosshoehen",
+                                          "label":  "Geschosshöhen (m)",
+                                          "type":  "number",
+                                          "required":  true,
+                                          "min":  1,
+                                          "max":  20,
+                                          "hint":  "z. B. 2.50"
+                                      }
+                                  ]
                    },
                    {
-                       "key":  "geschosshoehen",
-                       "label":  "Geschosshöhen (m)",
-                       "type":  "number",
-                       "required":  true,
-                       "min":  1,
-                       "max":  20,
-                       "hint":  "z. B. 2.50"
+                       "title":  "Rechentool-Gebäudevolumen beheizt",
+                       "fields":  [
+                                      {
+                                          "key":  "dachvolumen",
+                                          "label":  "1) Dachvolumen (m³)",
+                                          "type":  "number",
+                                          "required":  true,
+                                          "min":  0,
+                                          "max":  5000000,
+                                          "hint":  "z. B. 250"
+                                      },
+                                      {
+                                          "key":  "wohnvolumen",
+                                          "label":  "2) Wohnvolumen (m³)",
+                                          "type":  "number",
+                                          "required":  true,
+                                          "min":  0,
+                                          "max":  5000000,
+                                          "hint":  "z. B. 450"
+                                      },
+                                      {
+                                          "key":  "kellervolumen",
+                                          "label":  "3) Kellervolumen (m³)",
+                                          "type":  "number",
+                                          "required":  true,
+                                          "min":  0,
+                                          "max":  5000000,
+                                          "hint":  "z. B. 100"
+                                      },
+                                      {
+                                          "key":  "gebaeudevolumen",
+                                          "label":  "Gebäudevolumen (m³)",
+                                          "type":  "number",
+                                          "required":  true,
+                                          "min":  1,
+                                          "max":  5000000,
+                                          "hint":  "z. B. 800",
+                                          "calcSumOf":  [
+                                                           "dachvolumen",
+                                                           "wohnvolumen",
+                                                           "kellervolumen"
+                                                       ],
+                                          "readonly":  true
+                                      }
+                                  ]
                    },
                    {
-                       "key":  "gebaeudevolumen",
-                       "label":  "Gebäudevolumen (m³)",
-                       "type":  "number",
-                       "required":  true,
-                       "min":  1,
-                       "max":  5000000,
-                       "hint":  "z. B. 800"
+                       "title":  "Rechentool-Außenflächen beheizt",
+                       "fields":  [
+                                      {
+                                          "key":  "aussenflaeche_dach",
+                                          "label":  "1) Dachfläche / Oberste Geschossdecke (m²)",
+                                          "type":  "number",
+                                          "required":  true,
+                                          "min":  0,
+                                          "max":  500000,
+                                          "hint":  "z. B. 120"
+                                      },
+                                      {
+                                          "key":  "aussenflaeche_aussenwand",
+                                          "label":  "2) Außenwand (m²)",
+                                          "type":  "number",
+                                          "required":  true,
+                                          "min":  0,
+                                          "max":  500000,
+                                          "hint":  "z. B. 160"
+                                      },
+                                      {
+                                          "key":  "aussenflaeche_bodenplatte",
+                                          "label":  "3) Bodenplatte / Kellerdecke (m²)",
+                                          "type":  "number",
+                                          "required":  true,
+                                          "min":  0,
+                                          "max":  500000,
+                                          "hint":  "z. B. 40"
+                                      },
+                                      {
+                                          "key":  "aussenwandflaechen",
+                                          "label":  "Außenwandflächen (m²)",
+                                          "type":  "number",
+                                          "required":  true,
+                                          "min":  1,
+                                          "max":  500000,
+                                          "hint":  "z. B. 320",
+                                          "calcSumOf":  [
+                                                           "aussenflaeche_dach",
+                                                           "aussenflaeche_aussenwand",
+                                                           "aussenflaeche_bodenplatte"
+                                                       ],
+                                          "readonly":  true
+                                      }
+                                  ]
                    },
                    {
-                       "key":  "aussenwandflaechen",
-                       "label":  "Außenwandflächen (m²)",
-                       "type":  "number",
-                       "required":  true,
-                       "min":  1,
-                       "max":  500000,
-                       "hint":  "z. B. 320"
-                   },
-                   {
-                       "key":  "gebaeudelaenge",
-                       "label":  "Gebäudelänge (m) – Außenmaß",
-                       "type":  "number",
-                       "required":  false,
-                       "min":  1,
-                       "max":  500,
-                       "hint":  "optional, z. B. 10"
-                   },
-                   {
-                       "key":  "gebaeudebreite",
-                       "label":  "Gebäudebreite (m) – Außenmaß",
-                       "type":  "number",
-                       "required":  false,
-                       "min":  1,
-                       "max":  500,
-                       "hint":  "optional, z. B. 8"
+                       "title":  "",
+                       "fields":  [
+                                      {
+                                          "key":  "gebaeudelaenge",
+                                          "label":  "Gebäudelänge (m) – Außenmaß",
+                                          "type":  "number",
+                                          "required":  false,
+                                          "min":  1,
+                                          "max":  500,
+                                          "hint":  "optional, z. B. 10"
+                                      },
+                                      {
+                                          "key":  "gebaeudebreite",
+                                          "label":  "Gebäudebreite (m) – Außenmaß",
+                                          "type":  "number",
+                                          "required":  false,
+                                          "min":  1,
+                                          "max":  500,
+                                          "hint":  "optional, z. B. 8"
+                                      }
+                                  ]
                    }
                ],
     "group":  "Gebäude"

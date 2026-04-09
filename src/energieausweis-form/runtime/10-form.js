@@ -225,6 +225,20 @@ function repeaterFieldWhen(field, itemState) {
   return evalCond(field.when, { ...state, ...(itemState || {}) });
 }
 
+function calcSumValue(field) {
+  if (!field || !Array.isArray(field.calcSumOf) || !field.calcSumOf.length) return null;
+  let any = false;
+  let sum = 0;
+  field.calcSumOf.forEach((k) => {
+    const n = Number(state[k]);
+    if (Number.isFinite(n)) {
+      sum += n;
+      any = true;
+    }
+  });
+  return any ? String(sum) : "";
+}
+
 function optionsForField(field) {
   const raw =
     field.options ||
@@ -837,7 +851,10 @@ function renderFields(step) {
       }
 
       const key = field.key;
+      const calcVal = calcSumValue(field);
+      if (calcVal !== null) state[key] = calcVal;
       const val = state[key];
+      const isReadOnly = Boolean(field.readonly || field.calcSumOf);
 
       const wrap = el("div", { class: "field" + (field.full ? " full" : "") + (field.indent ? " field-indent" : ""), "data-key": key });
       const err = el("div", { class: "errtxt", id: "err_" + key });
@@ -945,10 +962,15 @@ function renderFields(step) {
         control = el("input", { class: "control", name: key, type: field.type === "number" ? "number" : "text", value: val ?? "", placeholder: resolveFieldProp(field, "hint") || "" });
         if (field.min != null) control.setAttribute("min", String(field.min));
         if (field.max != null) control.setAttribute("max", String(field.max));
-        // While typing, do not re-render (otherwise the input element gets recreated and typing feels broken).
-        control.addEventListener("input", () => setValue(key, control.value, step, { render: false }));
-        // On commit (blur/enter), re-render so any dependent UI updates can happen.
-        control.addEventListener("change", () => setValue(key, control.value, step));
+        if (isReadOnly) {
+          control.readOnly = true;
+          control.classList.add("readonly");
+        } else {
+          // While typing, do not re-render (otherwise the input element gets recreated and typing feels broken).
+          control.addEventListener("input", () => setValue(key, control.value, step, { render: false }));
+          // On commit (blur/enter), re-render so any dependent UI updates can happen.
+          control.addEventListener("change", () => setValue(key, control.value, step));
+        }
       } else if (field.type === "counter") {
         const min = field.min != null ? Number(field.min) : 0;
         const max = field.max != null ? Number(field.max) : 999999;
