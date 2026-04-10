@@ -139,6 +139,7 @@
                                           "label":  "Werden alle Räume innerhalb der Gebäudehülle beheizt?",
                                           "labelHtml":  "Werden <strong>alle Räume</strong> innerhalb der Gebäudehülle beheizt?",
                                           "type":  "radio",
+                                          "default":  "Ja",
                                           "required":  true,
                                           "optionsRef":  "ja_nein_radio",
                                           "full":  true

@@ -223,6 +223,17 @@ function fieldWhen(field) {
   return evalCond(field.when, state);
 }
 
+function applyFieldDefault(field, key) {
+  if (!field || !key) return;
+  if (!isEmpty(state[key])) return;
+  const def = field.default;
+  if (def == null || def === "") return;
+  const opts = rawOptionsForField(field);
+  if (opts.some((o) => String(o.value) === String(def))) {
+    state[key] = String(def);
+  }
+}
+
 function repeaterFieldWhen(field, itemState) {
   if (!field || !field.when) return true;
   return evalCond(field.when, { ...state, ...(itemState || {}) });
@@ -856,6 +867,7 @@ function renderFields(step) {
       const key = field.key;
       const calcVal = calcSumValue(field);
       if (calcVal !== null) state[key] = calcVal;
+      applyFieldDefault(field, key);
       const val = state[key];
       const isReadOnly = Boolean(field.readonly || field.calcSumOf);
 
