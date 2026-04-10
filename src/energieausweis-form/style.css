@@ -890,6 +890,11 @@ select.control:open{
   height:100%;
   object-fit:contain;
 }
+.up-drop-label{
+  font-weight:600;
+  color:#344054;
+  margin:4px 0 6px;
+}
 .up-t1{ font-weight:700; margin-bottom:4px; }
 .up-t2{ margin-bottom:12px; }
 .up-drop > .btn.secondary{

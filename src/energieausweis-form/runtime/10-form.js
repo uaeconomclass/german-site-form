@@ -551,6 +551,12 @@ function renderFieldLabelSpan(field, className) {
   return el("span", attrs, label != null ? String(label) : "");
 }
 
+function renderFieldLabelSpanWithReq(field, className, { showReq = true } = {}) {
+  const labelSpan = renderFieldLabelSpan(field, className);
+  if (showReq && isRequired(field)) labelSpan.appendChild(el("span", { class: "req", "aria-hidden": "true" }, "*"));
+  return labelSpan;
+}
+
 function renderLabel(field) {
   const pieces = [renderFieldLabelSpan(field)];
   if (isRequired(field)) pieces.push(el("span", { class: "req", "aria-hidden": "true" }, "*"));
@@ -1064,7 +1070,7 @@ function renderFields(step) {
             { class: "checkbox-row", for: id },
             input,
             el("span", { class: "cb-box", "aria-hidden": "true" }),
-            renderFieldLabelSpan(field, "cb-label")
+            renderFieldLabelSpanWithReq(field, "cb-label", { showReq: false })
           );
           optionTip = renderSelectedOptionTip(field, currentVal);
         } else {
@@ -1124,10 +1130,12 @@ function renderFields(step) {
           },
           "Datei auswählen"
         );
+        const dropLabel = resolveFieldProp(field, "dropLabel");
         const drop = el(
           "div",
           { class: "up-drop", role: "button", tabindex: "0" },
           el("div", { class: "up-ico", "aria-hidden": "true" }, el("img", { src: resolveAssetUrl("../assets/images/upload/library-photo.png"), alt: "" })),
+          dropLabel ? el("div", { class: "up-drop-label" }, String(dropLabel)) : null,
           el("div", { class: "up-t1" }, "Dateien per Drag & Drop hochladen"),
           el("div", { class: "up-t2 muted small" }, "Privat. Nur für Sie sichtbar."),
           btnPick
@@ -1407,7 +1415,7 @@ function renderFields(step) {
           { class: "checkbox-row", for: id },
           input,
           el("span", { class: "cb-box", "aria-hidden": "true" }),
-          renderFieldLabelSpan(field, "cb-label")
+          renderFieldLabelSpanWithReq(field, "cb-label")
         );
         if (field.tipKey && TIPS[field.tipKey]) optionTip = el("div", { class: "field-info" },
           el("span", { class: "field-info-ico", "aria-hidden": "true" }),

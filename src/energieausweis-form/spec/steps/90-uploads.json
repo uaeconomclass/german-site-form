@@ -40,6 +40,17 @@
                                                "value":  "Energieabrechnungen der letzten Jahre (optional)"
                                            }
                                        ],
+                       "dropLabelByCond":  [
+                                             {
+                                                 "when":  {
+                                                              "eq":  [
+                                                                         "ausweisart",
+                                                                         "Bedarfsausweis"
+                                                                     ]
+                                                          },
+                                                 "value":  "Beschriftung - Energieabrechnung"
+                                             }
+                                         ],
                        "type":  "file",
                        "full":  true,
                        "when":  {
@@ -336,6 +347,7 @@
                    {
                        "key":  "upload_daemmung_photos",
                        "label":  "Wärmedämmung (Fotos)",
+                       "dropLabel":  "Beschriftung - Wärmedämmung",
                        "type":  "file",
                        "full":  true,
                        "when":  {
