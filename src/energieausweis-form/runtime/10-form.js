@@ -19,6 +19,8 @@ for (const st of (FORM_SPEC.steps || [])) {
       if (f.type === "repeater") {
         const defaultItems = Math.max(0, Number(f.defaultItems) || 0);
         DEFAULTS[f.key] = Array.from({ length: defaultItems }, () => ({}));
+      } else if (f.type === "checklist") {
+        DEFAULTS[f.key] = [];
       } else if (f.type === "periods3") {
         DEFAULTS[f.key] = [];
       } else {
@@ -577,7 +579,7 @@ function renderLabel(field) {
   return el("label", null, ...pieces);
 }
 
-function renderChecklist(field) {
+function renderChecklist(field, step) {
   const wrap = el("div", { class: "checklistbox" + (field.variant ? (" " + String(field.variant)) : "") });
   const isThankYouCard = String(field.variant || "") === "thankyou-card";
 
@@ -598,20 +600,54 @@ function renderChecklist(field) {
   }
 
   const items = Array.isArray(field.items) ? field.items : [];
+  const key = field && field.key ? String(field.key) : "";
+  const isInteractive = Boolean(key);
   if (items.length) {
     const ul = el("ul", { class: "checklist-items" });
-    items.forEach((it) => {
+    items.forEach((it, idx) => {
       const label = (it && it.label != null) ? String(it.label) : "";
       const note = (it && it.note != null) ? String(it.note) : "";
       const req = Boolean(it && it.required);
-      ul.appendChild(
-        el(
-          "li",
-          { class: "checklist-item" + (req ? " req" : "") },
-          el("div", { class: "checklist-main" }, label, req ? el("span", { class: "checklist-req", "aria-hidden": "true" }, "*") : null),
-          note ? el("div", { class: "checklist-note muted small" }, note) : null
-        )
-      );
+      if (isInteractive) {
+        const cur = Array.isArray(state[key]) ? state[key] : [];
+        const checked = Boolean(cur[idx]);
+        const inputId = key + "_" + String(idx);
+        const input = el("input", { type: "checkbox", id: inputId, name: key });
+        if (checked) input.checked = true;
+        input.addEventListener("change", () => {
+          const next = Array.isArray(state[key]) ? [...state[key]] : [];
+          next[idx] = input.checked === true;
+          setValue(key, next, step || currentStep(), { render: false });
+        });
+
+        ul.appendChild(
+          el(
+            "li",
+            { class: "checklist-item with-check" + (req ? " req" : "") },
+            el(
+              "label",
+              { class: "checklist-check" },
+              input,
+              el("span", { class: "checklist-box", "aria-hidden": "true" }),
+              el(
+                "div",
+                { class: "checklist-content" },
+                el("div", { class: "checklist-main" }, label, req ? el("span", { class: "checklist-req", "aria-hidden": "true" }, "*") : null),
+                note ? el("div", { class: "checklist-note muted small" }, note) : null
+              )
+            )
+          )
+        );
+      } else {
+        ul.appendChild(
+          el(
+            "li",
+            { class: "checklist-item" + (req ? " req" : "") },
+            el("div", { class: "checklist-main" }, label, req ? el("span", { class: "checklist-req", "aria-hidden": "true" }, "*") : null),
+            note ? el("div", { class: "checklist-note muted small" }, note) : null
+          )
+        );
+      }
     });
     wrap.appendChild(ul);
   }
@@ -868,8 +904,13 @@ function renderFields(step) {
 
     fields.forEach((field) => {
       if (field.type === "checklist") {
-        const wrap = el("div", { class: "field full checklist-field" });
-        wrap.appendChild(renderChecklist(field));
+        const key = field.key ? String(field.key) : "";
+        const wrap = el(
+          "div",
+          { class: "field full checklist-field", ...(key ? { "data-key": key } : {}) }
+        );
+        wrap.appendChild(renderChecklist(field, step));
+        if (key) wrap.appendChild(el("div", { class: "errtxt", id: "err_" + key }));
         dom.form.appendChild(wrap);
         return;
       }
@@ -1614,6 +1655,16 @@ function validateStep(idx, { silent } = {}) {
     const req = isRequired(f);
     const v = f.type === "file" ? state.uploads[key] || [] : state[key];
 
+    if (f.type === "checklist") {
+      const items = Array.isArray(f.items) ? f.items : [];
+      if (key && items.length) {
+        const val = Array.isArray(state[key]) ? state[key] : [];
+        const missing = items.some((it, idx) => (it && it.required) && val[idx] !== true);
+        if (missing) errors[key] = "Bitte alle Punkte bestätigen";
+      }
+      continue;
+    }
+
     if (req && isEmpty(v)) {
       errors[key] = "Pflichtfeld";
       continue;
@@ -1748,6 +1799,8 @@ function validateStep(idx, { silent } = {}) {
         setInvalid(wrap.querySelector(".radio-row"));
         // Checkbox row container
         setInvalid(wrap.querySelector(".checkbox-row"));
+        // Checklist confirmations
+        wrap.querySelectorAll(".checklist-check").forEach(setInvalid);
       }
 
       if (errors[key]) {
