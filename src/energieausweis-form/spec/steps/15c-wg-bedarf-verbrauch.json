@@ -1,6 +1,7 @@
 ﻿{
     "id":  "wg_bedarf_verbrauch",
-    "title":  "Energieverbrauch",
+    "title":  "Energieverbrauch (optional)",
+    "stepperTitle":  "Energieverbrauch",
     "meta":  "A5c",
     "when":  {
                  "and":  [
@@ -19,15 +20,28 @@
                          ]
              },
     "intro":  {
-                  "title":  "Energieverbrauch",
+                  "title":  "Energieverbrauch (optional)",
                   "text":  "Falls vorhanden, können Sie freiwillig Energieverbrauchsdaten angeben. Diese dienen ausschließlich der Plausibilitätsprüfung und sind nicht Grundlage des Bedarfsausweises."
               },
     "fields":  [
+                   {
+                       "key":  "bedarf_verbrauch_enabled",
+                       "label":  "Ich möchte freiwillig Verbrauchsdaten angeben",
+                       "type":  "checkbox",
+                       "full":  true,
+                       "required":  false
+                   },
                    {
                        "key":  "etr_traeger_gewechselt",
                        "label":  "Wurde der Energieträger in den letzten 3 Jahren gewechselt?",
                        "type":  "radio",
                        "full":  true,
+                       "when":  {
+                                    "eq":  [
+                                               "bedarf_verbrauch_enabled",
+                                               true
+                                           ]
+                                },
                        "required":  false,
                        "optionsRef":  "ja_nein_radio"
                    },
@@ -37,10 +51,20 @@
                        "type":  "text",
                        "full":  true,
                        "when":  {
-                                    "eq":  [
-                                               "etr_traeger_gewechselt",
-                                               "Ja"
-                                           ]
+                                    "and":  [
+                                                {
+                                                    "eq":  [
+                                                               "bedarf_verbrauch_enabled",
+                                                               true
+                                                           ]
+                                                },
+                                                {
+                                                    "eq":  [
+                                                               "etr_traeger_gewechselt",
+                                                               "Ja"
+                                                           ]
+                                                }
+                                            ]
                                 },
                        "required":  false,
                        "hint":  "z. B. Heizöl"
@@ -51,10 +75,20 @@
                        "type":  "text",
                        "full":  true,
                        "when":  {
-                                    "eq":  [
-                                               "etr_traeger_gewechselt",
-                                               "Ja"
-                                           ]
+                                    "and":  [
+                                                {
+                                                    "eq":  [
+                                                               "bedarf_verbrauch_enabled",
+                                                               true
+                                                           ]
+                                                },
+                                                {
+                                                    "eq":  [
+                                                               "etr_traeger_gewechselt",
+                                                               "Ja"
+                                                           ]
+                                                }
+                                            ]
                                 },
                        "required":  false,
                        "hint":  "z. B. Wärmepumpe"
@@ -62,16 +96,28 @@
                    {
                        "key":  "etr_abrechnungsart",
                        "label":  "Abrechnungsart",
-                       "type":  "radio",
+                       "type":  "select",
                        "full":  true,
+                       "when":  {
+                                    "eq":  [
+                                               "bedarf_verbrauch_enabled",
+                                               true
+                                           ]
+                                },
                        "required":  false,
                        "optionsRef":  "etr_abrechnungsart"
                    },
                    {
                        "key":  "etr_verbrauch_betrifft_wg",
                        "label":  "Verbrauch betrifft",
-                       "type":  "radio",
+                       "type":  "select",
                        "full":  true,
+                       "when":  {
+                                    "eq":  [
+                                               "bedarf_verbrauch_enabled",
+                                               true
+                                           ]
+                                },
                        "required":  false,
                        "optionsRef":  "etr_verbrauch_betrifft_wg"
                    },
@@ -80,6 +126,12 @@
                        "label":  "Energieträger",
                        "type":  "select",
                        "full":  true,
+                       "when":  {
+                                    "eq":  [
+                                               "bedarf_verbrauch_enabled",
+                                               true
+                                           ]
+                                },
                        "required":  false,
                        "optionsRef":  "etr_kategorie_bk",
                        "tipKey":  "etr_kategorie"
@@ -89,6 +141,12 @@
                        "label":  "Abrechnungszeiträume",
                        "type":  "periods3",
                        "full":  true,
+                       "when":  {
+                                    "eq":  [
+                                               "bedarf_verbrauch_enabled",
+                                               true
+                                           ]
+                                },
                        "required":  false,
                        "startKey":  "etr1_start",
                        "unitKey":  "etr1_einheit",

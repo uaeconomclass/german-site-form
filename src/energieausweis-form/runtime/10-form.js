@@ -181,6 +181,16 @@ function resolveStepTitle(step) {
   return step && step.title ? String(step.title) : "";
 }
 
+function resolveStepperTitle(step) {
+  const variants = Array.isArray(step && step.stepperTitleByCond) ? step.stepperTitleByCond : [];
+  for (const variant of variants) {
+    if (!variant || !variant.when) continue;
+    if (evalCond(variant.when, state)) return String(variant.value || "");
+  }
+  if (step && step.stepperTitle) return String(step.stepperTitle);
+  return resolveStepTitle(step);
+}
+
 function resolveStepIntro(step) {
   const variants = Array.isArray(step && step.introByCond) ? step.introByCond : [];
   for (const variant of variants) {
@@ -646,23 +656,23 @@ function isJaNeinRadio(field) {
 }
 
 function renderStepper() {
-  const steps = visibleSteps();
-  dom.topStepper.innerHTML = "";
-  steps.forEach((st, idx) => {
-    // Disallow jumping ahead via the stepper. Only current/past steps are clickable.
+    const steps = visibleSteps();
+    dom.topStepper.innerHTML = "";
+    steps.forEach((st, idx) => {
+      // Disallow jumping ahead via the stepper. Only current/past steps are clickable.
     const locked = idx > stepIndex;
     const pill = el(
       "div",
       {
         class: "step-pill" + (idx === stepIndex ? " active" : "") + (idx < stepIndex ? " done" : "") + (locked ? " locked" : ""),
         ...(locked ? {} : { onclick: () => { stepIndex = idx; render(); } }),
-      },
-      el("span", { class: "num" }, String(idx + 1)),
-      el("span", null, resolveStepTitle(st))
-    );
-    dom.topStepper.appendChild(pill);
-  });
-}
+        },
+        el("span", { class: "num" }, String(idx + 1)),
+        el("span", null, resolveStepperTitle(st))
+      );
+      dom.topStepper.appendChild(pill);
+    });
+  }
 
 var GROUP_ORDER = ["Gebäude", "Technik", "Zusatz", "Abschluss"];
 
