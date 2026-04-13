@@ -56,10 +56,20 @@
                        "when":  {
                                     "or":  [
                                                {
-                                                   "eq":  [
-                                                              "ausweisart",
-                                                              "Verbrauchsausweis"
-                                                          ]
+                                                   "and":  [
+                                                               {
+                                                                   "eq":  [
+                                                                              "gebaeudetyp",
+                                                                              "NWG"
+                                                                          ]
+                                                               },
+                                                               {
+                                                                   "eq":  [
+                                                                              "ausweisart",
+                                                                              "Verbrauchsausweis"
+                                                                          ]
+                                                               }
+                                                           ]
                                                },
                                                {
                                                    "eq":  [

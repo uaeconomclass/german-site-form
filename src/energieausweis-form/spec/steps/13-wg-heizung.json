@@ -175,8 +175,8 @@
                                       },
                                       {
                                           "key":  "etr_abrechnungsart",
-                                          "label":  "Abrechnungsart",
-                                          "type":  "radio",
+                                          "label":  "Energieverbrauchsdaten",
+                                          "type":  "select",
                                           "full":  true,
                                           "when":  {
                                                        "eq":  [
