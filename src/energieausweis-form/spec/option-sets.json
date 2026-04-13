@@ -10,8 +10,7 @@
   "ausweisart": [
     { "value": "", "label": "Welchen Ausweis benötigen Sie?" },
     { "value": "Verbrauchsausweis", "label": "Verbrauchsausweis" },
-    { "value": "Bedarfsausweis", "label": "Bedarfsausweis" },
-    { "value": "weiß ich nicht", "label": "weiß ich nicht" }
+    { "value": "Bedarfsausweis", "label": "Bedarfsausweis" }
   ],
   "gebaeudetyp": [
     { "value": "", "label": "Gebäudetyp" },

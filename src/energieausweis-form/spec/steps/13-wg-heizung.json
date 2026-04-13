@@ -28,7 +28,7 @@
                                       {
                                           "key":  "heizung_heizsystem",
                                           "label":  "Heizsystem",
-                                          "type":  "radio",
+                                            "type":  "select",
                                           "required":  true,
                                           "optionsRef":  "heizung_heizsystem"
                                       },

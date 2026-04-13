@@ -94,14 +94,15 @@
                    {
                        "title":  "",
                        "fields":  [
-                                      {
-                                          "key":  "zf_ueberwiegend_beheizt",
-                                          "label":  "Wurde das Gebäude während des gesamten Abrechnungszeitraums überwiegend beheizt?",
-                                          "type":  "radio",
-                                          "required":  true,
-                                          "optionsRef":  "ja_nein_radio",
-                                          "full":  true
-                                      },
+                                        {
+                                            "key":  "zf_ueberwiegend_beheizt",
+                                            "label":  "Wurde das Gebäude während des gesamten Abrechnungszeitraums überwiegend beheizt?",
+                                            "type":  "radio",
+                                            "default":  "Ja",
+                                            "required":  true,
+                                            "optionsRef":  "ja_nein_radio",
+                                            "full":  true
+                                        },
                                       {
                                           "key":  "zf_nicht_beheizt_bereich",
                                           "label":  "Welche Bereiche wurden nicht beheizt?",
@@ -146,14 +147,15 @@
                    {
                        "title":  "",
                        "fields":  [
-                                      {
-                                          "key":  "zf_alle_raeume_beheizt",
-                                          "label":  "Wurden alle Räume dauerhaft beheizt?",
-                                          "type":  "radio",
-                                          "required":  true,
-                                          "optionsRef":  "ja_nein_radio",
-                                          "full":  true
-                                      },
+                                        {
+                                            "key":  "zf_alle_raeume_beheizt",
+                                            "label":  "Wurden alle Räume dauerhaft beheizt?",
+                                            "type":  "radio",
+                                            "default":  "Ja",
+                                            "required":  true,
+                                            "optionsRef":  "ja_nein_radio",
+                                            "full":  true
+                                        },
                                       {
                                           "key":  "zf_nicht_dauernd_zeitraum",
                                           "label":  "Zeitraum",

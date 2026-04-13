@@ -785,21 +785,13 @@ function runPlausibilityWarnings() {
 }
 
 function getAusweisAdvisorResult() {
-  if (String(state.ausweisart || "") !== "weiß ich nicht") return null;
-
   const geb = String(state.wei_check_gebaeudetyp || "");
   const bg = String(state.wei_check_baugenehmigung || "");
   const mod = String(state.wei_check_modernisierung || "");
   const leer = String(state.wei_check_leerstand || "");
   const ready = !isEmpty(geb) && !isEmpty(bg) && !isEmpty(mod) && !isEmpty(leer);
 
-  if (!ready) {
-    return {
-      ready: false,
-      allowed: [],
-      reason: "Bitte beantworten Sie zuerst alle vier Fragen des Energieausweis-Checks.",
-    };
-  }
+  if (!ready) return null;
 
   // Heuristic from "Welcher Energieausweis" check.
   const needBedarfByLeerstand = leer === "ge_30";
@@ -825,8 +817,6 @@ function getAusweisAdvisorResult() {
 
 function renderAusweisAdvisor(step) {
   if (!step || String(step.id || "") !== "gebaeudetyp") return;
-  if (String(state.ausweisart || "") !== "weiß ich nicht") return;
-
   const res = getAusweisAdvisorResult();
   if (!res) return;
 
@@ -863,12 +853,6 @@ function setValue(key, value, step, opts) {
     if (state.ausweisart !== "Bedarfsausweis" || state.anlass !== "Modernisierung") {
       state.modernisierungsjahr = "";
     }
-  }
-  if (key === "ausweisart" && state.ausweisart !== "weiß ich nicht") {
-    state.wei_check_gebaeudetyp = "";
-    state.wei_check_baugenehmigung = "";
-    state.wei_check_modernisierung = "";
-    state.wei_check_leerstand = "";
   }
   // Cooling consistency: when no cooling, reset dependent flags/area.
   if (key === "klimatisiert" && state.klimatisiert === "Nein") {
@@ -908,6 +892,7 @@ function renderFields(step) {
     if (!fields.length) return;
     if (block.title) dom.form.appendChild(el("div", { class: "block-title" }, block.title));
 
+    let insertedAdvisor = false;
     fields.forEach((field) => {
       if (field.type === "checklist") {
         const key = field.key ? String(field.key) : "";
@@ -1060,7 +1045,10 @@ function renderFields(step) {
         if (isJaNeinRadio(field)) {
           wantsDefaultLabel = false;
           const id = key + "_ja";
-          const currentVal = String(val || "") === "Ja" ? "Ja" : "Nein";
+          const fallbackVal = String(resolveFieldProp(field, "default") || "Nein") === "Ja" ? "Ja" : "Nein";
+          const currentVal = String(val || "") === "Ja"
+            ? "Ja"
+            : (String(val || "") === "Nein" ? "Nein" : fallbackVal);
           if (val !== currentVal) state[key] = currentVal;
           const input = el("input", { type: "checkbox", id, name: key });
           input.checked = currentVal === "Ja";
@@ -1472,6 +1460,11 @@ function renderFields(step) {
       if (help) wrap.appendChild(el("div", { class: "helptext" }, help));
       wrap.appendChild(err);
       dom.form.appendChild(wrap);
+
+      if (!insertedAdvisor && String(step.id || "") === "gebaeudetyp" && String(field.key || "") === "wei_check_leerstand") {
+        renderAusweisAdvisor(step);
+        insertedAdvisor = true;
+      }
     });
   });
 }
