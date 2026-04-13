@@ -240,6 +240,10 @@ function applyFieldDefault(field, key) {
   if (!isEmpty(state[key])) return;
   const def = field.default;
   if (def == null || def === "") return;
+  if (field.type === "checkbox") {
+    state[key] = def === true || String(def).toLowerCase() === "true";
+    return;
+  }
   const opts = rawOptionsForField(field);
   if (opts.some((o) => String(o.value) === String(def))) {
     state[key] = String(def);
@@ -378,6 +382,8 @@ function getPriceConfig() {
     verbrauch_gewerbe: 79,
     bedarf_wg: 129,
     bedarf_gewerbe: 139,
+    delivery_post: 5,
+    express: 7,
   };
   const cfg = EA_CFG && EA_CFG.prices && typeof EA_CFG.prices === "object" ? EA_CFG.prices : {};
   const out = { ...fallback };
@@ -388,22 +394,57 @@ function getPriceConfig() {
   return out;
 }
 
+function getDeliveryMethodPrice() {
+  const prices = getPriceConfig();
+  return state.delivery_post ? prices.delivery_post : 0;
+}
+
+function getExpressPrice() {
+  const prices = getPriceConfig();
+  return state.delivery_express ? prices.express : 0;
+}
+
+function formatAddonPrice(v) {
+  const n = Number(v);
+  if (!Number.isFinite(n) || n <= 0) return "";
+  const whole = Math.abs(n - Math.round(n)) < 0.000001;
+  const formatted = new Intl.NumberFormat("de-DE", {
+    minimumFractionDigits: whole ? 0 : 2,
+    maximumFractionDigits: 2,
+  }).format(n);
+  return ` (+${formatted} €)`;
+}
+
+function getDeliveryMethodLabel() {
+  const suffix = formatAddonPrice(getDeliveryMethodPrice());
+  const hasEmail = state.delivery_email !== false;
+  const hasPost = Boolean(state.delivery_post);
+  if (hasEmail && hasPost) return "PDF per E-Mail + Per Post" + suffix;
+  if (hasPost) return "Per Post" + suffix;
+  return "PDF per E-Mail";
+}
+
+function getExpressLabel() {
+  if (!state.delivery_express) return "Nein";
+  return "Ja" + formatAddonPrice(getExpressPrice());
+}
+
 function computeOverviewPrice() {
   const prices = getPriceConfig();
   const a = String(state.ausweisart || "");
   const t = String(state.gebaeudetyp || "");
+  let base = null;
 
   if (a === "Verbrauchsausweis") {
-    if (t === "WG") return prices.verbrauch_wg;
-    if (t === "NWG" || t === "MISCH") return prices.verbrauch_gewerbe;
-    return null;
+    if (t === "WG") base = prices.verbrauch_wg;
+    else if (t === "NWG" || t === "MISCH") base = prices.verbrauch_gewerbe;
   }
   if (a === "Bedarfsausweis") {
-    if (t === "WG") return prices.bedarf_wg;
-    if (t === "NWG" || t === "MISCH") return prices.bedarf_gewerbe;
-    return null;
+    if (t === "WG") base = prices.bedarf_wg;
+    else if (t === "NWG" || t === "MISCH") base = prices.bedarf_gewerbe;
   }
-  return null;
+  if (!Number.isFinite(base)) return null;
+  return base + getDeliveryMethodPrice() + getExpressPrice();
 }
 
 function formatOverviewPrice(v) {
@@ -1416,7 +1457,8 @@ function renderFields(step) {
           ["Produkt:", buildOrderProductLabel()],
           ["Adresse:", buildObjectAddressLabel()],
           ["Lieferzeit:", "innerhalb von 24 Stunden"],
-          ["Versand:", "PDF per E-Mail"],
+          ["Versand:", getDeliveryMethodLabel()],
+          ["Express:", getExpressLabel()],
         ];
 
         const list = el(
@@ -1774,6 +1816,15 @@ function validateStep(idx, { silent } = {}) {
       errors.ausweisart = "Bitte den Energieausweis-Check vollständig ausfüllen.";
     } else {
       errors.ausweisart = "Bitte über den Check eine Ausweisart auswählen.";
+    }
+  }
+
+  if (String(st.id || "") === "summary") {
+    const hasEmail = state.delivery_email !== false;
+    const hasPost = Boolean(state.delivery_post);
+    if (!hasEmail && !hasPost) {
+      errors.delivery_email = "Bitte mindestens einen Versandweg wählen";
+      errors.delivery_post = "Bitte mindestens einen Versandweg wählen";
     }
   }
 

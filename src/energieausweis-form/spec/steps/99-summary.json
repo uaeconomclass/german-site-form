@@ -16,6 +16,28 @@
                                           "label":  "Ihre Bestellung",
                                           "type":  "kvsummary",
                                           "full":  true
+                                      },
+                                      {
+                                          "key":  "delivery_email",
+                                          "label":  "PDF per E-Mail",
+                                          "type":  "checkbox",
+                                          "required":  false,
+                                          "default":  true,
+                                          "full":  true
+                                      },
+                                      {
+                                          "key":  "delivery_post",
+                                          "label":  "Per Post hinzufügen",
+                                          "type":  "checkbox",
+                                          "required":  false,
+                                          "full":  true
+                                      },
+                                      {
+                                          "key":  "delivery_express",
+                                          "label":  "Express-Service hinzufügen",
+                                          "type":  "checkbox",
+                                          "required":  false,
+                                          "full":  true
                                       }
                                   ]
                    },

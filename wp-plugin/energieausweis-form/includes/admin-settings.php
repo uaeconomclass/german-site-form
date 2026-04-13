@@ -10,6 +10,8 @@ function ea_form_default_prices() {
         'verbrauch_gewerbe' => 79.0,
         'bedarf_wg' => 129.0,
         'bedarf_gewerbe' => 139.0,
+        'delivery_post' => 5.0,
+        'express' => 7.0,
     );
 }
 
@@ -93,6 +95,18 @@ function ea_form_render_prices_page() {
               <th scope="row"><label for="ea_price_bedarf_gewerbe">Bedarfsausweis für Gewerbe</label></th>
               <td>
                 <input id="ea_price_bedarf_gewerbe" type="number" step="0.01" min="0" name="ea_form_prices[bedarf_gewerbe]" value="<?php echo esc_attr((string) $prices['bedarf_gewerbe']); ?>" class="regular-text" />
+              </td>
+            </tr>
+            <tr>
+              <th scope="row"><label for="ea_price_delivery_post">Versand: Per Post</label></th>
+              <td>
+                <input id="ea_price_delivery_post" type="number" step="0.01" min="0" name="ea_form_prices[delivery_post]" value="<?php echo esc_attr((string) $prices['delivery_post']); ?>" class="regular-text" />
+              </td>
+            </tr>
+            <tr>
+              <th scope="row"><label for="ea_price_express">Express-Zuschlag</label></th>
+              <td>
+                <input id="ea_price_express" type="number" step="0.01" min="0" name="ea_form_prices[express]" value="<?php echo esc_attr((string) $prices['express']); ?>" class="regular-text" />
               </td>
             </tr>
           </tbody>
