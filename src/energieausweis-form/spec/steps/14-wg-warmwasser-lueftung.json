@@ -75,16 +75,16 @@
                                           "type":  "radio",
                                           "full":  true,
                                           "required":  {
-                                                           "eq":  [
-                                                                      "ausweisart",
-                                                                      "Bedarfsausweis"
-                                                                  ]
+                                                           "and":  [
+                                                               { "eq":  ["ausweisart", "Bedarfsausweis"] },
+                                                               { "not":  { "eq":  ["warmwasser_type", "kein Warmwasser"] } }
+                                                           ]
                                                        },
                                           "when":  {
-                                                       "eq":  [
-                                                                  "ausweisart",
-                                                                  "Bedarfsausweis"
-                                                              ]
+                                                       "and":  [
+                                                           { "eq":  ["ausweisart", "Bedarfsausweis"] },
+                                                           { "not":  { "eq":  ["warmwasser_type", "kein Warmwasser"] } }
+                                                       ]
                                                    },
                                           "optionsRef":  "warmwasser_integriert"
                                       },
