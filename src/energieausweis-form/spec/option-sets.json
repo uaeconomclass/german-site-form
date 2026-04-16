@@ -254,8 +254,7 @@
     { "value": "Steildach gedämmt", "label": "Steildach gedämmt" },
     { "value": "Flachdach gedämmt", "label": "Flachdach gedämmt" },
     { "value": "Oberste Geschossdecke gedämmt", "label": "Oberste Geschossdecke gedämmt" },
-    { "value": "Oberste Geschossdecke ungedämmt", "label": "Oberste Geschossdecke ungedämmt" },
-    { "value": "Unbekannt", "label": "Unbekannt" }
+    { "value": "Oberste Geschossdecke ungedämmt", "label": "Oberste Geschossdecke ungedämmt" }
   ],
   "dachraum_zustand": [
     { "value": "", "label": "Bitte wählen…" },
