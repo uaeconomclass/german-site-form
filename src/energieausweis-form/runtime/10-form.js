@@ -2119,13 +2119,25 @@ function render() {
   ) ? "1" : "";
 
   // Auto-select ausweisart when advisor restricts to exactly one option.
-  // If two options are available, clear to force explicit user choice (shows "Bitte wählen…").
+  // Track the previous allowed count; when it transitions from 1 → 2+ clear ausweisart
+  // so the user must choose explicitly (regardless of how the value was set before).
   const _advRes = getAusweisAdvisorResult();
   if (_advRes && Array.isArray(_advRes.allowed)) {
-    if (_advRes.allowed.length === 1) {
-      if (state.ausweisart !== _advRes.allowed[0]) state.ausweisart = _advRes.allowed[0];
-    } else if (_advRes.allowed.length > 1 && !_advRes.allowed.includes(state.ausweisart)) {
-      state.ausweisart = "";
+    const _prevCount = state.__advisor_allowed_count || 0;
+    const _curCount = _advRes.allowed.length;
+    state.__advisor_allowed_count = _curCount;
+
+    if (_curCount === 1) {
+      // Auto-select the only available option.
+      state.ausweisart = _advRes.allowed[0];
+    } else if (_curCount > 1) {
+      if (_prevCount === 1) {
+        // Transitioned from 1 → 2+ options: force user to re-choose.
+        state.ausweisart = "";
+      } else if (!_advRes.allowed.includes(state.ausweisart)) {
+        // Current value is no longer in the allowed list.
+        state.ausweisart = "";
+      }
     }
   }
 
