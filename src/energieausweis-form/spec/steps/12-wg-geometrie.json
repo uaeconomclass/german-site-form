@@ -53,7 +53,7 @@
                        "fields":  [
                                       {
                                           "key":  "dachvolumen",
-                                          "label":  "1) Dachvolumen (m³)",
+                                          "label":  "Dachvolumen (m³)",
                                           "type":  "number",
                                           "required":  true,
                                           "min":  0,
@@ -62,7 +62,7 @@
                                       },
                                       {
                                           "key":  "wohnvolumen",
-                                          "label":  "2) Wohnvolumen (m³)",
+                                          "label":  "Wohnvolumen (m³)",
                                           "type":  "number",
                                           "required":  true,
                                           "min":  0,
@@ -71,7 +71,7 @@
                                       },
                                       {
                                           "key":  "kellervolumen",
-                                          "label":  "3) Kellervolumen (m³)",
+                                          "label":  "Kellervolumen (m³)",
                                           "type":  "number",
                                           "required":  true,
                                           "min":  0,
@@ -101,7 +101,7 @@
                        "fields":  [
                                       {
                                           "key":  "aussenflaeche_dach",
-                                          "label":  "1) Dachfläche / Oberste Geschossdecke (m²)",
+                                          "label":  "Dachfläche / Oberste Geschossdecke (m²)",
                                           "type":  "number",
                                           "required":  true,
                                           "min":  0,
@@ -110,7 +110,7 @@
                                       },
                                       {
                                           "key":  "aussenflaeche_aussenwand",
-                                          "label":  "2) Außenwand (m²)",
+                                          "label":  "Außenwand (m²)",
                                           "type":  "number",
                                           "required":  true,
                                           "min":  0,
@@ -119,7 +119,7 @@
                                       },
                                       {
                                           "key":  "aussenflaeche_bodenplatte",
-                                          "label":  "3) Bodenplatte / Kellerdecke (m²)",
+                                          "label":  "Bodenplatte / Kellerdecke (m²)",
                                           "type":  "number",
                                           "required":  true,
                                           "min":  0,
