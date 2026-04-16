@@ -269,7 +269,6 @@
     { "value": "Unbeheizter Keller", "label": "Unbeheizter Keller vorhanden" },
     { "value": "Beheizter Keller", "label": "Beheizter Keller" },
     { "value": "Kellerdecke gedämmt", "label": "Kellerdecke gedämmt" },
-    { "value": "Kellerdecke ungedämmt", "label": "Kellerdecke ungedämmt" },
     { "value": "Bodenplatte ohne Keller", "label": "Bodenplatte ohne Keller" }
   ],
   "verglasung": [
