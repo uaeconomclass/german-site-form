@@ -175,10 +175,10 @@
                                           "type":  "number",
                                           "required":  false,
                                           "when":  {
-                                                       "eq":  [
-                                                                  "ausweisart",
-                                                                  "Bedarfsausweis"
-                                                              ]
+                                                       "and":  [
+                                                           { "eq":  ["ausweisart", "Bedarfsausweis"] },
+                                                           { "eq":  ["lueftung_waermerueckgewinnung", "Ja"] }
+                                                       ]
                                                    },
                                           "min":  1900,
                                           "max":  2100,
