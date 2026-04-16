@@ -15,6 +15,31 @@ function ea_form_default_prices() {
     );
 }
 
+function ea_form_default_delivery_times() {
+    return array(
+        'bedarf_standard'    => 'zwischen 48–72 Stunden',
+        'verbrauch_standard' => 'zwischen 24–48 Stunden',
+        'bedarf_express'     => 'innerhalb von 48 Stunden',
+        'verbrauch_express'  => 'innerhalb von 24 Stunden',
+    );
+}
+
+function ea_form_sanitize_delivery_times($raw) {
+    $defaults = ea_form_default_delivery_times();
+    $in = is_array($raw) ? $raw : array();
+    $out = array();
+    foreach ($defaults as $key => $fallback) {
+        $v = isset($in[$key]) ? sanitize_text_field($in[$key]) : $fallback;
+        $out[$key] = $v !== '' ? $v : $fallback;
+    }
+    return $out;
+}
+
+function ea_form_get_delivery_times() {
+    $saved = get_option('ea_form_delivery_times', array());
+    return ea_form_sanitize_delivery_times(is_array($saved) ? $saved : array());
+}
+
 function ea_form_sanitize_prices($raw) {
     $defaults = ea_form_default_prices();
     $in = is_array($raw) ? $raw : array();
@@ -47,6 +72,15 @@ add_action('admin_init', function () {
             'default' => ea_form_default_prices(),
         )
     );
+    register_setting(
+        'ea_form_prices_group',
+        'ea_form_delivery_times',
+        array(
+            'type' => 'array',
+            'sanitize_callback' => 'ea_form_sanitize_delivery_times',
+            'default' => ea_form_default_delivery_times(),
+        )
+    );
 });
 
 add_action('admin_menu', function () {
@@ -65,10 +99,11 @@ function ea_form_render_prices_page() {
     }
 
     $prices = ea_form_get_prices();
+    $delivery_times = ea_form_get_delivery_times();
     ?>
     <div class="wrap">
-      <h1>Energieausweis Preise</h1>
-      <p>Preise für die Formular-Übersicht (inkl. MwSt.).</p>
+      <h1>Energieausweis Preise &amp; Lieferzeiten</h1>
+      <p>Preise für die Formular-Übersicht (inkl. MwSt.) und Lieferzeittexte.</p>
       <form method="post" action="options.php">
         <?php settings_fields('ea_form_prices_group'); ?>
         <table class="form-table" role="presentation">
@@ -111,6 +146,25 @@ function ea_form_render_prices_page() {
             </tr>
           </tbody>
         </table>
+          <tr>
+              <td colspan="2"><h2 style="margin-top:1.5em">Lieferzeiten</h2></td>
+            </tr>
+            <tr>
+              <th scope="row"><label for="ea_dt_bedarf_standard">Bedarfsausweis – Standard</label></th>
+              <td><input id="ea_dt_bedarf_standard" type="text" name="ea_form_delivery_times[bedarf_standard]" value="<?php echo esc_attr($delivery_times['bedarf_standard']); ?>" class="regular-text" /></td>
+            </tr>
+            <tr>
+              <th scope="row"><label for="ea_dt_verbrauch_standard">Verbrauchsausweis – Standard</label></th>
+              <td><input id="ea_dt_verbrauch_standard" type="text" name="ea_form_delivery_times[verbrauch_standard]" value="<?php echo esc_attr($delivery_times['verbrauch_standard']); ?>" class="regular-text" /></td>
+            </tr>
+            <tr>
+              <th scope="row"><label for="ea_dt_bedarf_express">Bedarfsausweis – Express</label></th>
+              <td><input id="ea_dt_bedarf_express" type="text" name="ea_form_delivery_times[bedarf_express]" value="<?php echo esc_attr($delivery_times['bedarf_express']); ?>" class="regular-text" /></td>
+            </tr>
+            <tr>
+              <th scope="row"><label for="ea_dt_verbrauch_express">Verbrauchsausweis – Express</label></th>
+              <td><input id="ea_dt_verbrauch_express" type="text" name="ea_form_delivery_times[verbrauch_express]" value="<?php echo esc_attr($delivery_times['verbrauch_express']); ?>" class="regular-text" /></td>
+            </tr>
         <?php submit_button('Speichern'); ?>
       </form>
     </div>

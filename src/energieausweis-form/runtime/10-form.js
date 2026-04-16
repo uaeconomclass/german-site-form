@@ -158,6 +158,7 @@ const dom = {
   btnAdminExportCsv: document.getElementById("btnAdminExportCsv"),
 
   overviewProgress: document.getElementById("overviewProgress"),
+  overviewDelivery: document.getElementById("overviewDelivery"),
   overviewPriceWrap: document.getElementById("overviewPriceWrap"),
   overviewPriceSpacer: document.getElementById("overviewPriceSpacer"),
   overviewPrice: document.getElementById("overviewPrice"),
@@ -392,6 +393,31 @@ function getPriceConfig() {
     if (Number.isFinite(n) && n >= 0) out[k] = n;
   }
   return out;
+}
+
+function getDeliveryTimeConfig() {
+  const fallback = {
+    bedarf_standard:    "zwischen 48\u201372 Stunden",
+    verbrauch_standard: "zwischen 24\u201348 Stunden",
+    bedarf_express:     "innerhalb von 48 Stunden",
+    verbrauch_express:  "innerhalb von 24 Stunden",
+  };
+  const cfg = EA_CFG && EA_CFG.delivery_times && typeof EA_CFG.delivery_times === "object" ? EA_CFG.delivery_times : {};
+  const out = { ...fallback };
+  for (const k of Object.keys(fallback)) {
+    if (cfg[k] && String(cfg[k]).trim()) out[k] = String(cfg[k]).trim();
+  }
+  return out;
+}
+
+function getDeliveryTime() {
+  const cfg = getDeliveryTimeConfig();
+  const isBedarf = String(state.ausweisart || "") === "Bedarfsausweis";
+  const isExpress = Boolean(state.delivery_express);
+  if (isBedarf && isExpress)  return cfg.bedarf_express;
+  if (!isBedarf && isExpress) return cfg.verbrauch_express;
+  if (isBedarf)               return cfg.bedarf_standard;
+  return cfg.verbrauch_standard;
 }
 
 function getDeliveryMethodPrice() {
@@ -1483,7 +1509,7 @@ function renderFields(step) {
         const rows = [
           ["Produkt:", buildOrderProductLabel()],
           ["Adresse:", buildObjectAddressLabel()],
-          ["Lieferzeit:", "innerhalb von 24 Stunden"],
+          ["Lieferzeit:", getDeliveryTime()],
           ["Versand:", getDeliveryMethodLabel()],
           ["Express:", getExpressLabel()],
         ];
@@ -2070,6 +2096,7 @@ function persistDraft(reason) {
 function updateOverview() {
   const steps = visibleSteps();
   dom.overviewProgress.textContent = String(stepIndex + 1) + "/" + String(steps.length);
+  if (dom.overviewDelivery) dom.overviewDelivery.textContent = getDeliveryTime();
   if (dom.overviewPrice) {
     const v = computeOverviewPrice();
     const show = Number.isFinite(Number(v));

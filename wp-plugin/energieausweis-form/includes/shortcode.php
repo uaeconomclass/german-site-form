@@ -203,7 +203,7 @@ add_shortcode('energieausweis_form', function ($atts = array(), $content = '') {
 
                 <div class="kv">
                   <div class="muted">Voraussichtliche Fertigstellung:</div>
-                  <div><b>innerhalb von 24 Stunden</b></div>
+                  <div><b id="overviewDelivery">–</b></div>
                 </div>
 
                 <div class="sp"></div>

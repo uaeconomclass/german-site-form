@@ -49,6 +49,12 @@ function ea_form_plugin_enqueue_assets() {
             'bedarf_wg' => 129.0,
             'bedarf_gewerbe' => 139.0,
         ),
+        'delivery_times' => function_exists('ea_form_get_delivery_times') ? ea_form_get_delivery_times() : array(
+            'bedarf_standard'    => 'zwischen 48–72 Stunden',
+            'verbrauch_standard' => 'zwischen 24–48 Stunden',
+            'bedarf_express'     => 'innerhalb von 48 Stunden',
+            'verbrauch_express'  => 'innerhalb von 24 Stunden',
+        ),
     );
 
     if (is_singular(array('ea_order', 'wg', 'nwg', 'misch')) && is_user_logged_in()) {
