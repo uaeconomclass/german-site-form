@@ -15,13 +15,8 @@
           "key": "wei_check_gebaeudetyp",
           "label": "Gebäudetyp",
           "type": "radio",
+          "required": true,
           "full": true,
-          "when": {
-            "eq": [
-              "ausweisart",
-              ""
-            ]
-          },
           "options": [
             {
               "value": "wg_lt5",
@@ -41,13 +36,8 @@
           "key": "wei_check_baugenehmigung",
           "label": "Datum der Baugenehmigung",
           "type": "radio",
+          "required": true,
           "full": true,
-          "when": {
-            "eq": [
-              "ausweisart",
-              ""
-            ]
-          },
           "options": [
             {
               "value": "vor_1977",
@@ -63,13 +53,8 @@
           "key": "wei_check_modernisierung",
           "label": "Modernisierung",
           "type": "radio",
+          "required": true,
           "full": true,
-          "when": {
-            "eq": [
-              "ausweisart",
-              ""
-            ]
-          },
           "options": [
             {
               "value": "keine",
@@ -89,13 +74,8 @@
           "key": "wei_check_leerstand",
           "label": "Leerstand",
           "type": "radio",
+          "required": true,
           "full": true,
-          "when": {
-            "eq": [
-              "ausweisart",
-              ""
-            ]
-          },
           "options": [
             {
               "value": "ge_30",
@@ -114,7 +94,10 @@
           "required": true,
           "tipKey": "anlass",
           "optionsRef": "anlass",
-          "infoText": "Wofür benötigen Sie den Ausweis?"
+          "infoText": "Wofür benötigen Sie den Ausweis?",
+          "when": {
+            "eq": ["wei_check_done", "1"]
+          }
         },
         {
           "key": "ausweisart",
@@ -122,7 +105,10 @@
           "type": "select",
           "required": true,
           "tipKey": "ausweisart",
-          "optionsRef": "ausweisart"
+          "optionsRef": "ausweisart",
+          "when": {
+            "eq": ["wei_check_done", "1"]
+          }
         },
         {
           "key": "modernisierungsjahr",
@@ -133,22 +119,22 @@
           "hint": "z. B. 2019",
           "tipKey": "modernisierungsjahr",
           "when": {
-            "eq": [
-              "anlass",
-              "Modernisierung"
+            "and": [
+              { "eq": ["wei_check_done", "1"] },
+              { "eq": ["anlass", "Modernisierung"] }
             ]
           },
           "required": {
-            "eq": [
-              "anlass",
-              "Modernisierung"
-            ]
+            "eq": ["anlass", "Modernisierung"]
           }
         }
       ]
     },
     {
       "title": "",
+      "when": {
+        "eq": ["wei_check_done", "1"]
+      },
       "fields": [
         {
           "key": "misch_nutzung",
@@ -165,10 +151,7 @@
               "value": "Gewerbe",
               "label": "Gewerbe",
               "when": {
-                "eq": [
-                  "ausweisart",
-                  "Verbrauchsausweis"
-                ]
+                "eq": ["ausweisart", "Verbrauchsausweis"]
               }
             },
             {
@@ -183,16 +166,10 @@
           "type": "radio",
           "full": true,
           "when": {
-            "eq": [
-              "misch_nutzung",
-              "Kombination"
-            ]
+            "eq": ["misch_nutzung", "Kombination"]
           },
           "required": {
-            "eq": [
-              "misch_nutzung",
-              "Kombination"
-            ]
+            "eq": ["misch_nutzung", "Kombination"]
           },
           "options": [
             {
@@ -207,10 +184,7 @@
               "value": "über 50%",
               "label": "über 50%",
               "when": {
-                "eq": [
-                  "ausweisart",
-                  "Verbrauchsausweis"
-                ]
+                "eq": ["ausweisart", "Verbrauchsausweis"]
               }
             }
           ]
@@ -219,6 +193,9 @@
     },
     {
       "title": "",
+      "when": {
+        "eq": ["wei_check_done", "1"]
+      },
       "fields": [
         {
           "key": "gebaeudetyp",
@@ -234,6 +211,9 @@
     },
     {
       "title": "Komplexe Technik?",
+      "when": {
+        "eq": ["wei_check_done", "1"]
+      },
       "fields": [
         {
           "key": "misch_tech_lueftung",
@@ -242,10 +222,7 @@
           "required": true,
           "optionsRef": "ja_nein_radio",
           "when": {
-            "eq": [
-              "gebaeudetyp",
-              "MISCH"
-            ]
+            "eq": ["gebaeudetyp", "MISCH"]
           }
         },
         {
@@ -255,10 +232,7 @@
           "required": true,
           "optionsRef": "ja_nein_radio",
           "when": {
-            "eq": [
-              "gebaeudetyp",
-              "MISCH"
-            ]
+            "eq": ["gebaeudetyp", "MISCH"]
           }
         },
         {
@@ -268,10 +242,7 @@
           "required": true,
           "optionsRef": "ja_nein_radio",
           "when": {
-            "eq": [
-              "gebaeudetyp",
-              "MISCH"
-            ]
+            "eq": ["gebaeudetyp", "MISCH"]
           }
         },
         {
@@ -281,16 +252,16 @@
           "required": true,
           "optionsRef": "ja_nein_radio",
           "when": {
-            "eq": [
-              "gebaeudetyp",
-              "MISCH"
-            ]
+            "eq": ["gebaeudetyp", "MISCH"]
           }
         }
       ]
     },
     {
       "title": "",
+      "when": {
+        "eq": ["wei_check_done", "1"]
+      },
       "fields": [
         {
           "key": "wg_subtype",
@@ -299,10 +270,7 @@
           "required": true,
           "optionsRef": "wg_subtype",
           "when": {
-            "eq": [
-              "gebaeudetyp",
-              "WG"
-            ]
+            "eq": ["gebaeudetyp", "WG"]
           },
           "full": true
         }
@@ -310,6 +278,9 @@
     },
     {
       "title": "Basisdaten",
+      "when": {
+        "eq": ["wei_check_done", "1"]
+      },
       "fields": [
         {
           "key": "baualtersklasse",
@@ -318,10 +289,7 @@
           "required": true,
           "optionsRef": "baualtersklasse",
           "when": {
-            "eq": [
-              "gebaeudetyp",
-              "WG"
-            ]
+            "eq": ["gebaeudetyp", "WG"]
           }
         },
         {
@@ -329,19 +297,13 @@
           "label": "Baujahr Gebäude",
           "type": "number",
           "required": {
-            "eq": [
-              "ausweisart",
-              "Bedarfsausweis"
-            ]
+            "eq": ["ausweisart", "Bedarfsausweis"]
           },
           "min": 1800,
           "max": 2100,
           "hint": "z. B. 1985",
           "when": {
-            "eq": [
-              "gebaeudetyp",
-              "WG"
-            ]
+            "eq": ["gebaeudetyp", "WG"]
           }
         },
         {
@@ -353,10 +315,7 @@
           "max": 999,
           "hint": "z. B. 1",
           "when": {
-            "eq": [
-              "gebaeudetyp",
-              "WG"
-            ]
+            "eq": ["gebaeudetyp", "WG"]
           }
         },
         {
@@ -369,10 +328,7 @@
           "tipKey": "wohnflaeche",
           "hint": "z. B. 120",
           "when": {
-            "eq": [
-              "gebaeudetyp",
-              "WG"
-            ]
+            "eq": ["gebaeudetyp", "WG"]
           }
         },
         {
@@ -382,10 +338,7 @@
           "required": true,
           "optionsRef": "wohnflaeche_basis",
           "when": {
-            "eq": [
-              "gebaeudetyp",
-              "WG"
-            ]
+            "eq": ["gebaeudetyp", "WG"]
           }
         },
         {
@@ -398,10 +351,7 @@
           "tipKey": "nutzflaeche",
           "hint": "z. B. 155",
           "when": {
-            "eq": [
-              "gebaeudetyp",
-              "WG"
-            ]
+            "eq": ["gebaeudetyp", "WG"]
           }
         },
         {
@@ -409,25 +359,12 @@
           "label": "Ist ein Keller oder Untergeschoss in der beheizten Wohnfläche enthalten?",
           "type": "radio",
           "required": {
-            "eq": [
-              "ausweisart",
-              "Bedarfsausweis"
-            ]
+            "eq": ["ausweisart", "Bedarfsausweis"]
           },
           "when": {
             "and": [
-              {
-                "eq": [
-                  "gebaeudetyp",
-                  "WG"
-                ]
-              },
-              {
-                "eq": [
-                  "ausweisart",
-                  "Bedarfsausweis"
-                ]
-              }
+              { "eq": ["gebaeudetyp", "WG"] },
+              { "eq": ["ausweisart", "Bedarfsausweis"] }
             ]
           },
           "optionsRef": "keller_in_wohnflaeche",

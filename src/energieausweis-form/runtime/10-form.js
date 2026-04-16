@@ -859,23 +859,26 @@ function getAusweisAdvisorResult() {
 function renderAusweisAdvisor(step) {
   if (!step || String(step.id || "") !== "gebaeudetyp") return;
   const res = getAusweisAdvisorResult();
-  if (!res) return;
 
   const box = el("div", { class: "banner full info field ausweis-advice" });
   box.appendChild(el("div", { class: "ico" }, "i"));
   const right = el("div", { class: "ausweis-advice-content" });
   right.appendChild(el("div", { class: "kicker" }, "Energieausweis-Check"));
-  right.appendChild(el("p", null, String(res.reason || "")));
 
-  if (res.ready && Array.isArray(res.allowed) && res.allowed.length) {
-    right.appendChild(el("p", { class: "small muted" }, "Erlaubte Optionen: " + res.allowed.join(" / ")));
-    const actions = el("div", { class: "ausweis-advice-actions" });
-    res.allowed.forEach((opt) => {
-      const b = el("button", { type: "button", class: "btn secondary" }, "Auswählen: " + opt);
-      b.addEventListener("click", () => setValue("ausweisart", opt, step));
-      actions.appendChild(b);
-    });
-    right.appendChild(actions);
+  if (!res) {
+    right.appendChild(el("p", { class: "muted" }, "Bitte alle Felder oben ausfüllen, um die passende Ausweisart zu ermitteln."));
+  } else {
+    right.appendChild(el("p", null, String(res.reason || "")));
+    if (res.ready && Array.isArray(res.allowed) && res.allowed.length) {
+      right.appendChild(el("p", { class: "small muted" }, "Erlaubte Optionen: " + res.allowed.join(" / ")));
+      const actions = el("div", { class: "ausweis-advice-actions" });
+      res.allowed.forEach((opt) => {
+        const b = el("button", { type: "button", class: "btn secondary" }, "Auswählen: " + opt);
+        b.addEventListener("click", () => setValue("ausweisart", opt, step));
+        actions.appendChild(b);
+      });
+      right.appendChild(actions);
+    }
   }
 
   box.appendChild(right);
@@ -912,6 +915,14 @@ function setValue(key, value, step, opts) {
   const hookName = step && step.afterChangeRef;
   if (hookName && AFTER_CHANGE[hookName]) AFTER_CHANGE[hookName](state, key);
 
+  // When advisor inputs change, clear ausweisart if it's no longer in the allowed list.
+  if (key && key.startsWith("wei_check_") && !isEmpty(state.ausweisart)) {
+    const advRes = getAusweisAdvisorResult();
+    if (advRes && Array.isArray(advRes.allowed) && !advRes.allowed.includes(state.ausweisart)) {
+      state.ausweisart = "";
+    }
+  }
+
   const shouldRender = !(opts && opts.render === false);
   if (shouldRender) render();
   else {
@@ -929,6 +940,7 @@ function renderFields(step) {
     : [{ title: "", fields: step.fields || [] }];
 
   blocks.forEach((block) => {
+    if (block.when && !evalCond(block.when, state)) return;
     const fields = (block.fields || []).filter((f) => fieldWhen(f));
     if (!fields.length) return;
     if (block.title) dom.form.appendChild(el("div", { class: "block-title" }, block.title));
@@ -962,7 +974,13 @@ function renderFields(step) {
       let wantsDefaultLabel = true;
 
       if (field.type === "select") {
-        const opts = optionsForField(field);
+        let opts = optionsForField(field);
+        if (key === "ausweisart") {
+          const advRes = getAusweisAdvisorResult();
+          if (advRes && Array.isArray(advRes.allowed)) {
+            opts = opts.filter((o) => advRes.allowed.includes(o.value));
+          }
+        }
         control = el("select", { class: "control", name: key });
         opts.forEach((opt) => {
           const o = el("option", { value: opt.value }, opt.label);
@@ -2053,6 +2071,14 @@ function updateOverview() {
 }
 
 function render() {
+  // Sync derived flag used by field/block visibility conditions.
+  state.wei_check_done = (
+    !isEmpty(state.wei_check_gebaeudetyp) &&
+    !isEmpty(state.wei_check_baugenehmigung) &&
+    !isEmpty(state.wei_check_modernisierung) &&
+    !isEmpty(state.wei_check_leerstand)
+  ) ? "1" : "";
+
   const steps = visibleSteps();
   stepIndex = clamp(stepIndex, 0, steps.length - 1);
   const st = currentStep();
@@ -2095,7 +2121,6 @@ function render() {
   } else {
     renderFields(st);
   }
-  renderAusweisAdvisor(st);
 
   dom.btnBack.disabled = stepIndex === 0;
 
