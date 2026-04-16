@@ -254,6 +254,63 @@
                                       }
                                   ]
                    }
+               ,
+                   {
+                       "title":  "Warmwasserbereitung",
+                       "fields":  [
+                                      {
+                                          "key":  "warmwasser_type",
+                                          "label":  "Wie wird das Warmwasser erzeugt?",
+                                          "type":  "select",
+                                          "full":  true,
+                                          "required":  true,
+                                          "optionsRef":  "warmwasser",
+                                          "tipKey":  "warmwasser_type"
+                                      },
+                                      {
+                                          "key":  "warmwasser_im_verbrauch",
+                                          "label":  "Warmwasser im Energieverbrauch enthalten?",
+                                          "type":  "radio",
+                                          "full":  true,
+                                          "required":  {
+                                                           "eq":  ["ausweisart", "Verbrauchsausweis"]
+                                                       },
+                                          "when":  {
+                                                       "eq":  ["ausweisart", "Verbrauchsausweis"]
+                                                   },
+                                          "optionsRef":  "ja_nein_radio"
+                                      },
+                                      {
+                                          "key":  "warmwasser_integriert",
+                                          "label":  "Ist die Warmwasserbereitung über die Heizungsanlage integriert?",
+                                          "type":  "radio",
+                                          "full":  true,
+                                          "required":  {
+                                                           "and":  [
+                                                               { "eq":  ["ausweisart", "Bedarfsausweis"] },
+                                                               { "not":  { "eq":  ["warmwasser_type", "kein Warmwasser"] } }
+                                                           ]
+                                                       },
+                                          "when":  {
+                                                       "and":  [
+                                                           { "eq":  ["ausweisart", "Bedarfsausweis"] },
+                                                           { "not":  { "eq":  ["warmwasser_type", "kein Warmwasser"] } }
+                                                       ]
+                                                   },
+                                          "optionsRef":  "warmwasser_integriert"
+                                      },
+                                      {
+                                          "key":  "bewohner_anzahl",
+                                          "label":  "Wie viele Personen leben im Gebäude?",
+                                          "type":  "number",
+                                          "full":  true,
+                                          "required":  false,
+                                          "min":  1,
+                                          "max":  999,
+                                          "hint":  "z. B. 3"
+                                      }
+                                  ]
+                   }
                ],
     "group":  "Technik"
 }
