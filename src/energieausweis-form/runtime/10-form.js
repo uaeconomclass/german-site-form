@@ -1013,7 +1013,10 @@ function renderFields(step) {
         if (key === "ausweisart") {
           const advRes = getAusweisAdvisorResult();
           if (advRes && Array.isArray(advRes.allowed)) {
-            opts = opts.filter((o) => advRes.allowed.includes(o.value));
+            const placeholder = opts.find((o) => o.value === "");
+            const filtered = opts.filter((o) => o.value !== "" && advRes.allowed.includes(o.value));
+            // Keep placeholder only when user must choose between multiple options.
+            opts = (filtered.length > 1 && placeholder) ? [placeholder, ...filtered] : filtered;
           }
         }
         control = el("select", { class: "control", name: key });
@@ -2114,6 +2117,17 @@ function render() {
     !isEmpty(state.wei_check_modernisierung) &&
     !isEmpty(state.wei_check_leerstand)
   ) ? "1" : "";
+
+  // Auto-select ausweisart when advisor restricts to exactly one option.
+  // If two options are available, clear to force explicit user choice (shows "Bitte wählen…").
+  const _advRes = getAusweisAdvisorResult();
+  if (_advRes && Array.isArray(_advRes.allowed)) {
+    if (_advRes.allowed.length === 1) {
+      if (state.ausweisart !== _advRes.allowed[0]) state.ausweisart = _advRes.allowed[0];
+    } else if (_advRes.allowed.length > 1 && !_advRes.allowed.includes(state.ausweisart)) {
+      state.ausweisart = "";
+    }
+  }
 
   const steps = visibleSteps();
   stepIndex = clamp(stepIndex, 0, steps.length - 1);
