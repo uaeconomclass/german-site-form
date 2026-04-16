@@ -78,12 +78,12 @@
           "full": true,
           "options": [
             {
-              "value": "ge_30",
-              "label": "30% oder mehr der Gesamtfläche"
-            },
-            {
               "value": "lt_30",
               "label": "Weniger als 30% der Gesamtfläche"
+            },
+            {
+              "value": "ge_30",
+              "label": "30% oder mehr der Gesamtfläche"
             }
           ]
         },
