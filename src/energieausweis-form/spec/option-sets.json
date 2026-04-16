@@ -252,7 +252,7 @@
     { "value": "", "label": "Bitte wählen…" },
     { "value": "Steildach ungedämmt", "label": "Steildach ungedämmt" },
     { "value": "Steildach gedämmt", "label": "Steildach gedämmt" },
-    { "value": "Flachdach", "label": "Flachdach" },
+    { "value": "Flachdach gedämmt", "label": "Flachdach gedämmt" },
     { "value": "Oberste Geschossdecke gedämmt", "label": "Oberste Geschossdecke gedämmt" },
     { "value": "Oberste Geschossdecke ungedämmt", "label": "Oberste Geschossdecke ungedämmt" },
     { "value": "Unbekannt", "label": "Unbekannt" }
@@ -261,8 +261,7 @@
     { "value": "", "label": "Bitte wählen…" },
     { "value": "Unbeheizt", "label": "Dachraum unbeheizt" },
     { "value": "Ausgebaut / beheizt", "label": "Dachraum ausgebaut / beheizt" },
-    { "value": "Teilweise ausgebaut", "label": "Teilweise ausgebaut / beheizt" },
-    { "value": "Unbekannt", "label": "Unbekannt" }
+    { "value": "Teilweise ausgebaut", "label": "Teilweise ausgebaut / beheizt" }
   ],
   "keller_bodenplatte": [
     { "value": "", "label": "Bitte wählen…" },
