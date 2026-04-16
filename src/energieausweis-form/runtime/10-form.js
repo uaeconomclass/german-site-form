@@ -888,6 +888,15 @@ function renderAusweisAdvisor(step) {
 function setValue(key, value, step, opts) {
   state[key] = value;
 
+  // Clear volume fields when the corresponding heated condition no longer applies.
+  if (key === "dachraum_zustand") {
+    const heated = state.dachraum_zustand === "Ausgebaut / beheizt" || state.dachraum_zustand === "Teilweise ausgebaut";
+    if (!heated) state.dachvolumen = "";
+  }
+  if (key === "keller_bodenplatte" && state.keller_bodenplatte !== "Beheizter Keller") {
+    state.kellervolumen = "";
+  }
+
   // Keep spec constraint: if Ausweisart not Bedarf, remove invalid Anlass
   if (key === "ausweisart" && state.ausweisart !== "Bedarfsausweis") {
     if (state.anlass === "Neubau" || state.anlass === "Modernisierung") state.anlass = "";

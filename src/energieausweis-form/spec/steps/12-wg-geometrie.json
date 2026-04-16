@@ -55,10 +55,21 @@
                                           "key":  "dachvolumen",
                                           "label":  "Dachvolumen (m³)",
                                           "type":  "number",
-                                          "required":  true,
                                           "min":  0,
                                           "max":  5000000,
-                                          "hint":  "z. B. 250"
+                                          "hint":  "z. B. 250",
+                                          "when":  {
+                                              "or":  [
+                                                  { "eq":  ["dachraum_zustand", "Ausgebaut / beheizt"] },
+                                                  { "eq":  ["dachraum_zustand", "Teilweise ausgebaut"] }
+                                              ]
+                                          },
+                                          "required":  {
+                                              "or":  [
+                                                  { "eq":  ["dachraum_zustand", "Ausgebaut / beheizt"] },
+                                                  { "eq":  ["dachraum_zustand", "Teilweise ausgebaut"] }
+                                              ]
+                                          }
                                       },
                                       {
                                           "key":  "wohnvolumen",
@@ -73,10 +84,11 @@
                                           "key":  "kellervolumen",
                                           "label":  "Kellervolumen (m³)",
                                           "type":  "number",
-                                          "required":  true,
                                           "min":  0,
                                           "max":  5000000,
-                                          "hint":  "z. B. 100"
+                                          "hint":  "z. B. 100",
+                                          "when":  { "eq":  ["keller_bodenplatte", "Beheizter Keller"] },
+                                          "required":  { "eq":  ["keller_bodenplatte", "Beheizter Keller"] }
                                       },
                                       {
                                           "key":  "gebaeudevolumen",
