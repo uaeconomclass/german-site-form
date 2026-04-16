@@ -261,7 +261,7 @@
     { "value": "", "label": "Bitte wählen…" },
     { "value": "Unbeheizt", "label": "Dachraum unbeheizt" },
     { "value": "Ausgebaut / beheizt", "label": "Dachraum ausgebaut / beheizt" },
-    { "value": "Teilweise ausgebaut", "label": "Teilweise ausgebaut" },
+    { "value": "Teilweise ausgebaut", "label": "Teilweise ausgebaut / beheizt" },
     { "value": "Unbekannt", "label": "Unbekannt" }
   ],
   "keller_bodenplatte": [
